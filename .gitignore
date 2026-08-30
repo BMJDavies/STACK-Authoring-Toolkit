@@ -15,3 +15,8 @@ content/progress.log
 # Do NOT ignore tools/project.conf: it has no secrets beyond a local dev
 # database password, and having it in the repo is what makes a fresh clone
 # work. If you point this at a real server, move the credentials out first.
+
+# Source material: usually third-party copyright. Remove these two lines
+# if the material is yours to distribute.
+sources/*
+!sources/README.md
