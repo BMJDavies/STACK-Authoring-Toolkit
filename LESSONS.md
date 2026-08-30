@@ -2,8 +2,7 @@
 
 **Audience: your assistant, and you. Worth reading once yourself.**
 
-Roughly 600 questions across three books, over about four months. These are the
-things that cost real time and that are not easily discovered by reading
+These are the things that cost real time and that are not easily discovered by reading
 documentation. The technical ones are already encoded in `style-guide.md`; this
 file is the reasoning behind them, plus the process lessons that do not belong
 in a style guide.
