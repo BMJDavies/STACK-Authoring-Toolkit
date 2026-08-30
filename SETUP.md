@@ -5,10 +5,14 @@
 This walks you from a laptop with nothing installed to a working authoring
 pipeline. Budget half a day for the first run, most of which is downloads.
 
-**You do not have to do this alone.** Open Claude Code in the kit folder and say:
-"Walk me through SETUP.md step by step. Run the commands and tell me what each
-one does before you run it." That is what it is for, and it is a good first
-exercise in working with it.
+**Do not work through this alone, and do not start at section 1.** Open your
+assistant in this folder and type `/start`, or, if your tool has no slash
+commands, ask it to follow `ONBOARDING.md`.
+
+It will establish what you already have installed and send you only to the
+sections you need. Someone with Moodle and STACK already running usually needs
+four of the ten below. It will also ask what it needs to know about your project,
+which this file does not cover.
 
 Everything below was verified on macOS (Apple Silicon) against Moodle 5.0.6 and
 STACK 4.11.1. Version numbers move; the shape does not.

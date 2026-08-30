@@ -172,8 +172,9 @@ the difference:
 - Do not let it commit. Read the diff and commit yourself.
 - Escape interrupts a run. Nothing is precious; the plans and XML are on disk.
 
-Good first move: open Claude Code in this folder and say *"Walk me through
-SETUP.md step by step. Explain each command before you run it."*
+Good first move: type `/start`, then ask it to explain each command before it
+runs it. Working through setup with it narrating is the best introduction to
+working with it on the questions afterwards.
 
 ---
 
