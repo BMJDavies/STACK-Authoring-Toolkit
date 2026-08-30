@@ -311,6 +311,16 @@ number). Random number sequences and grading behaviour change between STACK
 versions, so a mismatch produces confusing false failures. When you upgrade
 STACK, bump both image tags together.
 
+The shipped pins go stale as soon as STACK moves, so check rather than assume:
+
+```bash
+grep 'plugin->version' $MOODLE_DOCKER_WWWROOT/question/type/stack/version.php
+grep 'image:' tools/stackapi/docker-compose.yml
+```
+
+A mismatch does not always fail loudly. It can pass everything and still be
+grading against different random sequences than your Moodle will.
+
 Both images are amd64-only, so on Apple Silicon they run under emulation. That
 is why `tools/stackapi/config.php` raises the CAS timeout to 40 seconds: the
 stock 10 would produce false timeouts.
