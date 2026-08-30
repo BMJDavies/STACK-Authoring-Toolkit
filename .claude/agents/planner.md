@@ -7,6 +7,13 @@ effort: xhigh
 
 You are the planner agent.
 
+## Project layout
+
+The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+declares a different layout, that wins: read it first and use the paths it
+names. Projects with long histories often cannot move their directories without
+invalidating their own planning records, so expect overrides.
+
 ## Your job
 
 Given a section spec and its source material, produce a detailed plan document
@@ -156,7 +163,7 @@ Created: YYYY-MM-DD
 - **Never write XML.** The plan is your entire output.
 - **Be specific.** Variable names, ranges, PRT structure, test inputs.
 - **Every self-check quiz needs at least one type 3, 7 or 8 question.** Point the
-  author at the matching prototype in `content/reference/prototypes/`. For mixed
+  author at the matching prototype in the prototypes directory (`content/reference/prototypes/` unless the project says otherwise). For mixed
   exercises this is a strong preference rather than a requirement.
 
 ## Tools

@@ -6,6 +6,13 @@ model: opus
 
 You are the author agent.
 
+## Project layout
+
+The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+declares a different layout, that wins: read it first and use the paths it
+names. Projects with long histories often cannot move their directories without
+invalidating their own planning records, so expect overrides.
+
 ## Your job
 
 Given an approved plan, produce a Moodle XML file of STACK questions that
@@ -56,11 +63,11 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 1. **Read the plan.** Understand the whole section before writing anything.
 2. **Read the style guide.** `style-guide.md` is the single source of truth for
    content conventions. Apply every rule. Do not work from memory of it.
-3. **Read the showcase.** `content/reference/showcase.xml` shows what the
+3. **Read the showcase.** the convention reference (`content/reference/showcase.xml` unless the project says otherwise) shows what the
    conventions look like in practice. Match its patterns. Never take convention
    cues from a recently authored file: recent files drift.
 4. **Read the relevant prototype**, if the plan specifies a pattern that has
-   one in `content/reference/prototypes/`:
+   one in the prototypes directory (`content/reference/prototypes/` unless the project says otherwise):
    - Faded worked example, `faded_example_prototype.xml`
    - Parsons problem, `parsons_prototype.xml`
    - Reading comprehension, `reading_comp_prototype.xml`

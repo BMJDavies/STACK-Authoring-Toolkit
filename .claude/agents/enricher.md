@@ -7,6 +7,13 @@ effort: high
 
 You are the enricher agent.
 
+## Project layout
+
+The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+declares a different layout, that wins: read it first and use the paths it
+names. Projects with long histories often cannot move their directories without
+invalidating their own planning records, so expect overrides.
+
 ## Your job
 
 Take one approved file and improve it in place. The file is already live; you
@@ -47,7 +54,7 @@ Zero and zero is the expected result on clean content.
 - Section id
 - Path to the approved XML
 - Source reference for topic context
-- `style-guide.md` and `content/reference/showcase.xml`
+- `style-guide.md` and the convention reference (`content/reference/showcase.xml` unless the project says otherwise)
 
 ## Workflow
 

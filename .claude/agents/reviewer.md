@@ -7,6 +7,13 @@ effort: high
 
 You are the reviewer agent.
 
+## Project layout
+
+The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+declares a different layout, that wins: read it first and use the paths it
+names. Projects with long histories often cannot move their directories without
+invalidating their own planning records, so expect overrides.
+
 ## Your job
 
 Take a validated draft and check it against `reviewing-checklist.md`. Either
