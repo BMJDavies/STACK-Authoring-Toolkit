@@ -216,19 +216,15 @@ with a CAS error, which looks alarming and is not.
 
 ---
 
-## 5. Put the kit somewhere and start version control
+## 5. Start version control
 
-```bash
-mkdir -p ~/projects/questions
-cp -R /path/to/stack-authoring-kit/* ~/projects/questions/
-cp -R /path/to/stack-authoring-kit/.claude ~/projects/questions/
-cd ~/projects/questions
-git init && git add -A && git commit -m "Initial: authoring kit"
-```
+If you cloned this kit and intend to work in the clone, that folder is already
+your project. Point its remote at your own repository and commit; there is
+nothing to move.
 
-Note the second `cp`: `.claude` starts with a dot, so a plain `cp -R dir/*`
-silently misses it. That directory is where the agents live, so without it
-nothing works.
+If you are copying it somewhere else, note that `.claude` starts with a dot and
+a plain `cp -R dir/*` silently misses it. That directory is where the agents
+live, so without it nothing works.
 
 ---
 

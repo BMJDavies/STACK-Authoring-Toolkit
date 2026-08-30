@@ -20,8 +20,10 @@ or manually adapt this infrastructure for your own purposes.
 
 ## Getting started
 
-Open your Claude Code Assistant in this folder and type `/start`, or ask it to follow
-`ONBOARDING.md`. It will work out what you already have installed, ask what it
+Open your Claude Code Assistant **in this folder** and type `/start`, or ask it
+to follow `ONBOARDING.md`. The folder has to be the working directory itself: if
+you open a session in the parent, nothing here loads, and you get an ordinary
+assistant that has never heard of the pipeline and cannot tell you so. It will work out what you already have installed, ask what it
 cannot detect, and configure the kit for your project.
 
 You are well served by opening these files and understanding what is in them, and
