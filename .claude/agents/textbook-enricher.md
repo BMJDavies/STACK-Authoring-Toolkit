@@ -141,7 +141,7 @@ to R." Not "the answer is 5". Not "f(r) = 0".
 Run `tools/test-question.sh <path>` in the FOREGROUND and let it block.
 
 Do not background it. Do not poll for an output file. Do not write sleep loops.
-Under concurrent load validation can take 15 to 30 minutes; your Bash call will
+Under concurrent load validation can run for a long time; your Bash call will
 simply wait. Polling is the leading cause of agents dying mid-workflow without
 finishing their work. If you have already started a backgrounded run and cannot
 tell whether it is progressing, abort the poll after two minutes and re-run in

@@ -20,8 +20,10 @@ or manually adapt this infrastructure for your own purposes.
 
 ## Getting started
 
-Open your Claude Code Assistant in this folder and type `/start`, or ask it to follow
-`ONBOARDING.md`. It will work out what you already have installed, ask what it
+Open your Claude Code Assistant **in this folder** and type `/start`, or ask it
+to follow `ONBOARDING.md`. The folder has to be the working directory itself: if
+you open a session in the parent, nothing here loads, and you get an ordinary
+assistant that has never heard of the pipeline and cannot tell you so. It will work out what you already have installed, ask what it
 cannot detect, and configure the kit for your project.
 
 You are well served by opening these files and understanding what is in them, and
@@ -157,10 +159,9 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 
 ## Realistic expectations
 
-- Setup: half a day, most of it downloads. Do it with Claude Code alongside you.
-- First section: 20 to 40 minutes, most of it validation. Start with one small
-  section, not a chapter.
-- After that: a chapter is a few hours, largely unattended.
+- Setup is mostly downloads. Do it with Claude Code alongside you.
+- Start with one small section, not a chapter. Most of the time goes on
+  validation.
 - Validation is slow and produces no output while running. That is normal. Let
   it block; do not background it and poll.
 
@@ -221,7 +222,9 @@ project, an adaptation of an existing A-level and GCSE textbook series into
 interactive STACK content. It has been exercised across three books. A case study
 describing that project is forthcoming on the STACK site, at
 stack-assessment.org/CaseStudies/. Nothing from that project's content is
-included here, and no knowledge of it is needed to use this kit.
+included here, and neither are its conventions: the style guide names no
+syllabus, phase or exam board, and has been used unchanged at other levels and
+in other countries. No knowledge of that project is needed to use this kit.
 
 The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
 header is a placeholder to fill in.

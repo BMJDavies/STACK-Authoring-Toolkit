@@ -99,9 +99,8 @@ broken file gets edited. Cap concurrency at three.
 
 ## Backgrounding a validation loses the work
 
-Validation produces no output while it runs. It can take 15 to 30 minutes, and
-it has taken eight hours on a large file under load. It is very tempting to
-background it and poll.
+Validation produces no output while it runs, and can run for hours on a large
+file under load. It is very tempting to background it and poll.
 
 Do not. We lost three agents out of three in one batch to this. The pattern is
 always the same: the poll gets ambiguous, the agent cannot tell whether anything
@@ -206,7 +205,7 @@ sets up, and grades its own test cases correctly. It cannot tell you:
 - Whether the feedback actually teaches anything
 - Whether the difficulty progression makes sense
 - Whether a distractor is accidentally true
-- Whether a currency value renders as `£1166.40` or as a vulgar fraction
+- Whether a currency value renders as `1166.40` or as a vulgar fraction
 - Whether the question is the right question to be asking
 
 That is why the reviewer's pedagogy audit is a named duty rather than an

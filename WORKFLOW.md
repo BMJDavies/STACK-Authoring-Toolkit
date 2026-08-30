@@ -62,8 +62,7 @@ Start small. One section, five or six questions.
 ```
 
 It asks for what it needs (source, page range, output filename, target quiz),
-then runs the three agents. Expect 20 to 40 minutes for a first section, most of
-it validation.
+then runs the three agents. Most of the time goes on validation.
 
 You will be asked to approve the plan. Read it properly, this once. It is the
 cheapest place to catch a misunderstanding: fixing "you have misread what this
@@ -93,8 +92,8 @@ single list at the end rather than interrupting you a dozen times.
 
 If you want it to run without even the plan gate, say "run unattended".
 
-This is the mode to use once you trust the setup. A chapter takes a few hours,
-mostly unattended.
+This is the mode to use once you trust the setup. A chapter runs mostly
+unattended.
 
 ---
 
@@ -129,7 +128,8 @@ Full runbook: `.claude/skills/moodle-operations/SKILL.md`.
 ## Where things live
 
 ```
-content/drafts/      the author writes here
+content/drafts/      the author writes here (naming is your project's to
+                     choose; settle it once and record it in CLAUDE.md)
 content/approved/    the reviewer promotes here; this is the source of truth
 content/plans/       plan documents
 content/reference/   showcase.xml and the pattern prototypes
@@ -208,9 +208,18 @@ believing it. Agents reported as dead have frequently carried on and written
 their file successfully.
 
 **Validation seems to have hung.** It produces no output while running, so
-silence is normal. It can take 15 to 30 minutes, occasionally much longer. Wait.
-Do not background it and poll: that is the most reliable way to lose a run that
-was about to succeed.
+silence is normal and can last a long time. Wait. Do not background it and poll:
+that is the most reliable way to lose a run that was about to succeed.
+
+Silence is also what a genuinely wedged run looks like, so if you need to tell
+them apart, check for a live process rather than guessing from elapsed time:
+
+```bash
+docker exec <webserver-container> ps -eo pid,etime,cmd | grep -E 'php|maxima'
+```
+
+Work in progress shows a process. A wedged run shows one with a long elapsed
+time and nothing to show for it, or none at all.
 
 ---
 

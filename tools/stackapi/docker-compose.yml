@@ -9,10 +9,10 @@
 services:
   maxima:
     platform: linux/amd64
-    # Pinned to match our LIVE Moodle STACK version (stackmaximaversion
-    # 2026010500 / release 4.11.1). rand() sequences and grading change between
-    # STACK versions, so the image MUST match live or seed->variant mismatches
-    # cause false fails. Bump both tags together when live STACK is upgraded.
+    # Pin these to the STACK version installed in YOUR Moodle: check
+    # question/type/stack/version.php ($plugin->version). rand() sequences and
+    # grading change between STACK versions, so a mismatch can cause false
+    # fails, or pass while grading differently. Bump both tags together.
     image: mathinstitut/goemaxima:2026010500-latest
     tmpfs:
       - "/tmp"

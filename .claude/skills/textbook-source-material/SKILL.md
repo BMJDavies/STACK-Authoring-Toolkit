@@ -23,6 +23,11 @@ pdftotext -layout sources/chapter5.pdf - > /tmp/ch5.txt
 
 `-layout` preserves two-column layout where it can.
 
+Page numbers here and in plans are always **PDF** page numbers, which is what
+`pdftotext` and `pdftoppm` take. A book with front matter numbers its printed
+pages differently, and a range written in printed numbers renders the wrong
+pages while still landing on plausible content.
+
 If the output looks scrambled, do not guess at what it meant. Common failures
 and what to do:
 
@@ -44,8 +49,8 @@ extraction is a convenience, not an authority.
 ### Step 2: identify the items
 
 Go through and classify every item. Your source will have its own structural
-markers; write your project's map into this skill once you know it. A typical
-school textbook maps like this:
+markers; write your project's map into this skill once you know it. The table
+below is one worked example, not a schema to match:
 
 | Marker | What it is | Becomes |
 |--------|------------|---------|
@@ -61,10 +66,15 @@ school textbook maps like this:
 
 ### Step 3: check nothing was dropped
 
-Count the items in the source and count the items in your work order. They
-should match. Every source item appears as a question, as a description, or as
-an explicitly flagged item that cannot be adapted with a stated reason. Silently
-skipping is not an option: it is how content gaps ship unnoticed.
+Every source item must appear in the work order: as a question, as a
+description, or as an explicitly flagged item that cannot be adapted, with a
+stated reason. Silently skipping is not an option: it is how content gaps ship
+unnoticed.
+
+The counts need not match. A source with exercises tends to map one-to-one; a
+source that teaches through worked examples and puts its exercises at the end of
+a chapter maps one-to-many, because a sub-topic otherwise yields no interactive
+questions at all. Account for every item; do not expect equal totals.
 
 ---
 

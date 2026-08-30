@@ -3,7 +3,7 @@
 **Audience: your assistant, working alongside you. Ask it to walk you through this rather than reading it yourself.**
 
 This walks you from a laptop with nothing installed to a working authoring
-pipeline. Budget half a day for the first run, most of which is downloads.
+pipeline. Most of the first run is downloads.
 
 **Do not work through this alone, and do not start at section 1.** Open your
 assistant in this folder and type `/start`, or, if your tool has no slash
@@ -19,7 +19,21 @@ STACK 4.11.1. Version numbers move; the shape does not.
 
 ---
 
-## 0. What you are building
+## 0. What you are building, and what you need
+
+### What you need first
+
+- macOS or Linux. On Apple Silicon see the note in section 4: the standard
+  Maxima package is not the one to install.
+- About 12GB free disk. Docker Desktop, its images and the Moodle source are
+  roughly 9GB before Maxima; moodledata grows from there.
+- Docker Desktop, given at least 4 CPUs and 8GB in its settings.
+- git, and Homebrew if you are on macOS.
+- poppler, for `pdftotext` and `pdftoppm`. Onboarding uses these to check
+  whether your source PDF's mathematics survives text extraction, and to render
+  pages when it does not: `brew install poppler`.
+
+### What you are building
 
 ```
 Your laptop
@@ -41,6 +55,11 @@ Put the kit folder under version control on day one.
 ---
 
 ## 1. Install Docker
+
+**This step is yours, not your assistant's.** Installing Docker needs a
+password at a real terminal, so an assistant cannot complete it unattended.
+Homebrew's cask is `docker-desktop` (plain `docker` is the old name) and it
+rolls the whole install back if it cannot get sudo.
 
 Docker Desktop, from docker.com. Start it and leave it running. Everything else
 happens inside it, so nothing in these steps pollutes your laptop.
@@ -92,8 +111,8 @@ Note the container names Docker gives you (`docker ps` will show them, typically
 
 ## 3. Install STACK
 
-STACK is a question type plugin plus three question behaviours. All four go into
-the Moodle source tree you cloned:
+STACK is a question type plugin, three question behaviours, and a question bank
+plugin. All five go into the Moodle source tree you cloned:
 
 ```bash
 cd $MOODLE_DOCKER_WWWROOT
@@ -105,9 +124,19 @@ git clone https://github.com/maths/moodle-qbehaviour_dfexplicitvaildate.git \
     question/behaviour/dfexplicitvaildate
 git clone https://github.com/maths/moodle-qbehaviour_dfcbmexplicitvaildate.git \
     question/behaviour/dfcbmexplicitvaildate
+git clone https://github.com/maths/moodle-qbank_importasversion.git \
+    question/bank/importasversion
 ```
 
 (The misspelling in "vaildate" is upstream's, not a typo here. Keep it.)
+
+STACK's dependencies change between releases, and this list will go stale. The
+authority is the `$plugin->dependencies` block in
+`question/type/stack/version.php`: clone whatever it names that Moodle core does
+not ship. If you miss one, section 2's `install_database.php` fails with
+"Dependencies check failed for qtype_stack" without naming the missing plugin,
+one section before the step that is actually wrong, and it exits 0 while doing
+so.
 
 Then run the Moodle upgrade so it notices them:
 
@@ -130,7 +159,37 @@ docker exec <webserver-container> bash -c \
 
 **Use `maxima-sage`, not `maxima`, on Apple Silicon.** The standard `maxima`
 package segfaults on ARM. `maxima-sage` uses the ECL backend and works. This
-cost a day before it was diagnosed.
+cost a day before it was diagnosed. It also means `platform` stays `linux`
+rather than `linux-optimised`, so expect a slower CAS: STACK cannot build its
+prebuilt Maxima image against ECL.
+
+Then tell STACK how to reach it. A CLI install writes none of these settings,
+and without them the CAS fails with "tried to get the value from of an
+unevaluated casstring", which names none of what is missing:
+
+```bash
+cd $MOODLE_DOCKER_WWWROOT
+for kv in platform=linux maximacommand=/usr/bin/maxima-sage \
+          maximaversion=default castimeout=60 maximalibraries=; do
+    docker exec <webserver-container> php admin/cli/cfg.php \
+        --component=qtype_stack --name="${kv%%=*}" --set="${kv#*=}"
+done
+```
+
+Two of those are not guesses:
+
+- `maximacommand`. The `maxima-sage` package installs `/usr/bin/maxima-sage`
+  and no `maxima`, but STACK's default command is `maxima`. Set the command
+  rather than making a symlink: this setting lives in the database and survives
+  recreating the container, a symlink does not.
+- `maximaversion=default`. The dropdown offers whole minor versions only, and
+  Debian ships 5.45.1, so nothing matches. Picking the nearest looks right and
+  is not: STACK compares the string exactly and reports "serious problems"
+  while the CAS actually works. Use `default` unless your Maxima matches a
+  listed version exactly.
+
+**Your system may differ.** These values were taken from one macOS/ARM install;
+check what your own Maxima reports rather than assuming.
 
 Then in Moodle, go to Site administration, Plugins, Question types, STACK, and
 run the healthcheck at:
@@ -143,6 +202,9 @@ Work down the page until everything is green. It tells you exactly what is wrong
 when something is. The one you care about most is the Maxima connection test: if
 that is green, STACK works.
 
+The page also writes `stackmaximaversion`, which the commands above do not set,
+so visit it once even if the CLI settings all applied.
+
 ### If you ever recreate the containers
 
 Restarting containers (`stop` then `start`) is safe and changes nothing.
@@ -154,19 +216,15 @@ with a CAS error, which looks alarming and is not.
 
 ---
 
-## 5. Put the kit somewhere and start version control
+## 5. Start version control
 
-```bash
-mkdir -p ~/projects/questions
-cp -R /path/to/stack-authoring-kit/* ~/projects/questions/
-cp -R /path/to/stack-authoring-kit/.claude ~/projects/questions/
-cd ~/projects/questions
-git init && git add -A && git commit -m "Initial: authoring kit"
-```
+If you cloned this kit and intend to work in the clone, that folder is already
+your project. Point its remote at your own repository and commit; there is
+nothing to move.
 
-Note the second `cp`: `.claude` starts with a dot, so a plain `cp -R dir/*`
-silently misses it. That directory is where the agents live, so without it
-nothing works.
+If you are copying it somewhere else, note that `.claude` starts with a dot and
+a plain `cp -R dir/*` silently misses it. That directory is where the agents
+live, so without it nothing works.
 
 ---
 
@@ -252,6 +310,16 @@ Moodle** (check `question/type/stack/version.php`, the `$plugin->version`
 number). Random number sequences and grading behaviour change between STACK
 versions, so a mismatch produces confusing false failures. When you upgrade
 STACK, bump both image tags together.
+
+The shipped pins go stale as soon as STACK moves, so check rather than assume:
+
+```bash
+grep 'plugin->version' $MOODLE_DOCKER_WWWROOT/question/type/stack/version.php
+grep 'image:' tools/stackapi/docker-compose.yml
+```
+
+A mismatch does not always fail loudly. It can pass everything and still be
+grading against different random sequences than your Moodle will.
 
 Both images are amd64-only, so on Apple Silicon they run under emulation. That
 is why `tools/stackapi/config.php` raises the CAS timeout to 40 seconds: the
