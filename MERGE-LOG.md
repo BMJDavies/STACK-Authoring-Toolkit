@@ -48,15 +48,31 @@ literal. On a correct check the kit already carried the randomisation floor
 hints, the `simp:false` list-indexing trap, the forbidden-identifier rule,
 `EqualComAssRules [oneMul]`, `dispdp` trailing zeros, and terminal answer notes.
 
-## Not yet verified
+## Commands and skills: verified, nothing to carry
 
-The two slash commands and the five skills were surveyed structurally but not
-merged line by line. Both are rewrites rather than copies, so a heading-level
-comparison is too noisy to conclude from and they need a genuine pass:
+Both slash commands and all five skills were checked functionally against the
+live SMP versions. All are supersets or equivalents. Nothing needed carrying back.
 
-- `commands/develop-section.md`, `commands/develop-chapter.md`
-- `skills/jsxgraph`, `skills/moodle-operations`, `skills/quiz-settings`,
-  `skills/stack-question-types`, `skills/source-material` against SMP's
-  `pdf-extraction`
+`develop-section` and `develop-chapter` are longer here (146 and 178 lines against
+125 and 151) and add a "validate it yourself" step, encoding the lesson that the
+dispatcher owns validation rather than the author, plus guardrails and partial-run
+sections that SMP lacks.
 
-The four agents and the style guide are done.
+`quiz-settings` is better here: it carries the slot-to-page map restore lesson,
+that a push regroups pages and undoes a hand-built layout, which the SMP version
+does not have.
+
+`jsxgraph`, `moodle-operations` and `stack-question-types` are equivalent in
+coverage. `pdf-extraction` became `source-material`, a better name given a PDF is
+only one kind of source, and it additionally handles the case of a syllabus with
+no source text at all.
+
+Two apparent gaps in this pass were my own measurement errors, not content
+differences: searching for `feedback/` with a slash when the text reads "feedback
+documents", and for "section headings" when the kit phrases the same rule around
+page grouping.
+
+## Outstanding
+
+Nothing in the merge. SMP has not yet been cut over to consume this repo, which
+is Phase 4 of `CONSOLIDATION-PLAN.md` in the SMP repo.
