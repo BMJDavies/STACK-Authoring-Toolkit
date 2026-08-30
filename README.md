@@ -5,7 +5,7 @@ assistant.**
 
 This repo holds a pipeline for writing STACK questions for Moodle with an AI assistant: agents,
 skills, tooling, content rules and a theme. It assumes no particular subject, level or syllabus. You point it at your own
-material and your own Moodle site. 
+material and your own Moodle site.
 
 This folder becomes your project. Everything lives inside it, including the agent
 definitions in `.claude/`. Nothing is installed elsewhere on your machine, so the
@@ -14,9 +14,9 @@ projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
 
 It was built for and tested with Claude Code. The content, the style guide, the
 checklist and the tools are not tool-specific, and `AGENTS.md` explains how to
-drive the same pipeline from another assistant. As of late 2026, I am working on 
+drive the same pipeline from another assistant. As of late 2026, I am working on
 an LLM-agnostic version of this project but for now, you will need to use Claude Code
-or manually adapt this infrastructure for your own purposes. 
+or manually adapt this infrastructure for your own purposes.
 
 ## Getting started
 
@@ -26,20 +26,20 @@ cannot detect, and configure the kit for your project.
 
 You are well served by opening these files and understanding what is in them, and
 you will get more out of the kit if you do. But you do not *need* to read anything beyond
-this readme file to get started. 
+this readme file to get started.
 
 ## What this contains, and what it does not
 
 No teaching content of any kind: no publisher material, no source documents, no
 authored question banks. The only XMLs here are the showcase and the pattern
 prototypes, which exist to demonstrate conventions and were written for that
-purpose. 
+purpose.
 
-You will need to provide your own source material. This might be a textbook you wish to 'STACKify', 
-your lecture notes, or something similar that has been carefully designed in a different context. 
+You will need to provide your own source material. This might be a textbook you wish to 'STACKify',
+your lecture notes, or something similar that has been carefully designed in a different context.
 Like many things in life, the quality of the input (i.e. your source files) is the primary factor
-in determining the quality of the output (i.e. your interactive, STACKified textbook). 
-The old 'garbage in, garbage out' mantra very much applies here. 
+in determining the quality of the output (i.e. your interactive, STACKified textbook).
+The old 'garbage in, garbage out' mantra very much applies here.
 
 What it does contain is the method: agents, commands, skills, tooling, the style
 guide and the reviewing checklist, plus a Moodle theme.
@@ -134,20 +134,20 @@ instead of believing the author.
 
 ## What this does not do
 
-This system does NOT give you 100% certainty that each and every question mets your 
+This system does NOT give you 100% certainty that each and every question meets your
 pedagogic aims. This is worth knowing before you start, so you build the human checks into your process
 rather than discovering the gap later.
 
-In my experience, the quality of the questions produced is generally very high. 
-The question text, feedback, and PRTs are all *usually* very good. That said, quality varies, 
-particularly when authoring questions on a new, unfamiliar, or esoteric topic. 
+In my experience, the quality of the questions produced is generally very high.
+The question text, feedback, and PRTs are all *usually* very good. That said, quality varies,
+particularly when authoring questions on a new, unfamiliar, or esoteric topic.
 
 The pipeline will confirm whether a question imports, sets up, and grades its own test
 cases correctly. It cannot tell you whether a figure is the right picture,
 whether the feedback teaches anything, whether the difficulty progression makes
 sense, whether a distractor is accidentally true, or whether you are asking the
 right question. Those need your eyes. The reviewer flags them but will only resolve them
-in relatively trivial cases. 
+in relatively trivial cases.
 
 There is also a specific bug class the tooling exists to catch but does not catch
 consistently on its own: a question that validates cleanly and marks students wrongly. LESSONS.md
@@ -171,17 +171,17 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 You do not need to understand the internals to use this. A few things that make
 the difference:
 
-- You will need to set-up Claude Code on your own before using this toolkit. 
-  Here is anthropics quickstart guide: https://code.claude.com/docs/en/quickstart
+- You will need to set-up Claude Code on your own before using this toolkit.
+  Here is Anthropic's quickstart guide: https://code.claude.com/docs/en/quickstart
 - `CLAUDE.md` is read at the start of every session. It is where standing
   instructions go. Keep it short: it costs context on every request.
-- Correct the system in the moment, rather than waiting. "Stop, do Y instead" mid-task works, 
+- Correct the system in the moment, rather than waiting. "Stop, do Y instead" mid-task works,
   and is far better than letting it finish something wrong.
 - Ask it to explain before acting while you are learning: "tell me what this
   command does before you run it".
 - Paste errors verbatim with the command that produced them. The exact text is
-  the useful part. Uploading screenshots is also useful for the same purpose. I recommend 
-  chosing a terminal UI that accepted c+p images. 
+  the useful part. Uploading screenshots is also useful for the same purpose. I recommend
+  choosing a terminal that accepts pasted images.
 - Do not let it commit. Read the diff and commit yourself.
 - Escape interrupts a run. Nothing is precious; the plans and XML are on disk.
 
@@ -228,6 +228,6 @@ header is a placeholder to fill in.
 
 The reference XML under `content/reference/` consists of purpose-written
 exemplars demonstrating each question pattern. The mathematics in them is
-standard school and early-undergraduate material. 
+standard school and early-undergraduate material.
 
-STACK is GPL, and is maintained by Chris Sangwin and colleagues at The University of Edinburgh
+STACK is GPL, and is maintained by Chris Sangwin and colleagues at The University of Edinburgh.
