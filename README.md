@@ -22,6 +22,24 @@ A working copy of the agents, commands and skills is deployed into
 `~/.claude/` so the pipeline is available in every project on the machine.
 Deploy by copying, never by symlink.
 
+## What this contains, and what it does not
+
+No textbook content. No SMP, AQA or other publisher material, no source PDFs, no
+authored question banks. The only XML here is the showcase and the pattern
+prototypes, which exist to demonstrate conventions and were written for that
+purpose.
+
+What it does contain is the method: agents, commands, skills, tooling, the style
+guide and the reviewing checklist, plus a Moodle theme.
+
+`tools/project.conf` ships with the moodle-docker default local development
+database password. That is deliberate, so a fresh clone works out of the box, and
+it is documented in the file. Repoint it before using the kit against any real
+server.
+
+**Licence: not yet chosen.** Decide before sharing this outside your own
+institution.
+
 ---
 
 ## Read these in this order
