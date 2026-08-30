@@ -3,7 +3,7 @@
 **Audience: your assistant, working alongside you. Ask it to walk you through this rather than reading it yourself.**
 
 This walks you from a laptop with nothing installed to a working authoring
-pipeline. Budget half a day for the first run, most of which is downloads.
+pipeline. Most of the first run is downloads.
 
 **Do not work through this alone, and do not start at section 1.** Open your
 assistant in this folder and type `/start`, or, if your tool has no slash

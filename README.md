@@ -159,10 +159,9 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 
 ## Realistic expectations
 
-- Setup: half a day, most of it downloads. Do it with Claude Code alongside you.
-- First section: 20 to 40 minutes, most of it validation. Start with one small
-  section, not a chapter.
-- After that: a chapter is a few hours, largely unattended.
+- Setup is mostly downloads. Do it with Claude Code alongside you.
+- Start with one small section, not a chapter. Most of the time goes on
+  validation.
 - Validation is slow and produces no output while running. That is normal. Let
   it block; do not background it and poll.
 

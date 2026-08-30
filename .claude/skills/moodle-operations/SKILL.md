@@ -41,7 +41,7 @@ everything passed, exit 1 means something failed.
 Nothing is published until this returns 0. Run it yourself rather than trusting
 an agent's report that it passed.
 
-Run it in the FOREGROUND and let it block. It can take 15 to 30 minutes under
+Run it in the FOREGROUND and let it block. It can run for a long time under
 load, and much longer on a big file. Backgrounding it and polling is the single
 most common way an agent loses its work: the poll gets murky, the agent gives
 up, and the run is wasted. Just wait.
