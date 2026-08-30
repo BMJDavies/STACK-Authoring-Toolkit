@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-# Deploy the kit's agents, commands and skills into ~/.claude so the pipeline is
-# available in every project. Copies, never symlinks: a symlinked .claude has
-# broken twice in this project's history.
+# OPTIONAL, for people running several authoring projects. See MULTIPLE-PROJECTS.md.
+# The normal install is per-project: the kit folder IS the project and nothing
+# outside it is touched. This script is the other case.
+#
+# Deploys the agents, commands and skills into ~/.claude so the pipeline is
+# available in every project. Copies, never symlinks: a symlinked .claude is a
+# well-known way to end up with links pointing at directories that no longer exist.
 #
 # Project-level .claude/ definitions take precedence over these, so a project
 # overrides any of them by name.

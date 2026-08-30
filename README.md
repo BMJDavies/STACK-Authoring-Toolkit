@@ -7,20 +7,11 @@ anger to produce around 600 questions across three books.
 It is set up to be generic. Nothing in it assumes a particular subject, level or
 syllabus. You point it at your own material and your own Moodle.
 
-## This repo is the source of truth
-
-Anything generic lives here and is edited here. Projects that use the kit
-(SMP, Kenya, and others) hold only an appendix of their own conventions, and
-override an agent by name where they genuinely need to.
-
-When this repo and a project copy disagree about a generic rule, this repo wins.
-A rule that turns out to be generic gets promoted into this repo rather than
-copied sideways between projects. That single convention is what stops the
-pipeline fragmenting into parallel versions again.
-
-A working copy of the agents, commands and skills is deployed into
-`~/.claude/` so the pipeline is available in every project on the machine.
-Deploy by copying, never by symlink.
+This folder becomes your project. Everything lives inside it, including the
+agents in `.claude/`. Nothing is installed anywhere else on your machine, so you
+can undo the whole thing by deleting the folder. If you later run several
+authoring projects and want them to share one pipeline, see
+`MULTIPLE-PROJECTS.md`.
 
 ## What this contains, and what it does not
 
@@ -53,6 +44,7 @@ institution.
 | **style-guide.md** | The content rules. The agents' authority. | Skim now, edit as you go |
 | **reviewing-checklist.md** | What the reviewer checks. | Skim now |
 | **CLAUDE.md** | Project instructions. Has placeholders to fill in. | During setup |
+| **MULTIPLE-PROJECTS.md** | Sharing one kit across several projects. | Only if you have more than one |
 
 ---
 
@@ -66,6 +58,8 @@ LESSONS.md                 what we learned the hard way
 CLAUDE.md                  project instructions (fill in the placeholders)
 style-guide.md             content rules: the single source of truth
 reviewing-checklist.md     the reviewer's checklist
+MULTIPLE-PROJECTS.md       optional: sharing one kit across projects
+docs/MERGE-LOG.md          provenance: how the kit was reconciled with its origin
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
