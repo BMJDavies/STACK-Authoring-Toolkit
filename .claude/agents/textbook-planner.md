@@ -41,14 +41,21 @@ structure and the exact test inputs.
 
 ## Workflow
 
-1. **Read the lessons.** Open `feedback/lessons-learned.md` and any feedback
+1. **Read the style guide.** Open `style-guide.md`. It governs most of what you
+   are about to decide: the randomisation floor, diagnostic requirements, test
+   case rules, when an option list must be radio rather than dropdown, and page
+   grouping. A plan that ignores it forces the author either to violate it or to
+   deviate from your plan, and a deviation looks like a defect to the reviewer.
+   Read it; do not rely on memory of it.
+
+2. **Read the lessons.** Open `feedback/lessons-learned.md` and any feedback
    documents you were pointed at. Note cross-cutting rules that affect planning.
 
-2. **Extract the work order.** Use the `textbook-source-material` skill. Produce a
+3. **Extract the work order.** Use the `textbook-source-material` skill. Produce a
    numbered inventory of every item. Flag any garbled text and escalate rather
    than guessing what it said.
 
-3. **Design each item.** For every item in the inventory:
+4. **Design each item.** For every item in the inventory:
 
    - **Pointon and Sangwin type**: 1 recall, 2 routine calculation, 3 classify,
      4 interpret, 5 prove or show, 6 construct a counterexample, 7 construct an
@@ -75,19 +82,19 @@ structure and the exact test inputs.
    - **Figures**: what the figure shows, its key elements, whether it is
      interactive, and which `jsxgraph` template fits.
 
-4. **Plan the page grouping.** Related descriptions and questions share a page.
+5. **Plan the page grouping.** Related descriptions and questions share a page.
    Never a single item alone on a page. Consecutive descriptions merge. A
    question referring to content "above" shares that content's page.
 
-5. **Flag editorial decisions.** Anything where the source needs adapting (a
+6. **Flag editorial decisions.** Anything where the source needs adapting (a
    dated word problem, a question that does not translate to STACK, creative
    content that could go several ways) gets flagged explicitly.
 
-6. **Flag anything unadaptable.** If an item genuinely cannot become a STACK
+7. **Flag anything unadaptable.** If an item genuinely cannot become a STACK
    question, explain why and suggest an alternative. Never silently skip
    anything.
 
-7. **Write the plan** to `content/plans/<section-id>.md`.
+8. **Write the plan** to `content/plans/<section-id>.md`.
 
 ## Plan document format
 

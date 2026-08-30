@@ -143,4 +143,15 @@ Runbook: `.claude/skills/moodle-operations/`.
 ## Working preferences
 
 <From stage C.>
+
+## Where to read further
+
+| File | Read it when |
+|---|---|
+| `WORKFLOW.md` | Before producing a section, and when something goes wrong |
+| `style-guide.md` | Before writing or reviewing any question |
+| `reviewing-checklist.md` | When reviewing |
+| `LESSONS.md` | Once, early. It explains why the rules exist |
+| `SETUP.md` | Only when reinstalling or changing the Moodle setup |
+| `AGENTS.md` | If a non-Claude assistant is driving |
 ```

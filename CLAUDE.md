@@ -44,6 +44,7 @@ user.
 | File | Read it when |
 |---|---|
 | `ONBOARDING.md` | Now, if this project is unconfigured |
+| `AGENTS.md` | If you are not Claude Code: the portable description of the pipeline |
 | `SETUP.md` | While installing, guided by onboarding |
 | `WORKFLOW.md` | Before producing the first section |
 | `style-guide.md` | Before writing or reviewing any question |
