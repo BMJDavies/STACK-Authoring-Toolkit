@@ -222,7 +222,9 @@ project, an adaptation of an existing A-level and GCSE textbook series into
 interactive STACK content. It has been exercised across three books. A case study
 describing that project is forthcoming on the STACK site, at
 stack-assessment.org/CaseStudies/. Nothing from that project's content is
-included here, and no knowledge of it is needed to use this kit.
+included here, and neither are its conventions: the style guide names no
+syllabus, phase or exam board, and has been used unchanged at other levels and
+in other countries. No knowledge of that project is needed to use this kit.
 
 The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
 header is a placeholder to fill in.

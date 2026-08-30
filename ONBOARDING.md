@@ -62,6 +62,9 @@ sections 5, 6, 8 and 9.
 2. Roughly how much material: a topic, a module, a book?
 3. What is the source material, and what form is it in? PDF, LaTeX, Word,
    or print only?
+3b. Where in the world are the students? Currency, names, places and units in
+   worded questions follow from this, and the agents will otherwise default to
+   wherever their training leans without saying so. Record it in `CLAUDE.md`.
 
 4. **Get the material into `sources/` before going further.** Ask them to put it
    there, then confirm it has arrived and that you can actually read it:
@@ -118,6 +121,8 @@ and offer to walk them through their first section using `WORKFLOW.md`.
 Questions are adapted from <source material> in `sources/`. Every item in the
 source appears in the output as a question, a description, or an explicitly
 flagged item. Nothing is silently skipped.
+
+Locale: <where the students are; currency, names, places and units to use>.
 
 ## Content rules
 

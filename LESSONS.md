@@ -205,7 +205,7 @@ sets up, and grades its own test cases correctly. It cannot tell you:
 - Whether the feedback actually teaches anything
 - Whether the difficulty progression makes sense
 - Whether a distractor is accidentally true
-- Whether a currency value renders as `£1166.40` or as a vulgar fraction
+- Whether a currency value renders as `1166.40` or as a vulgar fraction
 - Whether the question is the right question to be asking
 
 That is why the reviewer's pedagogy audit is a named duty rather than an

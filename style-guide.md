@@ -113,7 +113,7 @@ When displaying randomised expressions:
 
 Never display a currency amount straight from a value built with `1+p/100` or
 any other rational. It stays an exact rational and renders as a vulgar fraction:
-`£\frac{5832}{5}` instead of `£1166.40`, or an enormous compound-interest
+`\frac{5832}{5}` instead of `1166.40`, or an enormous compound-interest
 fraction. Define a display variable, `bal_d: float(round(bal*100)/100);`, and
 interpolate that in the stem, the feedback and the question note. Keep the exact
 value for grading only.
