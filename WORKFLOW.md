@@ -128,7 +128,8 @@ Full runbook: `.claude/skills/moodle-operations/SKILL.md`.
 ## Where things live
 
 ```
-content/drafts/      the author writes here
+content/drafts/      the author writes here (naming is your project's to
+                     choose; settle it once and record it in CLAUDE.md)
 content/approved/    the reviewer promotes here; this is the source of truth
 content/plans/       plan documents
 content/reference/   showcase.xml and the pattern prototypes
