@@ -19,7 +19,21 @@ STACK 4.11.1. Version numbers move; the shape does not.
 
 ---
 
-## 0. What you are building
+## 0. What you are building, and what you need
+
+### What you need first
+
+- macOS or Linux. On Apple Silicon see the note in section 4: the standard
+  Maxima package is not the one to install.
+- About 12GB free disk. Docker Desktop, its images and the Moodle source are
+  roughly 9GB before Maxima; moodledata grows from there.
+- Docker Desktop, given at least 4 CPUs and 8GB in its settings.
+- git, and Homebrew if you are on macOS.
+- poppler, for `pdftotext` and `pdftoppm`. Onboarding uses these to check
+  whether your source PDF's mathematics survives text extraction, and to render
+  pages when it does not: `brew install poppler`.
+
+### What you are building
 
 ```
 Your laptop
@@ -41,6 +55,11 @@ Put the kit folder under version control on day one.
 ---
 
 ## 1. Install Docker
+
+**This step is yours, not your assistant's.** Installing Docker needs a
+password at a real terminal, so an assistant cannot complete it unattended.
+Homebrew's cask is `docker-desktop` (plain `docker` is the old name) and it
+rolls the whole install back if it cannot get sudo.
 
 Docker Desktop, from docker.com. Start it and leave it running. Everything else
 happens inside it, so nothing in these steps pollutes your laptop.

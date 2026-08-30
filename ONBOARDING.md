@@ -20,6 +20,8 @@ Work out everything you can without asking. Every question you avoid is one they
 do not have to answer.
 
 ```bash
+command -v docker || echo NO_DOCKER      # absent: they need SETUP.md section 1
+command -v pdftotext || echo NO_POPPLER   # absent: brew install poppler
 docker ps --format '{{.Names}}'          # is anything already running
 docker ps -a --format '{{.Names}}'       # containers that exist but are stopped
 uname -sm                                # OS and architecture
