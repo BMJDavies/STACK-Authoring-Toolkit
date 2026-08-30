@@ -111,8 +111,8 @@ Note the container names Docker gives you (`docker ps` will show them, typically
 
 ## 3. Install STACK
 
-STACK is a question type plugin plus three question behaviours. All four go into
-the Moodle source tree you cloned:
+STACK is a question type plugin, three question behaviours, and a question bank
+plugin. All five go into the Moodle source tree you cloned:
 
 ```bash
 cd $MOODLE_DOCKER_WWWROOT
@@ -124,9 +124,19 @@ git clone https://github.com/maths/moodle-qbehaviour_dfexplicitvaildate.git \
     question/behaviour/dfexplicitvaildate
 git clone https://github.com/maths/moodle-qbehaviour_dfcbmexplicitvaildate.git \
     question/behaviour/dfcbmexplicitvaildate
+git clone https://github.com/maths/moodle-qbank_importasversion.git \
+    question/bank/importasversion
 ```
 
 (The misspelling in "vaildate" is upstream's, not a typo here. Keep it.)
+
+STACK's dependencies change between releases, and this list will go stale. The
+authority is the `$plugin->dependencies` block in
+`question/type/stack/version.php`: clone whatever it names that Moodle core does
+not ship. If you miss one, section 2's `install_database.php` fails with
+"Dependencies check failed for qtype_stack" without naming the missing plugin,
+one section before the step that is actually wrong, and it exits 0 while doing
+so.
 
 Then run the Moodle upgrade so it notices them:
 
