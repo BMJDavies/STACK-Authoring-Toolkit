@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2026051400;
-$plugin->requires  = 2025040800;
+$plugin->requires  = 2024042200;
 $plugin->component = 'theme_textbook';
 $plugin->dependencies = [
     'theme_boost' => 2025041400,

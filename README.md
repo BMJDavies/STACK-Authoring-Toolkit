@@ -7,6 +7,21 @@ anger to produce around 600 questions across three books.
 It is set up to be generic. Nothing in it assumes a particular subject, level or
 syllabus. You point it at your own material and your own Moodle.
 
+## This repo is the source of truth
+
+Anything generic lives here and is edited here. Projects that use the kit
+(SMP, Kenya, and others) hold only an appendix of their own conventions, and
+override an agent by name where they genuinely need to.
+
+When this repo and a project copy disagree about a generic rule, this repo wins.
+A rule that turns out to be generic gets promoted into this repo rather than
+copied sideways between projects. That single convention is what stops the
+pipeline fragmenting into parallel versions again.
+
+A working copy of the agents, commands and skills is deployed into
+`~/.claude/` so the pipeline is available in every project on the machine.
+Deploy by copying, never by symlink.
+
 ---
 
 ## Read these in this order
