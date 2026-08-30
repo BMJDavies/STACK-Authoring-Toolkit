@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE: Reading comprehension — proof that graph doesn't
+     cross the x-axis (completing the square)
+     Bickerton & Sangwin approach: present numbered proof, ask
+     questions about structure, justification, and meaning.
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Reading comprehension — graph and x-axis</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Here is a proof that the graph of \(y = {@quad_expr@}\) does not cross the \(x\)-axis.</p>
+
+<div class="proof" style="border-left:3px solid #003399; padding:8px 16px; margin:12px 0; background:#f8f8ff;">
+<p><strong>Proof</strong></p>
+<p><strong>(1)</strong> \({@quad_expr@} = {@expand_step@}\)</p>
+<p><strong>(2)</strong> \(= {@csq_expr@}\)</p>
+<p><strong>(3)</strong> \({@csq_inner@} \geq 0\) for all values of \(x\).</p>
+<p><strong>(4)</strong> Therefore \({@quad_expr@} \geq {@qval@}\) for all values of \(x\).</p>
+<p><strong>(5)</strong> Since \({@qval@} > 0\), the expression \({@quad_expr@}\) is always positive, so the graph of \(y = {@quad_expr@}\) never reaches the \(x\)-axis.</p>
+</div>
+
+<p>Answer the following questions about the proof above.</p>
+
+<ol class="HELM_parts">
+  <li><p>In which step is completing the square carried out?</p>
+      <p>Steps [[input:ans1]] and [[input:ans2]] [[validation:ans1]] [[validation:ans2]] [[feedback:prt1]]</p></li>
+
+  <li><p>What property of a square number is used in step (3)?</p>
+      <p>[[input:ans3]] [[validation:ans3]] [[feedback:prt2]]</p></li>
+
+  <li><p>What is the minimum value of \({@quad_expr@}\)?</p>
+      <p>[[input:ans4]] [[validation:ans4]] [[feedback:prt3]]</p></li>
+
+  <li><p>At what value of \(x\) does this minimum occur?</p>
+      <p>\(x = \) [[input:ans5]] [[validation:ans5]] [[feedback:prt4]]</p></li>
+
+  <li><p>Would the proof still work if the constant term were \({@c_counter@}\) instead of \({@c@}\)?</p>
+      <p>[[input:ans6]] [[validation:ans6]] [[feedback:prt5]]</p></li>
+</ol>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<ol class="HELM_parts">
+  <li><p>Steps <strong>(1)</strong> and <strong>(2)</strong> carry out the completing the square: step (1) rewrites \({@x^2 + b*x@}\) using the identity \({@x^2 + b*x@} = {@csq_inner@} - {@bsq@}\), and step (2) combines the constants.</p></li>
+  <li><p>The property used is that <strong>a square is always greater than or equal to zero</strong>: \({@csq_inner@} \geq 0\).</p></li>
+  <li><p>The minimum value is \({@qval@}\), achieved when \({@csq_inner@} = 0\).</p></li>
+  <li><p>This occurs when \(x = {@-half_b@}\).</p></li>
+  <li><p>No. With constant term \({@c_counter@}\) the completed-square form would be \({@csq_inner@} + {@qval_counter@}\). Since \({@qval_counter@} \leq 0\), the expression can equal zero or be negative, so the graph would cross or touch the \(x\)-axis and the proof would fail.</p></li>
+</ol>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>5</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2024092500</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* Randomise: b even, qval > 0 so graph doesn't cross x-axis */
+b: 2*rand_with_step(1, 5, 1) * (2*rand(2)-1);
+half_b: b/2;
+bsq: half_b^2;
+qval: rand_with_step(1, 6, 1);
+c: qval + bsq;
+
+quad_expr: x^2 + b*x + c;
+csq_inner: (x + half_b)^2;
+csq_expr: (x + half_b)^2 + qval;
+expand_step: (x + half_b)^2 - bsq + c;
+
+/* Counterexample for part (e): reduce c so completed square gives qval_counter <= 0 */
+c_counter: bsq - rand_with_step(1, 3, 1);
+qval_counter: c_counter - bsq;
+
+/* Answers */
+ta1: 1;
+ta2: 2;
+
+/* Part (b): dropdown */
+ta_opts3: [["A square is always greater than or equal to zero", true], ["A square is always positive", false], ["A square is always an integer", false]];
+
+ta4: qval;
+ta5: -half_b;
+
+/* Part (e): answer is always No (qval_counter is always negative) */
+ta_opts6: [["No", true], ["Yes", false]];
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote format="html">
+    <text>\({@quad_expr@}\), min = {@qval@}. Counter c = {@c_counter@}, counter qval = {@qval_counter@}.</text>
+  </questionnote>
+  <questiondescription format="html"><text></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+
+  <!-- Input: ans1 — step number -->
+  <input>
+    <name>ans1</name>
+    <type>algebraic</type>
+    <tans>ta1</tans>
+    <boxsize>2</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>1</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- Input: ans2 — step number -->
+  <input>
+    <name>ans2</name>
+    <type>algebraic</type>
+    <tans>ta2</tans>
+    <boxsize>2</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>1</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- Input: ans3 — dropdown -->
+  <input>
+    <name>ans3</name>
+    <type>dropdown</type>
+    <tans>ta_opts3</tans>
+    <boxsize>10</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- Input: ans4 — minimum value (algebraic) -->
+  <input>
+    <name>ans4</name>
+    <type>algebraic</type>
+    <tans>ta4</tans>
+    <boxsize>4</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>1</mustverify>
+    <showvalidation>1</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- Input: ans5 — x value at minimum (algebraic) -->
+  <input>
+    <name>ans5</name>
+    <type>algebraic</type>
+    <tans>ta5</tans>
+    <boxsize>4</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>1</mustverify>
+    <showvalidation>1</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- Input: ans6 — yes/no dropdown -->
+  <input>
+    <name>ans6</name>
+    <type>dropdown</type>
+    <tans>ta_opts6</tans>
+    <boxsize>5</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options></options>
+  </input>
+
+  <!-- PRT1: steps 1 and 2 (accept either order) -->
+  <prt>
+    <name>prt1</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables>
+      <text>sa_set: setify([ans1, ans2]);</text>
+    </feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Check steps 1 and 2 in either order</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>sa_set</sans>
+      <tans>{1, 2}</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>Completing the square happens in steps (1) and (2), where the quadratic is rewritten in the form \({@csq_expr@}\).</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <!-- PRT2: property of squares (dropdown) -->
+  <prt>
+    <name>prt2</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Check dropdown — square >= 0</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans3</sans>
+      <tans>first(mcq_correct(ta_opts3))</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt2-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>A square is always <strong>greater than or equal to</strong> zero. It is not always strictly positive — for example, \(0^2 = 0\). This distinction matters: the proof uses \(\geq\), not \(>\).</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <!-- PRT3: minimum value -->
+  <prt>
+    <name>prt3</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Check minimum value</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans4</sans>
+      <tans>ta4</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt3-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt3-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>From step (4), \({@quad_expr@} \geq {@qval@}\) for all \(x\), so the minimum value is \({@qval@}\).</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <!-- PRT4: x at minimum -->
+  <prt>
+    <name>prt4</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Check x at minimum</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans5</sans>
+      <tans>ta5</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt4-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt4-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>The minimum occurs when \({@csq_inner@} = 0\), i.e. when \(x = {@-half_b@}\).</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <!-- PRT5: counterexample yes/no -->
+  <prt>
+    <name>prt5</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Check yes/no for counterexample</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans6</sans>
+      <tans>first(mcq_correct(ta_opts6))</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt5-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt5-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>With constant term \({@c_counter@}\), the completed-square form would be \({@csq_inner@} + {@qval_counter@}\). Since \({@qval_counter@} \leq 0\), the expression can be zero or negative, so the graph would cross or touch the \(x\)-axis.</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <!-- Test case 1: correct answers -->
+  <qtest>
+    <testcase>1</testcase>
+    <description>All correct answers</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <testinput>
+      <name>ans3</name>
+      <value>first(mcq_correct(ta_opts3))</value>
+    </testinput>
+    <testinput>
+      <name>ans4</name>
+      <value>ta4</value>
+    </testinput>
+    <testinput>
+      <name>ans5</name>
+      <value>ta5</value>
+    </testinput>
+    <testinput>
+      <name>ans6</name>
+      <value>first(mcq_correct(ta_opts6))</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt1-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt3</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt3-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt4</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt4-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt5</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt5-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+
+  <!-- Test case 2: all wrong -->
+  <qtest>
+    <testcase>2</testcase>
+    <description>All wrong answers</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1+2</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2+2</value>
+    </testinput>
+    <testinput>
+      <name>ans3</name>
+      <value>first(mcq_incorrect(ta_opts3))</value>
+    </testinput>
+    <testinput>
+      <name>ans4</name>
+      <value>ta4+1</value>
+    </testinput>
+    <testinput>
+      <name>ans5</name>
+      <value>ta5+1</value>
+    </testinput>
+    <testinput>
+      <name>ans6</name>
+      <value>first(mcq_incorrect(ta_opts6))</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt1-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt3</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt3-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt4</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt4-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt5</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt5-1-F</expectedanswernote>
+    </expected>
+  </qtest>
+</question>
+
+</quiz>

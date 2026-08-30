@@ -1,0 +1,17 @@
+# Runtime noise
+content/progress.log
+*.log
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+
+# Claude Code local settings (keep .claude/agents, commands and skills tracked)
+.claude/settings.local.json
+
+# Do NOT ignore tools/project.conf: it has no secrets beyond a local dev
+# database password, and having it in the repo is what makes a fresh clone
+# work. If you point this at a real server, move the credentials out first.

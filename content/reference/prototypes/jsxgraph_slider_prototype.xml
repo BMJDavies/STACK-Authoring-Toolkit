@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE: JSXGraph interactive explorer with sliders
+
+     Demonstrates: a slider that controls a parameter in a
+     function plot, with a dynamic text label updating in
+     real time. Based on the Ch3 B1/B2 pattern.
+
+     Key structural features:
+     - type="stack" with defaultgrade 0 (zero-mark explorer)
+     - board.create('slider', [startPt, endPt, [min, init, max]])
+     - Dynamic functiongraph via slider.Value() in callback
+     - Dynamic text label updating with slider value
+     - Reference curve (faded) for comparison
+     - IIFE wrapping, unique board ID, role="img" + aria-label
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: JSXGraph — interactive slider explorer</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>The graph below shows \(y = (x - a)^2\) in blue. Use the slider to change the value of \(a\) and observe how the graph translates horizontally. The faded grey curve shows \(y = x^2\) for reference.</p>
+
+<div id="proto-slider-board" style="width:360px; height:280px;" role="img" aria-label="Interactive graph of y = (x - a) squared with slider to control a"></div>
+<script>
+(function() {
+  var b = JXG.JSXGraph.initBoard('proto-slider-board', {
+    boundingbox: [-7, 12, 7, -2],
+    axis: true,
+    grid: false,
+    showNavigation: false,
+    showCopyright: false
+  });
+
+  /* Slider: placed in top-left area of the board.
+     Arguments: [start point], [end point], [min, initial, max]
+     snapWidth makes it jump in integer steps. */
+  var aSlider = b.create('slider', [[-6, 10], [-1, 10], [-5, 0, 5]], {
+    name: 'a',
+    snapWidth: 1,
+    precision: 0
+  });
+
+  /* Reference curve y = x² (faded grey) */
+  b.create('functiongraph', [function(x) { return x * x; }, -7, 7], {
+    strokeColor: '#999999',
+    strokeWidth: 1.5,
+    dash: 2
+  });
+
+  /* Dynamic curve y = (x - a)² */
+  b.create('functiongraph', [function(x) {
+    var a = aSlider.Value();
+    return (x - a) * (x - a);
+  }, -7, 7], {
+    strokeColor: '#003399',
+    strokeWidth: 2
+  });
+
+  /* Dynamic vertex point */
+  b.create('point', [
+    function() { return aSlider.Value(); },
+    function() { return 0; }
+  ], {
+    size: 4,
+    color: '#003399',
+    fixed: true,
+    name: '',
+    label: { offset: [8, -12], fontSize: 12 }
+  });
+
+  /* Dynamic text label showing the current equation */
+  b.create('text', [3, 10, function() {
+    var a = aSlider.Value();
+    if (a === 0) return 'y = x²';
+    var sign = a > 0 ? ' - ' : ' + ';
+    var absA = Math.abs(a);
+    return 'y = (x' + sign + absA + ')²';
+  }], {
+    fontSize: 14,
+    color: '#003399'
+  });
+})();
+</script>
+<div style="display:none;">[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html"><text></text></generalfeedback>
+  <defaultgrade>0</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <stackversion>
+    <text>2024032401</text>
+  </stackversion>
+  <questionvariables>
+    <text>
+/* No random variables needed — this is an interactive explorer. */
+ta: 0;
+    </text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote><text>Slider prototype — interactive explorer</text></questionnote>
+  <questiondescription format="html"><text></text></questiondescription>
+  <prtcorrect format="html"><text></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>dot</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <!-- Zero-mark explorer: dummy hidden input/PRT to satisfy STACK -->
+  <input>
+    <name>ans1</name>
+    <type>algebraic</type>
+    <tans>ta</tans>
+    <boxsize>5</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>1</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options></options>
+  </input>
+  <prt>
+    <name>prt1</name>
+    <value>1</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>ta</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+  </prt>
+  <deployedseed>70001</deployedseed>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Dummy test (zero-mark explorer)</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt1-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+</question>
+
+</quiz>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ================================================================
+     PROTOTYPE: TYPE 7 — CONSTRUCT AN EXAMPLE
+     (Pointon & Sangwin "type 7" question class)
+
+     WHAT MAKES THIS DIFFERENT FROM EVERY OTHER PATTERN:
+       There is NO single model answer. Infinitely many student
+       responses are correct. The PRT does NOT compare the student
+       answer to a teacher answer with AlgEquiv. Instead it COMPUTES
+       A PROPERTY of the student's expression and tests that property.
+
+     HOW TO COPY THIS:
+       1. The "model answer" in <input><tans> is only a sample (used
+          for the input's syntax/validation slot). It is NOT what
+          grading is based on.
+       2. The real work happens in the PRT <feedbackvariables>: there
+          we take the student's expression `ans1`, normalise it
+          (expand), and extract the property we care about (here the
+          discriminant of a quadratic).
+       3. The PRT nodes test the PROPERTY (is it a quadratic? is the
+          discriminant the target value?), never `AlgEquiv(ans1, ta)`.
+       4. Diagnostics report the computed property back to the student
+          (e.g. "the discriminant of YOUR expression is {@disc@}").
+
+     STACK QUIRK TO REMEMBER:
+       coeff() only reads coefficients off a SUM. A factored answer
+       like (x+1)*(x+4) has coeff(...,x,2) = 0 unless you expand it
+       first. So ALWAYS `sa: expand(ans1)` before calling coeff().
+       A bare number (e.g. "9") or a linear expression (e.g. 3x+2)
+       gives coeff(...,x,2) = 0, which correctly falls into the
+       "not a quadratic" branch.
+
+     This question is intentionally NOT randomised: the target
+     discriminant is the fixed constant 9. The pattern randomises
+     cleanly (pick a perfect-square target, or any integer target)
+     if a future section wants variants.
+     ================================================================ -->
+<question type="stack">
+  <name><text>Construct instance prototype - quadratic with given discriminant</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Give a quadratic expression in \(x\) whose <strong>discriminant</strong> is equal to \({@target@}\).</p>
+<p>There are infinitely many correct answers. Type any quadratic you like that works, for example in the form <code>x^2+5*x+4</code>.</p>
+<div>Quadratic: [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>For a quadratic \(ax^2 + bx + c\), the discriminant is \(b^2 - 4ac\). This question has many correct answers: any quadratic whose discriminant works.</p>
+<p>One simple way to build one is to start from the factorised form. A quadratic with two distinct integer roots \(p\) and \(q\) is \((x-p)(x-q) = x^2 - (p+q)x + pq\), and its discriminant is \((p-q)^2\). Choosing roots two apart, such as \(p = -4\) and \(q = -1\), gives \(x^2 + 5x + 4\) with discriminant \(5^2 - 4(1)(4) = 25 - 16 = 9\).</p>
+<p>Another valid answer is \(x^2 - 3x\): here \(a = 1\), \(b = -3\), \(c = 0\), so the discriminant is \((-3)^2 - 4(1)(0) = 9\).</p>
+<p>Any expression you give is graded by computing its discriminant, not by matching one particular answer.</p>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion><text>2020120600</text></stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* The target PROPERTY, not a model answer. Many quadratics satisfy it. */
+target: 9;
+/* A single sample valid answer. Used ONLY for the input's tans slot
+   (syntax/type check + "show me a correct answer" preview). Grading
+   never compares to this. */
+samplean: x^2 + 5*x + 4;
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
+  <questionnote format="moodle_auto_format">
+    <text>Construct: quadratic in x with discriminant {@target@}. Property-checked PRT (many correct answers); sample answer {@samplean@}.</text>
+  </questionnote>
+  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <isbroken>0</isbroken>
+  <variantsselectionseed></variantsselectionseed>
+
+  <input><name>ans1</name><type>algebraic</type><tans>samplean</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint>x^2+b*x+c</syntaxhint><syntaxattribute>1</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+
+  <prt><name>prt1</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text><![CDATA[
+/* Compute the PROPERTY of the student's expression.
+   expand() first so coeff() works on factored input too. */
+sa: expand(ans1);
+A: coeff(sa, x, 2);
+B: coeff(sa, x, 1);
+C: coeff(sa, x, 0);
+disc: B^2 - 4*A*C;
+    ]]></text></feedbackvariables>
+    <node><name>0</name><description>Is the answer actually a quadratic? (leading coeff non-zero)</description><answertest>AlgEquiv</answertest><sans>A</sans><tans>0</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-1-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>That is not a quadratic: the coefficient of \(x^2\) is zero. Your expression must contain an \(x^2\) term, for example \(x^2 + 5x + 4\).</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt1-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>Does the discriminant equal the target?</description><answertest>AlgEquiv</answertest><sans>disc</sans><tans>target</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-2-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt1-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>The discriminant of your expression is \({@disc@}\), but you need it to equal \({@target@}\). Recall that the discriminant of \(ax^2 + bx + c\) is \(b^2 - 4ac\). Adjust your coefficients so that \(b^2 - 4ac = {@target@}\).</p>]]></text></falsefeedback></node>
+  </prt>
+
+  <deployedseed>11111</deployedseed>
+  <deployedseed>22222</deployedseed>
+  <deployedseed>33333</deployedseed>
+
+  <qtest><testcase>1</testcase><description>Correct: x^2+5x+4, discriminant 25-16=9</description>
+    <testinput><name>ans1</name><value>x^2+5*x+4</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>2</testcase><description>Correct alternative form: x^2-3x, discriminant 9-0=9</description>
+    <testinput><name>ans1</name><value>x^2-3*x</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>3</testcase><description>Wrong quadratic: x^2+x+1, discriminant 1-4=-3 (wrong-discriminant branch)</description>
+    <testinput><name>ans1</name><value>x^2+x+1</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-F</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>4</testcase><description>Not a quadratic: 3x+2 (not-a-quadratic branch)</description>
+    <testinput><name>ans1</name><value>3*x+2</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>5</testcase><description>Edge: bare number 9 falls into not-a-quadratic branch with sensible feedback</description>
+    <testinput><name>ans1</name><value>9</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+</question>
+
+</quiz>

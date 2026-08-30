@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE: JSXGraph shaded region
+
+     Demonstrates: shading an area between a curve and the x-axis
+     over a specified interval. This pattern is needed for
+     Chapters 8-11 (rates of change, integration, area under
+     a graph).
+
+     Key structural features:
+     - type="stack" with defaultgrade 0 (zero-mark figure)
+     - JSXGraph inside [[jsxgraph]] block (NOT in a description)
+     - IIFE wrapping to avoid variable collisions
+     - Unique board ID pattern: <section>-<question>-board
+     - Shading via board.create('curve') with filled region
+     - role="img" and aria-label for accessibility
+     - Bounding box with padding around the data
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: JSXGraph — shaded region under a curve</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>The graph below shows \(y = {@expr@}\) with the area between the curve and the \(x\)-axis from \(x = {@a@}\) to \(x = {@b@}\) shaded.</p>
+
+<div id="proto-shaded-board" style="width:360px; height:240px;" role="img" aria-label="Graph of {@expr@} with shaded region between x={@a@} and x={@b@}"></div>
+<script>
+(function() {
+  var b = JXG.JSXGraph.initBoard('proto-shaded-board', {
+    boundingbox: [-1, 12, 5, -2],
+    axis: true,
+    grid: false,
+    showNavigation: false,
+    showCopyright: false
+  });
+
+  /* The curve y = f(x) */
+  var f = function(x) { return -x*x + 4*x + 1; };
+
+  /* Plot the full curve */
+  b.create('functiongraph', [f, -0.5, 4.5], {
+    strokeColor: '#003399',
+    strokeWidth: 2
+  });
+
+  /* Shaded region: build an array of points tracing the curve
+     from x=a to x=b, then back along the x-axis */
+  var a = {#a#}, bVal = {#b#};
+  var pts = [];
+  var steps = 80;
+  var dx = (bVal - a) / steps;
+  for (var i = 0; i <= steps; i++) {
+    var xi = a + i * dx;
+    pts.push([xi, f(xi)]);
+  }
+  /* Close the region along the x-axis */
+  pts.push([bVal, 0]);
+  pts.push([a, 0]);
+
+  b.create('polygon', pts, {
+    fillColor: '#003399',
+    fillOpacity: 0.2,
+    borders: { strokeWidth: 0 },
+    vertices: { visible: false }
+  });
+
+  /* Label the bounds */
+  b.create('point', [a, 0], {
+    fixed: true, size: 3, color: '#003399',
+    name: 'x = ' + a, label: { offset: [0, -18], fontSize: 12 }
+  });
+  b.create('point', [bVal, 0], {
+    fixed: true, size: 3, color: '#003399',
+    name: 'x = ' + bVal, label: { offset: [0, -18], fontSize: 12 }
+  });
+})();
+</script>
+<div style="display:none;">[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html"><text></text></generalfeedback>
+  <defaultgrade>0</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <stackversion>
+    <text>2024032401</text>
+  </stackversion>
+  <questionvariables>
+    <text>
+/* y = -x² + 4x + 1, shaded from x=a to x=b */
+expr: -x^2 + 4*x + 1;
+a: 1;
+b: 3;
+ta: 0;
+    </text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote><text>Shaded region prototype — static figure</text></questionnote>
+  <questiondescription format="html"><text></text></questiondescription>
+  <prtcorrect format="html"><text></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>dot</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <!-- Zero-mark figure: dummy hidden input + PRT to satisfy STACK's
+       requirement that type="stack" has at least one input. -->
+  <input>
+    <name>ans1</name>
+    <type>algebraic</type>
+    <tans>ta</tans>
+    <boxsize>5</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>1</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options></options>
+  </input>
+  <prt>
+    <name>prt1</name>
+    <value>1</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>ta</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+  </prt>
+  <deployedseed>60001</deployedseed>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Dummy test (zero-mark figure)</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt1-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+</question>
+
+</quiz>

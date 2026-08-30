@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE: Pointon/Sangwin "type 3 — classify"
+     The student sorts objects into categories.
+
+     EXEMPLAR TASK: Sort four functions into two groups —
+     those that have a stationary point, and those that do not.
+         x^2 - 4x  -> HAS a stationary point (minimum at x = 2)
+         3x + 2    -> NO stationary point (linear)
+         x^2 + 1   -> HAS a stationary point (minimum at x = 0)
+         5 - 2x    -> NO stationary point (linear)
+
+     INPUT MECHANISM CHOSEN: one dropdown per object.
+       Each function gets a dropdown with the two category labels
+       ("Has a stationary point" / "No stationary point").
+
+     WHY NOT DRAG-AND-DROP (Parsons) GROUPING:
+       Our STACK Parsons is wired through prooflib.mac
+       (proof(), proof_assessment, proof_alternatives), which grades a
+       single ORDERED sequence of steps. It has no robust grading path
+       for sorting objects into multiple labelled buckets. The Parsons
+       UI can show extra columns, but there is no supported
+       bucket-classification answer test in our build, so grading would
+       rely on hand-decoding parsons_decode() output — fragile and
+       untested. Per our dropdown-discipline rule, dropdowns ARE the
+       correct input for fixed 2-4 option classification. A robust
+       dropdown classify that validates beats a flaky drag-and-drop.
+
+     PRT DESIGN:
+       Node 0  — full marks only if ALL FOUR are classified correctly.
+       Node 1  — diagnostic: fires if a LINEAR function was called
+                 "Has a stationary point" (the core misconception),
+                 with feedback naming the underlying idea.
+                 Otherwise a generic hint.
+
+     This question is intentionally FIXED (specific named functions),
+     like a proof-structure prototype. The four functions are chosen
+     to be UNAMBIGUOUS (quadratics with a clear minimum vs linear
+     functions), avoiding cubics/inflections. No figure is shown on
+     purpose: a graph would give the answer away.
+     ============================================================ -->
+<question type="stack">
+  <name><text>Classify objects prototype - stationary points</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p class="tb-exercise">Exercise</p>
+<p>Sort these functions into two groups: those that <strong>have a stationary point</strong>, and those that do <strong>not</strong>.</p>
+<p>A stationary point is a point where the gradient (the derivative) is zero. For each function, choose the correct group.</p>
+<ol class="tb-parts">
+  <li><div>\(f(x) = x^2 - 4x\) &nbsp; [[input:ans1]] [[validation:ans1]]</div></li>
+  <li><div>\(f(x) = 3x + 2\) &nbsp; [[input:ans2]] [[validation:ans2]]</div></li>
+  <li><div>\(f(x) = x^2 + 1\) &nbsp; [[input:ans3]] [[validation:ans3]]</div></li>
+  <li><div>\(f(x) = 5 - 2x\) &nbsp; [[input:ans4]] [[validation:ans4]]</div></li>
+</ol>
+<div>[[feedback:prt1]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>A function has a stationary point exactly where its derivative is zero. Differentiate each function and ask whether the derivative can equal zero.</p>
+<ul>
+  <li><p>\(f(x) = x^2 - 4x\): here \(f'(x) = 2x - 4\), which is zero when \(x = 2\). So this function <strong>has a stationary point</strong> (a minimum at \(x = 2\)).</p></li>
+  <li><p>\(f(x) = 3x + 2\): here \(f'(x) = 3\), a constant that is never zero. A linear function has a constant gradient, so it has <strong>no stationary point</strong>.</p></li>
+  <li><p>\(f(x) = x^2 + 1\): here \(f'(x) = 2x\), which is zero when \(x = 0\). So this function <strong>has a stationary point</strong> (a minimum at \(x = 0\)).</p></li>
+  <li><p>\(f(x) = 5 - 2x\): here \(f'(x) = -2\), a constant that is never zero. So this linear function has <strong>no stationary point</strong>.</p></li>
+</ul>
+<p>The key idea: linear functions have a constant, non-zero gradient, so their derivative is never zero and they never have stationary points. The quadratics turn around at their vertex, where the gradient is momentarily zero.</p>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion><text>2024032401</text></stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* Two category labels, same DISPLAY for every function.
+   Each option is [value, correct, display]: the value is a unique
+   short code (so the four dropdowns never share a value), the display
+   is the human-readable category label, the boolean marks the correct
+   category for that function. Unique values avoid any cross-dropdown
+   value-resolution ambiguity in the grader. */
+opt1: [["sp1", true,  "Has a stationary point"], ["no1", false, "No stationary point"]]; /* x^2 - 4x */
+opt2: [["sp2", false, "Has a stationary point"], ["no2", true,  "No stationary point"]]; /* 3x + 2  */
+opt3: [["sp3", true,  "Has a stationary point"], ["no3", false, "No stationary point"]]; /* x^2 + 1 */
+opt4: [["sp4", false, "Has a stationary point"], ["no4", true,  "No stationary point"]]; /* 5 - 2x  */
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote format="html">
+    <text>Classify: x^2-4x (SP), 3x+2 (none), x^2+1 (SP), 5-2x (none).</text>
+  </questionnote>
+  <questiondescription format="html"><text></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+
+  <input><name>ans1</name><type>dropdown</type><tans>opt1</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans2</name><type>dropdown</type><tans>opt2</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans3</name><type>dropdown</type><tans>opt3</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans4</name><type>dropdown</type><tans>opt4</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+
+  <prt>
+    <name>prt1</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables>
+      <text><![CDATA[
+ca1: first(mcq_correct(opt1));
+ca2: first(mcq_correct(opt2));
+ca3: first(mcq_correct(opt3));
+ca4: first(mcq_correct(opt4));
+m1: if is(ans1 = ca1) then 1 else 0;
+m2: if is(ans2 = ca2) then 1 else 0;
+m3: if is(ans3 = ca3) then 1 else 0;
+m4: if is(ans4 = ca4) then 1 else 0;
+ncorrect: m1 + m2 + m3 + m4;
+/* Linear-function misconception: picked "has a stationary point"
+   (the "sp" code) for either linear function 3x+2 (ans2) or 5-2x (ans4). */
+lin_err: if (is(ans2 = "sp2") or is(ans4 = "sp4")) then 1 else 0;
+      ]]></text>
+    </feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>All four classified correctly?</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ncorrect</sans>
+      <tans>4</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+    <node>
+      <name>1</name>
+      <description>Diagnostic: linear function called "has a stationary point"?</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>lin_err</sans>
+      <tans>1</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-2-T</trueanswernote>
+      <truefeedback format="html"><text><![CDATA[<p>Not quite. A linear function such as \(3x + 2\) or \(5 - 2x\) has a <strong>constant gradient</strong>: its derivative is a non-zero constant (\(3\) and \(-2\) respectively). Since the derivative is never zero, a linear function has <strong>no stationary point</strong>. A function has a stationary point only where its derivative equals zero.</p>]]></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-2-F</falseanswernote>
+      <falsefeedback format="html"><text><![CDATA[<p>Not quite. A function has a stationary point exactly where its derivative is zero. Differentiate each function and check whether the derivative can equal zero: the quadratics turn around at a minimum, while a linear function has a constant gradient that is never zero.</p>]]></text></falsefeedback>
+    </node>
+  </prt>
+
+  <qtest>
+    <testcase>1</testcase>
+    <description>All four classified correctly -> full marks.</description>
+    <testinput><name>ans1</name><value>first(mcq_correct(opt1))</value></testinput>
+    <testinput><name>ans2</name><value>first(mcq_correct(opt2))</value></testinput>
+    <testinput><name>ans3</name><value>first(mcq_correct(opt3))</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_correct(opt4))</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Linear function 3x+2 wrongly called "has a stationary point" -> 0, diagnostic fires.</description>
+    <testinput><name>ans1</name><value>first(mcq_correct(opt1))</value></testinput>
+    <testinput><name>ans2</name><value>first(mcq_incorrect(opt2))</value></testinput>
+    <testinput><name>ans3</name><value>first(mcq_correct(opt3))</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_correct(opt4))</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Quadratic x^2-4x wrongly called "no stationary point" (not the linear misconception) -> 0, generic hint.</description>
+    <testinput><name>ans1</name><value>first(mcq_incorrect(opt1))</value></testinput>
+    <testinput><name>ans2</name><value>first(mcq_correct(opt2))</value></testinput>
+    <testinput><name>ans3</name><value>first(mcq_correct(opt3))</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_correct(opt4))</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-F</expectedanswernote></expected>
+  </qtest>
+</question>
+
+</quiz>

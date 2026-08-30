@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE: Faded worked example (Pattern 6)
+
+     Demonstrates: presenting a worked solution with algebraic
+     blanks for the student to fill in. Each blank is an
+     independent AlgEquiv input with its own PRT.
+
+     Topic: Completing the square on x² + bx + c
+     "Write x² + bx + c in the form (x + p)² + q"
+
+     Key structural features:
+     - Step-by-step solution in questiontext with [[input:]] placeholders
+     - One PRT per blank (independent grading)
+     - Wrong-answer feedback shows the specific step
+     - Randomised coefficients with curated triples
+     - generalfeedback shows the complete worked solution
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Faded example — completing the square</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<h4 class="tb-example">Example</h4>
+<p>Write \({@expr@}\) in the form \((x + p)^2 + q\).</p>
+<h4 class="tb-solution">Solution</h4>
+<p>Half the coefficient of \(x\) is \({@bb@} \div 2 =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>
+<p>So \({@expr@} = (x + {@ta1@})^2 - ({@ta1@})^2 + {@cc@}\)</p>
+<p>\(= (x + {@ta1@})^2 -\) [[input:ans2]] \(+ {@cc@}\) [[validation:ans2]] [[feedback:prt2]]</p>
+<p>\(=\) [[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</p>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Half the coefficient of \(x\) is \({@bb@} \div 2 = {@ta1@}\).</p>
+<p>\[{@expr@} = (x + {@ta1@})^2 - ({@ta1@})^2 + {@cc@} = (x + {@ta1@})^2 - {@ta1^2@} + {@cc@} = {@completed@}\]</p>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>3</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <stackversion>
+    <text>2024032401</text>
+  </stackversion>
+  <questionvariables>
+    <text>
+/* Completing the square: x² + bx + c = (x + b/2)² + (c - b²/4)
+   Curated triples [b, c] with integer b (even) for clean half-values. */
+params: rand([[4, 1], [6, 2], [-4, 5], [8, 3], [-6, 1], [2, -3], [-8, 7], [10, 1]]);
+bb: params[1];
+cc: params[2];
+expr: x^2 + bb*x + cc;
+/* Teacher answers for the three blanks */
+ta1: bb/2;
+ta2: ta1^2;
+ta3: (x + ta1)^2 + cc - ta2;
+completed: ta3;
+    </text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote><text>{@expr@} = {@completed@}</text></questionnote>
+  <questiondescription format="html"><text></text></questiondescription>
+  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>dot</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input>
+    <name>ans1</name>
+    <type>algebraic</type>
+    <tans>ta1</tans>
+    <boxsize>4</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>1</mustverify>
+    <showvalidation>3</showvalidation>
+    <options></options>
+  </input>
+  <input>
+    <name>ans2</name>
+    <type>algebraic</type>
+    <tans>ta2</tans>
+    <boxsize>4</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>1</mustverify>
+    <showvalidation>3</showvalidation>
+    <options></options>
+  </input>
+  <input>
+    <name>ans3</name>
+    <type>algebraic</type>
+    <tans>ta3</tans>
+    <boxsize>15</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>1</mustverify>
+    <showvalidation>3</showvalidation>
+    <options></options>
+  </input>
+  <prt>
+    <name>prt1</name>
+    <value>1</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>ta1</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html"><text><![CDATA[<p>Half of \({@bb@}\) is \({@ta1@}\).</p>]]></text></falsefeedback>
+    </node>
+  </prt>
+  <prt>
+    <name>prt2</name>
+    <value>1</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans2</sans>
+      <tans>ta2</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt2-1-F</falseanswernote>
+      <falsefeedback format="html"><text><![CDATA[<p>We need \(({@ta1@})^2 = {@ta2@}\).</p>]]></text></falsefeedback>
+    </node>
+  </prt>
+  <prt>
+    <name>prt3</name>
+    <value>1</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node>
+      <name>0</name>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans3</sans>
+      <tans>ta3</tans>
+      <testoptions></testoptions>
+      <quiet>0</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt3-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt3-1-F</falseanswernote>
+      <falsefeedback format="html"><text><![CDATA[<p>Combining: \((x + {@ta1@})^2 - {@ta2@} + {@cc@} = {@completed@}\).</p>]]></text></falsefeedback>
+    </node>
+  </prt>
+  <deployedseed>50001</deployedseed>
+  <deployedseed>50002</deployedseed>
+  <deployedseed>50003</deployedseed>
+  <deployedseed>50004</deployedseed>
+  <deployedseed>50005</deployedseed>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Correct answers</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <testinput>
+      <name>ans3</name>
+      <value>ta3</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt1-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt3</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt3-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Wrong answers</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1+1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2+1</value>
+    </testinput>
+    <testinput>
+      <name>ans3</name>
+      <value>ta3+1</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt1-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt3</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt3-1-F</expectedanswernote>
+    </expected>
+  </qtest>
+</question>
+
+</quiz>

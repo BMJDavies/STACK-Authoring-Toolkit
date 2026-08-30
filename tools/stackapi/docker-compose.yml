@@ -1,0 +1,35 @@
+# Standalone STACK REST API + goemaxima CAS, for validating/grading our
+# Moodle-XML questions WITHOUT a Moodle DB import. See tools/api-check.sh.
+#
+#   docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d
+#
+# The images are amd64-only; `platform: linux/amd64` runs them under Rosetta
+# emulation on Apple Silicon. config.php is mounted to raise castimeout (the
+# stock 10s times out under emulation). API listens on http://localhost:3080.
+services:
+  maxima:
+    platform: linux/amd64
+    # Pinned to match our LIVE Moodle STACK version (stackmaximaversion
+    # 2026010500 / release 4.11.1). rand() sequences and grading change between
+    # STACK versions, so the image MUST match live or seed->variant mismatches
+    # cause false fails. Bump both tags together when live STACK is upgraded.
+    image: mathinstitut/goemaxima:2026010500-latest
+    tmpfs:
+      - "/tmp"
+    restart: unless-stopped
+    cap_add:
+      - SETGID
+      - SETUID
+    cap_drop:
+      - ALL
+    environment:
+      GOEMAXIMA_QUEUE_LEN: 32
+    read_only: true
+  stack:
+    platform: linux/amd64
+    image: stackmaths/stackapi:2026010500-latest
+    restart: unless-stopped
+    volumes:
+      - ./config.php:/srv/stack/api/config.php:ro
+    ports:
+      - '3080:80'

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ================================================================
+     REFERENCE PROTOTYPE: ANTIDIFFERENTIATION (indefinite integral)
+     Core 2, Chapter 9 (Differentiation and Integration).
+
+     This is the CANONICAL pattern to copy for EVERY Core 2 indefinite
+     integration question. It is NOT live student content.
+
+     WHY THIS DESIGN (read before copying):
+
+     Correctness is established by the *antiderivative relationship*,
+     not by string-matching one particular form. The STACK built-in
+     "Int" answer test (ATInt) does the work in a single node:
+
+       - It DIFFERENTIATES the student's answer and checks the result
+         equals the integrand, so any algebraically equivalent
+         antiderivative is accepted (this is the verification node, in
+         the spirit of Core 1 Ch10 A2's manual AlgEquiv(diff(ans1,x),
+         integrand) trick, but more robust).
+       - By default it is fussy about the constant of integration
+         (constint:true), so it REQUIRES "+ c" and accepts any constant
+         name (c, k, A, ...). Omitting the constant fails the test.
+
+     So node 0 (Int) does BOTH the verification and the constant-of-
+     integration check, which the older Ch10 manual-diff trick could not.
+
+     Diagnostics (the whole point of the prototype) hang off the false
+     path of node 0, using AlgEquiv to name the specific error:
+       node 1 - correct antiderivative but no "+ c"  -> "add + c";
+       node 2 - differentiated instead of integrated -> shows the rule;
+       node 3 - raised each index but forgot to divide by the new index
+                (named power-rule error);
+       node 3 false - generic power-rule hint.
+
+     INSTALL NOTES / QUIRKS (verified in our Maxima install):
+       - The maxima functions live in stackmaxima.mac as ATInt,
+         ATAntidiff, ATAddConst, ATDiff. The XML <answertest> names are
+         Int, Antidiff, AddConst, Diff (no AT prefix).
+       - DO NOT USE Antidiff or AddConst in this install. Both set
+         simp:false inside their block WITHOUT listing simp as a local,
+         so they leak simp:false into global CAS state and corrupt the
+         evaluation of any later nodes / CASText (symptoms: empty PRT
+         results on most seeds, "unevaluated casstring" errors). ATInt
+         saves and restores simp correctly, so use Int instead. If a
+         future STACK upgrade fixes Antidiff/AddConst, the cleaner
+         "separated concerns" pattern (Antidiff for the relationship +
+         AddConst for the constant) becomes available.
+       - Int's options field = the variable of integration only (x here).
+       - With quiet=1, the recorded answer note is the author's branch
+         note only (e.g. prt1-1-T); the test's internal note is not
+         appended. qtests compare only the LAST answer note, trimmed.
+     ================================================================ -->
+<question type="stack">
+  <name><text>Integration with antidiff prototype - indefinite integral with diagnostics</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Find the indefinite integral of \({@integrand@}\) with respect to \(x\). Remember the constant of integration.</p>
+<p>Enter the constant of integration as <code>+ c</code>.</p>
+<div>\(\displaystyle \int \left({@integrand@}\right)\,\mathrm{d}x =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Integration is the reverse process of differentiation. To integrate a power of \(x\), increase the index by 1 and divide by the new index:</p>
+<p>\[\int x^n \,\mathrm{d}x = \frac{x^{n+1}}{n+1} + c.\]</p>
+<p>Applying this to each term:</p>
+<p>\[\int \left({@integrand@}\right)\,\mathrm{d}x = \frac{{@a@}x^{3}}{3} + \frac{{@b@}x^{2}}{2} + c = {@F@} + c.\]</p>
+<p>The constant of integration \(c\) is needed because differentiating any constant gives zero, so an indefinite integral is only determined up to an added constant.</p>
+<p>Check: \(\dfrac{\mathrm{d}}{\mathrm{d}x}\left({@F@} + c\right) = {@integrand@}.\) &#10003;</p>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion><text>2024032401</text></stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* Design backwards: choose nice integer antiderivative coefficients,
+   then build the integrand so every variant integrates cleanly.
+   a is a multiple of 3 and b a multiple of 2 so a/3 and b/2 are integers.
+   The canonical instance (3x^2 + 2x -> x^3 + x^2 + c) is the ca=cb=1 variant. */
+ca: rand_with_step(1, 3, 1);
+cb: rand_with_step(1, 3, 1);
+a: 3*ca;
+b: 2*cb;
+integrand: a*x^2 + b*x;
+F: ca*x^3 + cb*x^2;        /* model antiderivative, without the constant */
+ta: F + c;                 /* full model answer (used for input display) */
+ddx: diff(integrand, x);   /* = 2*a*x + b : the "differentiated instead" error */
+power_err: a*x^3 + b*x^2;  /* raised each index but forgot to divide by the new index */
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html"><text></text></specificfeedback>
+  <questionnote format="moodle_auto_format">
+    <text>Integrand {@integrand@}; antiderivative {@F@} + c.</text>
+  </questionnote>
+  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <isbroken>0</isbroken>
+  <variantsselectionseed></variantsselectionseed>
+
+  <input><name>ans1</name><type>algebraic</type><tans>ta</tans><boxsize>15</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords>int,integrate</forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+
+  <prt>
+    <name>prt1</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+
+    <!-- NODE 0: VERIFICATION + CONSTANT CHECK. Int differentiates the
+         student's answer, checks it returns the integrand (any equivalent
+         antiderivative is accepted), AND requires the constant of
+         integration (constint:true by default). Any constant name works.
+         Everything that fails routes to the diagnostics. -->
+    <node>
+      <name>0</name>
+      <description>Int: antiderivative relationship and constant of integration</description>
+      <answertest>Int</answertest>
+      <sans>ans1</sans>
+      <tans>F</tans>
+      <testoptions>x</testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-1-T</trueanswernote>
+      <truefeedback format="html"><text></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>1</falsenextnode>
+      <falseanswernote>prt1-1-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+
+    <!-- NODE 1: DIAGNOSTIC - correct antiderivative but constant omitted.
+         Reached when Int failed; if the answer equals the antiderivative
+         exactly then the only thing missing is the constant. -->
+    <node>
+      <name>1</name>
+      <description>Diagnostic: antiderivative correct but no constant of integration</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>F</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-2-T</trueanswernote>
+      <truefeedback format="html"><text><![CDATA[<p>Your antiderivative is right, but you have omitted the constant of integration. Because differentiating a constant gives zero, the indefinite integral must include an arbitrary constant. Add \(+ c\).</p>]]></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>2</falsenextnode>
+      <falseanswernote>prt1-2-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+
+    <!-- NODE 2: DIAGNOSTIC - differentiated instead of integrated. -->
+    <node>
+      <name>2</name>
+      <description>Diagnostic: differentiated the integrand instead of integrating</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>ddx</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-3-T</trueanswernote>
+      <truefeedback format="html"><text><![CDATA[<p>It looks like you differentiated rather than integrated. To integrate a power, increase the index by 1 and divide by the new index: \(\displaystyle\int x^n\,\mathrm{d}x = \frac{x^{n+1}}{n+1} + c\).</p>]]></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>3</falsenextnode>
+      <falseanswernote>prt1-3-F</falseanswernote>
+      <falsefeedback format="html"><text></text></falsefeedback>
+    </node>
+
+    <!-- NODE 3: DIAGNOSTIC - raised the index but forgot to divide by it. -->
+    <node>
+      <name>3</name>
+      <description>Diagnostic: raised each index but did not divide by the new index</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>ans1</sans>
+      <tans>power_err</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0.0000000</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt1-4-T</trueanswernote>
+      <truefeedback format="html"><text><![CDATA[<p>You increased each index by 1, but you must also divide by the new index. For example, \(\displaystyle\int {@a@}x^{2}\,\mathrm{d}x = \frac{{@a@}x^{3}}{3} = {@ca@}x^{3}\), not \({@a@}x^{3}\). Do the same for every term, and add \(+ c\).</p>]]></text></truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0.0000000</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt1-4-F</falseanswernote>
+      <falsefeedback format="html"><text><![CDATA[<p>To integrate each power of \(x\), increase the index by 1, divide by the new index, then add the constant of integration: \(\displaystyle\int x^n\,\mathrm{d}x = \frac{x^{n+1}}{n+1} + c\). Check each term and try again.</p>]]></text></falsefeedback>
+    </node>
+  </prt>
+
+  <qtest>
+    <testcase>1</testcase>
+    <description>Correct: antiderivative with constant c -> full marks</description>
+    <testinput><name>ans1</name><value>F + c</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Correct with a different constant name k -> full marks (any constant accepted)</description>
+    <testinput><name>ans1</name><value>F + k</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Forgot the constant of integration -> 0, hits +c diagnostic</description>
+    <testinput><name>ans1</name><value>F</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>4</testcase>
+    <description>Differentiated instead of integrated -> 0, hits differentiated diagnostic</description>
+    <testinput><name>ans1</name><value>ddx</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-3-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>5</testcase>
+    <description>Raised index but did not divide by new index -> 0, hits power-rule diagnostic</description>
+    <testinput><name>ans1</name><value>power_err</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-4-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>6</testcase>
+    <description>Completely wrong (not an antiderivative) -> 0, generic hint</description>
+    <testinput><name>ans1</name><value>x^99</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-4-F</expectedanswernote></expected>
+  </qtest>
+</question>
+
+</quiz>
