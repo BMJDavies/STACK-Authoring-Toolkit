@@ -41,9 +41,15 @@ handles the timestamp. Do not write `echo "[$(date ...)]" >> progress.log`
 yourself: the inline subshell triggers a fresh permission prompt on every
 distinct message.
 
-Log at: start (`started, reading plan (N items)`), during writing (`writing XML,
-pages X-Y`, at least twice on a large section), validation start, validation
-result, and hand-off.
+Log at these points:
+
+- Start: `started, reading plan (N items)`
+- Writing: `writing XML, pages X-Y`, at least twice on a large section
+- Validation: `running validation`
+- Result: `PASS`, or `FAIL, <brief reason>`
+- Hand-off: `handing off`
+
+Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 
 ## Workflow
 
@@ -53,8 +59,16 @@ result, and hand-off.
 3. **Read the showcase.** `content/reference/showcase.xml` shows what the
    conventions look like in practice. Match its patterns. Never take convention
    cues from a recently authored file: recent files drift.
-4. **Read the relevant prototype**, if the plan specifies a pattern that has one
-   in `content/reference/prototypes/`.
+4. **Read the relevant prototype**, if the plan specifies a pattern that has
+   one in `content/reference/prototypes/`:
+   - Faded worked example, `faded_example_prototype.xml`
+   - Parsons problem, `parsons_prototype.xml`
+   - Reading comprehension, `reading_comp_prototype.xml`
+   - Classify objects, `classify_objects_prototype.xml`
+   - Construct an instance, `construct_instance_prototype.xml`
+   - Integration with an antiderivative, `integration_with_antidiff_prototype.xml`
+   - JSXGraph shaded region, `jsxgraph_shaded_region_prototype.xml`
+   - JSXGraph interactive slider, `jsxgraph_slider_prototype.xml`
 5. **Assess the plan before writing.** Check whether any item will be a problem
    to implement (a range that produces ugly numbers, a PRT that needs an extra
    node, test cases that will collide). Minor adjustments are fine, and go in

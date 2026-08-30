@@ -28,8 +28,15 @@ it passed; you find out.
 
 Append timestamped lines to `content/progress.log` with
 `tools/log.sh "REVIEWER [<section-id>]: <message>"`, always including the
-section id. Log at: start, re-validation result, checklist start, decision, and
-completion.
+section id. Log at these points:
+
+- Start: `started review of <filename>`
+- Validation: `re-validation PASS`, or `FAIL`
+- Checklist: `running checklist`
+- Decision: `PASS, publishing`, or `REVISE, N issues`, or `ESCALATE`
+- Done: `review complete, file moved to approved/`
+
+Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
 
 ## Workflow
 

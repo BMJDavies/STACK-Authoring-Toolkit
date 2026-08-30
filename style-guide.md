@@ -147,6 +147,11 @@ Maxima check.
   STACK deduplicates placeholders with `array_unique()` before `format_text()`
   but not after, which causes a mismatch and throws a coding exception. If you
   need the same input in two places, restructure the question.
+- **Never repeat an `[[input:ansN]]` placeholder.** STACK's renderer removes
+  duplicate placeholders with `array_unique()` before formatting the text but not
+  after, and the resulting mismatch throws a coding exception. If the same input
+  needs referring to twice, restructure the question or refer to it in prose.
+
 - **Wrap input lines in `<div>`, never `<p>`.** Any HTML line containing
   `[[input:ansN]]` must be in a `<div>`. STACK renders `[[validation:ansN]]` as a
   block-level `<div>`, and HTML5 auto-closes an open `<p>` when it meets a block
@@ -241,6 +246,14 @@ When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
   three independent sections in a single session before we understood it.
 
 ---
+
+### Conclusion plus reason pairs: author the reason as radio
+
+Where a question pairs a short conclusion input (over or underestimate,
+increasing or decreasing) with a "because ..." reason, author the reason input as
+radio from the start rather than converting it later. Reason options are full
+sentences, so they fall under the option-length rule, and LaTeX does not render
+inside a dropdown.
 
 ## PRTs and feedback
 
@@ -451,6 +464,14 @@ time, before the PRT ever sees the answer.
 Form guards should test an inequality on structure, not an equality. A guard
 like `degree(denom) == 1` silently rejects legitimate equivalent forms at the
 boundary (`1+q/x` has denominator degree 0). Use `degree(denom) < 2`.
+
+### Reject-qtests for "write in completed-square form"
+
+Do not build the reject case by probing `ev(expand(ta),simp)`. On a seed where the
+vertex sits at zero, `(x-0)^2+q` *is* `x^2+q`, so the expanded probe equals the
+completed-square form, the form check correctly accepts it, and the reject test
+fails for the wrong reason. Probe with a form that is value-equal but never in
+completed-square form, such as the factored `(x-r1)(x-r2)` for distinct roots.
 
 ### Integration: use `Int`, and `tans` is the antiderivative
 
