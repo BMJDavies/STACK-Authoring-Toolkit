@@ -1,5 +1,7 @@
 # Reviewing checklist
 
+**Audience: the assistant, when reviewing.**
+
 The `textbook-reviewer` agent works through this. It is deliberately a checklist rather
 than prose: the point is that nothing gets skipped because it felt fine.
 

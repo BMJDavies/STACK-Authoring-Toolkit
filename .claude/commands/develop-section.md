@@ -21,7 +21,7 @@ or the conversation:
 1. Topic or book identifier
 2. Chapter number and name
 3. Section letter, or "Test Yourself" / "Mixed"
-4. Source path, or the relevant syllabus outcomes
+4. Source path and page range
 5. Page range, if source-led
 6. Output filename under `content/drafts/` (suggest one from the naming
    convention and let the user accept or override)

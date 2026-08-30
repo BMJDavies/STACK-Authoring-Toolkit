@@ -1,21 +1,37 @@
 # STACK question authoring kit
 
-A working pipeline for writing STACK questions with Claude Code: agents, skills,
-tooling, content rules and a Moodle theme. Everything here has been used in
-anger to produce around 600 questions across three books.
+**Audience: you, the human. Everything else here is written to be read by your
+assistant.**
 
-It is set up to be generic. Nothing in it assumes a particular subject, level or
-syllabus. You point it at your own material and your own Moodle.
+A pipeline for writing STACK questions for Moodle with an AI assistant: agents,
+skills, tooling, content rules and a theme. It has been used to produce
+approximately 600 questions across three books.
 
-This folder becomes your project. Everything lives inside it, including the
-agents in `.claude/`. Nothing is installed anywhere else on your machine, so you
-can undo the whole thing by deleting the folder. If you later run several
-authoring projects and want them to share one pipeline, see
-`MULTIPLE-PROJECTS.md`.
+It assumes no particular subject, level or syllabus. You point it at your own
+material and your own Moodle.
+
+This folder becomes your project. Everything lives inside it, including the agent
+definitions in `.claude/`. Nothing is installed elsewhere on your machine, so the
+whole thing is undone by deleting the folder. If you later run several authoring
+projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
+
+It was built for and tested with Claude Code. The content, the style guide, the
+checklist and the tools are not tool-specific, and `AGENTS.md` explains how to
+drive the same pipeline from another assistant.
+
+## Getting started
+
+Open your assistant in this folder and type `/start`, or ask it to follow
+`ONBOARDING.md`. It will work out what you already have installed, ask what it
+cannot detect, and configure the kit for your project.
+
+You are well served by opening these files and understanding what is in them, and
+you will get more out of the kit if you do. But you do not need to read any of
+them to get started.
 
 ## What this contains, and what it does not
 
-No textbook content. No SMP, AQA or other publisher material, no source PDFs, no
+No teaching content of any kind: no publisher material, no source documents, no
 authored question banks. The only XML here is the showcase and the pattern
 prototypes, which exist to demonstrate conventions and were written for that
 purpose.
@@ -23,49 +39,31 @@ purpose.
 What it does contain is the method: agents, commands, skills, tooling, the style
 guide and the reviewing checklist, plus a Moodle theme.
 
-`tools/project.conf` ships with the moodle-docker default local development
-database password. That is deliberate, so a fresh clone works out of the box, and
-it is documented in the file. Repoint it before using the kit against any real
-server.
-
-**Licence: not yet chosen.** Decide before sharing this outside your own
-institution.
-
----
-
-## Read these in this order
-
-| File | What it is | When |
-|------|-----------|------|
-| **README.md** | This. What is in the box and how the pieces fit. | Now, 10 minutes |
-| **SETUP.md** | Docker, Moodle, STACK, Maxima, courses, theme, from nothing. | First, half a day |
-| **WORKFLOW.md** | How to actually make questions once it runs. | Before your first section |
-| **LESSONS.md** | What cost us time, and why the rules are the rules. | Once now, again when something baffles you |
-| **style-guide.md** | The content rules. The agents' authority. | Skim now, edit as you go |
-| **reviewing-checklist.md** | What the reviewer checks. | Skim now |
-| **CLAUDE.md** | Project instructions. Has placeholders to fill in. | During setup |
-| **MULTIPLE-PROJECTS.md** | Sharing one kit across several projects. | Only if you have more than one |
+`tools/project.conf` ships with the default local development database password
+used by moodle-docker, so that a fresh copy works immediately. Repoint it before
+using the kit against any server that matters.
 
 ---
 
 ## What is in the box
 
 ```
-README.md                  start here
+README.md                  this file, for you
+ONBOARDING.md              setup interview, for your assistant
+AGENTS.md                  portable entry point for a non-Claude assistant
+CLAUDE.md                  project instructions, rewritten during setup
 SETUP.md                   from nothing to a working install
 WORKFLOW.md                using the pipeline day to day
-LESSONS.md                 what we learned the hard way
-CLAUDE.md                  project instructions (fill in the placeholders)
-style-guide.md             content rules: the single source of truth
-reviewing-checklist.md     the reviewer's checklist
-MULTIPLE-PROJECTS.md       optional: sharing one kit across projects
-docs/MERGE-LOG.md          provenance: how the kit was reconciled with its origin
+LESSONS.md                 why the rules are the rules
+style-guide.md             content conventions: the agents' authority
+reviewing-checklist.md     what the reviewer works through
+MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
-  commands/                /develop-section, /develop-chapter
-  skills/                  question types, JSXGraph, Moodle ops, quiz settings,
-                           turning source material into a work order
+  commands/                /start, /develop-section, /develop-chapter
+  skills/                  question types, JSXGraph, Moodle operations,
+                           quiz settings, reading source material
 
 tools/
   project.conf             the one file you edit: all your Moodle ids
@@ -73,20 +71,20 @@ tools/
   create-live-course.php   creates a course to publish into
   api-check.sh             fast validation, seconds per question
   test-question.sh         full validation, the gate before publishing
-  audit-test-inputs.sh     catches the silent wrong-marking bug class
-  push-review.sh           preview a draft as a student
+  audit-test-inputs.sh     catches the silent wrong-marking defect class
+  push-review.sh           preview a draft as a student sees it
   push-live.sh             publish
-  render-check.sh          does it actually look right on the page
+  render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
-  ...and a few smaller utilities
+  ...and several smaller utilities
 
 content/
   reference/showcase.xml   ten questions, one per pattern: the golden reference
   reference/prototypes/    working templates for the harder patterns
   drafts/ approved/ plans/ where work happens
 
-moodle-theme/textbook/     a Boost child theme that makes quizzes read like
-                           textbook pages rather than tests
+moodle-theme/textbook/     a Boost child theme that makes quizzes read as
+                           textbook pages rather than as tests
 ```
 
 ---
@@ -202,17 +200,23 @@ from.
 
 ---
 
-## Provenance and licensing
+## Provenance
 
-The agents, skills, tooling and documentation are ours to pass on freely. The
-theme is a Boost child theme and inherits Moodle's GPL v3; the copyright header
-is a placeholder for you to fill in.
+This pipeline was built and used in production on the SMP interactive textbook
+project, an adaptation of an existing A-level and GCSE textbook series into
+interactive STACK content. It has been exercised across three books. A case study
+describing that project is forthcoming on the STACK site, at
+stack-assessment.org/CaseStudies/. Nothing from that project's content is
+included here, and no knowledge of it is needed to use this kit.
 
-The reference XML files under `content/reference/` are our own authored
-exemplars, included as convention references. The mathematics in them is
+The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
+header is a placeholder to fill in.
+
+The reference XML under `content/reference/` consists of purpose-written
+exemplars demonstrating each question pattern. The mathematics in them is
 standard school and early-undergraduate material.
 
-STACK itself is GPL and maintained by Chris Sangwin and colleagues at Edinburgh.
-The pedagogic patterns in the proof and question-type sections draw on Sangwin's
-book and on Bickerton and Sangwin (2022) on proof comprehension. Both are worth
-reading if you are going to spend serious time on this.
+STACK is GPL, and is maintained by Chris Sangwin and colleagues at Edinburgh. The
+pedagogic patterns in the proof and question-type sections draw on Sangwin's book
+and on Bickerton and Sangwin (2022) on proof comprehension. Both are worth
+reading before spending serious time on this.

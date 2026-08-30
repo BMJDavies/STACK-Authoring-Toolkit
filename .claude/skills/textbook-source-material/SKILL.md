@@ -1,11 +1,11 @@
 ---
 name: textbook-source-material
-description: How to turn source material (a PDF chapter, or a syllabus with no source text) into a structured work order for authoring STACK questions.
+description: How to turn source material (a chapter of a textbook, notes or worksheets) into a structured work order for authoring STACK questions.
 ---
 
 # Turning source material into a work order
 
-Input: either a section of an existing document, or a topic from a syllabus.
+Input: a section of an existing document.
 Output: a numbered work order listing every item the author should produce.
 
 There are two paths. Pick the one that matches your project and say which in
@@ -13,7 +13,7 @@ There are two paths. Pick the one that matches your project and say which in
 
 ---
 
-## Path A: source-led (you have a textbook, notes or worksheets)
+## Reading a source document (a textbook, notes or worksheets)
 
 ### Step 1: extract the text
 
@@ -68,52 +68,17 @@ skipping is not an option: it is how content gaps ship unnoticed.
 
 ---
 
-## Path B: from scratch (a syllabus, no source text)
+## Authoring without a source document
 
-With no source document, the curriculum specification is the only ground truth,
-and questions are invented rather than adapted. That changes two things: there is
-no item count to check against, and nobody has already vetted the mathematics.
+Not supported in this release. Working from a syllabus alone, with no source
+text, is possible in principle and may be addressed in a future version, but it
+has not been validated here. The item-count check that catches silently dropped
+content does not apply, and nothing has pre-vetted the mathematics, so the
+safeguards this kit relies on are weaker. If that is the situation, say so rather
+than improvising it.
 
-So the work order is built from the learning outcomes instead:
 
-### Step 1: pin down the outcomes
-
-Extract the specific learning outcomes for the topic from the specification,
-verbatim. Not your paraphrase. Quote them in the work order.
-
-### Step 2: decide the shape of the topic before the questions
-
-For each outcome, decide:
-
-- What a student who has met this outcome can do that one who has not, cannot.
-- What the worked example looks like.
-- What the common misconception is.
-
-That third question is the one worth spending time on. It determines the
-diagnostic PRT nodes, which is where most of the pedagogic value in a STACK
-question lives.
-
-### Step 3: build a progression
-
-An invented topic has no built-in difficulty ordering, so you have to impose
-one. A workable default: one or two description items setting up the idea, a
-worked example, three to six routine practice questions rising in difficulty,
-then one question of Pointon and Sangwin type 3, 7 or 8 (classify, construct an
-example, criticise a fallacy) to test understanding rather than execution.
-
-### Step 4: vet before authoring
-
-Because nothing is adapted from a vetted source, add a human gate that
-source-led work does not need. Before any XML is written, a subject expert
-checks: is the mathematics correct, is the level right for the specification, is
-the notation the one students will meet elsewhere?
-
-Getting this wrong is cheap to fix at the plan stage and expensive to fix once
-30 questions are live.
-
----
-
-## Work order format (both paths)
+## Work order format
 
 ```markdown
 # Work order: <topic> <section>

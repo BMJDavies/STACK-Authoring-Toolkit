@@ -1,96 +1,51 @@
 # Project instructions
 
-CLAUDE.md is the file Claude Code reads automatically at the start of every
-session in this folder. Everything in it is treated as a standing instruction.
-Keep it short and factual: it is loaded into context every single time, so long
-rambling notes here cost you on every request.
+**Audience: the assistant. The human reader wants README.md.**
 
-**Fill in every `<...>` placeholder below before your first authoring run.**
-Delete this paragraph and the one above once you have.
+This file is read automatically at the start of every session in this folder and
+is treated as standing instruction. Right now it describes a kit that has not yet
+been configured for anyone's project.
 
----
+## This project has not been set up yet
 
-## What this project is
+If this notice is still here, no project has been configured. Do not author,
+validate or publish anything.
 
-<One or two sentences. What are you building, for whom, at what level?
-Example: "Interactive STACK question banks for a first-year undergraduate
-linear algebra module, delivered through Moodle to about 200 students a year.">
+Instead:
 
-## Where the questions come from
+1. Read `ONBOARDING.md` and follow it.
+2. It will tell you what to detect about this machine, what to ask the user, and
+   what to do with the answers.
+3. At the end of it you will replace this file with real project instructions.
 
-<Pick ONE and delete the other.>
+Once that is done, this notice goes away and `CLAUDE.md` describes an actual
+project.
 
-**Source-led.** Questions are adapted from `<source material>` in `sources/`.
-Every item in the source appears in the output as a question, a description, or
-an explicitly flagged item. Nothing is silently skipped.
+## What this repository is, before configuration
 
-**From scratch.** There is no source text. `<the syllabus / module spec /
-learning outcomes doc>` in `references/` is the only ground truth. Questions are
-invented against it, so every question must be checked against the spec for
-level and scope, and a human signs off the maths before it goes live.
+A pipeline for writing STACK questions for Moodle with an AI assistant. It
+contains four agent definitions, two slash commands, five skills, a set of shell
+and PHP tools, a style guide, a reviewing checklist, a Moodle theme, and
+reference XML showing each question pattern.
 
-## Content rules
+It contains no question content and no teaching material. Those come from the
+user.
 
-`style-guide.md` is the single source of truth for all content conventions
-(PRTs, inputs, display, randomisation, editorial standards). Agents read it
-before writing or reviewing anything. Do not rely on memory of it.
+## Standing rules that apply from the first session
 
-`reviewing-checklist.md` is the reviewer's checklist.
+- Never run validation in the background and poll for it. It is slow, produces
+  no output while running, and blocking is correct.
+- Never commit on the user's behalf unless they have said to.
+- The XML under `content/` is the master copy. Moodle is a rendering target.
+- Ask before doing anything that writes to Moodle.
 
-`content/reference/showcase.xml` is the golden reference: worked examples of
-every question pattern. Agents match its conventions. Never use a recently
-authored file as the convention reference, because recent files drift.
+## Where to read further
 
-## The pipeline
-
-```
-/develop-section  ->  planner  ->  author  ->  validate  ->  reviewer  ->  approved/  ->  live
-                                                                 |
-                                                                 +-> feedback/<section>.md
-```
-
-- Agents are defined in `.claude/agents/`. Skills are in `.claude/skills/`.
-- All agents run in the foreground, never in the background. The pipeline is
-  sequential: each agent's output decides the next step, and two agents touching
-  Moodle at once collide.
-- Author validates its own work and only hands off files that pass.
-- Reviewer re-runs validation itself rather than trusting the author's word.
-
-## Validation
-
-```bash
-tools/api-check.sh path/to/questions.xml      # fast inner loop, seconds per question
-tools/test-question.sh path/to/questions.xml  # the real gate, before anything goes live
-```
-
-Every STACK question must embed at least two `<qtest>` cases (one correct, one
-wrong). Without them the marking logic is untested and a broken question looks
-exactly like a working one.
-
-## Moodle
-
-Site: `<http://localhost:8000>`
-All ids (courses, question banks, quizzes) live in `tools/project.conf`. Scripts
-read them from there. Never hardcode an id into a command.
-
-| Content prefix | Course | `--course=` key |
-|----------------|--------|-----------------|
-| `<C1_>` | `<Course name>` | `<key>` |
-
-Publish with `tools/push-live.sh <xml> <quiz-id> --course=<key>`.
-Full runbook for every script: `.claude/skills/moodle-operations/`.
-
-## Working preferences
-
-<Tell Claude how you want to be worked with. Examples, keep what fits:>
-- I am new to Claude Code. Explain technical steps rather than just doing them.
-- Give me direct question preview URLs, not just quiz links.
-- Show me a plan as a short table before writing any XML.
-- Never commit. I stage and commit myself.
-- Flag editorial decisions (adapting a word problem, converting "explain why"
-  into multiple choice) before implementing them, not after.
-
-## Planning
-
-The rolling to-do list, open decisions, and pipeline notes live in
-`PROJECT-PLAN.md`. Create it on your first real session.
+| File | Read it when |
+|---|---|
+| `ONBOARDING.md` | Now, if this project is unconfigured |
+| `SETUP.md` | While installing, guided by onboarding |
+| `WORKFLOW.md` | Before producing the first section |
+| `style-guide.md` | Before writing or reviewing any question |
+| `reviewing-checklist.md` | When reviewing |
+| `LESSONS.md` | Once, early. It explains why the rules exist |

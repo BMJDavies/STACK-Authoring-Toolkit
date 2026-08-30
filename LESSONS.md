@@ -1,7 +1,9 @@
-# What we learned the hard way
+# Lessons from production use
+
+**Audience: your assistant, and you. Worth reading once yourself.**
 
 Roughly 600 questions across three books, over about four months. These are the
-things that cost us real time and that you cannot easily discover by reading
+things that cost real time and that are not easily discovered by reading
 documentation. The technical ones are already encoded in `style-guide.md`; this
 file is the reasoning behind them, plus the process lessons that do not belong
 in a style guide.
@@ -73,7 +75,7 @@ returning an EMPTY score rather than a wrong one.
 
 **An empty score means the question never set up.** That is the single most
 useful diagnostic signal in the system, and it points at the variables, not at
-the marking tree. It took us a long time to learn to read it that way.
+the marking tree. That reading takes a while to acquire.
 
 ---
 
@@ -99,7 +101,7 @@ broken file gets edited. Cap concurrency at three.
 ## Backgrounding a validation loses the work
 
 Validation produces no output while it runs. It can take 15 to 30 minutes, and
-we have had it take eight hours on a big file under load. It is very tempting to
+it has taken eight hours on a large file under load. It is very tempting to
 background it and poll.
 
 Do not. We lost three agents out of three in one batch to this. The pattern is
@@ -116,7 +118,7 @@ Silence is not a hang.
 
 We built a custom Moodle theme, edited it inside the container, and never
 committed it. Months later a fresh install did not look right and nobody could
-work out why, because the thing that made it look right existed only inside a
+work out why, because whatever made it look right existed only inside a
 container.
 
 If you change something inside a container, either put it in the repo or accept
@@ -130,13 +132,13 @@ rendering target. Commit the XML, and be able to rebuild the site from it.
 
 ## Bulk edits across XML are a bad idea
 
-At one point we ran regex sweeps across the question bank to fix a systematic
+An early attempt used regex sweeps across the question bank to fix a systematic
 issue. It produced silent corruption: valid XML, questions that imported fine,
 subtly broken content.
 
 Default to per-question edits through the pipeline. If a bulk edit is genuinely
 mechanical (renaming a CSS class, say), do it with a dry run and a tag-count
-integrity check before and after, and validate the result. That is what we did
+integrity check before and after, and validate the result. That is the safe procedure
 to produce this kit's reference files.
 
 ---
@@ -156,7 +158,7 @@ anyone off to fix a phantom:
 - CAS timeouts leave a blank score on scattered seeds. A real defect fails the
   same test on every seed with an actual wrong score.
 
-We had two agents stall chasing the first of those before we understood it.
+Two agents stalled chasing the first of those before it was understood.
 
 ---
 

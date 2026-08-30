@@ -1,0 +1,55 @@
+# Agent instructions
+
+**Audience: the assistant, whichever tool is driving it.**
+
+This kit was built for and tested with Claude Code. The content is not
+tool-specific and can be driven by another assistant; the orchestration is. This
+file is the portable entry point.
+
+## Start here
+
+If `CLAUDE.md` still carries a "not set up yet" notice, follow `ONBOARDING.md`
+before doing anything else.
+
+## What the pipeline is
+
+Four roles, run in sequence, each with a defined hand-off:
+
+| Role | Definition | Produces |
+|---|---|---|
+| planner | `.claude/agents/textbook-planner.md` | a plan document, no code |
+| author | `.claude/agents/textbook-author.md` | validated Moodle XML |
+| reviewer | `.claude/agents/textbook-reviewer.md` | an approved file, published |
+| enricher | `.claude/agents/textbook-enricher.md` | improved feedback on live content |
+
+Those four files are plain markdown role prompts. The YAML header at the top of
+each is Claude Code metadata; the body below it is portable. An assistant on
+another tool can be given the body of a file as its instructions for that step.
+
+The value is in the separation, not the mechanism. The planner must name the
+misconception before any code exists. The author cannot hand off a file that
+fails validation. The reviewer re-runs validation instead of trusting the author,
+which is the single habit that catches the most defects. An assistant working
+alone through all four steps in one conversation will approximate this, but the
+independence is what makes it work, so preserve the sequence and the hand-offs
+even when one model performs every role.
+
+## If your tool has no sub-agents
+
+Run the four roles as four separate conversations rather than four turns of one.
+Carry only the artefacts between them: the plan document, the XML file, the
+review notes. Do not carry the reasoning. A reviewer that has just watched itself
+author the file is not an independent reviewer.
+
+## What the assistant must not do
+
+- Background a validation run and poll for it. It is slow and silent by design.
+- Trust a previous step's claim that validation passed. Re-run it.
+- Commit unless the user has asked.
+- Write to Moodle without asking.
+
+## Reference
+
+`style-guide.md` is authoritative for content conventions and is where the
+hard-won rules live. `reviewing-checklist.md` is what the reviewer works through.
+`LESSONS.md` explains why the rules exist and is worth reading once, early.

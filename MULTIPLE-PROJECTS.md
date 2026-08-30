@@ -1,5 +1,7 @@
 # Running several projects from one kit
 
+**Audience: you, the human, and only if you run more than one project.**
+
 **Skip this unless you already have more than one authoring project.** The normal
 way to use the kit is the one SETUP.md describes: this folder *is* your project,
 `.claude/` sits inside it, and nothing outside the folder is touched. That is

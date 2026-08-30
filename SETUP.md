@@ -1,5 +1,7 @@
 # Setup, from nothing
 
+**Audience: your assistant, working alongside you. Ask it to walk you through this rather than reading it yourself.**
+
 This walks you from a laptop with nothing installed to a working authoring
 pipeline. Budget half a day for the first run, most of which is downloads.
 
@@ -29,7 +31,7 @@ Your laptop
 ```
 
 The XML files in `content/` are the master copy. Moodle is a rendering target.
-If Moodle burns down you re-import; if you lose the XML you have lost the work.
+If the Moodle installation is lost you re-import; if the XML is lost, the work is gone.
 Put the kit folder under version control on day one.
 
 ---
@@ -124,7 +126,7 @@ docker exec <webserver-container> bash -c \
 
 **Use `maxima-sage`, not `maxima`, on Apple Silicon.** The standard `maxima`
 package segfaults on ARM. `maxima-sage` uses the ECL backend and works. This
-cost us a day before we worked it out.
+cost a day before it was diagnosed.
 
 Then in Moodle, go to Site administration, Plugins, Question types, STACK, and
 run the healthcheck at:
@@ -215,7 +217,7 @@ Interactive Textbook.
 
 Two things worth knowing:
 
-- The colours are ours. They are SCSS variables at the top of
+- The colours are defaults, not requirements. They are SCSS variables at the top of
   `moodle-theme/textbook/scss/textbook.scss` (`$tb-marine`, `$tb-teal` and so
   on). Change them there and re-run the upgrade command to rebuild.
 - The theme's install hook rewrites some Moodle language strings, so the quiz
@@ -278,14 +280,16 @@ the agents compare their conventions against.
 
 ---
 
-## 10. Fill in CLAUDE.md
+## 10. Write the project instructions
 
-Open `CLAUDE.md` and replace every `<...>` placeholder. It is loaded into
-context at the start of every Claude Code session, so it is where you tell
-Claude what the project is, where questions come from, and how you want to be
-worked with.
+`CLAUDE.md` currently carries a "not set up yet" notice. It is read automatically
+at the start of every session, so it is where the assistant is told what the
+project is, where the questions come from, and how you want to be worked with.
 
-Then read WORKFLOW.md, which covers actually using the thing.
+Do not write it by hand. Ask your assistant to follow `ONBOARDING.md`, or type
+`/start`. It will ask what it needs and write the file for you.
+
+Then read `WORKFLOW.md`, which covers using the pipeline day to day.
 
 ---
 

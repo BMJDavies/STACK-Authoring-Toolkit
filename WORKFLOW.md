@@ -1,5 +1,7 @@
 # Using the pipeline
 
+**Audience: your assistant, and you if you want to understand what it is doing.**
+
 Setup is done and the showcase publishes. This is how you actually make
 questions.
 

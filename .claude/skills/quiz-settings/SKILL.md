@@ -23,7 +23,7 @@ formative, work-through-it material rather than assessment.
 | Time limit | none | Formative use |
 
 The alternative behaviour worth knowing about is `adaptivenopenalty`, which lets
-a student retry within a single attempt. Older material of ours uses it. If you
+a student retry within a single attempt. Some older material uses it. If you
 are starting fresh, `immediatefeedback` is the better default.
 
 ## Using `tools/quiz-admin.php`

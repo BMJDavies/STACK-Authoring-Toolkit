@@ -16,7 +16,7 @@ From `$ARGUMENTS` or by asking:
 
 1. Topic or book identifier
 2. Chapter number and name
-3. Source path, or the relevant syllabus outcomes
+3. Source path and page range
 4. Which sections are already done, if resuming
 5. Any special notes (questions to skip, editorial preferences, figures needing
    attention)

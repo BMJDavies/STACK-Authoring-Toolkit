@@ -1,5 +1,7 @@
 # Content rules and style guide
 
+**Audience: the assistant. This is authoritative for content conventions. Edit it to make the rules yours.**
+
 The single source of truth for content conventions in this project. Agents read
 this before writing or reviewing anything. Implementation patterns (XML
 skeletons, PRT wiring, JSXGraph templates) live in the skill packages under
@@ -242,8 +244,8 @@ When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
   student's submission with "is not listed by the teacher as an option" and the
   question fails on most seeds. Keep the underlying value a plain literal token
   (`ruleA`, `manyone`). If you need parametric text, put it in the LaTeX display
-  string shown over that literal value, never in the value itself. This bit us in
-  three independent sections in a single session before we understood it.
+  string shown over that literal value, never in the value itself. This surfaced in
+  three independent sections in a single session before it was understood.
 
 ---
 
@@ -395,7 +397,7 @@ then node 2 false, the expected note is `prt1-2-F`. Never the first note
 
 Both wrong forms fail confusingly, because the validator prints the full trail
 for both actual and expected, so a full-trail expectation looks identical to the
-actual output and still fails. This cost us two fix rounds before we read the
+actual output and still fails. This costs two fix rounds if you do not read the
 plugin source. Re-check it whenever inserting a node shifts what used to be the
 terminal note.
 
@@ -489,8 +491,7 @@ Two hard limits:
   question.** With `constint:true`, `ATInt(x^2+3, x^2+3, x)` is false: it
   rejects the correct answer. A `+c` in the worked solution is not enough of a
   signal. Read the stem.
-- **Do not use `Antidiff` or `AddConst`** if your STACK install behaves like
-  ours. Both set `simp:false` inside their block without declaring it local,
+- **Do not use `Antidiff` or `AddConst`** if your STACK install behaves like the one this was built on. Both set `simp:false` inside their block without declaring it local,
   which leaks `simp:false` into global CAS state and corrupts every later PRT
   node and CASText. The symptoms are baffling: empty PRT results on most seeds,
   "unevaluated casstring" warnings, and hung Maxima processes. `Int` saves and
@@ -501,7 +502,7 @@ Two hard limits:
 
 Unless the significant-figure FORM is the skill being assessed, grade "to N
 s.f." questions with `NumAbsolute` and a magnitude-appropriate tolerance, not
-`NumSigFigs`. `NumSigFigs` has three failure modes that cost us three fix rounds
+`NumSigFigs`. `NumSigFigs` has three failure modes that cost three fix rounds
 on one section:
 
 1. Trailing-zero loss: `90.0` prints as `90` and is counted as 2 s.f., so the

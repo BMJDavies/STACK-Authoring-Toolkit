@@ -32,7 +32,7 @@ structure and the exact test inputs.
 - Topic or book identifier
 - Chapter or unit number and name
 - Section letter, or "Test Yourself" / "Mixed"
-- Source path and page range, or the relevant syllabus outcomes
+- Source path and page range
 - Output filename, under `content/drafts/`
 - Target quiz: new or existing, with name and id
 - Any overrides to quiz defaults or style
