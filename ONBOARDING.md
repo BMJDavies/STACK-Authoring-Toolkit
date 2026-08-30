@@ -59,12 +59,25 @@ sections 5, 6, 8 and 9.
 1. Subject, level, and who the students are.
 2. Roughly how much material: a topic, a module, a book?
 3. What is the source material, and what form is it in? PDF, LaTeX, Word,
-   or print only? If PDF, check whether the text layer is usable, because
-   mathematical notation frequently is not. `.claude/skills/textbook-source-material/`
-   covers this.
-4. What is the natural unit of delivery: chapter, module, topic? This decides how
+   or print only?
+
+4. **Get the material into `sources/` before going further.** Ask them to put it
+   there, then confirm it has arrived and that you can actually read it:
+
+   ```bash
+   ls -la sources/
+   pdftotext -layout sources/<their file>.pdf - | head -60
+   ```
+
+   Check the mathematics survived extraction. Surds, fractional indices and
+   subscripts are the usual casualties and they fail silently, producing
+   plausible text that is quietly wrong. If it is mangled, say so now and plan to
+   work from rendered page images instead. Finding this out here costs a minute;
+   finding it out when the planner is midway through a section costs the section.
+   `.claude/skills/textbook-source-material/` covers both routes.
+5. What is the natural unit of delivery: chapter, module, topic? This decides how
    courses, sections and quizzes are laid out.
-5. Do they have an existing question bank whose conventions should be matched?
+6. Do they have an existing question bank whose conventions should be matched?
 
 **This release supports source-led authoring only**, where questions are adapted
 from existing material. Authoring against a syllabus with no source text is
