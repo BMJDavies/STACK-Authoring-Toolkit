@@ -159,7 +159,37 @@ docker exec <webserver-container> bash -c \
 
 **Use `maxima-sage`, not `maxima`, on Apple Silicon.** The standard `maxima`
 package segfaults on ARM. `maxima-sage` uses the ECL backend and works. This
-cost a day before it was diagnosed.
+cost a day before it was diagnosed. It also means `platform` stays `linux`
+rather than `linux-optimised`, so expect a slower CAS: STACK cannot build its
+prebuilt Maxima image against ECL.
+
+Then tell STACK how to reach it. A CLI install writes none of these settings,
+and without them the CAS fails with "tried to get the value from of an
+unevaluated casstring", which names none of what is missing:
+
+```bash
+cd $MOODLE_DOCKER_WWWROOT
+for kv in platform=linux maximacommand=/usr/bin/maxima-sage \
+          maximaversion=default castimeout=60 maximalibraries=; do
+    docker exec <webserver-container> php admin/cli/cfg.php \
+        --component=qtype_stack --name="${kv%%=*}" --set="${kv#*=}"
+done
+```
+
+Two of those are not guesses:
+
+- `maximacommand`. The `maxima-sage` package installs `/usr/bin/maxima-sage`
+  and no `maxima`, but STACK's default command is `maxima`. Set the command
+  rather than making a symlink: this setting lives in the database and survives
+  recreating the container, a symlink does not.
+- `maximaversion=default`. The dropdown offers whole minor versions only, and
+  Debian ships 5.45.1, so nothing matches. Picking the nearest looks right and
+  is not: STACK compares the string exactly and reports "serious problems"
+  while the CAS actually works. Use `default` unless your Maxima matches a
+  listed version exactly.
+
+**Your system may differ.** These values were taken from one macOS/ARM install;
+check what your own Maxima reports rather than assuming.
 
 Then in Moodle, go to Site administration, Plugins, Question types, STACK, and
 run the healthcheck at:
@@ -171,6 +201,9 @@ http://localhost:8000/question/type/stack/adminui/healthcheck.php
 Work down the page until everything is green. It tells you exactly what is wrong
 when something is. The one you care about most is the Maxima connection test: if
 that is green, STACK works.
+
+The page also writes `stackmaximaversion`, which the commands above do not set,
+so visit it once even if the CLI settings all applied.
 
 ### If you ever recreate the containers
 
