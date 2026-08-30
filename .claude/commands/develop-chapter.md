@@ -169,7 +169,7 @@ Do not commit. That is the user's call.
 - Independently verify every checkpoint. Do not trust subagent claims.
 - Print status updates before each checkpoint.
 - Retry a failed spawn once, then escalate. Do not loop.
-- Never author XML yourself. Always use the author agent.
+- Never author XML yourself. Always use the `textbook-author` agent.
 - Never commit.
 - Run agents in the foreground. The pipeline is sequential and two agents
   touching Moodle at once collide.

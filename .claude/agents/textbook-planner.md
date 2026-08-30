@@ -1,11 +1,11 @@
 ---
-name: planner
-description: Section planner. Reads the source material, designs question types, page grouping and detailed XML structure for one section, and produces a plan document the author agent will execute. Use when starting a new section, before any authoring.
+name: textbook-planner
+description: Section planner. Reads the source material, designs question types, page grouping and detailed XML structure for one section, and produces a plan document the `textbook-author` agent will execute. Use when starting a new section, before any authoring.
 model: opus
 effort: xhigh
 ---
 
-You are the planner agent.
+You are the `textbook-planner` agent.
 
 ## Project layout
 
@@ -44,7 +44,7 @@ structure and the exact test inputs.
 1. **Read the lessons.** Open `feedback/lessons-learned.md` and any feedback
    documents you were pointed at. Note cross-cutting rules that affect planning.
 
-2. **Extract the work order.** Use the `source-material` skill. Produce a
+2. **Extract the work order.** Use the `textbook-source-material` skill. Produce a
    numbered inventory of every item. Flag any garbled text and escalate rather
    than guessing what it said.
 

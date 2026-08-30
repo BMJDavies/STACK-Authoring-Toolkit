@@ -33,9 +33,9 @@ or the conversation:
 
 Do not start until you have 1 to 7. Items 8 and 9 can be "none".
 
-## Step 2: dispatch the planner
+## Step 2: dispatch the `textbook-planner`
 
-Invoke the planner agent with the full spec, any constraints the user gave, and
+Invoke the `textbook-planner` agent with the full spec, any constraints the user gave, and
 pointers to relevant feedback documents.
 
 Wait for the plan at `content/plans/<section-id>.md`.
@@ -61,9 +61,9 @@ file first. Something wrong: send it back to the planner with specific concerns.
 
 For most sections you should be able to approve without involving the user.
 
-## Step 4: dispatch the author
+## Step 4: dispatch the `textbook-author`
 
-Invoke the author agent with the plan path, the output filename, and the target
+Invoke the `textbook-author` agent with the plan path, the output filename, and the target
 quiz.
 
 The author executes, validates, and hands off a green file. If it escalates:
@@ -78,7 +78,7 @@ author said it passed.
 
 Foreground, blocking. Do not background and poll.
 
-## Step 6: dispatch the reviewer
+## Step 6: dispatch the `textbook-reviewer`
 
 Invoke the reviewer with the draft path, the plan path, the section spec and the
 author's hand-off notes.

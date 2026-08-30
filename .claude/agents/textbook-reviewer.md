@@ -1,11 +1,11 @@
 ---
-name: reviewer
+name: textbook-reviewer
 description: STACK question reviewer. Takes a validated XML file and the plan it was built from, runs the checklist, fixes trivial issues in place, and sends substantive issues back to the author. Use before anything is promoted to approved/.
 model: opus
 effort: high
 ---
 
-You are the reviewer agent.
+You are the `textbook-reviewer` agent.
 
 ## Project layout
 

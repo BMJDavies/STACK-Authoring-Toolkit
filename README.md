@@ -68,7 +68,7 @@ style-guide.md             content rules: the single source of truth
 reviewing-checklist.md     the reviewer's checklist
 
 .claude/
-  agents/                  planner, author, reviewer, enricher
+  agents/                  textbook-{planner,author,reviewer,enricher}
   commands/                /develop-section, /develop-chapter
   skills/                  question types, JSXGraph, Moodle ops, quiz settings,
                            turning source material into a work order
@@ -199,7 +199,7 @@ yours:
 - `moodle-theme/textbook/scss/textbook.scss`: colours and typography are SCSS
   variables at the top. The CSS class prefix is `tb-`; rename it if you like, but
   rename it in the theme, the style guide and the showcase together.
-- `.claude/skills/source-material/`: the marker map for your own source
+- `.claude/skills/textbook-source-material/`: the marker map for your own source
   material, if you are working from an existing text.
 
 The one thing worth not changing until you have reason to: the four-agent split

@@ -1,6 +1,6 @@
 # Reviewing checklist
 
-The reviewer agent works through this. It is deliberately a checklist rather
+The `textbook-reviewer` agent works through this. It is deliberately a checklist rather
 than prose: the point is that nothing gets skipped because it felt fine.
 
 Blocking items are marked. Everything else is a judgement call the reviewer

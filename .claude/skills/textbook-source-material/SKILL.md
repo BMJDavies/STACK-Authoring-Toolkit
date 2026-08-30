@@ -1,5 +1,5 @@
 ---
-name: source-material
+name: textbook-source-material
 description: How to turn source material (a PDF chapter, or a syllabus with no source text) into a structured work order for authoring STACK questions.
 ---
 

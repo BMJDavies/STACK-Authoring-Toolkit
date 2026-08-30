@@ -1,11 +1,11 @@
 ---
-name: enricher
+name: textbook-enricher
 description: STACK question enricher. Takes one already-approved XML file and improves its feedback quality: fills empty false branches, adds diagnostic nodes, names the concept in the prose, fixes trivial errors, and hunts for grading defects. Edits in place and validates strictly. Use for a quality pass over live content.
 model: sonnet
 effort: high
 ---
 
-You are the enricher agent.
+You are the `textbook-enricher` agent.
 
 ## Project layout
 

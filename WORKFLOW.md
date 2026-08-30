@@ -22,13 +22,13 @@ questions.
 
 Four agents, in `.claude/agents/`:
 
-- **planner** decides what to build. Reads the source, designs each question,
+- **textbook-planner** decides what to build. Reads the source, designs each question,
   writes a plan document. Writes no XML.
-- **author** builds it. Executes the plan, validates its own work, hands off
+- **textbook-author** builds it. Executes the plan, validates its own work, hands off
   only files that pass.
-- **reviewer** checks it. Re-runs validation rather than trusting the author,
+- **textbook-reviewer** checks it. Re-runs validation rather than trusting the author,
   works the checklist, fixes small things itself, publishes.
-- **enricher** improves live content later. A separate quality pass, described
+- **textbook-enricher** improves live content later. A separate quality pass, described
   at the bottom of this file.
 
 Two slash commands drive them: `/develop-section` for one section,
