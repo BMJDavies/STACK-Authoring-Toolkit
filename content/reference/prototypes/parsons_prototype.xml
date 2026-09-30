@@ -75,6 +75,7 @@ proof_steps: [
 proof_steps: random_permutation(proof_steps);
 
 ta: proof("half", "ctsq", "bring_c", "sq_geq", "min_val", "min_at");
+ta1:[ta, proof_steps];
     ]]></text>
   </questionvariables>
   <specificfeedback format="html">
@@ -102,7 +103,7 @@ ta: proof("half", "ctsq", "bring_c", "sq_geq", "min_val", "min_at");
   <input>
     <name>ans1</name>
     <type>parsons</type>
-    <tans>[ta, proof_steps]</tans>
+    <tans>ta1</tans>
     <boxsize>15</boxsize>
     <strictsyntax>1</strictsyntax>
     <insertstars>0</insertstars>

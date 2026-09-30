@@ -96,7 +96,7 @@
   <questionvariables>
     <text>
 /* No random variables needed — this is an interactive explorer. */
-ta: 0;
+ta1: 0;
     </text>
   </questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
@@ -118,7 +118,7 @@ ta: 0;
   <input>
     <name>ans1</name>
     <type>algebraic</type>
-    <tans>ta</tans>
+    <tans>ta1</tans>
     <boxsize>5</boxsize>
     <strictsyntax>1</strictsyntax>
     <insertstars>0</insertstars>
@@ -143,7 +143,7 @@ ta: 0;
       <name>0</name>
       <answertest>AlgEquiv</answertest>
       <sans>ans1</sans>
-      <tans>ta</tans>
+      <tans>ta1</tans>
       <testoptions></testoptions>
       <quiet>1</quiet>
       <truescoremode>=</truescoremode>
@@ -166,7 +166,7 @@ ta: 0;
     <description>Dummy test (zero-mark explorer)</description>
     <testinput>
       <name>ans1</name>
-      <value>ta</value>
+      <value>ta1</value>
     </testinput>
     <expected>
       <name>prt1</name>
