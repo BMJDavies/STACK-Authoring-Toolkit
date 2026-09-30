@@ -8,18 +8,17 @@ been configured for anyone's project.
 
 ## This project has not been set up yet
 
-If this notice is still here, no project has been configured. Do not author,
-validate or publish anything.
+If the file CLAUDE_loc.md exists in this directory then a project has been configured. Ignore the rest of this file.  Use CLAUDE_loc.md instead.
+
+No project has been configured.  Do not author, validate or publish anything.
 
 Instead:
 
 1. Read `ONBOARDING.md` and follow it.
-2. It will tell you what to detect about this machine, what to ask the user, and
-   what to do with the answers.
+2. It will tell you what to detect about this machine, what to ask the user, and what to do with the answers.
 3. At the end of it you will replace this file with real project instructions.
 
-Once that is done, this notice goes away and `CLAUDE.md` describes an actual
-project.
+Once that is done, the file `CLAUDE_loc.md` describes an actual project.
 
 ## What this repository is, before configuration
 

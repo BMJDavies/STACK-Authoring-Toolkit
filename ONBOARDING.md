@@ -1,7 +1,6 @@
 # Onboarding
 
-**Audience: the assistant. Follow this when `CLAUDE.md` still carries the
-"not set up yet" notice.**
+**Audience: the assistant. Follow this when `CLAUDE_loc.md` does not exist in this directory.**
 
 ## Who you are working with
 
@@ -98,16 +97,15 @@ plainly rather than improvising it.
 
 ## What to do with the answers
 
-Replace `CLAUDE.md` entirely, using the template below. Delete the "not set up
-yet" notice. Keep it short: it is loaded on every request, so length here costs
-them on every interaction.
+Create a new file `CLAUDE_loc.md` entirely, using the template below. 
+Keep it short: it is loaded on every request, so length here costs them on every interaction.
 
 Then fill in `tools/project.conf` with the ids that `SETUP.md` section 6 prints,
 and offer to walk them through their first section using `WORKFLOW.md`.
 
 ---
 
-## Template for the new CLAUDE.md
+## Template for the new CLAUDE_loc.md
 
 ```markdown
 # Project instructions
