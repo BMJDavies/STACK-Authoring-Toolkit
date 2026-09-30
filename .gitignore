@@ -11,6 +11,7 @@ content/progress.log
 
 # Claude Code local settings (keep .claude/agents, commands and skills tracked)
 .claude/settings.local.json
+CLAUDE_loc.md
 
 # Do NOT ignore tools/project.conf: it has no secrets beyond a local dev
 # database password, and having it in the repo is what makes a fresh clone

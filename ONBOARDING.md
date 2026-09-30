@@ -31,6 +31,8 @@ ls tools/project.conf                    # has configuration been started
 Report what you found in one short paragraph before asking anything. If Moodle is
 already running, say so rather than asking whether it is.
 
+Copy file `tools/project.conf.new` to `tools/project.conf`. This file holds the local project configuration.
+
 ## Stage A: their environment
 
 This decides how much of `SETUP.md` applies. Ask only what detection did not
