@@ -13,7 +13,7 @@ services:
     # question/type/stack/version.php ($plugin->version). rand() sequences and
     # grading change between STACK versions, so a mismatch can cause false
     # fails, or pass while grading differently. Bump both tags together.
-    image: mathinstitut/goemaxima:2026010500-latest
+    image: mathinstitut/goemaxima:2026062900-latest
     tmpfs:
       - "/tmp"
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
     read_only: true
   stack:
     platform: linux/amd64
-    image: stackmaths/stackapi:2026010500-latest
+    image: stackmaths/stackapi:2026062900-latest
     restart: unless-stopped
     volumes:
       - ./config.php:/srv/stack/api/config.php:ro
