@@ -90,9 +90,9 @@ ta2: dyb / dxb;
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
-  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -187,9 +187,9 @@ ta4: (y1b + y2b) / 2;
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
-  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -297,9 +297,9 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Worked: x^2+{@b1@}x+{@c1@}={@ta1@}; Exercise: x^2+{@b2@}x+{@c2@}={@ta2@}</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -499,9 +499,9 @@ ta4: 8;
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
-  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -612,9 +612,9 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>x^2+{@b1@}x+{@c1@}={@ta1@}, min={@ta2@}, crossings={@ta3_num@}</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -897,9 +897,9 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
-  <prtcorrect format="html"><text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -1044,9 +1044,9 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
-  <prtcorrect format="html"><text><![CDATA[<span style="color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span style="color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span style="color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -1128,9 +1128,9 @@ ta2: r2;
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>\({@expand(expr)@} = 0\), solutions \(x = {@r1@}\) and \(x = {@r2@}\)</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
@@ -1294,9 +1294,9 @@ ta_set: {ta1, ta2};
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>JSXGraph figure: y = x^2 + x - 6</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
