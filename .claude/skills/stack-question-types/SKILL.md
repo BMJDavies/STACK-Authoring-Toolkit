@@ -59,6 +59,8 @@ Required elements:
 - `<questionvariables>` with Maxima code, including the teacher's answer `ta1` corresponding to input `ans1`.
 - `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
 - `<questionnote>` showing the randomised variant, including ALL random values
+- `<stackversion>` set to the project's STACK version stamp in
+  `CLAUDE.md` (style guide: "Stamp the target STACK version")
 - `<questiondescription>` with the provenance note (style guide: "Record where
   each question comes from")
 - At least one `<input>` and one `<prt>`
