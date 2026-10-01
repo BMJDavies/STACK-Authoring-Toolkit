@@ -97,7 +97,7 @@ ta1: 0;
   </questionvariables>
   <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote><text>Shaded region prototype — static figure</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a JSXGraph shaded-region question with a board-bound input.]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>

@@ -84,7 +84,7 @@ ta1:[ta, proof_steps];
   <questionnote format="html">
     <text>\(x^2 + {@b@}x + {@c@}\), min = {@qval@} at \(x = {@-half_b@}\). Order: {@ map(first, proof_steps) @}</text>
   </questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a Parsons (proof-ordering) problem.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>

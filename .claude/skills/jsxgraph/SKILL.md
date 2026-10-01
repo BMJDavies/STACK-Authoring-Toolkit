@@ -116,7 +116,7 @@ with no `<input>`, no `<prt>` and no `<qtest>`.
   <questionvariables><text></text></questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Short note for the author dashboard</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is based on <source item> in Section <X> of <citation>.]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>

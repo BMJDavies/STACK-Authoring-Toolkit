@@ -97,7 +97,7 @@ power_err: a*x^3 + b*x^2;  /* raised each index but forgot to divide by the new 
   <questionnote format="moodle_auto_format">
     <text>Integrand {@integrand@}; antiderivative {@F@} + c.</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of an indefinite integral graded with the Int answer test, with diagnostics.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>

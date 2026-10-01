@@ -59,6 +59,40 @@ understand why, you will spot the next variant of the same problem.
   creative STACK format or escalate to a human. Silent skipping is how content
   gaps get shipped.
 
+### Record where each question comes from
+
+Every STACK question states its provenance in `<questiondescription>`.
+Students never see this field. Write it as plain text. The field is evaluated
+as CASText, so no `{@...@}` and no `[[...]]`. Use exactly one of these four
+forms:
+
+- **Direct adaptation.** The same task as a source item, possibly randomised,
+  reworded, or split into parts:
+  `This question is directly adapted from Exercise 8 in Section 3A of <citation>.`
+- **Substantial adaptation.** The source item's task has changed in kind, for
+  example a proof turned into a Parsons problem or a computational scaffold:
+  `This question is adapted from Exercise 17 in Section 3A of <citation>: <one clause saying how it was changed>.`
+- **From the text.** It tests a definition, result or example in the section's
+  text rather than an exercise:
+  `This question is based on <Example 3.3 / the definition of a linear map> in Section 3A of <citation>.`
+- **Original.** Proposed by the planner, with no source item:
+  `This question is original to this project and does not come from <citation>.`
+
+`<citation>` is the project's fixed citation string, given in `CLAUDE_loc.md`.
+In kit reference material (the showcase and prototypes), write "original to
+this kit" instead.
+
+A question built from several source items names them all, using the strongest
+form that applies (direct, then substantial, then text). Cite the book's
+**published** numbering, never position in the source file: commented-out or
+omitted items shift the file's order. Skinny STACK questions carry a note too.
+`type="description"` items have no such field.
+
+Why: authors and reviewers need to see at a glance which questions are the
+book's and which are ours, both to check fidelity to the source and for rights.
+The fixed wording makes them searchable: `grep "directly adapted"` lists every
+direct adaptation.
+
 ---
 
 ## Content formatting

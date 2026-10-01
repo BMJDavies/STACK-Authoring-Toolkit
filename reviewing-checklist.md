@@ -12,6 +12,11 @@ records in the feedback document.
 
 ## Question settings
 
+- [ ] **Provenance note.** Every STACK question's `<questiondescription>`
+      uses one of the four forms in the style guide ("Record where each
+      question comes from"), with the project's citation verbatim. It matches
+      the plan's source inventory, and any exercise number is the book's
+      published number, not a file position.
 - [ ] `multiplicationsign` is `none`, not `dot` or `cross`
 - [ ] `<prtcorrect>`, `<prtpartiallycorrect>`, `<prtincorrect>` use the
       `[[commonstring]]` defaults, with no hardcoded text or icons (style guide,
