@@ -75,7 +75,7 @@
   <penalty>0.1</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2024032401</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 /* Design backwards: choose nice integer antiderivative coefficients,

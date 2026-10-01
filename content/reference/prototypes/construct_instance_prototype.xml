@@ -58,7 +58,7 @@
   <penalty>0</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2020120600</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 /* The target PROPERTY, not a model answer. Many quadratics satisfy it. */
