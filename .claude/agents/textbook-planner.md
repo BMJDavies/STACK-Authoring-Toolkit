@@ -118,6 +118,10 @@ Created: YYYY-MM-DD
 ### Page 1: <what this page covers>
 
 #### Item 1: <source reference>. <brief description>
+- **Provenance**: <direct | substantial: how | text | original>, with the
+  exact published reference (e.g. "direct: Exercise 8, Section 3A"; "text:
+  the linear map lemma (3.4)"). The author copies it into
+  `<questiondescription>` using the style guide's wording.
 - **P/S type**: <1-8>
 - **Type**: <STACK question type, or "description">
 - **Format**: <algebraic input / numerical / dropdown / multi-input>

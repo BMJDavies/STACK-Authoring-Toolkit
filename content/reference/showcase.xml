@@ -86,7 +86,7 @@ ta2: dyb / dxb;
   <questionnote format="moodle_auto_format">
     <text>Line A: ({@x1a@},{@y1a@}) to ({@x2a@},{@y2a@}), gradient {@ta1@}. Line B: ({@x1b@},{@y1b@}) to ({@x2b@},{@y2b@}), gradient {@ta2@}.</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a basic algebraic-input question with one PRT per part.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
@@ -183,7 +183,7 @@ ta4: (y1b + y2b) / 2;
   <questionnote format="moodle_auto_format">
     <text>(a) ({@x1a@},{@y1a@}) to ({@x2a@},{@y2a@}) mid ({@ta1@},{@ta2@}). (b) ({@x1b@},{@y1b@}) to ({@x2b@},{@y2b@}) mid ({@ta3@},{@ta4@}).</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a multi-part question whose PRT checks two inputs in turn.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
@@ -304,7 +304,7 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
   </questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Worked: x^2+{@b1@}x+{@c1@}={@ta1@}; Exercise: x^2+{@b2@}x+{@c2@}={@ta2@}</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a faded worked example.]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
@@ -503,7 +503,7 @@ ta4: 8;
   <questionnote format="moodle_auto_format">
     <text>Q1 faded: c=16, disc=k^2-64, k &lt;= -8 or k &gt;= 8</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of fill-in-the-blanks.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
@@ -619,7 +619,7 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
   </questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>x^2+{@b1@}x+{@c1@}={@ta1@}, min={@ta2@}, crossings={@ta3_num@}</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of multiple choice and dropdown inputs.]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
@@ -901,7 +901,7 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
   <questionnote format="html">
     <text>Parsons: x^2 + kx + 2k = 0 real roots. Order: {@ map(first, proof_steps) @}</text>
   </questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a Parsons (proof-ordering) problem.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
@@ -1048,7 +1048,7 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
   <questionnote format="moodle_auto_format">
     <text>Reading comprehension on Example 7: sign analysis of k(2-k), k=3 no real roots</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of reading comprehension.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
@@ -1135,7 +1135,7 @@ ta2: r2;
   </questionvariables>
   <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote><text>\({@expand(expr)@} = 0\), solutions \(x = {@r1@}\) and \(x = {@r2@}\)</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of randomisation with constraints.]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
@@ -1301,7 +1301,7 @@ ta_set: {ta1, ta2};
   <questionvariables><text></text></questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>JSXGraph figure: y = x^2 + x - 6</text></questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of a zero-mark JSXGraph figure (skinny STACK).]]></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
   <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
   <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>

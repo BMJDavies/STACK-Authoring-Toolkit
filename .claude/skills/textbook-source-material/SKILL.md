@@ -71,6 +71,12 @@ description, or as an explicitly flagged item that cannot be adapted, with a
 stated reason. Silently skipping is not an option: it is how content gaps ship
 unnoticed.
 
+Record each item's **published** reference (Exercise 8, Example 3.3, the result
+numbered 3.4), not its position in the source file. Commented-out, omitted or
+"not in the published book" items shift file order. Note any you find,
+because every question's provenance note cites these references (style guide:
+"Record where each question comes from").
+
 The counts need not match. A source with exercises tends to map one-to-one; a
 source that teaches through worked examples and puts its exercises at the end of
 a chapter maps one-to-many, because a sub-topic otherwise yields no interactive

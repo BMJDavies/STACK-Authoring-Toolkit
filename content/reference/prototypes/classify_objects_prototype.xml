@@ -91,7 +91,7 @@ opt4: [["sp4", false, "Has a stationary point"], ["no4", true,  "No stationary p
   <questionnote format="html">
     <text>Classify: x^2-4x (SP), 3x+2 (none), x^2+1 (SP), 5-2x (none).</text>
   </questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of classifying objects with a diagnostic for a named misconception.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>

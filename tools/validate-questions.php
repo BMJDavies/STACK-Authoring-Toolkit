@@ -168,6 +168,15 @@ foreach ($question_ids as $qid) {
                         echo "    $prtname: score={$state->score} (exp {$state->expectedscore}), note={$state->answernote} (exp {$state->expectedanswernote})\n";
                     }
                 }
+                // passed() also fails on these two, which the loop above never shows.
+                if (!empty($result->emptytestcase)) {
+                    echo "    empty test case (no inputs and no expectations)\n";
+                }
+                // STACK keys runtime errors by message (message => true).
+                foreach ((array) $result->runtimeerrors as $key => $err) {
+                    $msg = is_string($err) ? $err : $key;
+                    echo "    runtime error: " . trim(strip_tags($msg)) . "\n";
+                }
             }
         }
     }

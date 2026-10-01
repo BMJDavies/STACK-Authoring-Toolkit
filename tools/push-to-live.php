@@ -229,8 +229,30 @@ function question_group($name) {
     return $name; // single-part questions are their own group
 }
 
+// Helper: explicit page code in the name, e.g. "3A_P04b_Products" -> "04".
+// When EVERY slot carries one, pages follow the codes (renumbered 1, 2, 3...
+// in slot order) and the count-based logic below is skipped entirely.
+function page_code($name) {
+    if (preg_match('/_P(\d+)[a-z]?_/', $name, $m)) {
+        return $m[1];
+    }
+    return null;
+}
+
 $count = count($slot_info);
-for ($i = 0; $i < $count; $i++) {
+$codes = array_map(function($s) { return page_code($s['name']); }, $slot_info);
+$use_page_codes = $count > 0 && !in_array(null, $codes, true);
+
+for ($i = 0; $use_page_codes && $i < $count; $i++) {
+    if ($i === 0 || $codes[$i] !== $codes[$i-1]) {
+        $page++;
+    }
+    if ($slot_info[$i]['slot_rec']->page != $page) {
+        $DB->set_field('quiz_slots', 'page', $page, ['id' => $slot_info[$i]['slot_rec']->id]);
+    }
+}
+
+for ($i = 0; !$use_page_codes && $i < $count; $i++) {
     $info = $slot_info[$i];
     $is_desc = ($info['qtype'] === 'description');
     $prev_was_desc = ($i > 0) ? ($slot_info[$i-1]['qtype'] === 'description') : false;
