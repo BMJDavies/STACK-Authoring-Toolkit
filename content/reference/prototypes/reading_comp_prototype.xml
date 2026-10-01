@@ -96,7 +96,7 @@ ta_opts6: [["No", true], ["Yes", false]];
   <questionnote format="html">
     <text>\({@quad_expr@}\), min = {@qval@}. Counter c = {@c_counter@}, counter qval = {@qval_counter@}.</text>
   </questionnote>
-  <questiondescription format="html"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of reading comprehension.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>

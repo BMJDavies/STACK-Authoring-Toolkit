@@ -59,6 +59,8 @@ Required elements:
 - `<questionvariables>` with Maxima code, including the teacher's answer `ta1` corresponding to input `ans1`.
 - `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
 - `<questionnote>` showing the randomised variant, including ALL random values
+- `<questiondescription>` with the provenance note (style guide: "Record where
+  each question comes from")
 - At least one `<input>` and one `<prt>`
 - At least **two** `<qtest>` cases (correct scores 1, wrong scores 0)
 - `<generalfeedback>` with the worked solution

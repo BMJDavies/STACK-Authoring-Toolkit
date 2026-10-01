@@ -73,7 +73,7 @@ samplean: x^2 + 5*x + 4;
   <questionnote format="moodle_auto_format">
     <text>Construct: quadratic in x with discriminant {@target@}. Property-checked PRT (many correct answers); sample answer {@samplean@}.</text>
   </questionnote>
-  <questiondescription format="moodle_auto_format"><text></text></questiondescription>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of constructing an instance with a given property, graded by checking the property.]]></text></questiondescription>
   <questionsimplify>1</questionsimplify>
   <assumepositive>0</assumepositive>
   <assumereal>0</assumereal>
