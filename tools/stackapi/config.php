@@ -55,10 +55,10 @@ $CFG->maximacommandserver = getenv('MAXIMA_URL') ?: 'http://maxima:8080/maxima';
 $CFG->maximalocalfolder = $CFG->dataroot . 'maxima/';
 
 // Type (int).
-// Raised from 10 -> 40: the stackapi image is amd64-only and runs under
-// Rosetta emulation on Apple Silicon, so CAS calls are slower and the stock
-// 10s limit produces false-fail timeouts under load. 40s gives headroom.
-$CFG->castimeout = 40;
+// Raised from 10: the stackapi image is amd64-only and runs under emulation on
+// Apple Silicon, where the stock 10s limit produces false-fail timeouts under
+// load. goemaxima caps requests at 30s, so there is no point going higher.
+$CFG->castimeout = 30;
 $CFG->casdebugging = 1;
 $CFG->casresultscache = 'none';
 $CFG->maximalibraries = '';
@@ -97,9 +97,15 @@ $CFG->inputcheckanswertype = 1;
 $CFG->inputmustverify = 1;
 $CFG->inputshowvalidation = 1;
 
-// These should match the version of goemaxima in docker-compose.
+// Stackmaximaversion and version must match. Set
+// them to the version of goemaxima in docker-compose.
 $CFG->stackmaximaversion = "2026062900";
 $CFG->version = "2026062900";
+
+// This is an optional api identifier. In most cases this will match your stack version.
+// Versions of the API may be released between STACK releases, based on tags of the
+// api-maintenance branch. Whatever is set here will be output by the render route.
+$CFG->apiversion = "2026062900-2";
 
 // Do not change this setting.
 $CFG->mathsdisplay = 'api';
@@ -112,4 +118,10 @@ $CFG->httpsurl = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.j
 // URL of your site making requests to the API. Leave as wildcard to allow browser requests from anywhere.
 $CFG->corsorigin = '*';
 
+// Languages the API supports. These STACK language packs will be downloaded from Moodle on Docker production build.
+// Language will default to English. An attempt will be made to install parent languages as well,
+// so if you put 'pt_br_wp' there will be fallback to 'pt_br' and 'pt' before English. If you include '*', the API will
+// attempt to download language packs when needed. If they don't exist, empty /lang/[lang]/qtype_stack.php files will be
+// created. If a language pack later becomes available, you will need to delete the empty file or restart your container
+// to download it.
 $CFG->supportedlanguages = 'en,de';
