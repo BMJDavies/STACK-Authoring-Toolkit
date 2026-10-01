@@ -157,11 +157,51 @@ docker exec <webserver-container> bash -c \
     "apt-get update && apt-get install -y maxima-sage gnuplot"
 ```
 
-**Use `maxima-sage`, not `maxima`, on Apple Silicon.** The standard `maxima`
-package segfaults on ARM. `maxima-sage` uses the ECL backend and works. This
-cost a day before it was diagnosed. It also means `platform` stays `linux`
-rather than `linux-optimised`, so expect a slower CAS: STACK cannot build its
-prebuilt Maxima image against ECL.
+**Use `maxima-sage`, not `maxima`.** The standard Debian `maxima` package is
+built on GCL, and it segfaults inside a Docker container on Apple Silicon and on
+x86 Linux alike, even on `maxima --version`. On x86 the cause is confirmed: GCL
+calls `personality()` to disable address randomisation, and Docker's default
+seccomp profile blocks that call (`setarch -R` fails with "Operation not
+permitted"). `maxima-sage` uses the ECL backend and works. This cost a day
+before it was diagnosed.
+
+The price is speed. STACK can prebuild a Maxima image (`linux-optimised`) only
+for GCL, SBCL or CLISP, not ECL, so `platform` stays `linux`. That means every
+CAS call starts a fresh Maxima and reloads the STACK libraries. It barely shows
+on the showcase. A full section with multi-node PRTs can take an hour or more
+to validate.
+
+**Recommended: run the CAS as a separate goemaxima server instead.** This is
+how production STACK sites run, it survives recreating the Moodle containers,
+and it needs nothing installed inside them. The image tag must match your STACK
+version (`$plugin->version` in `question/type/stack/version.php`):
+
+```bash
+docker run -d --name moodle-goemaxima --network <moodle-network> \
+    --restart unless-stopped --read-only --tmpfs /tmp \
+    --cap-drop ALL --cap-add SETGID --cap-add SETUID \
+    -e GOEMAXIMA_QUEUE_LEN=32 mathinstitut/goemaxima:<stack-version>-latest
+
+cd $MOODLE_DOCKER_WWWROOT
+for kv in platform=server \
+          maximacommandserver=http://moodle-goemaxima:8080/goemaxima; do
+    docker exec <webserver-container> php admin/cli/cfg.php \
+        --component=qtype_stack --name="${kv%%=*}" --set="${kv#*=}"
+done
+docker exec <webserver-container> \
+    php question/type/stack/cli/clearcascache.php
+```
+
+`<moodle-network>` is the network your webserver is on:
+`docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}' <webserver-container>`
+(for moodle-docker it is usually `moodle-docker_default`). On one x86 machine
+this cut the showcase from 51 to 20 seconds, and a 28-item section from over an
+hour to about two minutes. The image is amd64-only, so on Apple Silicon it runs
+under emulation (see section 8). When you upgrade STACK, replace the container
+with the matching tag, or every question fails with a library-version error.
+
+Keep `maxima-sage` installed as the fallback. The `linux` settings below still
+apply if you ever switch `platform` back.
 
 Then tell STACK how to reach it. A CLI install writes none of these settings,
 and without them the CAS fails with "tried to get the value from of an
@@ -212,7 +252,9 @@ Restarting containers (`stop` then `start`) is safe and changes nothing.
 Recreating them (`down` then `up`, or a rebuild) wipes everything installed by
 hand inside them, which means Maxima and the custom theme. You will have to
 redo steps 4 and 7. The symptom is that every STACK question suddenly fails
-with a CAS error, which looks alarming and is not.
+with a CAS error, which looks alarming and is not. With the goemaxima server,
+the CAS survives, because it is its own container and the settings are in the
+database. Only the theme needs redoing.
 
 ---
 

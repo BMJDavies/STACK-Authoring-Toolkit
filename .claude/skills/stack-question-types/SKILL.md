@@ -26,8 +26,7 @@ description: Reference for STACK question types, XML skeletons, PRT patterns and
 | Indefinite integral, antidifferentiation | `stack` + algebraic, `Int` PRT | Copy `integration_with_antidiff_prototype.xml`. Do NOT use `Antidiff` / `AddConst`: see style guide. |
 | Figure or worked example with no input | `stack` with no input, PRT or qtest | "Skinny STACK". A `description` renders `[[jsxgraph]]` as literal text. |
 
-When in doubt, copy a question of the same shape out of
-`content/reference/showcase.xml`.
+When in doubt, copy a question of the same shape out of `content/reference/showcase.xml`.
 
 **Question-type variety.** Most routine practice is Pointon and Sangwin type 1
 or 2 (recall, routine calculation), which is fine. But every self-check quiz
@@ -57,7 +56,7 @@ surrounding boilerplate stays exactly as it is.
 
 Required elements:
 
-- `<questionvariables>` with Maxima code, including the teacher's answer `ta`
+- `<questionvariables>` with Maxima code, including the teacher's answer `ta1` corresponding to input `ans1`.
 - `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
 - `<questionnote>` showing the randomised variant, including ALL random values
 - At least one `<input>` and one `<prt>`
@@ -73,15 +72,14 @@ Settings, input configuration, display and randomisation rules are all in
 
 ### Pattern 1: algebraic (AlgEquiv)
 
-Node 0: `AlgEquiv(ans1, ta)`, true scores 1, false scores 0.
+Node 0: `AlgEquiv(ans1, ta1)`, true scores 1, false scores 0.
 Set `forbidfloat=1` where the answer must be exact.
 
-Note that this is form-blind. If the stem says "expand" or "factorise", see the
-form-check recipes in the style guide.
+Note that this is form-blind. If the stem says "expand" or "factorise", see the form-check recipes in the style guide.
 
 ### Pattern 2: numerical (NumDecPlaces)
 
-Node 0: `NumDecPlaces(ans1, ta, N)` where N is the required decimal places.
+Node 0: `NumDecPlaces(ans1, ta1, N)` where N is the required decimal places.
 Set `forbidfloat=0`, `requirelowestterms=0`.
 
 ### Pattern 3: dropdown (mcq_correct)
@@ -100,8 +98,7 @@ Test values: correct is `first(mcq_correct(ta1))`, wrong is
 ### Pattern 4: multi-input, independent PRTs
 
 One input and one PRT per part. Each PRT `value` is 1, `defaultgrade` is 1, and
-Moodle distributes the weight. Name them in aligned pairs: `ans1`/`prt1`,
-`ans2`/`prt2`.
+Moodle distributes the weight. Name them in aligned pairs: `ans1`/`prt1`, `ans2`/`prt2`.
 
 ### Pattern 5: multi-input, dependent PRTs
 
@@ -128,8 +125,7 @@ Match the structure in `content/reference/showcase.xml`.
 
 ## Proof and "show that" patterns
 
-All three involve editorial decisions about scaffolding level. Flag them for
-human review.
+All three involve editorial decisions about scaffolding level. Flag them for human review.
 
 ### Pattern 6: faded worked example
 
@@ -164,6 +160,7 @@ proof_steps: [
 proof_steps: random_permutation(proof_steps);
 
 ta: proof("key1", "key2");
+ta1:[ta, proof_steps];
 ```
 
 Question text:
@@ -177,7 +174,7 @@ Question text:
 [[input:ans1]] [[validation:ans1]]
 ```
 
-Input: type `parsons`, tans `[ta, proof_steps]`, `mustverify` 0,
+Input: type `parsons`, tans `ta1`, `mustverify` 0,
 `showvalidation` 0.
 
 PRT feedback variables:

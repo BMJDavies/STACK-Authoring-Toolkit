@@ -296,6 +296,17 @@ actually varies with the seed.
 Tooling: `tools/audit-test-inputs.sh` flags hardcoded test inputs in randomised
 questions. Run it before approving anything.
 
+### Careful use of answertest-generated feedback
+
+Answer tests can produce feedback of their own.  Sometimes this is meaningful to the students, 
+but sometimes it is an artefact of the question setup and should not be used.
+
+For each node of each PRT decide if the answertest feedback is meaningful or not. If the answertest feedback is not meaingful then choose the `quiet=yes` option in the PRT node.
+
+- If the answer test applies directly to the student's answer then the feedback from the answertest is likely to be meaningful.
+- If the answer test is applied to a variable constructed from many inputs, then the feedback from the answertest is unlikely to be meaninful.
+
+
 ### False branch feedback is mandatory
 
 Every false branch needs non-empty feedback: a hint towards the correct method,
