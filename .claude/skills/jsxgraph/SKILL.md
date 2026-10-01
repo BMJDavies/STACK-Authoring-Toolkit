@@ -117,9 +117,9 @@ with no `<input>`, no `<prt>` and no `<qtest>`.
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Short note for the author dashboard</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text><![CDATA[<span class="correct">Correct!</span>]]></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text><![CDATA[<span class="partiallycorrect">Your answer is partially correct.</span>]]></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text><![CDATA[<span class="incorrect">Incorrect.</span>]]></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>none</multiplicationsign>
