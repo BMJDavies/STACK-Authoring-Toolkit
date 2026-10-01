@@ -148,9 +148,11 @@ tell whether it is progressing, abort the poll after two minutes and re-run in
 the foreground.
 
 Expect a first-pass failure on any test case whose PRT you gave a new diagnostic
-node: the terminal answer note changed. The failure output shows the actual
-note. Update `<expectedanswernote>` to the new terminal note and add a case that
-exercises the diagnostic path. Then re-run: everything must pass across all
+node: its route changed. The failure output shows the actual trail. Update
+`<expectedanswernote>` to the new full route (node notes in order, no `AT...`
+notes, no brackets; see the style guide) only after confirming that the new
+route is the one you intended. Then add a case that exercises the diagnostic
+path. Then re-run: everything must pass across all
 seeds and all cases.
 
 If a test still fails, fix the cause, not the expectation. If you cannot resolve

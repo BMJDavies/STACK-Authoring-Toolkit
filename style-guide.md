@@ -273,6 +273,24 @@ Why: the strings then follow the site's language and STACK's own styling, and
 one change in Moodle updates every question. Hardcoded copies drift and cannot
 be translated.
 
+### Where the PRT feedback tag goes
+
+- **One PRT:** put `[[feedback:prt1]]` in `<specificfeedback>`, and nowhere in
+  the question text.
+- **Several PRTs:** put each `[[feedback:prtN]]` inline, after the inputs for
+  its part, and leave `<specificfeedback>` empty.
+- Each tag appears exactly once. STACK marks a question broken on import if the
+  question text and specific feedback together contain a tag twice, and the
+  fast validator does not catch this.
+- Never put a feedback tag inside a hidden element, such as the
+  `<div style="display:none;">` that holds a JSXGraph-bound input. Students
+  would never see the feedback.
+
+Why: Moodle's quiz settings control when specific feedback is shown (the
+review options and the question behaviour). A tag in the question text bypasses
+that control. A multi-part question needs each part's feedback next to the part
+it is about, which only an inline tag can do.
+
 ### Parametric references everywhere
 
 Anywhere a value depends on a randomised question variable (test inputs,
@@ -392,11 +410,11 @@ Three traps when adding a diagnostic:
    if `ta+1` happens to equal your diagnostic target there. After adding a
    diagnostic, re-read every qtest in that question.
 3. **Make the matched branch terminal.** Set the diagnostic's true-branch
-   `nextnode` to -1. STACK compares the expected answer note against the
-   terminal note of the traversal, so if the diagnostic routes onward the
-   terminal note becomes a later node's and the test fails even though the
-   diagnostic fired correctly. It is also better pedagogy to stop once the
-   misconception is identified.
+   `nextnode` to -1. It is better pedagogy to stop once the misconception is
+   identified. Then add the diagnostic to the route of every test that passes
+   through it (see "`<expectedanswernote>` is the full route through the
+   PRT"). Inserting the node changes the route of the existing wrong-answer
+   test too.
 
 ### The diagnostic must be reachable and distinct on every seed
 
@@ -413,18 +431,56 @@ drift apart.
 contribution to the question total. Correct cases use `1.0000000`, wrong cases
 `0.0000000`. Never fractional.
 
-### `<expectedanswernote>` must be the terminal leaf note
+### `<expectedanswernote>` is the full route through the PRT
 
-STACK compares the expected note against the **last** note in the response's
-trail; the comparator pops the list. So for a response that goes node 1 false
-then node 2 false, the expected note is `prt1-2-F`. Never the first note
-(`prt1-1-F`) and never the full trail (`prt1-1-F | prt1-2-F`).
+Since STACK 4.13.0 a test's expected answer note can specify the route through
+the tree, not just where it ends (STACK docs: `STACK_question_admin/Testing.md`,
+"Answer note expectation construction"). Use this in every test. For each PRT,
+list the answer note of **every node the response visits, in order**, separated
+by ` | `:
 
-Both wrong forms fail confusingly, because the validator prints the full trail
-for both actual and expected, so a full-trail expectation looks identical to the
-actual output and still fails. This costs two fix rounds if you do not read the
-plugin source. Re-check it whenever inserting a node shifts what used to be the
-terminal note.
+    <expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote>
+
+Why: a terminal note alone cannot tell routes apart that end at the same leaf.
+In Showcase 3, prt1 checks the x-coordinate, then the y-coordinate, and both
+branches of the x node lead to the y node. "x right, y wrong" and "both wrong"
+both end at `prt1-2-F`. Only the routes `prt1-1-T | prt1-2-F` and
+`prt1-1-F | prt1-2-F` distinguish them. A test that pins the whole route also
+catches a mis-wired `nextnode`, which a terminal-only test passes silently.
+
+How STACK matches (`questiontestresult.php`, `test_answer_note`):
+
+- The expected notes must all appear in the actual trail **in order**. Extra
+  actual notes are condoned.
+- The **last** expected note must equal the last actual note. This end anchor
+  is the default, written `(...]`.
+- Leave off the brackets: write the bare list. **Do not start-anchor** with
+  `[...]`. The trail also contains the answer test's own notes
+  (`ATAlgEquiv_String | prt1-1-F`, `ATSet_wrongentries. | prt1-1-F`), even
+  on quiet nodes. They usually come first, so a start anchor fails.
+- **Never put answer-test notes (`AT...`) in the expectation.** They depend on
+  the input and are not part of the route you designed.
+- Special values: `NULL` means the PRT did not fire (invalid or blank input).
+  `prt1-bail` means it bailed out in the feedback variables, and is never
+  anchored. `()` accepts anything, so never use it in this kit.
+- A single-node PRT has a one-note route (`prt1-1-T`), which is the same as the
+  old form.
+
+The route comes from the design, never from the validator's output. Write the
+route the plan intends, and let the validator confirm it. Copying the actual
+trail back into the test turns it into a snapshot that tests nothing. When a
+route test fails, the output shows `note=<actual trail> (exp <your route>)`.
+Decide which one is wrong (the test or the tree) before changing either.
+
+Answer notes are matched as exact strings, so every node's `trueanswernote`
+and `falseanswernote` must be unique within its PRT. The `prtN-K-T/F`
+convention guarantees this.
+
+Re-check every route in a question whenever you insert, remove or re-wire a
+node.
+
+Older questions with single terminal notes still pass, because a bare note is
+read as `(note]`. Upgrade them when you next touch the question.
 
 ### Wrong test cases use offsets, not independent values
 
@@ -439,7 +495,9 @@ be a completely wrong answer.
 ### Test every leaf path
 
 If a PRT has a diagnostic node, include a test case that exercises that specific
-path, not just correct and completely-wrong. Aim for one test case per leaf.
+path, not just correct and completely-wrong. Aim for one test case per distinct
+route, not just per leaf. Where two routes reach the same leaf (as in
+Showcase 3), each needs its own test, with its own full-route expectation.
 
 ### Non-tautological test inputs
 

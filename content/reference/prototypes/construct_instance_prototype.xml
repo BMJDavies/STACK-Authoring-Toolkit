@@ -43,7 +43,7 @@
     <text><![CDATA[
 <p>Give a quadratic expression in \(x\) whose <strong>discriminant</strong> is equal to \({@target@}\).</p>
 <p>There are infinitely many correct answers. Type any quadratic you like that works, for example in the form <code>x^2+5*x+4</code>.</p>
-<div>Quadratic: [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+<div>Quadratic: [[input:ans1]] [[validation:ans1]] </div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -113,15 +113,15 @@ disc: B^2 - 4*A*C;
 
   <qtest><testcase>1</testcase><description>Correct: x^2+5x+4, discriminant 25-16=9</description>
     <testinput><name>ans1</name><value>x^2+5*x+4</value></testinput>
-    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-T</expectedanswernote></expected>
   </qtest>
   <qtest><testcase>2</testcase><description>Correct alternative form: x^2-3x, discriminant 9-0=9</description>
     <testinput><name>ans1</name><value>x^2-3*x</value></testinput>
-    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-T</expectedanswernote></expected>
   </qtest>
   <qtest><testcase>3</testcase><description>Wrong quadratic: x^2+x+1, discriminant 1-4=-3 (wrong-discriminant branch)</description>
     <testinput><name>ans1</name><value>x^2+x+1</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-F</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote></expected>
   </qtest>
   <qtest><testcase>4</testcase><description>Not a quadratic: 3x+2 (not-a-quadratic branch)</description>
     <testinput><name>ans1</name><value>3*x+2</value></testinput>

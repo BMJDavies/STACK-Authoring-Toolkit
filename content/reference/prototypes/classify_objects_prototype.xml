@@ -54,7 +54,6 @@
   <li><div>\(f(x) = x^2 + 1\) &nbsp; [[input:ans3]] [[validation:ans3]]</div></li>
   <li><div>\(f(x) = 5 - 2x\) &nbsp; [[input:ans4]] [[validation:ans4]]</div></li>
 </ol>
-<div>[[feedback:prt1]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -88,7 +87,7 @@ opt3: [["sp3", true,  "Has a stationary point"], ["no3", false, "No stationary p
 opt4: [["sp4", false, "Has a stationary point"], ["no4", true,  "No stationary point"]]; /* 5 - 2x  */
     ]]></text>
   </questionvariables>
-  <specificfeedback format="html"><text></text></specificfeedback>
+  <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote format="html">
     <text>Classify: x^2-4x (SP), 3x+2 (none), x^2+1 (SP), 5-2x (none).</text>
   </questionnote>
@@ -195,7 +194,7 @@ lin_err: if (is(ans2 = "sp2") or is(ans4 = "sp4")) then 1 else 0;
     <testinput><name>ans2</name><value>first(mcq_incorrect(opt2))</value></testinput>
     <testinput><name>ans3</name><value>first(mcq_correct(opt3))</value></testinput>
     <testinput><name>ans4</name><value>first(mcq_correct(opt4))</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-T</expectedanswernote></expected>
   </qtest>
   <qtest>
     <testcase>3</testcase>
@@ -204,7 +203,7 @@ lin_err: if (is(ans2 = "sp2") or is(ans4 = "sp4")) then 1 else 0;
     <testinput><name>ans2</name><value>first(mcq_correct(opt2))</value></testinput>
     <testinput><name>ans3</name><value>first(mcq_correct(opt3))</value></testinput>
     <testinput><name>ans4</name><value>first(mcq_correct(opt4))</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-F</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote></expected>
   </qtest>
 </question>
 
