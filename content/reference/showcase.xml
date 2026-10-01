@@ -60,7 +60,7 @@
   <penalty>0.1</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2020120600</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 /* Line A */
@@ -159,7 +159,7 @@ ta2: dyb / dxb;
   <penalty>0.1</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2020120600</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 /* Part (a): even sums so mid-point is integer */
@@ -276,7 +276,7 @@ ta4: (y1b + y2b) / 2;
   <penalty>0</penalty>
   <hidden>0</hidden>
   <stackversion>
-    <text>2024032401</text>
+    <text>2026080600</text>
   </stackversion>
   <questionvariables>
     <text>
@@ -490,7 +490,7 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
   <penalty>0.1</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2020120600</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 ta1: 16;
@@ -592,7 +592,7 @@ ta4: 8;
   <penalty>0</penalty>
   <hidden>0</hidden>
   <stackversion>
-    <text>2024032401</text>
+    <text>2026080600</text>
   </stackversion>
   <questionvariables>
     <text>
@@ -875,7 +875,7 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
   <hidden>0</hidden>
   <idnumber></idnumber>
   <stackversion>
-    <text>2024092500</text>
+    <text>2026080600</text>
   </stackversion>
   <questionvariables>
     <text><![CDATA[
@@ -1030,7 +1030,7 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
   <penalty>0.1</penalty>
   <hidden>0</hidden>
   <idnumber></idnumber>
-  <stackversion><text>2020120600</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[
 opt1a: "The product of two factors is negative when one is positive and the other is negative";
@@ -1118,7 +1118,7 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
   <penalty>0</penalty>
   <hidden>0</hidden>
   <stackversion>
-    <text>2024032401</text>
+    <text>2026080600</text>
   </stackversion>
   <questionvariables>
     <text>
@@ -1297,7 +1297,7 @@ ta_set: {ta1, ta2};
   <defaultgrade>0</defaultgrade>
   <penalty>0</penalty>
   <hidden>0</hidden>
-  <stackversion><text>2024032401</text></stackversion>
+  <stackversion><text>2026080600</text></stackversion>
   <questionvariables><text></text></questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>JSXGraph figure: y = x^2 + x - 6</text></questionnote>
