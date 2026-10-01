@@ -220,16 +220,24 @@ ta4: (y1b + y2b) / 2;
     <testinput><name>ans2</name><value>ta2</value></testinput>
     <testinput><name>ans3</name><value>ta3</value></testinput>
     <testinput><name>ans4</name><value>ta4</value></testinput>
-    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
-    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-2-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T | prt1-2-T</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T | prt2-2-T</expectedanswernote></expected>
   </qtest>
   <qtest><testcase>2</testcase><description>All wrong — forgot to divide by 2</description>
     <testinput><name>ans1</name><value>ta1 + 100</value></testinput>
     <testinput><name>ans2</name><value>ta2 + 100</value></testinput>
     <testinput><name>ans3</name><value>ta3 + 100</value></testinput>
     <testinput><name>ans4</name><value>ta4 + 100</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-2-F</expectedanswernote></expected>
-    <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-2-F</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-F</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>3</testcase><description>Mixed: (a) x right, y wrong; (b) x wrong, y right. The two routes end at the same leaves as test 2 and test 1, so only the route tells them apart.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>ta2 + 100</value></testinput>
+    <testinput><name>ans3</name><value>ta3 + 100</value></testinput>
+    <testinput><name>ans4</name><value>ta4</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.5000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-T | prt1-2-F</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>0.5000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote></expected>
   </qtest>
 </question>
 
@@ -1095,7 +1103,7 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
     <text><![CDATA[
 <p class="tb-exercise">Exercise</p>
 <p>Solve \({@expand(expr)@} = 0\).</p>
-<p>\(x =\) [[input:ans1]] [[validation:ans1]] and \(x =\) [[input:ans2]] [[validation:ans2]] [[feedback:prt1]]</p>
+<p>\(x =\) [[input:ans1]] [[validation:ans1]] and \(x =\) [[input:ans2]] [[validation:ans2]]</p>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -1125,7 +1133,7 @@ ta1: r1;
 ta2: r2;
     </text>
   </questionvariables>
-  <specificfeedback format="html"><text></text></specificfeedback>
+  <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote><text>\({@expand(expr)@} = 0\), solutions \(x = {@r1@}\) and \(x = {@r2@}\)</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>

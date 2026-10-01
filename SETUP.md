@@ -363,6 +363,12 @@ grep 'image:' tools/stackapi/docker-compose.yml
 A mismatch does not always fail loudly. It can pass everything and still be
 grading against different random sequences than your Moodle will.
 
+**Never pin below STACK 4.13.0 (2026062900), in Moodle or in these images.**
+The style guide requires question tests to give the full route through each PRT
+(`prt1-1-F | prt1-2-T`). This form was added in 4.13.0. Older STACK compares
+only a single final note, so every route-style test fails there, even though
+the question itself is fine.
+
 Both images are amd64-only, so on Apple Silicon they run under emulation. That
 is why `tools/stackapi/config.php` raises the CAS timeout to 40 seconds: the
 stock 10 would produce false timeouts.

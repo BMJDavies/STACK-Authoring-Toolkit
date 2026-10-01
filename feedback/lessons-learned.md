@@ -23,7 +23,20 @@ applies.
 
 ## Open entries
 
-(none yet)
+### Answer-test notes are in the trail, even on quiet nodes
+
+A route expectation lists node notes only, with no `[` start anchor. The actual
+trail interleaves the answer test's own notes, e.g.
+`ATAlgEquiv_String | prt1-1-F | ATAlgEquiv_String | prt1-2-F` on string or
+MCQ comparisons, and `ATSet_wrongentries. | prt1-1-F` on sets. They usually come
+first, and `<quiet>1</quiet>` does not remove them: it hides feedback, not
+notes.
+
+Why: found on 2026-10-01 while moving to STACK 4.13 route expectations. A
+start-anchored `[prt1-1-F | prt1-2-F]` fails against such a trail, even though
+the route is right.
+Where: every `<expectedanswernote>`. It is already folded into the style-guide
+rule, so this entry records the evidence behind it.
 
 <!--
 Format:

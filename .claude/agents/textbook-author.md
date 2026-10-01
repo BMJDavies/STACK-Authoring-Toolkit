@@ -84,7 +84,11 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    For any figure, use the `jsxgraph` skill.
 7. **Embed the test cases** from the plan. Every STACK question needs at least
    two `<qtest>` cases. Multi-input questions need a mixed case. PRTs with
-   diagnostic nodes need a case per leaf path.
+   diagnostic nodes need a case per distinct route. Each
+   `<expectedanswernote>` is the full route the plan gives (node notes in
+   order, no `AT...` notes, no brackets; see the style guide). If a route
+   test fails, decide whether the tree or the plan's route is wrong. Never
+   copy the actual trail into the test to make it pass.
 8. **Validate.** Run `tools/api-check.sh content/drafts/<file>.xml`. This is the
    fast loop: seconds per question, no Moodle import, safe to run alongside
    other work. Read the failures, fix, re-run. Loop until green, or until you
