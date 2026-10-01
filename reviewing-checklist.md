@@ -69,6 +69,10 @@ You cannot test every combination. Test at least a couple of examples per path.
 
 ## PRTs
 
+- [ ] **Answer-test feedback is quiet where it would mislead.** A node testing a
+      value built from several inputs, or anything other than the student's
+      raw answer, has `<quiet>1</quiet>` (style guide, "Careful use of
+      answertest-generated feedback")
 - [ ] **Every false branch has non-empty feedback**, and it hints at the method
       rather than giving the answer. Routing nodes are the exception: their
       false feedback must stay empty.
