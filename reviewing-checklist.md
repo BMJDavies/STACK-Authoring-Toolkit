@@ -14,8 +14,13 @@ records in the feedback document.
 
 - [ ] `multiplicationsign` is `none`, not `dot` or `cross`
 - [ ] `<prtcorrect>`, `<prtpartiallycorrect>`, `<prtincorrect>` use the
-  `[[commonstring]]` defaults, with no hardcoded text or icons (style guide,
-  "Standard PRT feedback uses commonstring")
+      `[[commonstring]]` defaults, with no hardcoded text or icons (style guide,
+      "Standard PRT feedback uses commonstring")
+- [ ] **Feedback tag placement.** A single-PRT question has `[[feedback:prt1]]`
+      in `<specificfeedback>` and not in the question text. A multi-PRT
+      question has each tag inline after its part. Every tag appears exactly
+      once, and never inside a hidden element (style guide, "Where the PRT
+      feedback tag goes")
 - [ ] `syntaxhint` with `syntaxattribute=1` on any input expecting `sqrt`, `pi`,
       `inf` or other non-obvious notation, and the hint is a generic placeholder
       rather than the shape of the answer
@@ -42,7 +47,12 @@ records in the feedback document.
 - [ ] Every incorrect branch
 - [ ] A mixed case for multi-input questions
 - [ ] Predictable errors (for example, repeated inputs for quadratic solutions)
-- [ ] One case per leaf path where the PRT has diagnostic nodes
+- [ ] One case per distinct route where the PRT has diagnostic nodes, including
+      routes that end at the same leaf
+- [ ] **Every `<expectedanswernote>` is the full route**: the node notes in
+      order (`prt1-1-F | prt1-2-T`), with no `AT...` notes and no `[` start
+      anchor. Check each route against the PRT's design, not against the
+      validator's output.
 - [ ] **No hardcoded literals in randomised questions.** Run
       `tools/audit-test-inputs.sh <file>`. Any flagged `<testinput>` must
       reference `ta` / `ta1` / `ta+1`, not a value that only matches one seed.

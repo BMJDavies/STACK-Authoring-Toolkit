@@ -58,7 +58,7 @@
     <text><![CDATA[
 <p>Find the indefinite integral of \({@integrand@}\) with respect to \(x\). Remember the constant of integration.</p>
 <p>Enter the constant of integration as <code>+ c</code>.</p>
-<div>\(\displaystyle \int \left({@integrand@}\right)\,\mathrm{d}x =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+<div>\(\displaystyle \int \left({@integrand@}\right)\,\mathrm{d}x =\) [[input:ans1]] [[validation:ans1]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -93,7 +93,7 @@ ddx: diff(integrand, x);   /* = 2*a*x + b : the "differentiated instead" error *
 power_err: a*x^3 + b*x^2;  /* raised each index but forgot to divide by the new index */
     ]]></text>
   </questionvariables>
-  <specificfeedback format="html"><text></text></specificfeedback>
+  <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote format="moodle_auto_format">
     <text>Integrand {@integrand@}; antiderivative {@F@} + c.</text>
   </questionnote>
@@ -239,25 +239,25 @@ power_err: a*x^3 + b*x^2;  /* raised each index but forgot to divide by the new 
     <testcase>3</testcase>
     <description>Forgot the constant of integration -> 0, hits +c diagnostic</description>
     <testinput><name>ans1</name><value>F</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-2-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-T</expectedanswernote></expected>
   </qtest>
   <qtest>
     <testcase>4</testcase>
     <description>Differentiated instead of integrated -> 0, hits differentiated diagnostic</description>
     <testinput><name>ans1</name><value>ddx</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-3-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F | prt1-3-T</expectedanswernote></expected>
   </qtest>
   <qtest>
     <testcase>5</testcase>
     <description>Raised index but did not divide by new index -> 0, hits power-rule diagnostic</description>
     <testinput><name>ans1</name><value>power_err</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-4-T</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F | prt1-3-F | prt1-4-T</expectedanswernote></expected>
   </qtest>
   <qtest>
     <testcase>6</testcase>
     <description>Completely wrong (not an antiderivative) -> 0, generic hint</description>
     <testinput><name>ans1</name><value>x^99</value></testinput>
-    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-4-F</expectedanswernote></expected>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F | prt1-3-F | prt1-4-F</expectedanswernote></expected>
   </qtest>
 </question>
 

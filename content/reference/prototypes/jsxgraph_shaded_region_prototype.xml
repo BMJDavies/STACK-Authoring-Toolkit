@@ -76,7 +76,7 @@
   });
 })();
 </script>
-<div style="display:none;">[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+<div style="display:none;">[[input:ans1]] [[validation:ans1]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html"><text></text></generalfeedback>
@@ -95,7 +95,7 @@ b: 3;
 ta1: 0;
     </text>
   </questionvariables>
-  <specificfeedback format="html"><text></text></specificfeedback>
+  <specificfeedback format="html"><text>[[feedback:prt1]]</text></specificfeedback>
   <questionnote><text>Shaded region prototype — static figure</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
   <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>

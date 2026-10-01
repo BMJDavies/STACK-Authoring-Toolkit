@@ -74,9 +74,12 @@ structure and the exact test inputs.
      error, (c) a generic fallback hint. This is the most important decision you
      make. The author implements what you write here, so a vague "add a
      diagnostic" produces a useless one.
-   - **Test cases**: what the correct and wrong inputs should be. Use offsets
-     from the teacher's answer (`ta+1`), never independent values that might
-     coincide with it.
+   - **Test cases**: what the correct and wrong inputs should be, and for
+     each one the **route** it should take through every PRT, as node notes
+     in order (`prt1-1-F | prt1-2-T`). The author writes these routes into
+     `<expectedanswernote>`, and the validator checks them against the
+     tree. Use offsets from the teacher's answer (`ta+1`), never independent
+     values that might coincide with it.
    - **Worked solution**: what it should cover, in what notation, at what level
      of detail.
    - **Figures**: what the figure shows, its key elements, whether it is
@@ -129,11 +132,11 @@ Created: YYYY-MM-DD
     "<specific hint>" and terminates. False scores 0 with the generic hint.
   - Common errors: <one or two predictable mistakes>
   - Generic false hint: "<hint towards the method>"
-- **Test cases**:
-  - Correct: <inputs>
-  - Wrong: <inputs, using offsets>
-  - Diagnostic path: <input that should hit node 1>
-  - Mixed, if multi-input: <inputs>
+- **Test cases** (each with its expected route per PRT):
+  - Correct: <inputs> -> `prt1-1-T`
+  - Wrong: <inputs, using offsets> -> `prt1-1-F | prt1-2-F`
+  - Diagnostic path: <input that should hit node 2> -> `prt1-1-F | prt1-2-T`
+  - Mixed, if multi-input: <inputs> -> <route per PRT>
 - **Worked solution**: <method, notation, level of detail>
 - **Figure**: <description, template reference>
 - **Prototype**: <path, if one applies>

@@ -116,8 +116,12 @@ fairer and it is what a human marker would do.
 4. The new node's true branch gives the specific error feedback and terminates
    (`nextnode` = -1). Its false branch gives the generic method hint.
 5. Clear node 0's `<falsefeedback>`: it is a routing node now.
-6. Update the existing wrong-answer test's `<expectedanswernote>` to the new
-   terminal note, and add a test that exercises the diagnostic path.
+6. Update the route in the existing wrong-answer test's
+   `<expectedanswernote>` (it now passes through the new node), and add a test
+   that exercises the diagnostic path. Every expectation is the full route of
+   node notes, e.g. `prt1-1-F | prt1-2-T`, with no `AT...` notes and no
+   brackets: see the style guide, "`<expectedanswernote>` is the full route
+   through the PRT".
 
 Match the structure in `content/reference/showcase.xml`.
 
