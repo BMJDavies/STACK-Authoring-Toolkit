@@ -13,6 +13,9 @@ records in the feedback document.
 ## Question settings
 
 - [ ] `multiplicationsign` is `none`, not `dot` or `cross`
+- [ ] `<prtcorrect>`, `<prtpartiallycorrect>`, `<prtincorrect>` use the
+  `[[commonstring]]` defaults, with no hardcoded text or icons (style guide,
+  "Standard PRT feedback uses commonstring")
 - [ ] `syntaxhint` with `syntaxattribute=1` on any input expecting `sqrt`, `pi`,
       `inf` or other non-obvious notation, and the hint is a generic placeholder
       rather than the shape of the answer
