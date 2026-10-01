@@ -259,6 +259,20 @@ inside a dropdown.
 
 ## PRTs and feedback
 
+### Standard PRT feedback uses commonstring
+
+`<prtcorrect>`, `<prtpartiallycorrect>` and `<prtincorrect>` take STACK's
+language-string defaults, exactly as in `content/reference/showcase.xml`:
+
+    [[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]
+
+and likewise with `partiallycorrect` and `incorrect` in place of `correct`.
+Never hardcode text, icons or colours in these three fields.
+
+Why: the strings then follow the site's language and STACK's own styling, and
+one change in Moodle updates every question. Hardcoded copies drift and cannot
+be translated.
+
 ### Parametric references everywhere
 
 Anywhere a value depends on a randomised question variable (test inputs,
