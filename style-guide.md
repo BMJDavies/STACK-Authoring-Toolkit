@@ -301,10 +301,10 @@ questions. Run it before approving anything.
 Answer tests can produce feedback of their own.  Sometimes this is meaningful to the students, 
 but sometimes it is an artefact of the question setup and should not be used.
 
-For each node of each PRT decide if the answertest feedback is meaningful or not. If the answertest feedback is not meaingful then choose the `quiet=yes` option in the PRT node.
+For each node of each PRT decide if the answertest feedback is meaningful or not. If the answertest feedback is not meaningful then choose the `quiet=yes` option in the PRT node (in the XML, `<quiet>1</quiet>` on that `<node>`).
 
 - If the answer test applies directly to the student's answer then the feedback from the answertest is likely to be meaningful.
-- If the answer test is applied to a variable constructed from many inputs, then the feedback from the answertest is unlikely to be meaninful.
+- If the answer test is applied to a variable constructed from many inputs, then the feedback from the answertest is unlikely to be meaningful.
 
 
 ### False branch feedback is mandatory
