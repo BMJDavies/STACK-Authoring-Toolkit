@@ -12,6 +12,8 @@ records in the feedback document.
 
 ## Question settings
 
+- [ ] `<stackversion>` equals the STACK version stamp in `CLAUDE_loc.md`, not
+      a value copied from a template or an older question
 - [ ] **Provenance note.** Every STACK question's `<questiondescription>`
       uses one of the four forms in the style guide ("Record where each
       question comes from"), with the project's citation verbatim. It matches
