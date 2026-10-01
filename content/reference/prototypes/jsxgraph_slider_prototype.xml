@@ -102,9 +102,9 @@ ta: 0;
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Slider prototype — interactive explorer</text></questionnote>
   <questiondescription format="html"><text></text></questiondescription>
-  <prtcorrect format="html"><text></text></prtcorrect>
-  <prtpartiallycorrect format="html"><text></text></prtpartiallycorrect>
-  <prtincorrect format="html"><text></text></prtincorrect>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
   <decimals>.</decimals>
   <scientificnotation>*10</scientificnotation>
   <multiplicationsign>dot</multiplicationsign>
