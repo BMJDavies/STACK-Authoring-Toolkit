@@ -35,7 +35,8 @@ tools/test-question.sh path/to/file.xml --sandbox   # second stack, if configure
 ```
 
 Three stages: XML import, then Maxima checks on the question variables, then
-deploy 5 seeds and run every embedded `<qtest>` against every seed. Exit 0 means
+test the question's own `<deployedseed>` values (5 defaults if it has none) and
+run every embedded `<qtest>` against every seed. Exit 0 means
 everything passed, exit 1 means something failed.
 
 Nothing is published until this returns 0. Run it yourself rather than trusting

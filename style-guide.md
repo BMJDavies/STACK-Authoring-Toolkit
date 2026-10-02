@@ -40,8 +40,8 @@ understand why, you will spot the next variant of the same problem.
   - A worked solution in `<generalfeedback>`, unless the question is trivial.
   - At least **two** `<qtest>` cases (correct and wrong). Without them the PRT
     logic is untested. Multi-input questions also need a mixed case.
-  - At least one `<deployedseed>`, so STACK stops warning about missing
-    tests or variants.
+  - Number of random variants, and `<deployedseed>` selection, must follow the
+    Deployed seeds policy below.
 - Figure-only and worked-example slots use "skinny STACK", not
   `type="description"`. A skinny STACK question is `type="stack"` with no
   `<input>`, no `<prt>` and no `<qtest>`: just the question text (which may
@@ -832,6 +832,28 @@ Give both a course-page description so students can tell them apart.
 - Avoid variants where the answer is trivially 0 or 1, or where the numbers are
   big enough that arithmetic becomes the difficulty.
 - The same solution method must work for every variant.
+
+### Deployed seeds
+
+This section is the single statement of seed policy. The deployed seeds initiate
+Maxima's pseudo-random number generator are responsible for the variants students
+see, and they are the variants every validator tests.
+
+- **Randomised questions:** deploy one seed per distinct variant, up to 10 `<deployedseed>`
+  values. Check each one renders a distinct, non-degenerate variant.  Variants are
+  distinct if and only if the value of the instantiated question note is distinct.
+  Check this variant throws no run-time errors.  Replace any duplicates if possible.
+- **Fixed questions:** exactly one `<deployedseed>`.
+- **Parsons problems:** about 3, so students see different shuffles.
+- **Descriptions** have none.
+
+Every question carries its own seeds in the XML, so nothing downstream picks
+them. `test-question.sh` and `api-check.sh` test the XML's seeds and fall back
+to the defaults 1, 42, 137, 256, 999 only when a question has none, which should
+not happen. `push-live.sh` deploys exactly the XML's seeds and adds none. Only
+a STACK question with no `<deployedseed>` at all gets 5 random seeds, with a
+warning, because those seeds have never been validated. Treat that warning as a
+defect in the XML.
 
 ### Degenerate variant prevention
 
