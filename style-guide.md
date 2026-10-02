@@ -96,7 +96,7 @@ forms:
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
-`<citation>` is the project's fixed citation string, given in `CLAUDE.md`.
+`<citation>` is the project's fixed citation string, given in `CLAUDE_loc.md`.
 In kit reference material (the showcase and prototypes), write "original to
 this kit" instead.
 
