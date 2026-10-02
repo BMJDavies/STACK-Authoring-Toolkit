@@ -96,7 +96,7 @@ forms:
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
-`<citation>` is the project's fixed citation string, given in `CLAUDE_loc.md`.
+`<citation>` is the project's fixed citation string, given in `CLAUDE.md`.
 In kit reference material (the showcase and prototypes), write "original to
 this kit" instead.
 
@@ -277,12 +277,18 @@ When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
   different translations really can produce the same image, so a distractor
   saying "both move it up equally" is true, and a student who reasons correctly
   is marked wrong. Reword such options to target the genuine misconception.
+  A general claim is not false enough if its only counterexample is a case the
+  question excludes: "identical rows give a range of dimension 1" fails only for
+  the zero matrix, so it is true for a question whose matrix is all ones.
 - **Pattern:** define the option list in question variables using
   `mcq_correct()` / `mcq_incorrect()`, then reference it with `[[input:ansN]]`.
   Never define options inline.
 - **Option ordering:** natural logical order (numbers ascending, classifications
   in standard order). Never put the correct option first, or pattern-spotters
-  will pick it without engaging.
+  will pick it without engaging. When several inputs share one option list (for
+  example, justification dropdowns for the steps of a proof), do not order the
+  list by step: the positions of the correct options must not climb with the
+  steps, or the answers can be read off the pattern.
 - **PRT `tans`:** use `first(mcq_correct(options))`, not `mcq_correct(options)`.
   The latter returns a single-element list, but the student's answer is a
   scalar, so `AlgEquiv(scalar, list)` fails with `ATAlgEquiv_SA_not_list`.
@@ -771,6 +777,11 @@ classification, so use dropdowns for "sort these into categories" tasks.
 
 Present a complete numbered proof, then ask questions about its structure:
 which step does X, what justifies step Y, what would break if.
+
+Each step a student justifies contains exactly one equality or inference, so it
+has exactly one correct reason. Move any other equality into the connecting
+prose between steps. A step that chains two equalities with different reasons
+marks a defensible answer wrong.
 
 Implementation for all three: patterns 6, 7 and 8 in the `stack-question-types`
 skill, with prototypes in `content/reference/prototypes/`.
