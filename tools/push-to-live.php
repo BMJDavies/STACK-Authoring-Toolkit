@@ -288,14 +288,17 @@ for ($i = 0; !$use_page_codes && $i < $count; $i++) {
 }
 echo "\nRegrouped quiz into $page page(s).\n";
 
-// 5. Deploy variants for imported STACK questions (5 seeds each)
+// 5. Deployed seeds come from the XML (style-guide.md, "Deployed seeds"), so a
+// question that has any is left alone. Only a STACK question with none gets 5
+// random seeds, with a warning, because those seeds have not been validated.
 $deployed_count = 0;
 foreach ($imported_ids as $qid) {
     $q = question_bank::load_question($qid);
     if (!($q instanceof qtype_stack_question)) continue;
-    if (count($q->deployedseeds) >= 5) continue;
+    if (count($q->deployedseeds) > 0) continue;
 
-    $needed = 5 - count($q->deployedseeds);
+    echo "  [WARN] {$q->name} has no <deployedseed> in the XML; deploying 5 unvalidated random seeds.\n";
+    $needed = 5;
     $attempts = 0;
     while ($needed > 0 && $attempts < 20) {
         $seed = mt_rand(1, 999999);

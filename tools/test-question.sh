@@ -1,6 +1,7 @@
 #!/bin/bash
 # The final gate before publishing. Imports the XML into a real Moodle, runs the
-# question variables through Maxima, deploys 5 seeds, and runs every embedded
+# question variables through Maxima, uses the XML's <deployedseed> values (5
+# defaults if a question has none), and runs every embedded
 # <qtest> case against every seed.
 #
 #   tools/test-question.sh path/to/questions.xml [--sandbox]

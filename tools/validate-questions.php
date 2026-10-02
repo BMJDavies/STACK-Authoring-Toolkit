@@ -5,7 +5,8 @@
  * Imports a Moodle XML question file into the Claude sandbox, then:
  *   1. Validates XML structure and imports to DB
  *   2. Runs question variables through Maxima (CAS errors)
- *   3. Deploys 5 random seeds
+ *   3. Tests against the question's own <deployedseed> values (the variants
+ *      students will see); a question with none gets the 5 default seeds
  *   4. Runs all embedded question tests against all seeds (PRT logic)
  *
  * Usage (from your Mac terminal):
@@ -35,7 +36,9 @@ require_once($CFG->dirroot . '/question/type/stack/questiontype.php');
 // Imports accumulate here, so point it at a throwaway course, never a live one.
 $categoryid = (int)getenv('VALIDATE_CATEGORYID');
 $contextid  = (int)getenv('VALIDATE_CONTEXTID');
-$deploy_seeds = [1, 42, 137, 256, 999];
+// Used only for a question whose XML has no <deployedseed>. Otherwise the
+// question's own seeds are tested, since those are the variants that go live.
+$default_seeds = [1, 42, 137, 256, 999];
 
 if (!$categoryid || !$contextid) {
     echo "VALIDATE_CATEGORYID and VALIDATE_CONTEXTID must be set.\n";
@@ -140,12 +143,19 @@ foreach ($question_ids as $qid) {
     $qname = $DB->get_field('question', 'name', ['id' => $qid]);
     echo "Question: $qname (id=$qid)\n";
 
-    // Deploy seeds
-    $DB->delete_records('qtype_stack_deployed_seeds', ['questionid' => $qid]);
-    foreach ($deploy_seeds as $seed) {
-        $DB->insert_record('qtype_stack_deployed_seeds', ['questionid' => $qid, 'seed' => $seed]);
+    // Test the seeds the XML deploys (the import keeps them); fall back to
+    // the defaults only when it deploys none.
+    $deploy_seeds = $DB->get_fieldset_select('qtype_stack_deployed_seeds', 'seed',
+            'questionid = ?', [$qid], 'id');
+    if ($deploy_seeds) {
+        echo "  Deployed seeds (from XML): " . implode(', ', $deploy_seeds) . "\n";
+    } else {
+        $deploy_seeds = $default_seeds;
+        foreach ($deploy_seeds as $seed) {
+            $DB->insert_record('qtype_stack_deployed_seeds', ['questionid' => $qid, 'seed' => $seed]);
+        }
+        echo "  Deployed seeds (none in XML, using defaults): " . implode(', ', $deploy_seeds) . "\n";
     }
-    echo "  Deployed seeds: " . implode(', ', $deploy_seeds) . "\n";
 
     // Load test cases
     $testcases = $qtype->load_question_tests($qid);

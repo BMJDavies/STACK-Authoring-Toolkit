@@ -26,8 +26,9 @@ Do not silently deviate: an undocumented deviation is invisible to the reviewer
 and becomes a defect nobody knows about.
 
 Randomisation is mandatory for anything the plan marks "randomised": randomised
-`questionvariables`, no `deployedseed` blocks, and constraints that rule out
-degenerate cases. Where the plan says "fixed", use fixed values. Where the plan
+`questionvariables`, constraints that rule out degenerate cases, and deployed
+seeds as set out in the style guide's "Deployed seeds" section (the single
+statement of seed policy). Where the plan says "fixed", use fixed values. Where the plan
 is silent, randomise unless there is a clear reason not to (a proof structure, a
 Parsons problem).
 
