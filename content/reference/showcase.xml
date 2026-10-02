@@ -1316,4 +1316,113 @@ ta_set: {ta1, ta2};
   <variantsselectionseed></variantsselectionseed>
 </question>
 
+<!-- PATTERN 11: Matrix input
+     Demonstrates: matrix input type with matrixparens "(" (Axler's round brackets);
+     the correctness node quiet 0, so STACK highlights the wrong entries; the
+     diagnostic node quiet 1, because its highlighting would be measured against the
+     wrong matrix; matrix product with "." (never "*"); test inputs bound as question
+     variables first (Arec, dgT, tw1) and passed by name; the correct test rebuilds the
+     answer from the displayed formulas rather than reusing the teacher's answer.
+     Use "^^" for matrix powers ("^" is entry-wise). Do not use addrow (broken in STACK).
+     Source: LADR 3C, item 3C_P02b_MatrixStd, approved 2026-10-02. -->
+<question type="stack">
+  <name><text>Showcase 11: Matrix input</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Define \(T\in\mathcal{L}(\mathbf{R}^3)\) by</p>
+<p>\[T(x_1,x_2,x_3)=\big({@c1@},\ {@c2@},\ {@c3@}\big).\]</p>
+<p>Enter \(\mathcal{M}(T)\) with respect to the standard basis of \(\mathbf{R}^3\).</p>
+<div>\(\mathcal{M}(T)=\) [[input:ans1]] [[validation:ans1]]</div>]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[<p>For \(T\in\mathcal{L}(\mathbf{F}^n,\mathbf{F}^m)\) with the standard bases, column \(k\) of \(\mathcal{M}(T)\) is \(T(e_k)\) written as a column. So compute \(T\) at the three standard basis vectors:</p>
+<p>\[T(1,0,0)=({@a11@},{@a21@},{@a31@}),\quad T(0,1,0)=({@a12@},{@a22@},{@a32@}),\quad T(0,0,1)=({@a13@},{@a23@},{@a33@}).\]</p>
+<p>These are the three columns, in order:</p>
+<p>\[\mathcal{M}(T)={@MA@}.\]</p>
+<p>Equivalently, row \(j\) of \(\mathcal{M}(T)\) lists the coefficients of \(x_1,x_2,x_3\) in the \(j\)th component of \(T(x_1,x_2,x_3)\).</p>]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion><text>2026080600</text></stackversion>
+  <questionvariables>
+    <text><![CDATA[ordergreat(x1,x2,x3);
+/* Diagonal entries non-zero, so no component of T is zero. */
+a11: rand_with_prohib(-5,5,[0]);
+a22: rand_with_prohib(-5,5,[0]);
+a33: rand_with_prohib(-5,5,[0]);
+a12: rand(11)-5;
+a13: rand(11)-5;
+a23: rand(11)-5;
+a31: rand(11)-5;
+a32: rand(11)-5;
+/* a21 # a12 guarantees A # transpose(A), so the diagnostic is distinct. */
+a21: rand_with_prohib(-5,5,[a12]);
+MA: matrix([a11,a12,a13],[a21,a22,a23],[a31,a32,a33]);
+Tc: MA . matrix([x1],[x2],[x3]);
+c1: Tc[1,1];
+c2: Tc[2,1];
+c3: Tc[3,1];
+ta1: MA;
+/* Rebuilt from the displayed formulas: the correct test uses it. */
+Arec: apply(matrix, makelist(makelist(coeff(expand(Tc[r,1]), [x1,x2,x3][c]), c,1,3), r,1,3));
+/* Diagnostic: images written as rows. */
+dgT: transpose(MA);
+/* One entry off; transpose(A) - A is non-zero at (1,2), so tw1 # dgT. */
+tw1: MA+ematrix(3,3,1,2,3);]]></text>
+  </questionvariables>
+  <specificfeedback format="html"><text><![CDATA[[[feedback:prt1]]]]></text></specificfeedback>
+  <questionnote format="moodle_auto_format">
+    <text><![CDATA[T(x1,x2,x3)=({@c1@}, {@c2@}, {@c3@}); M(T)={@MA@}]]></text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is based on the definition of the matrix of a linear map (3.31) and Example 3.32 in Section 3C of Sheldon Axler, <em>Linear Algebra Done Right</em>, fourth edition (Springer, 2024).]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>(</matrixparens>
+  <isbroken>0</isbroken>
+  <variantsselectionseed></variantsselectionseed>
+
+  <input><name>ans1</name><type>matrix</type><tans>ta1</tans><boxsize>3</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+
+  <prt><name>prt1</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle>
+    <feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>M(T)</description><answertest>AlgEquiv</answertest><sans>ans1</sans><tans>ta1</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt1-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>Diagnostic: images written as rows</description><answertest>AlgEquiv</answertest><sans>ans1</sans><tans>dgT</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-2-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>You have written \(T(e_k)\) as row \(k\). In \(\mathcal{M}(T)\), \(T(e_k)\) is column \(k\): for example \(T(1,0,0)=({@a11@},{@a21@},{@a31@})\) is the first column. Equivalently, row \(j\) holds the coefficients of the \(j\)th component.</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt1-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Compute \(T(1,0,0)\), \(T(0,1,0)\) and \(T(0,0,1)\), and put \(T(e_k)\) in column \(k\).</p>]]></text></falsefeedback></node>
+  </prt>
+
+  <deployedseed>11</deployedseed>
+  <deployedseed>23</deployedseed>
+  <deployedseed>37</deployedseed>
+  <deployedseed>41</deployedseed>
+  <deployedseed>59</deployedseed>
+  <deployedseed>67</deployedseed>
+  <deployedseed>71</deployedseed>
+  <deployedseed>83</deployedseed>
+  <deployedseed>97</deployedseed>
+  <deployedseed>101</deployedseed>
+  <qtest><testcase>1</testcase><description>Correct (rebuilt from the displayed formulas)</description>
+    <testinput><name>ans1</name><value>Arec</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>2</testcase><description>Diagnostic: transpose</description>
+    <testinput><name>ans1</name><value>dgT</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>3</testcase><description>Generic: one entry off</description>
+    <testinput><name>ans1</name><value>tw1</value></testinput>
+    <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote></expected>
+  </qtest>
+</question>
+
 </quiz>
