@@ -160,6 +160,18 @@ When displaying randomised expressions:
   `disp_q: x^2 + b*x + c;`, and interpolate `\({@disp_q@}\)`. Maxima renders the
   signs properly. This applies everywhere: question text, feedback, general
   feedback, worked solutions.
+- **Never put a randomised coefficient directly before a symbol**, as in
+  `{@k@}x`, `{@k@}\,v_1` or `{@k@}e_1`. On the seeds where `k` is 0, 1 or −1
+  this prints "0 v₁", "1 e₁" or "(−1) v₂". Interpolate the product instead,
+  `{@k*x@}` or `{@b1*v1+b2*v2@}`, with the symbol added to `ordergreat` so the
+  terms stay in order, or name the scalar in the prose ("where \(k = {@k@}\)").
+  This came up in both 3B and 3D.
+- **Never put `\\` directly before `{@...@}` in CASText.** STACK drops a
+  backslash, so `\begin{pmatrix}{@a@}\\{@b@}\end{pmatrix}` renders as
+  `{-5}\{3}` on every seed. Interpolate the whole matrix (`{@matrix([a],[b])@}`),
+  or put a space after the line break: `\\ {@b@}`. Neither `test-question.sh`
+  nor `render-check` catches this, so only rendering the seeds and looking at
+  the result will find it.
 
 ### Currency: always use a rounded display variable
 

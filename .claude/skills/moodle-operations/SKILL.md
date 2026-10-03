@@ -27,6 +27,27 @@ before changing anything.
 The first run brings up two Docker containers and takes a minute. After that it
 is fast.
 
+## Display check, before hand-off
+
+```bash
+tools/render-sweep.sh path/to/file.xml
+tools/render-sweep.sh path/to/file.xml -- --verbose   # list every source warning
+```
+
+Renders every deployed seed of every STACK question through the same STACK API
+and flags defects that grade correctly but display wrongly. Neither
+`api-check.sh` nor `test-question.sh` looks for these:
+
+- `\\` straight before `{@...@}`, which shows a column vector as `{-5}\{3}`;
+- 0, 1 or −1 printed as the coefficient of a symbol ("1 v₁", "(−1) e₂");
+- `+ -` inside mathematics;
+- two deployed seeds with the same question note (a repeated variant).
+
+It also scans the source of every CASText field, including PRT feedback, which
+the API cannot render. Missing `<deployedseed>` is reported as a warning, and
+the default seeds are used. Exit 0 means no flags; exit 1 means at least one
+flag; exit 2 means the API failed to render something.
+
 ## Full validation, the real gate
 
 ```bash
@@ -184,6 +205,7 @@ docker exec <container> php /tmp/add-resource.php \
 ```
 (1) write XML into content/drafts/<file>.xml
 (2) tools/api-check.sh          -> fast green light while authoring
+    tools/render-sweep.sh       -> displayed maths is right on every seed
 (3) tools/test-question.sh      -> the real gate
 (4) reviewer approves           -> file moves to content/approved/
 (5) tools/push-live.sh          -> live course
