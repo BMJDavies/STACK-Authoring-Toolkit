@@ -114,6 +114,7 @@ pick it up rather than start again.
 
 ```bash
 tools/api-check.sh content/drafts/file.xml      # fast check, seconds
+tools/render-sweep.sh content/drafts/file.xml   # display check, every seed
 tools/test-question.sh content/drafts/file.xml  # the real gate, minutes
 tools/audit-test-inputs.sh content/drafts/file.xml
 tools/push-review.sh content/drafts/file.xml    # preview as a student
