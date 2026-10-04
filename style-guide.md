@@ -2,10 +2,12 @@
 
 **Audience: the assistant. This is authoritative for content conventions. Edit it to make the rules yours.**
 
-The single source of truth for content conventions in this project. Agents read
-this before writing or reviewing anything. Implementation patterns (XML
-skeletons, PRT wiring, JSXGraph templates) live in the skill packages under
-`.claude/skills/`; this file is about what standards the content must meet.
+Use this file, then style-guide_loc.md (if it exists) as the single source of 
+truth for content conventions in this project. Agents read this, then 
+style-guide_loc.md (if it exists), before writing or reviewing anything. 
+Implementation patterns (XML skeletons, PRT wiring, JSXGraph templates) 
+live in the skill packages under `.claude/skills/`; this file is about 
+what standards the content must meet.
 
 Almost every rule below was written after something went wrong. Where the reason
 is not obvious, it is stated. Treat the "why" as part of the rule: if you
