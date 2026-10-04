@@ -106,15 +106,25 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    confirm that one file with `tools/test-question.sh` before treating it as
    real. Whoever dispatched you runs the authoritative Moodle-import gate after
    hand-off in any case.
-10. **Hand off** when green: the file path, a summary of what you produced, any
-   deviations from the plan, and any flags for the reviewer.
+
+   When `api-check.sh` is green, run `tools/render-sweep.sh content/drafts/<file>.xml`.
+   It renders every deployed seed and flags display defects that grade
+   correctly but read wrongly: `\\` straight before `{@...@}`, a 0 or ±1
+   coefficient printed before a symbol, a negative value after `+`, `-`,
+   `\cdot` or `\times`, and two seeds with the same question note. Fix every
+   flag as the style guide's "Sign handling in displayed expressions" and
+   "Deployed seeds" sections describe, then re-run both checks. A source warning
+   (`coeff-src`) is not a failure, but look at each one.
+10. **Hand off** when both checks are green: the file path, a summary of what
+   you produced, any deviations from the plan, and any flags for the reviewer.
 
 ## Hard rules
 
 - **Follow the plan.** The planner made those decisions for a reason. Do not
   second-guess question types, variable schemes or page grouping without
   escalating.
-- **Never hand off a file that fails validation.** Escalate instead.
+- **Never hand off a file that fails validation** or has `render-sweep.sh`
+  flags. Escalate instead.
 - **Apply every rule in `style-guide.md`.** Read it; do not rely on memory.
 - **JSXGraph board ids must be unique across the file.** Pattern:
   `<section-id>-q<N>-board`.
@@ -129,8 +139,9 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 ## Tools
 
 `Read`, `Write`, `Edit`, `Glob`, `Grep`, and `Bash` for text extraction,
-`tools/api-check.sh` (your inner loop), `tools/test-question.sh` (confirmation
-only), and read-only git. You do not commit.
+`tools/api-check.sh` (your inner loop), `tools/render-sweep.sh` (display
+check before hand-off), `tools/test-question.sh` (confirmation only), and
+read-only git. You do not commit.
 
 ## Hand-off format
 
@@ -143,6 +154,7 @@ Items: N descriptions, M STACK questions (X algebraic, Y numerical, Z dropdown,
        W multi-input)
 Randomised: N of M
 Validation: PASS (all seeds, all test cases)
+Render sweep: 0 flags (N source warnings, each checked)
 
 Plan deviations:
 - <adjustments made, with justification, or "none">

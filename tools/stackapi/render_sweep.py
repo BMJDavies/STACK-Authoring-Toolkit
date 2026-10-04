@@ -16,7 +16,7 @@ Checks (style-guide.md, "Sign handling in displayed expressions"):
   Rendered question text and worked solution, on every deployed seed:
     FLAG  brace       `\{` followed by a number: the visible result of `linebreak`
     FLAG  coeff       0, 1 or -1 printed as a coefficient of a symbol
-    FLAG  plusminus   `+ -` inside mathematics
+    FLAG  plusminus   a negative value after +, -, \cdot or \times ("+ -3", "2\cdot{-3}")
     FLAG  notes       two seeds give the same question note (a repeated variant)
 
 Exit 0 = no FLAG (warnings allowed); exit 1 = at least one FLAG; exit 2 = the
@@ -48,7 +48,9 @@ R_BRACE = re.compile(r"\\\{\s*-?[\d./]+\s*\}")
 # STACK wraps every interpolated value in braces ("{1}\\,v_1"); requiring them
 # skips literal mathematics such as "0S = 0" written by the author.
 R_COEFF = re.compile(r"\{\s*(\(-1\)|\\left\(-1\\right\)|-1|1|0)\s*\}" + GAP + SYMBOL)
-R_PLUSMINUS = re.compile(r"\+\s*-")
+# A negative value straight after +, -, \cdot or \times: "+ -3", "2\cdot{-3}",
+# "-3-{-3}". STACK braces interpolated values, so allow "{" (but not "\{").
+R_PLUSMINUS = re.compile(r"(?:\+|-|\\cdot(?![a-z])|\\times)\s*(?:(?<!\\)\{\s*)?-")
 MATH = re.compile(r"\\\((.*?)\\\)|\\\[(.*?)\\\]", re.S)
 
 

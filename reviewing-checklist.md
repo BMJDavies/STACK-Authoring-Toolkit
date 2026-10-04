@@ -72,6 +72,11 @@ You cannot test every combination. Test at least a couple of examples per path.
 
 - [ ] **BLOCKING.** Tests have actually been executed and passed, not just
       written. Re-run validation yourself rather than trusting the author.
+- [ ] **BLOCKING.** `tools/render-sweep.sh <file>` reports no flags. It renders
+      every deployed seed and catches `\\` before `{@...@}`, 0 or ±1
+      coefficients before a symbol, a negative value after `+`, `-`, `\cdot`
+      or `\times`, and repeated question notes. Each `coeff-src` source warning
+      has been looked at.
 
 ---
 

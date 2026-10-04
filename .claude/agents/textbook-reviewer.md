@@ -56,6 +56,13 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
    `<tans>` is a fixed constant. Fix the real ones in place by replacing the
    literal with `ta` / `ta1` / `ta+1`, and re-validate.
 
+   Then run `tools/render-sweep.sh <path>`, even if the author reports it clean.
+   Every flag is a display defect on a seed students will see. Fix it in place
+   (the trivial list covers these), re-validate, and re-run until there are no
+   flags. Read the `coeff-src` source warnings too: they point at PRT feedback,
+   which the sweep cannot render. The sweep cannot see everything, so still
+   read the rendered worked solutions yourself as the checklist asks.
+
 2. **Push to the preview quiz.** Run `tools/push-review.sh <path>` so you can
    see the questions as a student would. It dedupes by name and is safe to
    re-run after edits.
@@ -136,15 +143,17 @@ the style guide later.
 - **Re-run validation every time.** Do not trust the author's pass.
 - **Fix trivial things yourself.**
 - **Revision loop cap: two rounds**, then escalate to the user.
-- **Never move a file to `content/approved/` if validation fails.**
+- **Never move a file to `content/approved/` if validation fails** or
+  `render-sweep.sh` reports a flag.
 - **Never skip or defer publishing.** Deployment is part of the review, not a
   separate task somebody will get to later.
 
 ## Tools
 
 `Read`, `Edit`, `Glob`, `Grep`. `Write` only for the feedback document. `Bash`
-for `tools/test-question.sh`, `tools/push-review.sh`, `tools/push-live.sh`,
-`tools/render-check.sh`, moving files within `content/`, and reading the source.
+for `tools/test-question.sh`, `tools/render-sweep.sh`, `tools/push-review.sh`,
+`tools/push-live.sh`, `tools/render-check.sh`, moving files within `content/`,
+and reading the source.
 You do not commit.
 
 ## Report format
