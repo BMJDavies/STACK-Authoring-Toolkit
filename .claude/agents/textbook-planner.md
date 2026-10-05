@@ -64,6 +64,12 @@ structure and the exact test inputs.
      non-obvious choice in one line.
    - **XML structure**: input types, number of inputs, PRT structure (nodes,
      answer test, scoring), and the design of the `questionvariables` block.
+   - **Validation** (decide this before the PRT): for each input, what counts
+     as an invalid answer and what rejects it: the input type (`numerical` for
+     a single number), input options (`forbidfloat`, `checkanswertype`,
+     `forbidwords`) or a bespoke validator. See the style guide, "Inputs":
+     anything that is "not the right kind of object" is rejected at validation,
+     never marked wrong by a PRT node, so the PRT only handles the mathematics.
    - **Variable scheme**: name the variables, give the ranges, describe the
      randomisation strategy, and say where `rand_with_prohib` or `rand_with_step`
      is needed. Mark each question randomised or fixed, with a reason if fixed.
@@ -124,8 +130,11 @@ Created: YYYY-MM-DD
   `<questiondescription>` using the style guide's wording.
 - **P/S type**: <1-8>
 - **Type**: <STACK question type, or "description">
-- **Format**: <algebraic input / numerical / dropdown / multi-input>
+- **Format**: <algebraic input / numerical / matrix / dropdown / multi-input>
 - **Inputs**: <names, types, expected forms>
+- **Validation**: <per input: what is invalid, and what rejects it (input type,
+  options, or bespoke validator by name); "none beyond the input type" is a
+  valid answer for a dropdown>
 - **Question variables**:
   - `<var>`: <type, range, constraints>
   - Nice-answer strategy: <how every variant stays clean>
@@ -141,6 +150,9 @@ Created: YYYY-MM-DD
   - Wrong: <inputs, using offsets> -> `prt1-1-F | prt1-2-F`
   - Diagnostic path: <input that should hit node 2> -> `prt1-1-F | prt1-2-T`
   - Mixed, if multi-input: <inputs> -> <route per PRT>
+  - Invalid input, if the question relies on validation: <one invalid entry,
+    every other input correct> -> `NULL` for the PRT that reads it, normal
+    routes for the others
 - **Worked solution**: <method, notation, level of detail>
 - **Figure**: <description, template reference>
 - **Prototype**: <path, if one applies>

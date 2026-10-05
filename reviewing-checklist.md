@@ -48,11 +48,35 @@ records in the feedback document.
 
 ---
 
+## Inputs and validation
+
+Validation decides whether an answer is the right kind of object; the PRT
+decides whether it is correct. See the style guide, "Inputs".
+
+- [ ] Every single-number input is `numerical` (`forbidfloat=1`,
+      `requirelowestterms=0` for exact answers), not `algebraic`
+- [ ] Every matrix of numbers carries `validator:validate_numeric`
+- [ ] Every formula input graded by a property (not by `AlgEquiv` against one
+      fixed answer) carries a variable-set validator
+- [ ] PRT nodes typically do not check `listofvars`, the variables used, the type 
+      of the answer, or floats unless that is the purpose of the question. Such 
+      checks belong on the input (type, options or a bespoke validator).
+- [ ] Each bespoke validator is a pure function of one argument, uses
+      `every`/`member` rather than `subsetp`/`setify`, and its message is clear
+      British English that does not hint at the answer
+- [ ] Try one invalid entry yourself through the API for at least one validated
+      input: it must come back invalid with the message, not marked wrong
+
+---
+
 ## Test cases
 
 - [ ] Correct answer
 - [ ] Every incorrect branch
 - [ ] A mixed case for multi-input questions
+- [ ] An invalid-input case for every question that relies on validation: one
+      invalid entry, every other input correct, `NULL` for the PRT that reads
+      it and the normal route for the others
 - [ ] Predictable errors (for example, repeated inputs for quadratic solutions)
 - [ ] One case per distinct route where the PRT has diagnostic nodes, including
       routes that end at the same leaf
