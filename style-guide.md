@@ -198,6 +198,26 @@ Maxima check.
 
 ## Inputs
 
+STACK makes an important distinction between validation and correctness.
+
+Validation asks whether the student's input is a valid and unambiguous response 
+that STACK can safely assess. For example, if a question asks for an equation, 
+`y=2*x+1` is valid, whereas `2*x+1` might be rejected if an equation is required. 
+Syntax errors, inappropriate mathematical objects, or forbidden constructions 
+are also dealt with at this stage.
+
+Correctness is a separate question: given a valid input, does the student's answer 
+have the mathematical properties required by the question? This is determined 
+by the question's answer tests and potential response trees.
+
+The distinction is important because students should not lose marks for technical 
+errors in entering their mathematics. Validation gives them an opportunity to 
+correct an ambiguous or malformed input before it is assessed. Only a valid
+response is passed to the marking logic.  This makes the potential response tree
+simpler and more reliable.  This separation is a fundamental design principle of 
+STACK: first make sure we understand what the student has entered and then decide 
+whether the mathematics is correct.
+
 - `mustverify`: `0` on all inputs.
 - `showvalidation` depends on how complex the expected answer is:
   - `0` (hidden) for single integers, single numbers, dropdowns and multiple
@@ -217,6 +237,17 @@ Maxima check.
   duplicate placeholders with `array_unique()` before formatting the text but not
   after, and the resulting mismatch throws a coding exception. If the same input
   needs referring to twice, restructure the question or refer to it in prose.
+- **A single number uses the `numerical` input type, not `algebraic`.** The numerical type
+  rejects letters itself, so these boxes need no bespoke validator. Use
+  `forbidfloat` 1, `requirelowestterms` 0 and no extra options (confirmed under
+  the API in 3F). With these settings `1/2`, `-3`, `2/4` and `sqrt(2)` are
+  accepted and reach the PRT as exact values. `0.5` is rejected as a float, and
+  `t` or `x1` is rejected with "This input expects a number, and so may not
+  contain variables".
+- **A matrix input of numbers can use the bespoke numeric validator,** where appropriate
+  because a matrix grid accepts symbolic entries:
+  `validate_numeric(ex) := if listofvars(ex) = [] then "" else "Enter a number, not an expression containing a letter or variable.";`
+  with `validator:validate_numeric` in the input's options.
 
 - **Wrap input lines in `<div>`, never `<p>`.** Any HTML line containing
   `[[input:ansN]]` must be in a `<div>`. STACK renders `[[validation:ansN]]` as a
@@ -230,6 +261,18 @@ Maxima check.
   - Tooling caveat: `render-check` reads the database, not the file on disk.
     After editing XML, re-import before re-running it, or you are checking the
     old version.
+
+- **Bespoke validators** allow question authors to test for, and reject as invalid,
+  answers.  Consider using bespoke validators where necessary.  Where bespoke validators
+  occur in many questions, suggest adding these to the STACK code base. For example:
+  `validate_x3(ex) := if every(lambda([v], member(v, [x1, x2, x3])), listofvars(ex)) then "" else "Use only the variables x1, x2, x3.";`
+  Do not use `subsetp(setify(listofvars(ex)), {x1, x2, x3})`: validators run with
+  `simp:false`, the set literal is not put into canonical order, and correct
+  entries such as `x2+x1` are rejected (found in 3F). A validator is a pure
+  function of one argument and cannot see question variables, so define one
+  per variable set. Where a question's variable set depends on the seed, allow
+  the largest set. The allowed variable names must not also be question variables, because
+  STACK forbids students from typing question-variable names.  
 
 ### Forbidden words (`forbidwords`)
 
@@ -733,6 +776,15 @@ worth recognising before you send an agent off to fix a phantom:
   test on EVERY seed with an actual wrong score; a flake leaves an EMPTY score on
   SCATTERED seeds while the identical test passes elsewhere. Confirm by isolating
   that question into a throwaway file and re-running.
+
+### Invalid-input tests
+
+- For every question that relies on a bespoke validatorm or where an invalid input
+  is likely, create a test case of an invalid input.
+  For example, put one symbolic entry in a single numerical input and fill every
+  other input with a correct value. The PRT that reads the rejected input
+  expects a blank score, a blank penalty and the answer note `NULL`. The other
+  PRTs expect their normal correct route.
 
 ---
 
