@@ -1,7 +1,10 @@
 # Onboarding
 
-**Audience: the assistant. Follow this when `CLAUDE.md` still carries the
-"not set up yet" notice.**
+**Audience: the assistant. Follow this when `project/CLAUDE.md` does not exist.**
+
+The kit (this folder) is generic and is never edited during onboarding.
+Everything you create belongs to the user's project, in `project/`, which is a
+separate git repository that the kit ignores.
 
 ## Who you are working with
 
@@ -25,8 +28,8 @@ command -v pdftotext || echo NO_POPPLER   # absent: brew install poppler
 docker ps --format '{{.Names}}'          # is anything already running
 docker ps -a --format '{{.Names}}'       # containers that exist but are stopped
 uname -sm                                # OS and architecture
-git -C . rev-parse --is-inside-work-tree # is the kit already under version control
-ls tools/project.conf                    # has configuration been started
+git -C . rev-parse --is-inside-work-tree # is the kit under version control (it should be)
+ls project/ 2>/dev/null                  # has a project folder been started
 ```
 
 Report what you found in one short paragraph before asking anything. If Moodle is
@@ -58,20 +61,34 @@ sections 5, 6, 8 and 9.
 
 ## Stage B: their project
 
+First create the project folder from the kit's skeleton, so there is somewhere
+to put their material:
+
+```bash
+cp -r templates/project project
+git -C project init -q
+```
+
+This gives `project/CLAUDE.md` (a template to fill in later), `project.conf`,
+`style-guide.md`, `content/`, `feedback/` and `sources/`, each with a short
+explanation. Explain to the user that `project/` is their own repository: the
+kit ignores it, so updating the kit never touches their work.
+
 1. Subject, level, and who the students are.
 2. Roughly how much material: a topic, a module, a book?
 3. What is the source material, and what form is it in? PDF, LaTeX, Word,
    or print only?
 3b. Where in the world are the students? Currency, names, places and units in
    worded questions follow from this, and the agents will otherwise default to
-   wherever their training leans without saying so. Record it in `CLAUDE.md`.
+   wherever their training leans without saying so. Record it in
+   `project/CLAUDE.md`.
 
-4. **Get the material into `sources/` before going further.** Ask them to put it
-   there, then confirm it has arrived and that you can actually read it:
+4. **Get the material into `project/sources/` before going further.** Ask them
+   to put it there, then confirm it has arrived and that you can actually read it:
 
    ```bash
-   ls -la sources/
-   pdftotext -layout sources/<their file>.pdf - | head -60
+   ls -la project/sources/
+   pdftotext -layout project/sources/<their file>.pdf - | head -60
    ```
 
    Check the mathematics survived extraction. Surds, fractional indices and
@@ -94,84 +111,18 @@ plainly rather than improvising it.
 
 1. How much explanation do they want at each step while they are learning?
 2. Do they want to approve a plan before any XML is written?
-3. Who commits to version control?
+3. Who commits to version control? (Their project has its own repository in
+   `project/`; the kit's repository is only for changes to the kit itself.)
 
 ## What to do with the answers
 
-Replace `CLAUDE.md` entirely, using the template below. Delete the "not set up
-yet" notice. Keep it short: it is loaded on every request, so length here costs
-them on every interaction.
+Fill in `project/CLAUDE.md`: replace every `<...>` in the template with their
+answers, and delete the comment at the top. Keep it short: it is loaded on every
+request, so length here costs them on every interaction. Generic instructions
+are already in the kit's `CLAUDE.md`; do not copy them across.
 
-Then fill in `tools/project.conf` with the ids that `SETUP.md` section 6 prints,
-and offer to walk them through their first section using `WORKFLOW.md`.
+Then fill in `project/project.conf` with the ids that `SETUP.md` section 6
+prints, and offer to walk them through their first section using `WORKFLOW.md`.
 
----
-
-## Template for the new CLAUDE.md
-
-```markdown
-# Project instructions
-
-## What this project is
-
-<One or two sentences: what is being built, for whom, at what level.>
-
-## Where the questions come from
-
-Questions are adapted from <source material> in `sources/`. Every item in the
-source appears in the output as a question, a description, or an explicitly
-flagged item. Nothing is silently skipped.
-
-Locale: <where the students are; currency, names, places and units to use>.
-
-## Content rules
-
-`style-guide.md` is the single source of truth for content conventions. Agents
-read it before writing or reviewing anything, rather than relying on memory.
-
-`reviewing-checklist.md` is the reviewer's checklist.
-
-`content/reference/showcase.xml` is the golden reference: a worked example of
-every question pattern. Match its conventions. Never take conventions from a
-recently authored file, because recent files drift.
-
-## The pipeline
-
-/develop-section -> planner -> author -> validate -> reviewer -> approved -> live
-
-- Agents are in `.claude/agents/`, skills in `.claude/skills/`.
-- Agents run in the foreground, never backgrounded. The pipeline is sequential,
-  and two agents touching Moodle at once collide.
-- The author validates its own work and hands off only files that pass.
-- The reviewer re-runs validation rather than trusting the author.
-
-## Validation
-
-    tools/api-check.sh <file>       fast inner loop, seconds per question
-    tools/test-question.sh <file>   the real gate, before anything goes live
-
-Every question embeds at least two test cases, one correct and one wrong.
-Without them the marking logic is untested, and a broken question is
-indistinguishable from a working one.
-
-## Moodle
-
-Site: <url>. All ids live in `tools/project.conf`; never hardcode one.
-Publish with `tools/push-live.sh <xml> <quiz-id> --course=<key>`.
-Runbook: `.claude/skills/moodle-operations/`.
-
-## Working preferences
-
-<From stage C.>
-
-## Where to read further
-
-| File | Read it when |
-|---|---|
-| `WORKFLOW.md` | Before producing a section, and when something goes wrong |
-| `style-guide.md` | Before writing or reviewing any question |
-| `reviewing-checklist.md` | When reviewing |
-| `LESSONS.md` | Once, early. It explains why the rules exist |
-| `SETUP.md` | Only when reinstalling or changing the Moodle setup |
-| `AGENTS.md` | If a non-Claude assistant is driving |
-```
+If they want you to commit, make the first commit in `project/`, never in the
+kit.

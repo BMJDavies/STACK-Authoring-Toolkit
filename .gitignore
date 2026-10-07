@@ -1,7 +1,7 @@
 # Your project lives in its own git repository inside the kit, in project/
 # (see README.md). The kit never tracks it. If you keep more projects side by
 # side and select them with STACK_PROJECT, add their folders here too.
-project/
+/project/
 
 # Runtime noise
 *.log

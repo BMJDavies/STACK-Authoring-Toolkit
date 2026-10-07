@@ -10,8 +10,10 @@ project's own instructions are in `project/CLAUDE.md`, imported here:
 
 ## Before anything else
 
-If `project/CLAUDE.md` does not exist, no project has been configured. Do not
-author, validate or publish anything. Read `ONBOARDING.md` and follow it.
+If `project/CLAUDE.md` does not exist, no project has been configured. If it
+still begins with the comment "Template from the kit", onboarding was started but
+not finished. In either case do not author, validate or publish anything: read
+`ONBOARDING.md` and follow it, resuming where it left off.
 
 ## How this folder is organised
 
