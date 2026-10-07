@@ -62,11 +62,13 @@ sections 5, 6, 8 and 9.
 ## Stage B: their project
 
 First create the project folder from the kit's skeleton, so there is somewhere
-to put their material:
+to put their material. If `project/` already exists (`SETUP.md` section 6
+creates it when the ids are first pasted in), keep it and its `project.conf`, and
+copy across only what is missing:
 
 ```bash
-cp -r templates/project project
-git -C project init -q
+[ -d project ] || { cp -r templates/project project; git -C project init -q; }
+cp -rn templates/project/. project/      # adds missing files, overwrites nothing
 ```
 
 This gives `project/CLAUDE.md` (a template to fill in later), `project.conf`,

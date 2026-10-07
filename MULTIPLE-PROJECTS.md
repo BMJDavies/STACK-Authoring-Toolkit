@@ -1,32 +1,46 @@
-# Running several projects from one kit
+# Running several projects
 
 **Audience: you, the human, and only if you run more than one project.**
 
 **Skip this unless you already have more than one authoring project.** The normal
-way to use the kit is the one SETUP.md describes: this folder *is* your project,
-`.claude/` sits inside it, and nothing outside the folder is touched. That is
-self-contained, obvious, and undone by deleting the folder.
+layout is the one `SETUP.md` describes: one kit folder, with your project inside
+it in `project/` as a separate git repository.
 
-This document covers the other case: you run two or more authoring projects and
-do not want to maintain a separate copy of the pipeline in each.
+## Recommended: one kit clone per project
 
-## The model
+Clone the kit once for each project, and give each clone its own `project/`:
 
-One copy of the kit is the source of truth. Each project holds only its own
-delta: its content rules, its source material, and any agent it genuinely needs
-to override.
+```
+~/stack/algebra/      a kit clone; its project/ is the algebra project
+~/stack/calculus/     another kit clone; its project/ is the calculus project
+```
 
-A working copy of the agents, commands and skills is deployed into `~/.claude/`,
-which makes them available in every project on the machine. Where a project needs
-different behaviour, it puts a file of the same name in its own `.claude/`, and
-that takes precedence over the home copy.
+Each clone is self-contained: the assistant, the tools and the project
+instructions all line up, and updating one kit with `git pull` cannot affect the
+other project. Kit clones are small, so the duplication costs little.
 
-When the shared copy and a project disagree about a generic rule, the shared copy
-wins. A rule that turns out to be generic is promoted here rather than copied
-sideways between projects. That single convention is what stops the pipeline
-fragmenting into parallel versions.
+## Possible: several project folders in one kit
 
-## Deploying
+The tools accept a `STACK_PROJECT` setting naming a folder other than
+`project/`, relative to the kit root or absolute:
+
+```bash
+STACK_PROJECT=calculus tools/test-question.sh calculus/content/approved/Ch1_A.xml
+```
+
+Add each such folder to the kit's `.gitignore`, as `project/` is.
+
+The limitation: `STACK_PROJECT` changes where the **tools** look. The assistant
+always imports `project/CLAUDE.md`, so it does not follow the setting. Either
+tell it explicitly which folder you are working on and which instructions to
+read, or keep the project you are actively working on in `project/` and rename
+folders to switch. For regular work on two projects, separate clones are less
+error-prone.
+
+## Shared agents, commands and skills in `~/.claude/`
+
+With several clones you may prefer one copy of the agents, commands and skills
+for every project on the machine:
 
 ```bash
 tools/sync-to-home.sh
@@ -46,7 +60,14 @@ removes exactly those entries before reinstalling. Two consequences worth knowin
   structurally, not by luck.
 
 `~/.claude/` is a deployment target, not a place to edit. Anything you change
-there is overwritten on the next sync. Edit the kit and re-run the script.
+there is overwritten on the next sync. Edit the kit and re-run the script. A
+kit clone's own `.claude/` takes precedence over the home copy while you work in
+that clone.
+
+When the kit and a project disagree about a generic rule, the kit wins. A rule
+that turns out to be generic is promoted into the kit's `style-guide.md` rather
+than copied sideways between projects' `project/style-guide.md` files. That
+single convention is what stops the pipeline fragmenting into parallel versions.
 
 ## Why the agents are prefixed
 
@@ -56,5 +77,5 @@ have nothing to do with textbooks. Names like `author` and `reviewer` are
 plausible picks in unrelated work, which is how the wrong specialist gets handed
 a job.
 
-If you only ever install the kit per-project, the prefix earns less. It is kept
+If you only ever use the kit's own `.claude/`, the prefix earns less. It is kept
 for consistency, and because it makes each agent self-describing.

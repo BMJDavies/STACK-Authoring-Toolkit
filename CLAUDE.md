@@ -34,9 +34,10 @@ Never put project-specific content in a kit file. A rule for one course goes in
 `project/style-guide.md`; a rule that would hold for any textbook goes in the
 kit's `style-guide.md`.
 
-`STACK_PROJECT` may name a different project folder (for example
-`STACK_PROJECT=ladr`) when several projects sit side by side. Everything below
-says `project/`; read it as that folder.
+The tools accept `STACK_PROJECT` to name a different project folder. This file
+still imports only `project/CLAUDE.md`, so if the user says they are working in
+another folder, read that folder's `CLAUDE.md` and use its paths instead of
+`project/` (see `MULTIPLE-PROJECTS.md`).
 
 ## Content rules
 

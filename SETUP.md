@@ -42,15 +42,19 @@ Your laptop
 │   ├── a database container
 │   └── Maxima, installed inside the Moodle container (the computer algebra
 │       system that does STACK's actual mathematics)
-└── This kit, in a folder you own
-    ├── content/     the XML files: the real source of truth for your questions
+└── This kit, in a folder you own (a git clone)
     ├── tools/       scripts that talk to Moodle
-    └── .claude/     the agents and skills Claude Code uses
+    ├── .claude/     the agents and skills Claude Code uses
+    └── project/     YOUR project, a separate git repository inside the kit
+        ├── content/       the XML files: the real source of truth for your questions
+        └── project.conf   your Moodle ids
 ```
 
-The XML files in `content/` are the master copy. Moodle is a rendering target.
-If the Moodle installation is lost you re-import; if the XML is lost, the work is gone.
-Put the kit folder under version control on day one.
+The XML files in `project/content/` are the master copy. Moodle is a rendering
+target. If the Moodle installation is lost you re-import; if the XML is lost, the
+work is gone. `project/` is its own git repository from the moment it is created;
+commit to it from day one. The kit's repository ignores it, so updating the kit
+never touches your work.
 
 ---
 
@@ -105,7 +109,7 @@ re-run them in every new terminal before `bin/moodle-docker-compose` works.
 
 Note the container names Docker gives you (`docker ps` will show them, typically
 `moodle-docker-webserver-1` and `moodle-docker-db-1`). You need them for
-`tools/project.conf`.
+`project/project.conf`.
 
 ---
 
@@ -281,7 +285,15 @@ docker cp tools/setup-workspace.php <webserver-container>:/tmp/setup.php
 docker exec <webserver-container> php /tmp/setup.php
 ```
 
-It prints a block of ids. Paste them into `tools/project.conf`.
+It prints a block of ids. They go into your project's settings file. If you have
+not created your project folder yet, create it now from the kit's skeleton:
+
+```bash
+cp -r templates/project project
+git -C project init -q
+```
+
+Then paste the ids into `project/project.conf`.
 
 Then a course to actually publish into:
 
@@ -291,11 +303,11 @@ docker exec <webserver-container> php /tmp/clc.php \
     --key=alg --shortname="Algebra 1" --fullname="Algebra 1 (interactive)"
 ```
 
-It prints a `COURSES` line. Add that to `tools/project.conf` too, and set
+It prints a `COURSES` line. Add that to `project/project.conf` too, and set
 `DEFAULT_COURSE` to the key you chose.
 
 Finally fill in the container names and site URL at the top of
-`tools/project.conf`. That file is the only place ids live: nothing else should
+`project/project.conf`. That file is the only place ids live: nothing else should
 have a hardcoded number in it.
 
 ---
@@ -340,7 +352,7 @@ takes minutes. The fast one posts to a standalone STACK API and takes seconds.
 You want the fast one for the authoring loop.
 
 ```bash
-tools/api-check.sh content/reference/showcase.xml
+tools/api-check.sh reference/showcase.xml
 ```
 
 The first run pulls two Docker images and takes a few minutes. After that it is
@@ -387,8 +399,8 @@ docker exec <webserver-container> php /tmp/qa.php create \
     --courseid=<your course id> --name="Showcase" --section=1
 
 # Validate it, then publish it
-tools/test-question.sh content/reference/showcase.xml
-tools/push-live.sh content/reference/showcase.xml <the quiz id it printed>
+tools/test-question.sh reference/showcase.xml
+tools/push-live.sh reference/showcase.xml <the quiz id it printed>
 ```
 
 Open the quiz. You should see ten questions covering key point boxes, algebraic
@@ -402,12 +414,14 @@ the agents compare their conventions against.
 
 ## 10. Write the project instructions
 
-`CLAUDE.md` currently carries a "not set up yet" notice. It is read automatically
-at the start of every session, so it is where the assistant is told what the
-project is, where the questions come from, and how you want to be worked with.
+The kit's `CLAUDE.md` is read automatically at the start of every session, and it
+imports `project/CLAUDE.md`. That second file is where the assistant is told what
+your project is, where the questions come from, and how you want to be worked
+with.
 
 Do not write it by hand. Ask your assistant to follow `ONBOARDING.md`, or type
-`/start`. It will ask what it needs and write the file for you.
+`/start`. It will ask what it needs and write the file for you, creating
+`project/` first if you have not already done so in section 6.
 
 Then read `WORKFLOW.md`, which covers using the pipeline day to day.
 
