@@ -23,7 +23,7 @@ or the conversation:
 3. Section letter, or "Test Yourself" / "Mixed"
 4. Source path and page range
 5. Page range, if source-led
-6. Output filename under `content/drafts/` (suggest one from the naming
+6. Output filename under `project/content/drafts/` (suggest one from the naming
    convention and let the user accept or override)
 7. Target quiz: new or existing? If new, what name and which course section
    number? If existing, what quiz id?
@@ -38,7 +38,7 @@ Do not start until you have 1 to 7. Items 8 and 9 can be "none".
 Invoke the `textbook-planner` agent with the full spec, any constraints the user gave, and
 pointers to relevant feedback documents.
 
-Wait for the plan at `content/plans/<section-id>.md`.
+Wait for the plan at `project/content/plans/<section-id>.md`.
 
 If the planner escalates (garbled source, pedagogic ambiguity), surface it to
 the user and pause.
@@ -107,7 +107,7 @@ Check whether they already exist first.
 
 ## Progress log
 
-Keep `content/progress.log` current so the user can check status without
+Keep `project/content/progress.log` current so the user can check status without
 interrupting you.
 
 - At the start of a section: `tools/log.sh --clear "MANAGER [<section-id>]: starting"`
@@ -140,7 +140,7 @@ section is in flight. Use `tools/log.sh`, not a raw `echo` with an inline
 The user can also invoke pieces of this directly:
 
 - "Run the planner on Ch5 Section B"
-- "Run the author on content/plans/Ch5_B.md"
-- "Run the reviewer on content/drafts/Ch5_B.xml"
+- "Run the author on project/content/plans/Ch5_B.md"
+- "Run the reviewer on project/content/drafts/Ch5_B.xml"
 
 Each is available at any time.

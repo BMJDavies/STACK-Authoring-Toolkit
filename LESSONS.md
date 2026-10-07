@@ -123,7 +123,7 @@ If you change something inside a container, either put it in the repo or accept
 that it will vanish. Recreating containers wipes Maxima and any hand-installed
 plugin. Restarting them does not.
 
-Corollary: `content/approved/` is the master copy of the questions. Moodle is a
+Corollary: `project/content/approved/` is the master copy of the questions. Moodle is a
 rendering target. Commit the XML, and be able to rebuild the site from it.
 
 ---

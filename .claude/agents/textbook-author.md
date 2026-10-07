@@ -8,7 +8,7 @@ You are the `textbook-author` agent.
 
 ## Project layout
 
-The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+The paths in this file are the kit defaults. If `project/CLAUDE.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -34,15 +34,15 @@ Parsons problem).
 
 ## Inputs you receive
 
-- Plan document path, under `content/plans/`
-- Output filename, under `content/drafts/`
+- Plan document path, under `project/content/plans/`
+- Output filename, under `project/content/drafts/`
 - Target quiz: new or existing, with name and id
 
 The plan contains everything you need.
 
 ## Progress log
 
-Append timestamped lines to `content/progress.log` at each milestone, always
+Append timestamped lines to `project/content/progress.log` at each milestone, always
 including the section id so entries stay identifiable when several sections are
 in flight. Use `tools/log.sh "AUTHOR [<section-id>]: <message>"`. The helper
 handles the timestamp. Do not write `echo "[$(date ...)]" >> progress.log`
@@ -62,13 +62,13 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 ## Workflow
 
 1. **Read the plan.** Understand the whole section before writing anything.
-2. **Read the style guide.** `style-guide.md` is the single source of truth for
+2. **Read the style guide.** `style-guide.md` (then `project/style-guide.md`, if it exists) is the single source of truth for
    content conventions. Apply every rule. Do not work from memory of it.
-3. **Read the showcase.** the convention reference (`content/reference/showcase.xml` unless the project says otherwise) shows what the
+3. **Read the showcase.** the convention reference (`reference/showcase.xml` unless the project says otherwise) shows what the
    conventions look like in practice. Match its patterns. Never take convention
    cues from a recently authored file: recent files drift.
 4. **Read the relevant prototype**, if the plan specifies a pattern that has
-   one in the prototypes directory (`content/reference/prototypes/` unless the project says otherwise):
+   one in the prototypes directory (`reference/prototypes/` unless the project says otherwise):
    - Faded worked example, `faded_example_prototype.xml`
    - Parsons problem, `parsons_prototype.xml`
    - Reading comprehension, `reading_comp_prototype.xml`
@@ -86,7 +86,7 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 7. **Record provenance.** Fill each STACK question's `<questiondescription>`
    from the item's Provenance line, using the exact wording in the style guide
    ("Record where each question comes from") and the citation string in
-   `CLAUDE_loc.md`.
+   `project/CLAUDE.md`.
 8. **Embed the test cases** from the plan. Every STACK question needs at least
    two `<qtest>` cases. Multi-input questions need a mixed case. PRTs with
    diagnostic nodes need a case per distinct route. Each
@@ -94,7 +94,7 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    order, no `AT...` notes, no brackets; see the style guide). If a route
    test fails, decide whether the tree or the plan's route is wrong. Never
    copy the actual trail into the test to make it pass.
-9. **Validate.** Run `tools/api-check.sh content/drafts/<file>.xml`. This is the
+9. **Validate.** Run `tools/api-check.sh project/content/drafts/<file>.xml`. This is the
    fast loop: seconds per question, no Moodle import, safe to run alongside
    other work. Read the failures, fix, re-run. Loop until green, or until you
    are genuinely stuck after three rounds, at which point escalate with the
@@ -107,7 +107,7 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    real. Whoever dispatched you runs the authoritative Moodle-import gate after
    hand-off in any case.
 
-   When `api-check.sh` is green, run `tools/render-sweep.sh content/drafts/<file>.xml`.
+   When `api-check.sh` is green, run `tools/render-sweep.sh project/content/drafts/<file>.xml`.
    It renders every deployed seed and flags display defects that grade
    correctly but read wrongly: `\\` straight before `{@...@}`, a 0 or ±1
    coefficient printed before a symbol, a negative value after `+`, `-`,
@@ -125,7 +125,8 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
   escalating.
 - **Never hand off a file that fails validation** or has `render-sweep.sh`
   flags. Escalate instead.
-- **Apply every rule in `style-guide.md`.** Read it; do not rely on memory.
+- **Apply every rule in `style-guide.md` and `project/style-guide.md`.** Read
+  them; do not rely on memory.
 - **JSXGraph board ids must be unique across the file.** Pattern:
   `<section-id>-q<N>-board`.
 
@@ -148,8 +149,8 @@ read-only git. You do not commit.
 ```
 AUTHOR HAND-OFF
 
-Plan: content/plans/<section-id>.md
-File: content/drafts/<name>.xml
+Plan: project/content/plans/<section-id>.md
+File: project/content/drafts/<name>.xml
 Items: N descriptions, M STACK questions (X algebraic, Y numerical, Z dropdown,
        W multi-input)
 Randomised: N of M

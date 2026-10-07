@@ -13,7 +13,7 @@ understand why, you will spot the next variant of the same problem.
 
 > **Freeze this file while a book or module is in production.** Changing
 > conventions mid-run makes author and reviewer behaviour drift between
-> sections. Put new rules discovered during a run into `feedback/lessons-learned.md`
+> sections. Put new rules discovered during a run into `project/feedback/lessons-learned.md`
 > and migrate them in at the next natural boundary.
 
 ---
@@ -62,7 +62,7 @@ understand why, you will spot the next variant of the same problem.
 ### Stamp the target STACK version
 
 Every STACK question's `<stackversion>` is the STACK version of the target
-Moodle, given in `CLAUDE.md`. Never copy the value from a template, the
+Moodle, given in `project/CLAUDE.md`. Never copy the value from a template, the
 showcase or an older question.
 
 Why: STACK reads this field as the version the question was last edited with.
@@ -74,7 +74,7 @@ old value misstates what the question needs. Our questions depend on 4.13
 features (route expectations, the commonstring feedback keys), so claiming an
 older version misleads anyone who maintains them later.
 
-When STACK is upgraded, update `CLAUDE.md`, then re-stamp a file the next
+When STACK is upgraded, update `project/CLAUDE.md`, then re-stamp a file the next
 time you touch it.
 
 ### Record where each question comes from
@@ -96,7 +96,7 @@ forms:
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
-`<citation>` is the project's fixed citation string, given in `CLAUDE.md`.
+`<citation>` is the project's fixed citation string, given in `project/CLAUDE.md`.
 In kit reference material (the showcase and prototypes), write "original to
 this kit" instead.
 
@@ -388,7 +388,7 @@ inside a dropdown.
 ### Standard PRT feedback uses commonstring
 
 `<prtcorrect>`, `<prtpartiallycorrect>` and `<prtincorrect>` take STACK's
-language-string defaults, exactly as in `content/reference/showcase.xml`:
+language-string defaults, exactly as in `reference/showcase.xml`:
 
     [[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]
 
@@ -705,7 +705,7 @@ Two hard limits:
   node and CASText. The symptoms are baffling: empty PRT results on most seeds,
   "unevaluated casstring" warnings, and hung Maxima processes. `Int` saves and
   restores `simp` correctly. Prototype:
-  `content/reference/prototypes/integration_with_antidiff_prototype.xml`.
+  `reference/prototypes/integration_with_antidiff_prototype.xml`.
 
 ### Numerical answers: prefer tolerance over significant figures
 
@@ -861,7 +861,7 @@ prose between steps. A step that chains two equalities with different reasons
 marks a defensible answer wrong.
 
 Implementation for all three: patterns 6, 7 and 8 in the `stack-question-types`
-skill, with prototypes in `content/reference/prototypes/`.
+skill, with prototypes in `reference/prototypes/`.
 
 ---
 

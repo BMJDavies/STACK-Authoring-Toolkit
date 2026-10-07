@@ -5,7 +5,8 @@ description: Reference for STACK question types, XML skeletons, PRT patterns and
 
 # STACK question types and PRT patterns
 
-> Content rules (what standards to meet) are in `style-guide.md`. This skill
+> Content rules (what standards to meet) are in `style-guide.md` (and
+> `project/style-guide.md`). This skill
 > covers implementation patterns (how to build each type).
 
 ## Type picker
@@ -21,12 +22,12 @@ description: Reference for STACK question types, XML skeletons, PRT patterns and
 | "Show that…" (procedural) | `stack` + faded example | Pattern 6 |
 | "Show that…" (reasoning order) | `stack` + parsons | Pattern 7 |
 | Proof analysis / comprehension | `stack` + mixed inputs | Pattern 8 |
-| Classify objects into categories (type 3) | `stack` + one dropdown per object | Copy `content/reference/prototypes/classify_objects_prototype.xml`. Parsons grades ordered proofs only, not bucket-sorting, so classification uses dropdowns. |
+| Classify objects into categories (type 3) | `stack` + one dropdown per object | Copy `reference/prototypes/classify_objects_prototype.xml`. Parsons grades ordered proofs only, not bucket-sorting, so classification uses dropdowns. |
 | "Give an example with property P" (type 7) | `stack` + algebraic, property-checking PRT | Copy `construct_instance_prototype.xml`. The PRT checks a computed property of the answer, not equivalence to one model answer. |
 | Indefinite integral, antidifferentiation | `stack` + algebraic, `Int` PRT | Copy `integration_with_antidiff_prototype.xml`. Do NOT use `Antidiff` / `AddConst`: see style guide. |
 | Figure or worked example with no input | `stack` with no input, PRT or qtest | "Skinny STACK". A `description` renders `[[jsxgraph]]` as literal text. |
 
-When in doubt, copy a question of the same shape out of `content/reference/showcase.xml`.
+When in doubt, copy a question of the same shape out of `reference/showcase.xml`.
 
 **Question-type variety.** Most routine practice is Pointon and Sangwin type 1
 or 2 (recall, routine calculation), which is fine. But every self-check quiz
@@ -50,7 +51,7 @@ yet, so flag it if a section wants one.
 ## STACK question skeleton
 
 Do not hand-write this from scratch. Copy a `<question type="stack">` block from
-`content/reference/showcase.xml`, then change `<name>`, `<questiontext>`,
+`reference/showcase.xml`, then change `<name>`, `<questiontext>`,
 `<questionvariables>`, the input `tans` values and the PRT nodes. All the
 surrounding boilerplate stays exactly as it is.
 
@@ -60,7 +61,7 @@ Required elements:
 - `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
 - `<questionnote>` showing the randomised variant, including ALL random values
 - `<stackversion>` set to the project's STACK version stamp in
-  `CLAUDE.md` (style guide: "Stamp the target STACK version")
+  `project/CLAUDE.md` (style guide: "Stamp the target STACK version")
 - `<questiondescription>` with the provenance note (style guide: "Record where
   each question comes from")
 - At least one `<input>` and one `<prt>`
@@ -127,7 +128,7 @@ fairer and it is what a human marker would do.
    brackets: see the style guide, "`<expectedanswernote>` is the full route
    through the PRT".
 
-Match the structure in `content/reference/showcase.xml`.
+Match the structure in `reference/showcase.xml`.
 
 ---
 
@@ -150,7 +151,7 @@ steps (the substitution, the simplification, not "compute b² − 4ac" in
 isolation), general feedback shows the complete solution, one `AlgEquiv` PRT per
 blank, styled with `tb-example`.
 
-Prototype: `content/reference/prototypes/faded_example_prototype.xml`
+Prototype: `reference/prototypes/faded_example_prototype.xml`
 
 ### Pattern 7: Parsons problem (drag and drop proof)
 
@@ -211,7 +212,7 @@ Sign handling: apply `tex1()` to whole Maxima expressions
 (`tex1(x^2 + b*x + c)`) rather than concatenating strings
 (`sconcat("x^2 + ", tex1(b), "x")`), or you get `x^2 + -2x`.
 
-Prototype: `content/reference/prototypes/parsons_prototype.xml`
+Prototype: `reference/prototypes/parsons_prototype.xml`
 
 ### Pattern 8: reading comprehension (proof analysis)
 
@@ -221,7 +222,7 @@ X, what justifies step Y, what is the key property used, what would break if.
 Use it after students have learned a technique, to test whether they understand
 why it works rather than how to execute it.
 
-Prototype: `content/reference/prototypes/reading_comp_prototype.xml`
+Prototype: `reference/prototypes/reading_comp_prototype.xml`
 
 ---
 

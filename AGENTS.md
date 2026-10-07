@@ -8,7 +8,7 @@ file is the portable entry point.
 
 ## Start here
 
-If `CLAUDE.md` still carries a "not set up yet" notice, follow `ONBOARDING.md`
+If `project/CLAUDE.md` does not exist yet, follow `ONBOARDING.md`
 before doing anything else.
 
 ## What the pipeline is
@@ -51,5 +51,6 @@ author the file is not an independent reviewer.
 ## Reference
 
 `style-guide.md` is authoritative for content conventions and is where the
-hard-won rules live. `reviewing-checklist.md` is what the reviewer works through.
+hard-won rules live; `project/style-guide.md`, if present, adds rules for one
+project. `reviewing-checklist.md` is what the reviewer works through.
 `LESSONS.md` explains why the rules exist and is worth reading once, early.

@@ -102,8 +102,8 @@ unattended.
 The agents are available individually, without the slash commands:
 
 - "Run the planner on Ch5 Section B"
-- "Run the author on content/plans/Ch5_B.md"
-- "Run the reviewer on content/drafts/Ch5_B.xml"
+- "Run the author on project/content/plans/Ch5_B.md"
+- "Run the reviewer on project/content/drafts/Ch5_B.xml"
 
 Useful when you are fixing one thing, or when a run died partway and you want to
 pick it up rather than start again.
@@ -113,13 +113,13 @@ pick it up rather than start again.
 ## The commands you will actually type
 
 ```bash
-tools/api-check.sh content/drafts/file.xml      # fast check, seconds
-tools/render-sweep.sh content/drafts/file.xml   # display check, every seed
-tools/test-question.sh content/drafts/file.xml  # the real gate, minutes
-tools/audit-test-inputs.sh content/drafts/file.xml
-tools/push-review.sh content/drafts/file.xml    # preview as a student
-tools/push-live.sh content/approved/file.xml <quiz-id> --course=<key>
-tools/render-check.sh content/approved/file.xml # does it look right on screen
+tools/api-check.sh project/content/drafts/file.xml      # fast check, seconds
+tools/render-sweep.sh project/content/drafts/file.xml   # display check, every seed
+tools/test-question.sh project/content/drafts/file.xml  # the real gate, minutes
+tools/audit-test-inputs.sh project/content/drafts/file.xml
+tools/push-review.sh project/content/drafts/file.xml    # preview as a student
+tools/push-live.sh project/content/approved/file.xml <quiz-id> --course=<key>
+tools/render-check.sh project/content/approved/file.xml # does it look right on screen
 ```
 
 Full runbook: `.claude/skills/moodle-operations/SKILL.md`.
@@ -129,30 +129,38 @@ Full runbook: `.claude/skills/moodle-operations/SKILL.md`.
 ## Where things live
 
 ```
-content/drafts/      the author writes here (naming is your project's to
-                     choose; settle it once and record it in CLAUDE.md)
-content/approved/    the reviewer promotes here; this is the source of truth
-content/plans/       plan documents
-content/reference/   showcase.xml and the pattern prototypes
-feedback/            one document per section, plus lessons-learned.md
-sources/             your source material
-tools/               scripts, and project.conf with all the ids
+In the kit (generic, shared):
+reference/                   showcase.xml and the pattern prototypes
+tools/                       scripts
+templates/project/           the skeleton a new project is created from
+
+In your project (project/, its own git repository):
+project/CLAUDE.md            what the project is: sources, locale, Moodle site
+project/project.conf         all the Moodle ids
+project/style-guide.md       rules for this project only
+project/content/drafts/      the author writes here (naming is your project's
+                             to choose; record it in project/CLAUDE.md)
+project/content/approved/    the reviewer promotes here; the source of truth
+project/content/plans/       plan documents
+project/feedback/            one document per section, plus lessons-learned.md
+project/sources/             your source material
 ```
 
-`content/approved/` is the master copy of your work. Commit it. Moodle is a
+`project/content/approved/` is the master copy of your work. Commit it, in the
+project's repository. Moodle is a
 rendering target that can be rebuilt from these files; the reverse is not true.
 
 ---
 
 ## The feedback loop
 
-The reviewer writes `feedback/<section-id>.md` after every section, with a
+The reviewer writes `project/feedback/<section-id>.md` after every section, with a
 "lessons for next section" list. Whoever is coordinating reads it and feeds
 those lessons into the next author spawn, which is why section 5 comes out
 better than section 1.
 
 When the same issue turns up in two or more sections, it stops being a lesson
-and becomes a rule: promote it to `feedback/lessons-learned.md`, and migrate it
+and becomes a rule: promote it to `project/feedback/lessons-learned.md`, and migrate it
 into `style-guide.md` at the next natural boundary.
 
 Do not edit `style-guide.md` mid-chapter. Changing the conventions while a
@@ -226,8 +234,9 @@ time and nothing to show for it, or none at all.
 
 ## Working with Claude Code, if it is new to you
 
-- `CLAUDE.md` is read at the start of every session. It is the place for
-  standing instructions. Keep it short, because it costs context every time.
+- `CLAUDE.md` is read at the start of every session, together with
+  `project/CLAUDE.md`, which it imports. Your project's standing instructions go
+  in `project/CLAUDE.md`. Keep it short, because it costs context every time.
 - Correct it when it goes wrong, in the moment. "Don't do X, do Y instead" in
   the middle of a task works, and is much better than letting it finish
   something wrong.

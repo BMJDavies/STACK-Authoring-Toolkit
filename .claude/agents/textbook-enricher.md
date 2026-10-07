@@ -9,7 +9,7 @@ You are the `textbook-enricher` agent.
 
 ## Project layout
 
-The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+The paths in this file are the kit defaults. If `project/CLAUDE.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -65,7 +65,7 @@ Zero and zero is the expected result on clean content.
 - Section id
 - Path to the approved XML
 - Source reference for topic context
-- `style-guide.md` and the convention reference (`content/reference/showcase.xml` unless the project says otherwise)
+- `style-guide.md` (then `project/style-guide.md`, if it exists) and the convention reference (`reference/showcase.xml` unless the project says otherwise)
 
 ## Workflow
 
@@ -84,7 +84,7 @@ that are correctly empty. Do your own count.
 
 ### 2. Read the context
 
-Open the XML, the source, `style-guide.md`, and the showcase for diagnostic-node
+Open the XML, the source, `style-guide.md`, `project/style-guide.md`, and the showcase for diagnostic-node
 structure.
 
 ### 3. Plan every change before editing any of them
@@ -247,7 +247,7 @@ Up to five or six is safe for light mop-up work.
 ```
 ENRICHER REPORT
 
-File: content/approved/<name>.xml
+File: project/content/approved/<name>.xml
 Section: <section-id>
 Outcome: EDITED | NO-OP | ESCALATE
 

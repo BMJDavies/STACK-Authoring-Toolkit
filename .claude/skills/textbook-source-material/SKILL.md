@@ -9,7 +9,7 @@ Input: a section of an existing document.
 Output: a numbered work order listing every item the author should produce.
 
 There are two paths. Pick the one that matches your project and say which in
-`CLAUDE.md`, so agents do not have to guess.
+`project/CLAUDE.md`, so agents do not have to guess.
 
 ---
 
@@ -18,7 +18,7 @@ There are two paths. Pick the one that matches your project and say which in
 ### Step 1: extract the text
 
 ```bash
-pdftotext -layout sources/chapter5.pdf - > /tmp/ch5.txt
+pdftotext -layout project/sources/chapter5.pdf - > /tmp/ch5.txt
 ```
 
 `-layout` preserves two-column layout where it can.
@@ -40,7 +40,7 @@ For anything with surds or fractional indices, `pdftotext` reliably mangles the
 glyphs. Render the pages as images instead and read those:
 
 ```bash
-pdftoppm -r 220 -png -f 64 -l 77 sources/chapter5.pdf /tmp/ch5page
+pdftoppm -r 220 -png -f 64 -l 77 project/sources/chapter5.pdf /tmp/ch5page
 ```
 
 Use the images as the truth source for the planner and the author. Text
@@ -99,8 +99,8 @@ than improvising it.
 ```markdown
 # Work order: <topic> <section>
 
-Source: <sources/file.pdf pages X-Y>  |  Spec outcomes: <quoted>
-Output file: content/drafts/<filename>.xml
+Source: <project/sources/file.pdf pages X-Y>  |  Spec outcomes: <quoted>
+Output file: project/content/drafts/<filename>.xml
 Target quiz: <name, or "new">
 
 ## Items (in order)

@@ -23,8 +23,8 @@ From `$ARGUMENTS` or by asking:
 
 Do not start without at least 1 to 3.
 
-Course ids, question bank ids and `--course=` keys are in `tools/project.conf`
-and summarised in `CLAUDE.md`. Read them rather than assuming.
+Course ids, question bank ids and `--course=` keys are in `project/project.conf`
+and summarised in `project/CLAUDE.md`. Read them rather than assuming.
 
 ## Step 2: session startup
 
@@ -120,7 +120,7 @@ docker exec <container> php /tmp/qa.php create \
 Spawn the reviewer with the draft path, section spec, quiz id, `--course=` key
 and the author's hand-off notes.
 
-On return, verify: the file moved to `content/approved/`, the feedback document
+On return, verify: the file moved to `project/content/approved/`, the feedback document
 exists, the push succeeded with variants deployed, and the render check came
 back clean. If any of those are missing, say what was skipped.
 
@@ -139,7 +139,7 @@ Print the quiz URL. Record the section as complete.
   wrote, and include its "lessons for next section" items in the next author
   spawn.
 - **Promote recurring issues:** if the same issue appears in two or more
-  sections' feedback, add it to `feedback/lessons-learned.md`. One-off quirks
+  sections' feedback, add it to `project/feedback/lessons-learned.md`. One-off quirks
   stay per-section; patterns get promoted.
 - **Compact your context.** You do not need the detailed checkpoint output from
   finished sections, and a long chapter will exhaust your context if you keep it.
@@ -157,7 +157,7 @@ For your review:
 1. <items needing a decision or a spot check>
 
 Feedback docs written:
-- feedback/<section-id>.md
+- project/feedback/<section-id>.md
 ```
 
 Do not commit. That is the user's call.
