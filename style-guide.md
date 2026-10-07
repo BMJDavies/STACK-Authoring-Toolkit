@@ -262,6 +262,19 @@ whether the mathematics is correct.
     After editing XML, re-import before re-running it, or you are checking the
     old version.
 
+- **Subscripted variables: `consolidatesubscripts`.**
+  Every `algebraic` input whose expected answer uses atoms of the form
+  letters-then-digits (`x1`, `x2`, `y1`, `c1`) carries the extra option
+  `consolidatesubscripts`, after any validator (if used):
+  `<options>validator:validate_x3, consolidatesubscripts</options>`. STACK then
+  converts a student's `x_1` to `x1` before validation and grading. Without it,
+  `x_1` is a different atom: a variable-set validator rejects it with a
+  confusing message, and an unvalidated input marks it wrong. The teacher's
+  answer, validators and PRTs keep the form without the underscore. STACK only
+  converts the pattern `^[a-zA-Z]+_[0-9]+$`, so double or non-numeric
+  subscripts are unaffected. Each such question that is chosen for it carries
+  one test entering the answer with underscores (for example
+  `subst([x1=x_1,x2=x_2,x3=x_3], ta1)`) and expecting full marks.
 - **Bespoke validators** allow question authors to test for, and reject as invalid,
   answers.  Consider using bespoke validators where necessary.  Where bespoke validators
   occur in many questions, suggest adding these to the STACK code base. For example:
