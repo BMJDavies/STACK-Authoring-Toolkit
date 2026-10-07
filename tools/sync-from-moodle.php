@@ -1,9 +1,9 @@
 <?php
 /**
- * Sync questions from a Moodle quiz back to local content/live/.
+ * Sync questions from a Moodle quiz back to local project/content/live/.
  *
  * Exports every question currently in the given quiz to a single Moodle XML
- * file under content/live/. Use this when questions have been hand-edited in
+ * file under project/content/live/. Use this when questions have been hand-edited in
  * Moodle and you want the repo to catch up.
  *
  * Direction: Moodle -> disk. Never the reverse (use tools/push-live.sh for that).
@@ -14,7 +14,7 @@
  *
  * Example:
  *   docker exec <container> php /tmp/sync.php 75 /tmp/export.xml
- *   docker cp <container>:/tmp/export.xml content/approved/Ch5A.xml
+ *   docker cp <container>:/tmp/export.xml project/content/approved/Ch5A.xml
  */
 
 define('CLI_SCRIPT', true);

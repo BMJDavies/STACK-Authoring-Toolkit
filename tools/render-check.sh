@@ -7,8 +7,8 @@
 #
 # Usage:
 #   tools/render-check.sh path/to/file.xml       # check one file
-#   tools/render-check.sh --match Ch6            # all approved/*Ch6*.xml
-#   tools/render-check.sh --all                  # every approved/*.xml
+#   tools/render-check.sh --match Ch6            # all project/content/approved/*Ch6*.xml
+#   tools/render-check.sh --all                  # every project/content/approved/*.xml
 #
 # Exit 0 = no flags. Exit 1 = at least one flag. Exit 2 = bad invocation.
 #
@@ -19,16 +19,18 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=project.conf
-source "$SCRIPT_DIR/project.conf"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+load_project_conf
 
 if [ "$#" -lt 1 ]; then
     echo "Usage: $0 <xml-path> | --match <substring> | --all" >&2
     exit 2
 fi
 
-# Run from the project root (the directory containing tools/ and content/).
-cd "$SCRIPT_DIR/.."
+# Run from the kit root, so a file argument such as
+# project/content/approved/Ch1_A.xml works as before.
+cd "$KIT_DIR"
 
 CONTAINER="$LIVE_CONTAINER"
 
@@ -44,7 +46,7 @@ stage_batch() {
 
 case "$1" in
     --all)
-        stage_batch content/approved/*.xml
+        stage_batch "$PROJECT_DIR"/content/approved/*.xml
         exit $?
         ;;
     --match)
@@ -52,9 +54,9 @@ case "$1" in
             echo "Usage: $0 --match <substring>  (e.g. --match Ch6)" >&2
             exit 2
         fi
-        FILES=(content/approved/*"$2"*.xml)
+        FILES=("$PROJECT_DIR"/content/approved/*"$2"*.xml)
         if [ ! -e "${FILES[0]}" ]; then
-            echo "No files matching content/approved/*$2*.xml" >&2
+            echo "No files matching $PROJECT_DIR/content/approved/*$2*.xml" >&2
             exit 2
         fi
         stage_batch "${FILES[@]}"

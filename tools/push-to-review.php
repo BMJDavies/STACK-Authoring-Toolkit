@@ -12,7 +12,7 @@
  * do not get duplicate quiz pages. Dedupe the category with
  * cleanup-duplicates.php if the bank gets noisy.
  *
- * Normally invoked via tools/push-review.sh, which reads tools/project.conf.
+ * Normally invoked via tools/push-review.sh, which reads project/project.conf.
  *
  * Usage:
  *   php push-to-review.php <xml> <quizid> --categoryid=<n> --contextid=<n> [--url=...]
@@ -43,7 +43,7 @@ $xmlfile = $positional[0] ?? null;
 $quizid  = isset($positional[1]) ? (int)$positional[1] : 0;
 if (!$xmlfile || !file_exists($xmlfile) || !$quizid || !$categoryid || !$contextid) {
     echo "Usage: php push-to-review.php <xml> <quizid> --categoryid=<n> --contextid=<n> [--url=...]\n";
-    echo "Normally invoked via tools/push-review.sh, which fills these in from tools/project.conf.\n";
+    echo "Normally invoked via tools/push-review.sh, which fills these in from project/project.conf.\n";
     exit(1);
 }
 

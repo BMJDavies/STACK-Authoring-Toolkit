@@ -4,14 +4,15 @@
 #
 #   tools/push-review.sh <xml-path> [quiz-id]
 #
-# If quiz-id is omitted, REVIEW_QUIZID from tools/project.conf is used.
+# If quiz-id is omitted, REVIEW_QUIZID from project/project.conf is used.
 # Prints a preview URL when it finishes.
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=project.conf
-source "$SCRIPT_DIR/project.conf"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+load_project_conf
 
 XML="${1:-}"
 QUIZ="${2:-${REVIEW_QUIZID:-}}"
@@ -21,7 +22,7 @@ if [ -z "$XML" ] || [ ! -f "$XML" ]; then
     exit 1
 fi
 if [ -z "$QUIZ" ]; then
-    echo "No quiz id given and REVIEW_QUIZID is unset in tools/project.conf." >&2
+    echo "No quiz id given and REVIEW_QUIZID is unset in $PROJECT_DIR/project.conf." >&2
     exit 1
 fi
 

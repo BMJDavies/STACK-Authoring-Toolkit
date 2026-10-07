@@ -1,7 +1,7 @@
 <?php
 /**
  * Create a course you will actually publish questions into, give it a question
- * bank, and print the COURSES line to add to tools/project.conf.
+ * bank, and print the COURSES line to add to project/project.conf.
  *
  * Idempotent: reuses an existing course with the same shortname.
  *
@@ -109,7 +109,7 @@ if ($cat) {
 $label = str_replace(' ', '_', $shortname);
 
 echo "\n=========================================================\n";
-echo "Add this to COURSES in tools/project.conf (space-separated list):\n\n";
+echo "Add this to COURSES in project/project.conf (space-separated list):\n\n";
 echo "  {$key}:{$course->id}:{$categoryid}:{$contextid}:{$label}\n\n";
 echo "Then push with:  tools/push-live.sh <xml> <quiz-id> --course={$key}\n";
 echo "Course page: {$CFG->wwwroot}/course/view.php?id={$course->id}\n";

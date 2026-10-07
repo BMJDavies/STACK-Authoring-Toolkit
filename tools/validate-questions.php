@@ -42,7 +42,7 @@ $default_seeds = [1, 42, 137, 256, 999];
 
 if (!$categoryid || !$contextid) {
     echo "VALIDATE_CATEGORYID and VALIDATE_CONTEXTID must be set.\n";
-    echo "Fill in DEV_CATEGORYID / DEV_CONTEXTID in tools/project.conf and use tools/test-question.sh.\n";
+    echo "Fill in DEV_CATEGORYID / DEV_CONTEXTID in project/project.conf and use tools/test-question.sh.\n";
     exit(1);
 }
 

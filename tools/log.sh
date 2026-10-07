@@ -1,5 +1,5 @@
 #!/bin/bash
-# log.sh: append a timestamped line to content/progress.log
+# log.sh: append a timestamped line to the project's content/progress.log
 # Usage: tools/log.sh "AUTHOR [Ch5C] validation PASS"
 #        tools/log.sh --clear "MANAGER [Ch5C] starting"   # truncate first
 # Wraps date+echo in a single command so callers don't trip the
@@ -19,11 +19,18 @@ if [ "$#" -lt 1 ]; then
     exit 2
 fi
 
-# Run from the project root regardless of caller's cwd
-cd "$(dirname "$0")/.."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+if [ ! -d "$PROJECT_DIR" ]; then
+    echo "No project folder at $PROJECT_DIR: see ONBOARDING.md." >&2
+    exit 1
+fi
+mkdir -p "$PROJECT_DIR/content"
+LOG="$PROJECT_DIR/content/progress.log"
 
 if [ "$CLEAR" = "1" ]; then
-    echo "[$(date '+%H:%M:%S')] $*" > content/progress.log
+    echo "[$(date '+%H:%M:%S')] $*" > "$LOG"
 else
-    echo "[$(date '+%H:%M:%S')] $*" >> content/progress.log
+    echo "[$(date '+%H:%M:%S')] $*" >> "$LOG"
 fi

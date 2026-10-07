@@ -4,7 +4,7 @@
 # seed except the one the literal happens to match (the D9/D12/D13 bug class).
 #
 # Usage: tools/audit-test-inputs.sh [path-or-glob...]
-#        defaults to content/approved/*.xml
+#        defaults to the project's content/approved/*.xml
 #
 # A testinput is flagged if BOTH:
 #   1. the enclosing <question> has rand(...) in <questionvariables>, AND
@@ -23,10 +23,14 @@
 
 set -u
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+
 shopt -s nullglob
 files=("$@")
 if [ ${#files[@]} -eq 0 ]; then
-  files=(content/approved/*.xml)
+  files=("$PROJECT_DIR"/content/approved/*.xml)
 fi
 
 # Two-pass approach per file: scan for randomised questions, then for each

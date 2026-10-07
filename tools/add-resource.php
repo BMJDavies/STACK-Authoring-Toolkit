@@ -4,7 +4,7 @@
  *
  * Usage:
  *   docker cp tools/add-resource.php <container>:/tmp/add-resource.php
- *   docker cp sources/chapter2.pdf <container>:/tmp/upload.pdf
+ *   docker cp project/sources/chapter2.pdf <container>:/tmp/upload.pdf
  *   docker exec <container> php /tmp/add-resource.php \
  *       --courseid=<n> --section=2 --name="Source: Chapter 2 (pp. 22-31)" \
  *       --filepath=/tmp/upload.pdf --filename="2_Surds_p022-031.pdf"
