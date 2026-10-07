@@ -1,5 +1,9 @@
+# Your project lives in its own git repository inside the kit, in project/
+# (see README.md). The kit never tracks it. If you keep more projects side by
+# side and select them with STACK_PROJECT, add their folders here too.
+project/
+
 # Runtime noise
-content/progress.log
 *.log
 
 # macOS
@@ -11,12 +15,3 @@ content/progress.log
 
 # Claude Code local settings (keep .claude/agents, commands and skills tracked)
 .claude/settings.local.json
-
-# Do NOT ignore tools/project.conf: it has no secrets beyond a local dev
-# database password, and having it in the repo is what makes a fresh clone
-# work. If you point this at a real server, move the credentials out first.
-
-# Source material: usually third-party copyright. Remove these two lines
-# if the material is yours to distribute.
-sources/*
-!sources/README.md
