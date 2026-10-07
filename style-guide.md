@@ -962,6 +962,20 @@ Use `rand_with_prohib` or explicit guards.
   When a source question asks "how can you tell", "why", or "explain", and you
   convert it, list the distractors with your rationale in the hand-off notes so
   the reviewer can audit them.
+- **Say when an answer is an example.** When a part asks for any one object
+  out of many that satisfy a condition (a vector in a null space, a map with a
+  given null space, two non-commuting matrices, constants for which a system
+  has no solution), write "Give an example of ...", not "Give ...". Students
+  then know that any valid answer earns the marks and that they need not find
+  a particular one. A part with a unique answer keep their usual wording.
+- **Ask for an exact value, not a bound.** Never place an input after ≤, ≥,
+  "at least" or "at most": any weaker bound also makes the statement true, so a
+  correct statement would be marked wrong. Ask for the smallest or largest
+  possible value, or write the step as an equality
+  (\(\dim\operatorname{range}S+\dim\operatorname{range}T\le\dim\operatorname{range}S+\dim\operatorname{null}S=\) [input]).
+  Where a bound is unavoidable, say "give the best bound". The exception is
+  describing a set exactly ("find the set of values: \(k\le\) [input] or
+  \(k\ge\) [input]").
 - **Prefer exact form over decimals.** Unless the question is explicitly about
   rounding or estimation, ask for exact answers (`sqrt(2)`, `3/4`, `pi/6`) and
   use `AlgEquiv`. Reserve numerical tolerance for genuinely numerical contexts.
