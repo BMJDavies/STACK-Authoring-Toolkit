@@ -15,6 +15,13 @@ still begins with the comment "Template from the kit", onboarding was started bu
 not finished. In either case do not author, validate or publish anything: read
 `ONBOARDING.md` and follow it, resuming where it left off.
 
+**Old layout.** If `project/CLAUDE.md` does not exist but there are signs of a
+project set up with an earlier version of the kit (`tools/project.conf` exists,
+`CLAUDE_loc.md` exists, or `content/approved/` holds XML files), do not run
+onboarding: that would start a second project beside the real one. Explain the
+reorganisation to the user, point them to `UPGRADING.md`, and offer to run
+`tools/migrate-to-project-folder.sh --dry-run` with them.
+
 ## How this folder is organised
 
 This folder is the kit: a pipeline for writing STACK questions for Moodle with an

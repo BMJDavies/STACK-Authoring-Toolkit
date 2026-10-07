@@ -92,6 +92,7 @@ LESSONS.md                 why the rules are the rules
 style-guide.md             content conventions: the agents' authority
 reviewing-checklist.md     what the reviewer works through
 MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
+UPGRADING.md               moving a project from an earlier version of the kit
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
@@ -109,6 +110,7 @@ tools/
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
+  migrate-to-project-folder.sh  upgrades a kit set up before project/ existed
   ...and several smaller utilities
 
 reference/
