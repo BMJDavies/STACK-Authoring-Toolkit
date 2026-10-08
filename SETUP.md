@@ -264,13 +264,22 @@ database. Only the theme needs redoing.
 
 ## 5. Start version control
 
-If you cloned this kit and intend to work in the clone, that folder is already
-your project. Point its remote at your own repository and commit; there is
-nothing to move.
+If you cloned this kit and intend to work in the clone, then point its
+remote at your own repository and commit.
 
 If you are copying it somewhere else, note that `.claude` starts with a dot and
 a plain `cp -R dir/*` silently misses it. That directory is where the agents
 live, so without it nothing works.
+
+This kit may also contain other subdirectories, such as `project`, which are
+under version control of their own.
+
+If you have not created your project folder yet, create it now from the kit's skeleton:
+
+```bash
+cp -r templates/project project
+git -C project init -q
+```
 
 ---
 
@@ -285,15 +294,8 @@ docker cp tools/setup-workspace.php <webserver-container>:/tmp/setup.php
 docker exec <webserver-container> php /tmp/setup.php
 ```
 
-It prints a block of ids. They go into your project's settings file. If you have
-not created your project folder yet, create it now from the kit's skeleton:
-
-```bash
-cp -r templates/project project
-git -C project init -q
-```
-
-Then paste the ids into `project/project.conf`.
+It prints a block of ids. They go into your project's settings file. Then 
+paste the ids into `project/project.conf`.
 
 Then a course to actually publish into:
 
