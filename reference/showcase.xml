@@ -33,7 +33,13 @@
 </question>
 
 <!-- PATTERN 2: Basic STACK question
-     Demonstrates: clean single-input, randomisation, false-branch PRT feedback -->
+     Demonstrates: clean single-input, randomisation, false-branch PRT feedback.
+     Each gradient is a single exact number, so each box is a NUMERICAL input
+     (forbidfloat 1, requirelowestterms 0, showvalidation 0). 1/2, -3 and 2/4 are
+     accepted and reach the PRT as exact values; 0.5 and letters are rejected at
+     validation, so no PRT node checks the kind of answer. Each input line is in
+     a div, with the prose in its own p. Test 3 is the invalid-input test: a
+     letter in one box, a correct value in the other. -->
 <question type="stack">
   <name><text>Showcase 2: Basic STACK question</text></name>
   <questiontext format="html">
@@ -41,9 +47,9 @@
 <p>Find the gradient of each straight line. Give your answer as a whole number or fraction.</p>
 <ol class="tb-parts">
   <li><p>The line from \(({@x1a@},\, {@y1a@})\) to \(({@x2a@},\, {@y2a@})\).</p>
-    <p>Gradient \(=\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p></li>
+    <div>Gradient \(=\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div></li>
   <li><p>The line from \(({@x1b@},\, {@y1b@})\) to \(({@x2b@},\, {@y2b@})\).</p>
-    <p>Gradient \(=\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p></li>
+    <div>Gradient \(=\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div></li>
 </ol>
     ]]></text>
   </questiontext>
@@ -104,8 +110,8 @@ ta2: dyb / dxb;
   <isbroken>0</isbroken>
   <variantsselectionseed></variantsselectionseed>
 
-  <input><name>ans1</name><type>algebraic</type><tans>ta1</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>1</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans2</name><type>algebraic</type><tans>ta2</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>1</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans1</name><type>numerical</type><tans>ta1</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans2</name><type>numerical</type><tans>ta2</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
 
   <prt><name>prt1</name><value>0.5000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
     <node><name>0</name><description>Check gradient of line A</description><answertest>AlgEquiv</answertest><sans>ans1</sans><tans>ta1</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt1-1-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Use gradient \(= \dfrac{y_2 - y_1}{x_2 - x_1}\).</p>]]></text></falsefeedback></node>
@@ -114,6 +120,16 @@ ta2: dyb / dxb;
     <node><name>0</name><description>Check gradient of line B</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>ta2</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt2-1-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Use gradient \(= \dfrac{y_2 - y_1}{x_2 - x_1}\).</p>]]></text></falsefeedback></node>
   </prt>
 
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>8</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
   <qtest><testcase>1</testcase><description>All correct</description>
     <testinput><name>ans1</name><value>ta1</value></testinput>
     <testinput><name>ans2</name><value>ta2</value></testinput>
@@ -126,10 +142,21 @@ ta2: dyb / dxb;
     <expected><name>prt1</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-F</expectedanswernote></expected>
     <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F</expectedanswernote></expected>
   </qtest>
+  <qtest><testcase>3</testcase><description>Invalid (a): a letter in the numerical box, rejected at validation; (b) still marked</description>
+    <testinput><name>ans1</name><value>t</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <expected><name>prt1</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+  </qtest>
 </question>
 
 <!-- PATTERN 3: Multi-part question with diagnostic PRT
-     Demonstrates: 4 inputs, 2 PRTs with 2 nodes each, per-coordinate feedback -->
+     Demonstrates: 4 inputs, 2 PRTs with 2 nodes each, per-coordinate feedback.
+     Each coordinate is a single number, so each of the four boxes is a NUMERICAL
+     input (forbidfloat 1, requirelowestterms 0, showvalidation 0): a half-integer
+     such as 3/2 is accepted, a letter or 1.5 is rejected at validation. Input
+     lines are in a div. Test 4 is the invalid-input test: a letter in one box of
+     (a), every other box correct; the whole PRT that reads it is not evaluated. -->
 <question type="stack">
   <name><text>Showcase 3: Multi-part with diagnostic PRT</text></name>
   <questiontext format="html">
@@ -137,9 +164,9 @@ ta2: dyb / dxb;
 <p>Find the mid-point of each line segment.</p>
 <ol class="tb-parts">
   <li><p>From \(({@x1a@},\, {@y1a@})\) to \(({@x2a@},\, {@y2a@})\).</p>
-    <p>Mid-point: \(\big(\) [[input:ans1]] \(,\) [[input:ans2]] \(\big)\) [[validation:ans1]] [[validation:ans2]] [[feedback:prt1]]</p></li>
+    <div>Mid-point: \(\big(\) [[input:ans1]] \(,\) [[input:ans2]] \(\big)\) [[validation:ans1]] [[validation:ans2]] [[feedback:prt1]]</div></li>
   <li><p>From \(({@x1b@},\, {@y1b@})\) to \(({@x2b@},\, {@y2b@})\).</p>
-    <p>Mid-point: \(\big(\) [[input:ans3]] \(,\) [[input:ans4]] \(\big)\) [[validation:ans3]] [[validation:ans4]] [[feedback:prt2]]</p></li>
+    <div>Mid-point: \(\big(\) [[input:ans3]] \(,\) [[input:ans4]] \(\big)\) [[validation:ans3]] [[validation:ans4]] [[feedback:prt2]]</div></li>
 </ol>
     ]]></text>
   </questiontext>
@@ -149,7 +176,7 @@ ta2: dyb / dxb;
 <p>\[\text{Mid-point} = \left(\frac{x_1 + x_2}{2},\; \frac{y_1 + y_2}{2}\right)\]</p>
 <ol class="tb-parts">
   <li><p>From \(({@x1a@},\, {@y1a@})\) to \(({@x2a@},\, {@y2a@})\):</p>
-    <p>\[\text{Mid-point} = \left(\frac{{@x1a@} + {@x2a@}}{2},\; \frac{{@y1a@} + {@y2a@}}{2}\right) = \left(\frac{{@x1a + x2a@}}{2},\; \frac{{@y1a + y2a@}}{2}\right) = ({@ta1@},\, {@ta2@})\]</p></li>
+    <p>\[\text{Mid-point} = \left(\frac{{@x1a@} + ({@x2a@})}{2},\; \frac{{@y1a@} + ({@y2a@})}{2}\right) = \left(\frac{{@x1a + x2a@}}{2},\; \frac{{@y1a + y2a@}}{2}\right) = ({@ta1@},\, {@ta2@})\]</p></li>
   <li><p>From \(({@x1b@},\, {@y1b@})\) to \(({@x2b@},\, {@y2b@})\):</p>
     <p>\[\text{Mid-point} = \left(\frac{{@x1b@} + ({@x2b@})}{2},\; \frac{{@y1b@} + ({@y2b@})}{2}\right) = \left(\frac{{@x1b + x2b@}}{2},\; \frac{{@y1b + y2b@}}{2}\right) = ({@ta3@},\, {@ta4@})\]</p></li>
 </ol>
@@ -201,10 +228,10 @@ ta4: (y1b + y2b) / 2;
   <isbroken>0</isbroken>
   <variantsselectionseed></variantsselectionseed>
 
-  <input><name>ans1</name><type>algebraic</type><tans>ta1</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans2</name><type>algebraic</type><tans>ta2</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans3</name><type>algebraic</type><tans>ta3</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans4</name><type>algebraic</type><tans>ta4</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans1</name><type>numerical</type><tans>ta1</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans2</name><type>numerical</type><tans>ta2</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans3</name><type>numerical</type><tans>ta3</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans4</name><type>numerical</type><tans>ta4</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
 
   <prt><name>prt1</name><value>0.5000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
     <node><name>0</name><description>Check x-coordinate of mid-point (a)</description><answertest>AlgEquiv</answertest><sans>ans1</sans><tans>ta1</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0.5000000</truescore><truepenalty></truepenalty><truenextnode>1</truenextnode><trueanswernote>prt1-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt1-1-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>The \(x\)-coordinate of the mid-point is \(\dfrac{x_1 + x_2}{2}\).</p>]]></text></falsefeedback></node>
@@ -215,6 +242,16 @@ ta4: (y1b + y2b) / 2;
     <node><name>1</name><description>Check y-coordinate of mid-point (b)</description><answertest>AlgEquiv</answertest><sans>ans4</sans><tans>ta4</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>+</truescoremode><truescore>0.5000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-2-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>+</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt2-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>The \(y\)-coordinate of the mid-point is \(\dfrac{y_1 + y_2}{2}\).</p>]]></text></falsefeedback></node>
   </prt>
 
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>8</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
   <qtest><testcase>1</testcase><description>All correct</description>
     <testinput><name>ans1</name><value>ta1</value></testinput>
     <testinput><name>ans2</name><value>ta2</value></testinput>
@@ -239,10 +276,22 @@ ta4: (y1b + y2b) / 2;
     <expected><name>prt1</name><expectedscore>0.5000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt1-1-T | prt1-2-F</expectedanswernote></expected>
     <expected><name>prt2</name><expectedscore>0.5000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote></expected>
   </qtest>
+  <qtest><testcase>4</testcase><description>Invalid (a): a letter in the first numerical box, rejected at validation; (b) still marked</description>
+    <testinput><name>ans1</name><value>t</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <testinput><name>ans3</name><value>ta3</value></testinput>
+    <testinput><name>ans4</name><value>ta4</value></testinput>
+    <expected><name>prt1</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T | prt2-2-T</expectedanswernote></expected>
+  </qtest>
 </question>
 
 <!-- PATTERN 4: Faded worked example
-     Demonstrates: worked solution with algebraic blanks, pedagogical progression -->
+     Demonstrates: worked solution with blanks, pedagogical progression.
+     Blank 1 is a single number, so it is a NUMERICAL input (forbidfloat 1,
+     requirelowestterms 0, showvalidation 0); blank 2 is a polynomial, so it stays
+     ALGEBRAIC. Each blank's input line is in a div. Test 3 is the invalid-input
+     test: a letter in the numerical blank, a correct polynomial in the other. -->
 <question type="stack">
   <name><text>Showcase 4: Faded worked example</text></name>
   <questiontext format="html">
@@ -259,9 +308,9 @@ ta4: (y1b + y2b) / 2;
 <p class="tb-exercise">Exercise</p>
 <p>Now complete the square for \({@disp_q2@}\), following the same method.</p>
 <p><strong>Step 1:</strong> The coefficient of \(x\) is \({@b2@}\). Half of this is \({@b2/2@}\), so:</p>
-<p>\({@disp_lhs2@} = (x + {@b2/2@})^2 -\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>
+<div>\({@disp_lhs2@} = (x + {@b2/2@})^2 -\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
 <p><strong>Step 2:</strong> Now bring back the constant term \({@c2@}\) and simplify:</p>
-<p>\({@disp_q2@} =\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p>
+<div>\({@disp_q2@} =\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -319,7 +368,7 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
   <variantsselectionseed></variantsselectionseed>
   <input>
     <name>ans1</name>
-    <type>algebraic</type>
+    <type>numerical</type>
     <tans>sq2</tans>
     <boxsize>5</boxsize>
     <strictsyntax>1</strictsyntax>
@@ -332,7 +381,7 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
     <requirelowestterms>0</requirelowestterms>
     <checkanswertype>0</checkanswertype>
     <mustverify>0</mustverify>
-    <showvalidation>3</showvalidation>
+    <showvalidation>0</showvalidation>
     <options></options>
   </input>
   <input>
@@ -407,11 +456,16 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
       <falsefeedback format="html"><text><![CDATA[<p>From Step 1, \({@disp_lhs2@} = {@disp_csq2@}\). Now add back the constant term \({@c2@}\):</p><p>\({@disp_q2@} = {@disp_csq2_full@} = {@ta2@}\).</p>]]></text></falsefeedback>
     </node>
   </prt>
-  <deployedseed>11111</deployedseed>
-  <deployedseed>22222</deployedseed>
-  <deployedseed>33333</deployedseed>
-  <deployedseed>44444</deployedseed>
-  <deployedseed>55555</deployedseed>
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>8</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
   <qtest>
     <testcase>1</testcase>
     <description>Correct answers</description>
@@ -460,10 +514,39 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
       <expectedanswernote>prt2-1-F</expectedanswernote>
     </expected>
   </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Invalid blank 1: a letter in the numerical box, rejected at validation; blank 2 still marked</description>
+    <testinput>
+      <name>ans1</name>
+      <value>t</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore></expectedscore>
+      <expectedpenalty></expectedpenalty>
+      <expectedanswernote>NULL</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1</expectedscore>
+      <expectedpenalty>0</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+  </qtest>
 </question>
 
 <!-- PATTERN 5: Fill-in-the-blanks
-     Demonstrates: inline inputs woven into equations and running text -->
+     Demonstrates: inline inputs woven into equations and running text.
+     The three blanks that are single numbers (c, and the two bounds) are
+     NUMERICAL inputs (forbidfloat 1, requirelowestterms 0, showvalidation 0); the
+     discriminant is a formula in k, so that blank stays ALGEBRAIC. Each line that
+     holds an input is a div, with the prose in its own p. Test 3 is the
+     invalid-input test: a letter in a numerical blank, the rest correct. -->
 <question type="stack">
   <name><text>Showcase 5: Fill-in-the-blanks</text></name>
   <questiontext format="html">
@@ -471,11 +554,11 @@ disp_csq2_full: (x + b2/2)^2 - (b2/2)^2 + c2;
 <p class="tb-exercise">Exercise</p>
 <p>The equation \(x^2 + kx + 16 = 0\), where \(k\) is a constant, has real roots.</p>
 
-<p>Here \(a = 1\), \(b = k\), \(c =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>
-<p>The discriminant is \(b^2 - 4ac =\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p>
+<div>Here \(a = 1\), \(b = k\), \(c =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
+<div>The discriminant is \(b^2 - 4ac =\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div>
 <p>For real roots we need the discriminant to be non-negative, i.e. \(k^2 - 64 \geq 0\).</p>
 <p>Hence find the set of possible values for \(k\).</p>
-<p>\(k \leq\) [[input:ans3]] [[validation:ans3]] [[feedback:prt3]] or \(k \geq\) [[input:ans4]] [[validation:ans4]] [[feedback:prt4]]</p>
+<div>\(k \leq\) [[input:ans3]] [[validation:ans3]] [[feedback:prt3]] or \(k \geq\) [[input:ans4]] [[validation:ans4]] [[feedback:prt4]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -520,10 +603,10 @@ ta4: 8;
   <matrixparens>[</matrixparens>
   <variantsselectionseed></variantsselectionseed>
 
-  <input><name>ans1</name><type>algebraic</type><tans>ta1</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans1</name><type>numerical</type><tans>ta1</tans><boxsize>4</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
   <input><name>ans2</name><type>algebraic</type><tans>ta2</tans><boxsize>10</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans3</name><type>algebraic</type><tans>ta3</tans><boxsize>6</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
-  <input><name>ans4</name><type>algebraic</type><tans>ta4</tans><boxsize>6</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans3</name><type>numerical</type><tans>ta3</tans><boxsize>6</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans4</name><type>numerical</type><tans>ta4</tans><boxsize>6</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
 
   <prt><name>prt1</name><value>0.2500000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
     <node><name>0</name><description>Check c value</description><answertest>AlgEquiv</answertest><sans>ans1</sans><tans>ta1</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt1-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt1-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
@@ -538,6 +621,7 @@ ta4: 8;
     <node><name>0</name><description>Check upper bound</description><answertest>AlgEquiv</answertest><sans>ans4</sans><tans>ta4</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt4-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt4-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
   </prt>
 
+  <deployedseed>1</deployedseed>
   <qtest><testcase>1</testcase><description>Correct</description>
     <testinput><name>ans1</name><value>16</value></testinput>
     <testinput><name>ans2</name><value>k^2-64</value></testinput>
@@ -558,10 +642,24 @@ ta4: 8;
     <expected><name>prt3</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt3-1-F</expectedanswernote></expected>
     <expected><name>prt4</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt4-1-F</expectedanswernote></expected>
   </qtest>
+  <qtest><testcase>3</testcase><description>Invalid c: a letter in the numerical box, rejected at validation; the other blanks still marked</description>
+    <testinput><name>ans1</name><value>t</value></testinput>
+    <testinput><name>ans2</name><value>k^2-64</value></testinput>
+    <testinput><name>ans3</name><value>-8</value></testinput>
+    <testinput><name>ans4</name><value>8</value></testinput>
+    <expected><name>prt1</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt3-1-T</expectedanswernote></expected>
+    <expected><name>prt4</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt4-1-T</expectedanswernote></expected>
+  </qtest>
 </question>
 
 <!-- PATTERN 6: MCQ / dropdown
-     Demonstrates: mcq_correct() pattern, dropdown input type, blank default -->
+     Demonstrates: mcq_correct() pattern, dropdown input type, blank default.
+     Part 1 is a formula (ALGEBRAIC); part 2, the minimum value, is a single
+     number (NUMERICAL: forbidfloat 1, requirelowestterms 0, showvalidation 0);
+     part 3 is a dropdown (showvalidation 0). Every input line is in a div. Test 3
+     is the invalid-input test: a letter in the numerical box, the rest correct. -->
 <question type="stack">
   <name><text>Showcase 6: MCQ / dropdown</text></name>
   <questiontext format="html">
@@ -570,11 +668,11 @@ ta4: 8;
 <p>For the quadratic \(y = {@disp_q1@}\), answer the following.</p>
 <ol class="tb-parts">
   <li><p>Write \({@disp_q1@}\) in completed-square form:</p>
-    <p>\(y =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p></li>
+    <div>\(y =\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div></li>
   <li><p>State the minimum value of \({@disp_q1@}\):</p>
-    <p>[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p></li>
+    <div>[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div></li>
   <li><p>How many times does the graph of \(y = {@disp_q1@}\) cross the \(x\)-axis?</p>
-    <p>[[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</p></li>
+    <div>[[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</div></li>
 </ol>
     ]]></text>
   </questiontext>
@@ -652,7 +750,7 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
   </input>
   <input>
     <name>ans2</name>
-    <type>algebraic</type>
+    <type>numerical</type>
     <tans>ta2</tans>
     <boxsize>5</boxsize>
     <strictsyntax>1</strictsyntax>
@@ -665,7 +763,7 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
     <requirelowestterms>0</requirelowestterms>
     <checkanswertype>0</checkanswertype>
     <mustverify>0</mustverify>
-    <showvalidation>3</showvalidation>
+    <showvalidation>0</showvalidation>
     <options></options>
   </input>
   <input>
@@ -767,11 +865,16 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
       <falsefeedback format="html"><text><![CDATA[<p>Look at the minimum value. If it is positive, the graph stays above the \(x\)-axis (0 crossings). If it is zero, the graph just touches (1 crossing). If it is negative, the graph dips below and crosses twice.</p>]]></text></falsefeedback>
     </node>
   </prt>
-  <deployedseed>11111</deployedseed>
-  <deployedseed>22222</deployedseed>
-  <deployedseed>33333</deployedseed>
-  <deployedseed>44444</deployedseed>
-  <deployedseed>55555</deployedseed>
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
+  <deployedseed>11</deployedseed>
   <qtest>
     <testcase>1</testcase>
     <description>Correct answers</description>
@@ -840,6 +943,40 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
       <expectedanswernote>prt3-1-F</expectedanswernote>
     </expected>
   </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Invalid part 2: a letter in the numerical box, rejected at validation; parts 1 and 3 still marked</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>t</value>
+    </testinput>
+    <testinput>
+      <name>ans3</name>
+      <value>first(mcq_correct(ta3_opts))</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore>1</expectedscore>
+      <expectedpenalty>0</expectedpenalty>
+      <expectedanswernote>prt1-1-T</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt2</name>
+      <expectedscore></expectedscore>
+      <expectedpenalty></expectedpenalty>
+      <expectedanswernote>NULL</expectedanswernote>
+    </expected>
+    <expected>
+      <name>prt3</name>
+      <expectedscore>1</expectedscore>
+      <expectedpenalty>0</expectedpenalty>
+      <expectedanswernote>prt3-1-T</expectedanswernote>
+    </expected>
+  </qtest>
 </question>
 
 <!-- PATTERN 7: Parsons problem (zero-mark formative)
@@ -855,7 +992,7 @@ explanation: if qval &gt; 0 then sconcat("The minimum value is ", string(qval), 
  "headers": ["Your proof:"],
  "available_header": ["Drag from here:"]}
 [[/parsons]]
-<p>[[input:ans1]] [[validation:ans1]]</p>
+<div>[[input:ans1]] [[validation:ans1]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
@@ -971,6 +1108,9 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
       </falsefeedback>
     </node>
   </prt>
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
   <qtest>
     <testcase>1</testcase>
     <description>Correct proof order gets full marks.</description>
@@ -1010,10 +1150,10 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
 <p>Look back at the example above. Answer these questions about the proof.</p>
 <ol class="tb-parts">
   <li><p>The discriminant simplifies to \(2k - k^2\). Why does the factorisation \(k(2 - k) &lt; 0\) give \(k &lt; 0\) or \(k > 2\)?</p>
-    <p>[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>
+    <div>[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div>
   </li>
   <li><p>For \(k = 3\), does the equation \(kx^2 + kx + \dfrac{1}{2}(k-1) = 0\) have real roots?</p>
-    <p>[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p>
+    <div>[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div>
   </li>
 </ol>
     ]]></text>
@@ -1075,6 +1215,7 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
     <node><name>0</name><description>Check part b</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>opt2a</tans><testoptions></testoptions><quiet>0</quiet><truescoremode>=</truescoremode><truescore>1.0000000</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0.0000000</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt2-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
   </prt>
 
+  <deployedseed>1</deployedseed>
   <qtest><testcase>1</testcase><description>Both correct</description>
     <testinput><name>ans1</name><value>first(mcq_correct(ta1))</value></testinput>
     <testinput><name>ans2</name><value>first(mcq_correct(ta2))</value></testinput>
@@ -1096,20 +1237,25 @@ ta2: [[opt2a, true], [opt2b, false], [opt2c, false]];
 </question>
 
 <!-- PATTERN 9: Randomised question with good constraints
-     Demonstrates: rand guards excluding 0, ensuring distinct values, avoiding degeneracy -->
+     Demonstrates: rand guards excluding 0, ensuring distinct values, avoiding degeneracy.
+     Each root is a single number, so both boxes are NUMERICAL inputs (forbidfloat 1,
+     requirelowestterms 0, showvalidation 0). The PRT compares the two answers as a
+     set, so either order scores; a letter, which would reach a set comparison as a
+     symbol, is rejected at validation instead. The input line is a div. Test 3 is
+     the invalid-input test: a letter in one box, a correct root in the other. -->
 <question type="stack">
   <name><text>Showcase 9: Randomised with constraints</text></name>
   <questiontext format="html">
     <text><![CDATA[
 <p class="tb-exercise">Exercise</p>
 <p>Solve \({@expand(expr)@} = 0\).</p>
-<p>\(x =\) [[input:ans1]] [[validation:ans1]] and \(x =\) [[input:ans2]] [[validation:ans2]]</p>
+<div>\(x =\) [[input:ans1]] [[validation:ans1]] and \(x =\) [[input:ans2]] [[validation:ans2]]</div>
     ]]></text>
   </questiontext>
   <generalfeedback format="html">
     <text><![CDATA[
 <p>To solve a quadratic equation by factorising, we look for two numbers that multiply to give the constant term and add to give the coefficient of \(x\).</p>
-<p>Here the constant term is \({@r1*r2@}\) and the coefficient of \(x\) is \({@-(r1+r2)@}\). The two numbers that work are \({@-r1@}\) and \({@-r2@}\), since \({@-r1@} \times {@-r2@} = {@r1*r2@}\) and \({@-r1@} + {@-r2@} = {@-(r1+r2)@}\).</p>
+<p>Here the constant term is \({@r1*r2@}\) and the coefficient of \(x\) is \({@-(r1+r2)@}\). The two numbers that work are \({@-r1@}\) and \({@-r2@}\), since \({@-r1@} \times ({@-r2@}) = {@r1*r2@}\) and \({@-r1@} + ({@-r2@}) = {@-(r1+r2)@}\).</p>
 <p>So \({@expand(expr)@} = {@expr@}\).</p>
 <p>Setting each bracket equal to zero gives \(x = {@r1@}\) and \(x = {@r2@}\).</p>
     ]]></text>
@@ -1150,7 +1296,7 @@ ta2: r2;
   <variantsselectionseed></variantsselectionseed>
   <input>
     <name>ans1</name>
-    <type>algebraic</type>
+    <type>numerical</type>
     <tans>ta1</tans>
     <boxsize>4</boxsize>
     <strictsyntax>1</strictsyntax>
@@ -1163,12 +1309,12 @@ ta2: r2;
     <requirelowestterms>0</requirelowestterms>
     <checkanswertype>0</checkanswertype>
     <mustverify>0</mustverify>
-    <showvalidation>3</showvalidation>
+    <showvalidation>0</showvalidation>
     <options></options>
   </input>
   <input>
     <name>ans2</name>
-    <type>algebraic</type>
+    <type>numerical</type>
     <tans>ta2</tans>
     <boxsize>4</boxsize>
     <strictsyntax>1</strictsyntax>
@@ -1181,7 +1327,7 @@ ta2: r2;
     <requirelowestterms>0</requirelowestterms>
     <checkanswertype>0</checkanswertype>
     <mustverify>0</mustverify>
-    <showvalidation>3</showvalidation>
+    <showvalidation>0</showvalidation>
     <options></options>
   </input>
   <prt>
@@ -1216,7 +1362,16 @@ ta_set: {ta1, ta2};
       <falsefeedback format="html"><text><![CDATA[<p>Factorise \({@expand(expr)@}\) by finding two numbers that multiply to \({@r1*r2@}\) and add to \({@-(r1+r2)@}\). Then set each factor to zero.</p>]]></text></falsefeedback>
     </node>
   </prt>
-  <deployedseed>12345</deployedseed>
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>8</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
   <qtest>
     <testcase>1</testcase>
     <description>Correct answers</description>
@@ -1251,6 +1406,24 @@ ta_set: {ta1, ta2};
       <expectedscore>0</expectedscore>
       <expectedpenalty>0</expectedpenalty>
       <expectedanswernote>prt1-1-F</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Invalid root 1: a letter in the numerical box, rejected at validation</description>
+    <testinput>
+      <name>ans1</name>
+      <value>t</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <expected>
+      <name>prt1</name>
+      <expectedscore></expectedscore>
+      <expectedpenalty></expectedpenalty>
+      <expectedanswernote>NULL</expectedanswernote>
     </expected>
   </qtest>
 </question>
@@ -1314,6 +1487,7 @@ ta_set: {ta1, ta2};
   <logicsymbol>lang</logicsymbol>
   <matrixparens>[</matrixparens>
   <variantsselectionseed></variantsselectionseed>
+  <deployedseed>1</deployedseed>
 </question>
 
 <!-- PATTERN 11: Matrix input
@@ -1323,7 +1497,26 @@ ta_set: {ta1, ta2};
      wrong matrix; matrix product with "." (never "*"); test inputs bound as question
      variables first (Arec, dgT, tw1) and passed by name; the correct test rebuilds the
      answer from the displayed formulas rather than reusing the teacher's answer.
-     Use "^^" for matrix powers ("^" is entry-wise). Do not use addrow (broken in STACK).
+     Use "^^" for matrix powers ("^" is entry-wise).
+     Validation: a matrix grid accepts symbolic entries, so a matrix of numbers
+     carries the bespoke validator validate_numeric (defined in the question
+     variables, named in the input's options); a letter in any cell is rejected
+     at validation and never reaches the PRT. Copy the REAL version defined
+     below: listofvars(%i) is [], so the old test "listofvars(ex) = []" lets a
+     complex entry such as i*1 through. The real version simplifies first and also
+     requires freeof(%i, ...), which rejects i and sqrt(-4) in a question set over
+     R. Where the field is F and C is legitimate, drop the freeof clause and say
+     so in the question. The same validator belongs on any NUMERICAL box that is
+     graded by a property (a null vector, a basis vector, a coefficient of a
+     decomposition): the numerical type accepts i, and i times a correct group
+     of numbers usually still satisfies the property.
+     No invalid-input test here, deliberately: with mustverify 0 a matrix input
+     puts no whole-input value in the test response, so STACK's test runner counts
+     a single-matrix-input test whose only expectation is NULL as empty and fails
+     it ("empty test case"). A matrix question that has a second input (or a second
+     PRT with a non-NULL expectation) does get the usual invalid-input test: a letter
+     in one cell, every other input correct, the PRT expecting a blank score, a
+     blank penalty and the note NULL. Checked: with mustverify 1 the test passes.
      Source: LADR 3C, item 3C_P02b_MatrixStd, approved 2026-10-02. -->
 <question type="stack">
   <name><text>Showcase 11: Matrix input</text></name>
@@ -1347,6 +1540,8 @@ ta_set: {ta1, ta2};
   <stackversion><text>2026080600</text></stackversion>
   <questionvariables>
     <text><![CDATA[ordergreat(x1,x2,x3);
+/* Bespoke validator for a matrix of numbers: a pure function of one argument. */
+validate_numeric(ex) := block([sx], sx: ev(ex, simp), if listofvars(ex) = [] and freeof(%i, sx) then "" else "Enter a real number, not an expression containing a letter, a variable or i.");
 /* Diagonal entries non-zero, so no component of T is zero. */
 a11: rand_with_prohib(-5,5,[0]);
 a22: rand_with_prohib(-5,5,[0]);
@@ -1393,7 +1588,7 @@ tw1: MA+ematrix(3,3,1,2,3);]]></text>
   <isbroken>0</isbroken>
   <variantsselectionseed></variantsselectionseed>
 
-  <input><name>ans1</name><type>matrix</type><tans>ta1</tans><boxsize>3</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans1</name><type>matrix</type><tans>ta1</tans><boxsize>3</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options>validator:validate_numeric</options></input>
 
   <prt><name>prt1</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle>
     <feedbackvariables><text></text></feedbackvariables>
@@ -1439,6 +1634,9 @@ tw1: MA+ematrix(3,3,1,2,3);]]></text>
      - Invalid-input tests: one invalid entry, every other input correct; the
        PRT reading the invalid input expects a blank score and penalty and the
        note NULL, the other PRT its normal route.
+     - The same validator also rejects complex coefficients: listofvars(%i) is
+       [], so without the freeof(%i, ...) clause i*(q*x1 - p*x2) would pass every
+       property check and score full marks. Test 9 pins this down.
      No PRT node checks variables or types: that is validation's job. -->
 <question type="stack">
   <name><text>Showcase 12: Validation layer</text></name>
@@ -1447,7 +1645,7 @@ tw1: MA+ematrix(3,3,1,2,3);]]></text>
 <ol class="tb-parts">
 <li><p>Find the gradient of the line through the origin and \(P\). Give an exact value.</p>
 <div>Gradient \(=\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</div></li>
-<li><p>Give a non-zero linear functional \(\varphi\) on \(\mathbf{R}^2\) with \(\varphi(P)=0\), as a formula in \(x_1, x_2\).</p>
+<li><p>Give an example of a non-zero linear functional \(\varphi\) on \(\mathbf{R}^2\) with \(\varphi(P)=0\), as a formula in \(x_1, x_2\).</p>
 <div>\(\varphi(x_1,x_2)=\) [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</div></li>
 </ol>]]></text>
   </questiontext>
@@ -1469,9 +1667,10 @@ ta1: q/p;
 ta2: q*x1 - p*x2;
 /* A second correct answer for (b), to show the PRT grades by property. */
 ta2b: 2*ta2;
-/* Bespoke validator for (b): only x1 and x2 may appear. A validator is a pure
-   function of one argument and runs with simp:false, so use every/member. */
-validate_x2(ex) := if every(lambda([v], member(v, [x1,x2])), listofvars(ex)) then "" else "Use only the variables x1 and x2.";]]></text>
+/* Bespoke validator for (b): only x1 and x2 may appear, with real coefficients.
+   A validator is a pure function of one argument and runs with simp:false, so use
+   every/member; simplify first to catch sqrt(-4), and freeof(%i, ...) rejects i. */
+validate_x2(ex) := block([sx], sx: ev(ex, simp), if every(lambda([v], member(v, [x1,x2])), listofvars(ex)) and freeof(%i, sx) then "" else "Use only the variables x1 and x2, with real coefficients.");]]></text>
   </questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote format="moodle_auto_format">
@@ -1496,7 +1695,7 @@ validate_x2(ex) := if every(lambda([v], member(v, [x1,x2])), listofvars(ex)) the
   <variantsselectionseed></variantsselectionseed>
 
   <input><name>ans1</name><type>numerical</type><tans>ta1</tans><boxsize>6</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
-  <input><name>ans2</name><type>algebraic</type><tans>ta2</tans><boxsize>20</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options>validator:validate_x2</options></input>
+  <input><name>ans2</name><type>algebraic</type><tans>ta2</tans><boxsize>20</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options>validator:validate_x2, consolidatesubscripts</options></input>
 
   <prt><name>prt1</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle>
     <feedbackvariables><text></text></feedbackvariables>
@@ -1571,6 +1770,12 @@ atP: ratsimp(subst([x1=p,x2=q],sa));]]></text></feedbackvariables>
     <testinput><name>ans2</name><value>ta2</value></testinput>
     <expected><name>prt1</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
     <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T | prt2-2-T | prt2-3-F</expectedanswernote></expected>
+  </qtest>
+  <qtest><testcase>9</testcase><description>Invalid (b): i times a correct functional, rejected by validate_x2 (real coefficients only); (a) still marked</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>i*ta2</value></testinput>
+    <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
+    <expected><name>prt2</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
   </qtest>
 </question>
 
