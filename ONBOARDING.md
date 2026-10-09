@@ -76,6 +76,17 @@ This gives `project/CLAUDE.md` (a template to fill in later), `project.conf`,
 explanation. Explain to the user that `project/` is their own repository: the
 kit ignores it, so updating the kit never touches their work.
 
+Then create their extensions folder the same way, if it is not already there:
+
+```bash
+[ -d extensions ] || cp -r templates/extensions extensions
+cp -rn templates/extensions/. extensions/   # adds missing files, overwrites nothing
+```
+
+Explain in a sentence that `extensions/` is for their own instructions across
+all projects, that the kit ignores it, and that it can stay empty. Offer, but do
+not assume, `git -C extensions init` if they want it under version control.
+
 1. Subject, level, and who the students are.
 2. Roughly how much material: a topic, a module, a book?
 3. What is the source material, and what form is it in? PDF, LaTeX, Word,

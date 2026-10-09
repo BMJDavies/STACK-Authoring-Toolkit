@@ -37,6 +37,14 @@ read, or keep the project you are actively working on in `project/` and rename
 folders to switch. For regular work on two projects, separate clones are less
 error-prone.
 
+## Your extensions across projects
+
+`extensions/` belongs to the kit folder, not to a project. With several project
+folders in one kit, every project shares it, which is the point. With one kit
+clone per project, each clone has its own `extensions/`: make yours a git
+repository and clone it into each kit clone, so that a change made in one can be
+pulled into the others.
+
 ## Shared agents, commands and skills in `~/.claude/`
 
 With several clones you may prefer one copy of the agents, commands and skills

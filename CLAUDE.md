@@ -4,11 +4,20 @@
 
 This file is read automatically at the start of every session in this folder. It
 belongs to the kit, is the same for every project, and is never rewritten. The
-project's own instructions are in `project/CLAUDE.md`, imported here:
+user's personal instructions, which apply across all their projects, are in
+`extensions/CLAUDE.md`. The project's own instructions are in
+`project/CLAUDE.md`. Both are imported here, in that order:
 
+@extensions/CLAUDE.md
 @project/CLAUDE.md
 
 ## Before anything else
+
+If `extensions/` does not exist, copy the kit's template into place. It is
+local, ignored by the kit's git, and overwrites nothing, so it needs no
+permission:
+
+    [ -d extensions ] || cp -r templates/extensions extensions
 
 If `project/CLAUDE.md` does not exist, no project has been configured. If it
 still begins with the comment "Template from the kit", onboarding was started but
@@ -26,23 +35,31 @@ reorganisation to the user, point them to `UPGRADING.md`, and offer to run
 
 This folder is the kit: a pipeline for writing STACK questions for Moodle with an
 AI assistant. Everything about one particular textbook or course lives in
-`project/`, which is a separate git repository that the kit ignores.
+`project/`, and the user's own cross-project additions live in `extensions/`.
+Both are folders the kit ignores, and each may be its own git repository. Both
+are created by copying a skeleton from `templates/`.
 
-| Kit (generic, shared) | Project (`project/`, specific to one course) |
-|---|---|
-| `.claude/`: agents, commands, skills | `CLAUDE.md`: what the project is, sources, locale, Moodle site, STACK version stamp, citation |
-| `tools/`: shell and PHP tools | `project.conf`: Moodle ids and courses |
-| `style-guide.md`, `reviewing-checklist.md` | `style-guide.md`: optional rules for this project only |
-| `reference/`: the showcase of every question pattern | `content/plans/`, `content/drafts/`, `content/approved/`, `content/progress.log` |
-| `WORKFLOW.md`, `SETUP.md`, `ONBOARDING.md`, `LESSONS.md` | `feedback/`: section reviews |
-| `moodle-theme/` | `sources/`: the source material |
+| Kit (generic, shared) | Extensions (`extensions/`, this user, every project) | Project (`project/`, specific to one course) |
+|---|---|---|
+| `.claude/`: agents, commands, skills | `CLAUDE.md`: an index of the user's extension files and when to read them | `CLAUDE.md`: what the project is, sources, locale, Moodle site, STACK version stamp, citation |
+| `tools/`: shell and PHP tools | Any other files the user adds: instructions, guidance, templates | `project.conf`: Moodle ids and courses |
+| `style-guide.md`, `reviewing-checklist.md` | | `style-guide.md`: optional rules for this project only |
+| `reference/`: the showcase of every question pattern | | `content/plans/`, `content/drafts/`, `content/approved/`, `content/progress.log` |
+| `WORKFLOW.md`, `SETUP.md`, `ONBOARDING.md`, `LESSONS.md` | | `feedback/`: section reviews |
+| `moodle-theme/`, `templates/` | | `sources/`: the source material |
 
-Never put project-specific content in a kit file. A rule for one course goes in
-`project/style-guide.md`; a rule that would hold for any textbook goes in the
-kit's `style-guide.md`.
+Never put project-specific or personal content in a kit file. A rule for one
+course goes in `project/style-guide.md`; a habit or workflow of this user's that
+spans courses goes in `extensions/`; a rule that would hold for any textbook and
+any user goes in the kit's `style-guide.md`.
+
+Instructions are layered: kit, then extensions, then project, and where they
+disagree the later one wins. Read extension files when the user asks for them or
+when `extensions/CLAUDE.md` says to. Paths in extension files are relative to
+the kit root.
 
 The tools accept `STACK_PROJECT` to name a different project folder. This file
-still imports only `project/CLAUDE.md`, so if the user says they are working in
+still imports `project/CLAUDE.md` for the project, so if the user says they are working in
 another folder, read that folder's `CLAUDE.md` and use its paths instead of
 `project/` (see `MULTIPLE-PROJECTS.md`).
 

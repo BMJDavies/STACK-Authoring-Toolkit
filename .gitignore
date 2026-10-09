@@ -3,6 +3,11 @@
 # side and select them with STACK_PROJECT, add their folders here too.
 /project/
 
+# Your personal extensions live in extensions/, created from templates/extensions/
+# and possibly its own git repository (see README.md). The kit never tracks it,
+# and the extensions apply across projects.
+/extensions/
+
 # Runtime noise
 *.log
 

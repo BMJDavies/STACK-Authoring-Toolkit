@@ -85,3 +85,12 @@ update the kit by hand, then re-run with `--no-update` to finish.
 
 If you prefer to stay on the old layout for now, the last version of the kit
 before this change is tagged `v1-flat-layout`.
+
+## The extensions folder
+
+Later versions of the kit add `extensions/`, for your own instructions across
+projects (`README.md`, "The kit and your project"). There is nothing to migrate:
+the assistant creates it from `templates/extensions/` at the start of the next
+session, and `git pull` adds the matching line to the kit's `.gitignore`. If you
+already keep personal instruction files somewhere else, move them in and list
+them in `extensions/CLAUDE.md`.

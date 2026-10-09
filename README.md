@@ -4,8 +4,8 @@
 assistant.**
 
 This repo holds a pipeline for writing STACK questions for Moodle with an AI assistant: agents,
-skills, tooling, content rules and a theme. It assumes no particular subject, level or syllabus. You point it at your own
-material and your own Moodle site.
+skills, tooling, content rules and a theme. It assumes no particular subject, level or syllabus. 
+You point it at your own material and your own Moodle site.
 
 This folder becomes your project. Everything lives inside it, including the agent
 definitions in `.claude/`. Nothing is installed elsewhere on your machine, so the
@@ -55,13 +55,18 @@ using the kit against any server that matters.
 
 ## The kit and your project
 
-This folder is the kit. Your own work lives inside it, in `project/`, which is a
-separate git repository that the kit ignores:
+This folder is the kit. Your own work lives inside it, in two folders the kit
+ignores: `project/`, a separate git repository for one course, and
+`extensions/`, your own instructions that apply across all your projects:
 
 ```
 stack-authoring-kit/          the kit: clone this, and run the assistant here
-├── CLAUDE.md                 standing instructions; imports project/CLAUDE.md
+├── CLAUDE.md                 standing instructions; imports extensions/CLAUDE.md
+│                             and project/CLAUDE.md
 ├── .claude/  tools/  style-guide.md  reference/  ...
+├── extensions/               yours, across projects: optionally its own repository
+│   ├── CLAUDE.md             an index of your extension files
+│   └── ...                   your own instructions, guidance and templates
 └── project/                  your project: its own git repository
     ├── CLAUDE.md             what the project is: sources, locale, Moodle site
     ├── project.conf          your Moodle ids
@@ -71,9 +76,16 @@ stack-authoring-kit/          the kit: clone this, and run the assistant here
     └── sources/              your source material
 ```
 
-Onboarding (`/start`) creates `project/` for you from `templates/project/`.
-Updating the kit is a `git pull` in this folder, and it never touches your
-project. Commit your project's work inside `project/`. If you already use an
+Onboarding (`/start`) creates `project/` for you from `templates/project/`, and
+`extensions/` from `templates/extensions/`. Updating the kit is a `git pull` in
+this folder, and it never touches either. Commit your project's work inside
+`project/`.
+
+`extensions/` is for things you want in every project but that are not part of
+the kit: for example, how you write paper exams. Instructions are layered: kit,
+then extensions, then project, and the later one wins where they disagree.
+`templates/extensions/README.md` explains how to write extension files.
+ If you already use an
 earlier version of the kit, where project files sat in the kit's own folders,
 see `UPGRADING.md`.
 
@@ -118,7 +130,9 @@ reference/
   prototypes/              working templates for the harder patterns
 
 templates/project/         the skeleton onboarding copies to project/
+templates/extensions/      the skeleton onboarding copies to extensions/
 
+extensions/                your own cross-project instructions (not part of the kit)
 project/                   your project (not part of the kit; see above)
 
 moodle-theme/textbook/     a Boost child theme that makes quizzes read as
