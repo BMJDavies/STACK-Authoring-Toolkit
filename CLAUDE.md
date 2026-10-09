@@ -55,8 +55,14 @@ any user goes in the kit's `style-guide.md`.
 
 Instructions are layered: kit, then extensions, then project, and where they
 disagree the later one wins. Read extension files when the user asks for them or
-when `extensions/CLAUDE.md` says to. Paths in extension files are relative to
-the kit root.
+when `extensions/CLAUDE.md` says to.
+
+Paths in extension files: a bare path (`content/exams/x.tex`) is relative to the
+project folder (`project/`, or the folder the user names); a path starting
+`extensions/`, or the bare name of an extension instruction file
+(`Exam-guidance.md`), is in `extensions/`; "the project's `X`" and "the kit's
+`X`" name a file that exists in more than one place. The rules are in
+`templates/extensions/README.md`.
 
 The tools accept `STACK_PROJECT` to name a different project folder. This file
 still imports `project/CLAUDE.md` for the project, so if the user says they are working in
