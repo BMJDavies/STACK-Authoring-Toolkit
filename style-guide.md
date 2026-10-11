@@ -172,6 +172,7 @@ When displaying randomised expressions:
   or put a space after the line break: `\\ {@b@}`. Neither `test-question.sh`
   nor `render-check` catches this, so only rendering the seeds and looking at
   the result will find it.
+- **`{@ex@}` keeps its braces:** it becomes `{…}` around the LaTeX of `ex`, so `\frac{@a@}{@b@}` is correct and renders as \(\frac{a}{b}\). Do not flag it as missing braces.
 
 ### Currency: always use a rounded display variable
 
