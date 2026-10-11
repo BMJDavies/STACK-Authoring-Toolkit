@@ -96,6 +96,13 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
    concern you cannot resolve, or if the revision loop has been round twice
    without converging.
 
+   On a pass with items that need the user's decision, leave each one in its
+   question as a `[[todo tags="kit-review, <section-id>"]]` block at the end of
+   the question description, before publishing (style guide, "Notes for the
+   human: `[[todo]]` blocks"). One block per issue; wrap quoted code in
+   `[[escape]]`. Re-validate after adding them. Revision requests for the
+   author are not todo blocks: they go in your report.
+
 10. **On pass, publish.** This step is mandatory, not deferred:
 
     ```bash
@@ -129,6 +136,9 @@ Reviewed: YYYY-MM-DD | Outcome: PASS / REVISE / ESCALATE
 
 ## Fixes made
 - <what you fixed in place>
+
+## For the user
+- <question name>: <issue>, left as a todo block (tag kit-review, <section-id>)
 
 ## Lessons for next section
 - <what the author should do differently, specific and actionable>
@@ -171,6 +181,9 @@ Outcome: PASS | REVISE | ESCALATE
   Render check: clean
   Feedback doc: project/feedback/<section-id>.md
   Fixes made: <list>
+  For the user (todo blocks, tag kit-review, <section-id>):
+    1. <question name>: <issue>. Proposed: <action>.
+    (or "none")
   Lessons for next section: <list, or "none">
 
 <if REVISE>

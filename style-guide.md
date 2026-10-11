@@ -81,8 +81,8 @@ time you touch it.
 
 Every STACK question states its provenance in `<questiondescription>`.
 Students never see this field. Write it as plain text. The field is evaluated
-as CASText, so no `{@...@}` and no `[[...]]`. Use exactly one of these four
-forms:
+as CASText, so no `{@...@}` and no `[[...]]`, apart from the review notes in
+the next subsection. Use exactly one of these four forms:
 
 - **Direct adaptation.** The same task as a source item, possibly randomised,
   reworded, or split into parts:
@@ -110,6 +110,44 @@ Why: authors and reviewers need to see at a glance which questions are the
 book's and which are ours, both to check fidelity to the source and for rights.
 The fixed wording makes them searchable: `grep "directly adapted"` lists every
 direct adaptation.
+
+### Notes for the human: `[[todo]]` blocks
+
+A decision that needs the user goes into the question as well as into the
+agent's report, as a STACK `[[todo]]` block. STACK lists every question with
+one at `<moodle>/question/type/stack/adminui/todo.php`, grouped by tag, so the
+user gets a working list inside Moodle. `WORKFLOW.md` ("Your to-do list in
+Moodle") is the user's side of this.
+
+- **Where:** at the end of `<questiondescription>`, after the provenance
+  sentence, never in the question text, the feedback or a PRT. Students never
+  see the question description.
+- **Tags:** `tags="<raised-by>, <section-id>"`. The first tag is `kit-review`
+  for the reviewer and `kit-enrich` for the enricher; the second is the section
+  id, for example `Ch5A`.
+- **One block per issue.** Each says where the issue is (question part, PRT
+  node, test case, sentence of the worked solution), what is wrong or
+  undecided, and the proposed action. Make it short enough to read in the edit
+  form.
+- **Valid CASText.** The block's content is evaluated. Wrap anything that
+  quotes code, `{@...@}`, `[[...]]` or a backslash in `[[escape]]`:
+  `[[todo tags="kit-review, Ch5A"]][[escape]]prt2 node 1 tests ans3 against {0} …[[/escape]][[/todo]]`.
+  Remember that `{@ex@}` keeps its braces when reading code you quote.
+- **Only for a human decision:** an editorial or pedagogic choice, a source
+  ambiguity, a defect flagged but not fixed. Anything the agent can and should
+  fix itself is fixed, not noted.
+- **Keep the list in step with the report.** Every "for your review" item that
+  belongs to a question has a block, and every block appears in the report.
+  Items about a whole quiz or section, with no single question, stay in the
+  report only.
+- **Removing.** A block is deleted when it is resolved: by the user in Moodle
+  (then the edits are pulled back into `project/content/approved/`), or by the
+  agent when the user answers in the conversation. A resolved block is never
+  left in place.
+
+Approved files may carry open blocks. They do not affect students, and the
+question can be published while the user decides. List them with
+`grep -l '\[\[todo' project/content/approved/*.xml`.
 
 ---
 

@@ -97,6 +97,63 @@ unattended.
 
 ---
 
+## Your to-do list in Moodle
+
+When something in a question needs your decision, the assistant leaves a note
+in the question itself as well as in its report. The note is a STACK
+`[[todo]]` block at the end of the question description:
+
+```
+[[todo tags="kit-review, Ch5A"]]The source asks for "the" eigenvector; any
+non-zero multiple is accepted here. Keep, or ask for a normalised one?[[/todo]]
+```
+
+Students never see it. The question description is not shown to them, and
+STACK replaces the block with an HTML comment in any case. The first tag says
+who raised the note: `kit-review` for the reviewer, `kit-enrich` for the
+enricher. The second tag is the section.
+
+**Finding them.** Log in to Moodle and open
+
+    <your-moodle>/question/type/stack/adminui/todo.php
+
+The page is also linked as "Find [[todo]] blocks" from STACK's admin page at
+`<your-moodle>/question/type/stack/adminui/index.php`. It lists every question
+with a todo block in every course where you can edit questions, grouped by tag.
+So `Ch5A` is your list for one section, and `kit-review` is everything the
+reviewer has raised. Each question name opens STACK's question dashboard, and
+the preview icon shows the question as a student sees it.
+
+**What to look for.** Open the question for editing and scroll to the question
+description: the note says what the issue is, where it is (a PRT node, a test
+case, a sentence of the worked solution) and what the assistant suggests.
+While a note remains, STACK's edit form shows a warning at the top, "You have
+un-resolved todo blocks in "Question description"", so a note is hard to
+overlook. Decide, then either:
+
+- **fix it yourself in Moodle:** make the change, delete the whole
+  `[[todo]]…[[/todo]]` block, save, and tell the assistant which quiz you
+  edited, so it can pull your edits back into `project/content/approved/`
+  ("Pulling hand edits back out of Moodle" in the moodle-operations skill); or
+- **reply to the assistant:** delete nothing, and tell it what you decided.
+  It changes the XML, removes the note, and re-publishes.
+
+Do one or the other for each question, not both. A re-publish replaces the
+question in Moodle with the version on disk, so edits you have made in Moodle
+and not yet pulled back are lost.
+
+**Keeping count.** A question is finished when the page no longer lists it.
+To see the outstanding notes on disk:
+
+```bash
+grep -l '\[\[todo' project/content/approved/*.xml
+```
+
+STACK's bulk tester reports any question with a todo block as needing
+attention. That is deliberate, and it is one more reminder.
+
+---
+
 ## Doing it by hand
 
 The agents are available individually, without the slash commands:

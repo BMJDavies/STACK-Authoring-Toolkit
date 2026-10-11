@@ -92,7 +92,25 @@ rounds, then escalate to the user regardless of state.
 
 - Pass: path to the approved file, path to the feedback document, one-line
   summary, minor fixes the reviewer made, any new rules for the style guide.
+  If the reviewer left todo blocks, list them, and give the link to STACK's
+  todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
+  look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
+
+## Step 9: when the user has worked through the todo list
+
+The user resolves each note either in Moodle or by answering you.
+
+- **Answered in the conversation:** make the change in
+  `project/content/approved/<file>.xml` (dispatch the author for anything
+  beyond a trivial edit), delete that todo block, re-validate, re-publish.
+- **Edited in Moodle:** pull the quiz back first, and take only the user's edits
+  into the approved file. Do not re-publish before this, or their Moodle edits
+  are overwritten.
+
+Then confirm none of this section's blocks remain:
+`grep -c '\[\[todo' project/content/approved/<file>.xml` should be 0, unless the
+user has chosen to leave one open.
 
 ## First section of a new chapter
 

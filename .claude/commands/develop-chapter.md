@@ -156,9 +156,19 @@ Sections produced:
 For your review:
 1. <items needing a decision or a spot check>
 
+Notes left in the questions: <N>, on STACK's todo page
+<moodle>/question/type/stack/adminui/todo.php, one tag per section
+(<section-ids>); tag kit-review lists them all.
+
 Feedback docs written:
 - project/feedback/<section-id>.md
 ```
+
+Every "for your review" item that belongs to a single question also has a todo
+block in that question (style guide, "Notes for the human: `[[todo]]` blocks").
+The user can work through the list in Moodle or answer here. Resolve them as
+`/develop-section` describes in "Step 9: when the user has worked through the
+todo list": pull Moodle edits back before any re-publish.
 
 Do not commit. That is the user's call.
 

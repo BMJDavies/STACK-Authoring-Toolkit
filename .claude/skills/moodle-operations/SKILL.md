@@ -181,6 +181,24 @@ git diff project/content/approved/<filename>.xml
 
 Use this only to reconcile hand edits. Read the diff before accepting it.
 
+## Questions with `[[todo]]` blocks
+
+Notes for the user are `[[todo]]` blocks in the question description (style
+guide, "Notes for the human: `[[todo]]` blocks"). STACK lists every question
+with one, grouped by tag, at
+
+    <moodle>/question/type/stack/adminui/todo.php
+
+and the same list is on disk:
+
+```bash
+grep -l '\[\[todo' project/content/approved/*.xml
+```
+
+A todo block does not stop validation, publishing or rendering, and students
+never see it. STACK's bulk tester reports each one as needing attention, which
+is intended.
+
 ## Removing questions from a quiz
 
 ```bash

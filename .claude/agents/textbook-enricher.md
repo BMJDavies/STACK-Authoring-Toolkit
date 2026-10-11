@@ -55,7 +55,10 @@ that only rejects answers of the wrong kind (wrong variables, a float, the
 wrong type) is a validation check in the wrong place; move it to the input,
 which saves the student a penalty.
 
-Fix what you can fix safely and re-validate. Flag the rest prominently. State
+Fix what you can fix safely and re-validate. Flag the rest prominently, in
+your report and in the question itself, as a
+`[[todo tags="kit-enrich, <section-id>"]]` block at the end of the question
+description (style guide, "Notes for the human: `[[todo]]` blocks"). State
 explicitly in your report: "grading-defect sweep: N confirmed, M flagged", and
 name the two or three riskiest PRTs you probed, so your coverage is visible.
 Zero and zero is the expected result on clean content.
@@ -204,6 +207,12 @@ substantive, flag: flagging is safer than editing.
 Each flag needs a question reference, the specific concern, and a proposed
 action. Vague flags ("Q4 could be better") waste the reader's time.
 
+Every flag that belongs to one question also goes into that question as a
+`[[todo tags="kit-enrich, <section-id>"]]` block, one block per flag, so the user
+finds it on STACK's todo page. The question description is the one place
+outside your usual remit where you add text; adding these blocks is always
+allowed. Re-validate after adding them.
+
 ## What not to change
 
 - Question text, question variables, inputs, scoring, page grouping and question
@@ -265,7 +274,7 @@ PRTs probed: <the two or three riskiest, named>
   Render check: clean
   Published to: quiz <N>
 
-  Concerns flagged, no action taken:
+  Concerns flagged, no action taken (todo blocks, tag kit-enrich, <section-id>):
   1. <Q ref>: <specific concern>. Proposed: <action>.
   (or "none")
 
