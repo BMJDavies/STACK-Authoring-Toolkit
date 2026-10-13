@@ -4,8 +4,8 @@
 
 This folder holds your own instructions for the assistant: anything you want in
 every project but that does not belong in the kit. Examples: guidance for writing
-paper exams, your institution's exam class file, a house style for a kind of
-question the kit does not cover.
+paper-based assessments, your institution's LaTeX class for them, a house style
+for a kind of question the kit does not cover.
 
 - The kit never tracks this folder (it is in the kit's `.gitignore`), so updating
   the kit never touches it.
@@ -33,9 +33,9 @@ of a path says which one it means. Never write `project/` or `../`.
 
 | Written as | Means | Example |
 |---|---|---|
-| A bare path | Relative to the project folder | `content/exams/2026-resit.tex` |
-| The bare name of an instruction file in this folder | That file here | `Exam-guidance.md` |
-| A path starting `extensions/` | Anything else here | `extensions/exam-reference/exam-paper.tex` |
+| A bare path | Relative to the project folder | `content/assessment/2026-test-1.tex` |
+| The bare name of an instruction file in this folder | That file here | `Assessment-guidance.md` |
+| A path starting `extensions/` | Anything else here | `extensions/assessment-reference/template.tex` |
 | "the project's `X`", "the kit's `X`" | A name that exists in more than one place | the project's `CLAUDE.md` |
 
 Because no path names `project/`, an extension works unchanged with any project,
@@ -43,11 +43,11 @@ including one selected with `STACK_PROJECT`.
 
 ## General files and specific jobs
 
-Some extension files hold a general method (how to write a good exam question).
-Others do one specific job (write the 2026 resit paper, write questions about
-one proof). A specific job may name very specific files, always in the project.
+Some extension files hold a general method (how to write a good assessment
+question). Others do one specific job (write the 2026 class test, write questions
+about one proof). A specific job may name very specific files, always in the project.
 Gather every job-specific value (year, output file, plan file, which proof) in a
-**This job** block near the top, give each a placeholder such as `<paper>`, and
+**This job** block near the top, give each a placeholder such as `<output>`, and
 use the placeholder in the rest of the file. The next job then means editing one
 block.
 

@@ -82,7 +82,7 @@ this folder, and it never touches either. Commit your project's work inside
 `project/`.
 
 `extensions/` is for things you want in every project but that are not part of
-the kit: for example, how you write paper exams. Instructions are layered: kit,
+the kit: for example, how you write paper-based assessments. Instructions are layered: kit,
 then extensions, then project, and the later one wins where they disagree.
 `templates/extensions/README.md` explains how to write extension files.
  If you already use an
@@ -271,7 +271,7 @@ interactive STACK content. It has been exercised across three books. A case stud
 describing that project is forthcoming on the STACK site, at
 stack-assessment.org/CaseStudies/. Nothing from that project's content is
 included here, and neither are its conventions: the style guide names no
-syllabus, phase or exam board, and has been used unchanged at other levels and
+syllabus, phase or awarding body, and has been used unchanged at other levels and
 in other countries. No knowledge of that project is needed to use this kit.
 
 The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright

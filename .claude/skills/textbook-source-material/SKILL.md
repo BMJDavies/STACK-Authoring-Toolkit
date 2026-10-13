@@ -118,7 +118,7 @@ Target quiz: <name, or "new">
 ## Notes
 - Figures needed, and which JSXGraph template fits
 - Cross-references to strip ("see Example 3 on p72")
-- Past exam questions, marked so they stay deterministic
+- Questions the source took from past assessments, marked so they stay deterministic
 - Anything that could not be adapted, with the reason
 ```
 
