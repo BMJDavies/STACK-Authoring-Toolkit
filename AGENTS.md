@@ -53,6 +53,13 @@ in Moodle. The format rules are in `style-guide.md`, "Notes for the human:
 `[[todo]]` blocks". The user's side is in `WORKFLOW.md`, "Your to-do list in
 Moodle".
 
+Code that avoids a defect in STACK is a workaround. It has an entry in the
+register `stack-workarounds.md`, and each question that uses it carries a
+`[[todo tags="stack-workaround, <id>"]]` block and a `/* <id> */` comment at
+the code, which stay until STACK is fixed. `tools/check-workarounds.sh` reports
+which can be removed. The rules are in `style-guide.md`, "Workarounds for STACK
+defects".
+
 When the user answers in the conversation, change the XML, delete the block,
 re-validate and re-publish. When the user has edited in Moodle, pull their edits
 back into the approved file before any re-publish, or they are overwritten.

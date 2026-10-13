@@ -103,6 +103,10 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
    `[[escape]]`. Re-validate after adding them. Revision requests for the
    author are not todo blocks: they go in your report.
 
+   Workaround blocks (`tags="stack-workaround, <id>"`) are not review notes:
+   check them against the checklist, leave them in place, and do not count
+   them as items for the user.
+
 10. **On pass, publish.** This step is mandatory, not deferred:
 
     ```bash

@@ -95,6 +95,8 @@ rounds, then escalate to the user regardless of state.
   If the reviewer left todo blocks, list them, and give the link to STACK's
   todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
   look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
+  List any STACK workarounds the section uses by register id, and any new
+  register entries the user needs to raise as GitHub issues.
 - Revise or escalate: what is blocked and what the user needs to decide.
 
 ## Step 9: when the user has worked through the todo list
@@ -108,9 +110,11 @@ The user resolves each note either in Moodle or by answering you.
   into the approved file. Do not re-publish before this, or their Moodle edits
   are overwritten.
 
-Then confirm none of this section's blocks remain:
-`grep -c '\[\[todo' project/content/approved/<file>.xml` should be 0, unless the
-user has chosen to leave one open.
+Then confirm none of this section's review notes remain:
+`grep -o '\[\[todo tags="[^"]*"' project/content/approved/<file>.xml | grep -vc stack-workaround`
+should be 0, unless the user has chosen to leave one open. Workaround blocks
+(tag `stack-workaround`) stay until STACK is fixed (style guide, "Workarounds
+for STACK defects").
 
 ## First section of a new chapter
 

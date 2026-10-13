@@ -20,7 +20,8 @@ Citation for provenance notes in `<questiondescription>`, used verbatim:
 `<author, title, edition, publisher, year>`
 
 STACK version stamp for `<stackversion>`: `<version number of STACK in this
-Moodle>`. Update it whenever STACK is upgraded.
+Moodle>`. Update it whenever STACK is upgraded, and then run
+`tools/check-workarounds.sh`.
 
 ## Project rules
 

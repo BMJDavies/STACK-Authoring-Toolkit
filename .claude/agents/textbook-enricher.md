@@ -213,6 +213,13 @@ finds it on STACK's todo page. The question description is the one place
 outside your usual remit where you add text; adding these blocks is always
 allowed. Re-validate after adding them.
 
+Leave `stack-workaround` blocks and their `/* <id> */` comments alone, unless
+you have been asked to remove a workaround that `tools/check-workarounds.sh`
+reports as ready to remove. Then restore the plain code given in the entry in
+`stack-workarounds.md`, delete the block and the comments, and validate. The
+question changes, so ask before re-publishing (style guide, "Workarounds for
+STACK defects").
+
 ## What not to change
 
 - Question text, question variables, inputs, scoring, page grouping and question

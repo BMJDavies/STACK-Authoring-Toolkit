@@ -125,6 +125,7 @@ Runbook: `.claude/skills/moodle-operations/`.
 | `WORKFLOW.md` | Before producing a section, and when something goes wrong |
 | `style-guide.md` | Before writing or reviewing any question |
 | `reviewing-checklist.md` | When reviewing |
+| `stack-workarounds.md` | When a question needs code that avoids a STACK defect, and after a STACK upgrade |
 | `LESSONS.md` | Once, early. It explains why the rules exist |
 | `SETUP.md` | While installing, or when changing the Moodle setup |
 | `AGENTS.md` | If you are not Claude Code: the portable description of the pipeline |

@@ -147,6 +147,12 @@ You cannot test every combination. Test at least a couple of examples per path.
 ## Formatting and style
 
 - [ ] Every applicable rule in `style-guide.md` and `project/style-guide.md` followed
+- [ ] Every workaround for a STACK defect has an entry in `stack-workarounds.md`,
+      a `[[todo tags="stack-workaround, <id>"]]` block naming the issue, the
+      `Upstream` version and what to restore, and a `/* <id> */` comment at
+      each line of the workaround (style guide, "Workarounds for STACK
+      defects"). Look for unmarked ones too: code that avoids a library
+      function the style guide would otherwise call for
 - [ ] Explanatory comments in the code
 - [ ] Alt text on every image and figure
 - [ ] Conventions checked against `reference/showcase.xml`, NOT against

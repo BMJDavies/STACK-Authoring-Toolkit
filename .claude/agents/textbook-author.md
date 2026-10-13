@@ -127,6 +127,11 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
   flags. Escalate instead.
 - **Apply every rule in `style-guide.md` and `project/style-guide.md`.** Read
   them; do not rely on memory.
+- **Mark every workaround for a STACK defect** with its todo block and its
+  `/* <id> */` code comments (style guide, "Workarounds for STACK defects").
+  Use only workarounds with an entry in `stack-workarounds.md`; if you find a
+  new defect, escalate with a draft entry rather than inventing a workaround
+  silently.
 - **JSXGraph board ids must be unique across the file.** Pattern:
   `<section-id>-q<N>-board`.
 

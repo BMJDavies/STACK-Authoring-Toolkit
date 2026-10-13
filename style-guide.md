@@ -149,6 +149,46 @@ Approved files may carry open blocks. They do not affect students, and the
 question can be published while the user decides. List them with
 `grep -l '\[\[todo' project/content/approved/*.xml`.
 
+### Workarounds for STACK defects
+
+A workaround is question code that avoids a defect, or a missing feature, in
+STACK (core or contrib), and that should be removed once STACK is fixed. Every
+workaround is recorded in the kit's register, `stack-workarounds.md`, and
+marked in each question that uses it, so it can be found and removed when a
+STACK release fixes it. Maxima behaviour that STACK cannot change, naming
+rules and forbidwords are ordinary style rules, not workarounds.
+
+- **Register first.** Use only a workaround that has an entry in
+  `stack-workarounds.md`. A new defect gets a draft entry, with id
+  `stack-wa-<slug>`, a minimal reproduction and `Upstream` set from STACK's
+  `master` on GitHub (the register says how). The user raises the GitHub issue;
+  the id then becomes `stack-<issue number>` everywhere.
+- **A todo block in each question,** one per workaround, at the end of
+  `<questiondescription>` as for other notes, tagged `stack-workaround` and the
+  id, never the section:
+
+      [[todo tags="stack-workaround, stack-1901"]][[escape]]Workaround for STACK
+      issue #1901 (make_list_of_lists returns a set unchanged), upstream
+      2026080600. When the installed STACK version is above 2026080600 and
+      #1901 is closed, replace the map(..., listify(ans1)) line in the feedback
+      variables with make_list_of_lists(ans1), and re-validate.[[/escape]][[/todo]]
+
+  It names the issue, the `Upstream` version, where the workaround is, and what
+  to restore. Wrap it in `[[escape]]` as it quotes code.
+- **A comment at the code,** `/* stack-1901 */`, on each line of the workaround
+  in the question variables, feedback variables or PRT, so it is found without
+  the todo page.
+- **These blocks stay** while the workaround is needed. They do not count as
+  open review notes, so a section is finished with them in place, and STACK's
+  todo page lists them under the tag `stack-workaround`. To count only the
+  review notes in a file:
+  `grep -o '\[\[todo tags="[^"]*"' <file> | grep -vc stack-workaround`.
+- **Removal.** `tools/check-workarounds.sh` reports an entry as ready to remove
+  when its issue is closed and the installed STACK version is above `Upstream`.
+  Then, in each question listed, restore the plain code, delete the block and
+  the comments, run `test-question.sh`, and ask before re-publishing. Set the
+  entry's status to `removed` when no question uses it.
+
 ---
 
 ## Content formatting

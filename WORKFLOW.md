@@ -154,6 +154,40 @@ attention. That is deliberate, and it is one more reminder.
 
 ---
 
+## Workarounds for STACK defects
+
+Sometimes a question has to avoid a bug or a missing feature in STACK itself,
+for example a library function that mishandles sets. The assistant then uses a
+workaround, and records it so that it can be taken out once STACK is fixed:
+
+- **The register,** `stack-workarounds.md` in the kit, has one entry per
+  workaround: the defect with a minimal reproduction, the GitHub issue, the
+  code used instead, the code to restore, and `Upstream`, the version number
+  on STACK's `master` branch when the entry was written. Any STACK release
+  with the fix has a larger number.
+- **In each question** that uses it there is a todo block tagged
+  `stack-workaround` and the entry's id (for example `stack-1901`), and a
+  `/* stack-1901 */` comment at the code. These blocks are not questions for
+  you: they stay until STACK is fixed, and STACK's todo page lists them under
+  `stack-workaround`.
+
+**Your part.**
+
+1. **Raise the issue.** When a plan or a report lists a new entry (its id
+   starts `stack-wa-`), raise an issue at
+   <https://github.com/maths/moodle-qtype_stack/issues> from the draft in the
+   entry, and give the assistant the issue number. It renames the id to
+   `stack-<number>` in the register and in the questions. The assistant never
+   posts to GitHub itself.
+2. **After upgrading STACK,** update the version stamp in `project/CLAUDE.md`
+   and ask the assistant to run `tools/check-workarounds.sh`. It reports, for
+   each entry, whether the issue is closed, which questions use it, and
+   whether the installed STACK is new enough. For an entry marked READY TO
+   REMOVE, the assistant restores the plain code in those questions,
+   re-validates, and asks you before re-publishing.
+
+---
+
 ## Doing it by hand
 
 The agents are available individually, without the slash commands:

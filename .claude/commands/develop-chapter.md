@@ -160,6 +160,9 @@ Notes left in the questions: <N>, on STACK's todo page
 <moodle>/question/type/stack/adminui/todo.php, one tag per section
 (<section-ids>); tag kit-review lists them all.
 
+STACK workarounds used: <register ids, with the number of questions each>
+(tag stack-workaround). To raise on GitHub: <new entries, or "none">.
+
 Feedback docs written:
 - project/feedback/<section-id>.md
 ```

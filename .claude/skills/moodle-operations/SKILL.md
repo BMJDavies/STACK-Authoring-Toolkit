@@ -199,6 +199,19 @@ A todo block does not stop validation, publishing or rendering, and students
 never see it. STACK's bulk tester reports each one as needing attention, which
 is intended.
 
+Blocks tagged `stack-workaround` mark code that avoids a STACK defect, and stay
+until STACK is fixed (style guide, "Workarounds for STACK defects"). After
+every STACK upgrade, and whenever asked, run
+
+```bash
+tools/check-workarounds.sh            # --offline to skip GitHub
+```
+
+It reads the register `stack-workarounds.md`, and for each open entry reports
+the GitHub issue's state, the installed STACK version and the questions that
+use it. An entry marked READY TO REMOVE is handed to the enricher to restore
+the plain code; ask before re-publishing.
+
 ## Removing questions from a quiz
 
 ```bash

@@ -103,6 +103,13 @@ structure and the exact test inputs.
    question, explain why and suggest an alternative. Never silently skip
    anything.
 
+   **Workarounds for STACK defects.** Where an item needs code that avoids a
+   defect in STACK, use the entry in `stack-workarounds.md` and name its id in
+   the item. For a defect not yet in the register, write a draft entry in the
+   plan (id `stack-wa-<slug>`, minimal reproduction, `Upstream` from STACK's
+   `master` on GitHub) and list it under "Editorial flags" for the user to
+   raise as a GitHub issue (style guide, "Workarounds for STACK defects").
+
 8. **Write the plan** to `project/content/plans/<section-id>.md`.
 
 ## Plan document format
@@ -164,6 +171,9 @@ Created: YYYY-MM-DD
 
 ## Editorial flags
 - <numbered list of items needing a human decision, with context>
+
+## STACK workarounds
+- <register id>: <items that use it>; new entries drafted in full (or "none")
 
 ## Summary
 - Total items: <N>
