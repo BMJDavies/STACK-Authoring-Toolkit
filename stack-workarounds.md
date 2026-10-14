@@ -14,12 +14,13 @@ style-guide rule), naming rules, and forbidwords.
 Newest last. One `###` section per entry, headed by its id. The field lines
 are read by `tools/check-workarounds.sh`, so keep them as written.
 
-    ### stack-<issue number>    (or stack-wa-<slug> until the issue is raised)
+    ### stack-<issue number>    (or stack-wa-<slug> when there is no issue)
 
-    - Issue: https://github.com/maths/moodle-qtype_stack/issues/<n>   (or "not raised yet")
+    - Issue: https://github.com/maths/moodle-qtype_stack/issues/<n>   (or "not raised yet", or "none, fixed in dev")
     - Upstream: <$plugin->version on STACK's master when the entry was written>
-    - Status: open | fixed upstream | removed
+    - Status: open | fixed in dev | removed
     - Found: <date>, <where>
+    - Fix: <the commit on dev that fixes it, once there is one>
 
     **Defect.** What goes wrong, with a minimal reproduction: the call, the
     result expected, the result returned. Name the file and line in STACK.
@@ -28,13 +29,37 @@ are read by `tools/check-workarounds.sh`, so keep them as written.
 
     **Restore.** The code to put back once STACK is fixed.
 
-`Upstream` comes from GitHub, never from the local install:
+**STACK's branches.** `master` is the current release. `dev` holds the fixes
+staged for the next release, which reach `master` when it is released.
+
+`Upstream` is the version on `master`, taken from GitHub, never from the local
+install:
 
     curl -s https://raw.githubusercontent.com/maths/moodle-qtype_stack/master/version.php | grep 'plugin->version'
 
-A release with the fix has a larger version number. An entry is ready to
-remove when its issue is closed and the installed STACK's version is larger
-than `Upstream`.
+Any release that contains a fix has a larger version number. Use `master`'s
+number even when the fix is already in `dev`: `dev`'s own number is that of a
+release not yet made.
+
+**Check `dev` first.** Before drafting an entry, look at the defective code on
+`dev`, for example
+`https://raw.githubusercontent.com/maths/moodle-qtype_stack/dev/<path>`, and
+at `dev`'s recent commits to that file:
+
+    curl -s "https://api.github.com/repos/maths/moodle-qtype_stack/commits?sha=dev&path=<path>&per_page=5"
+
+If `dev` already fixes it, no issue is raised: the entry keeps the id
+`stack-wa-<slug>`, with `Issue: none, fixed in dev`, `Status: fixed in dev`
+and the commit's URL under `Fix`. The workaround is still needed until a
+release with the fix is installed.
+
+**Status.** `open` until the fix is merged into `dev`. When the issue is
+closed with a fix in `dev`, set `fixed in dev` and record the commit under
+`Fix`. `removed` once no question uses the workaround.
+
+An entry is ready to remove when the fix is in `dev` (its issue is closed, or
+its status is `fixed in dev`) and the installed STACK's version is larger than
+`Upstream`.
 
 **Raising the issue.** The planner or author drafts the entry, including the
 reproduction; the user raises the issue on GitHub (the assistant never posts
@@ -52,6 +77,7 @@ that uses it:
 - Upstream: 2026080600
 - Status: open
 - Found: 2026-10-11, Chapter 5 plans of the Axler project
+- Fix: not in dev yet (checked 2026-10-14)
 
 **Defect.** In `stack/maxima/linearalgebra_core.mac`, `make_list_of_lists`
 declares and assigns `_op1` but tests `op1`, so for a set it returns its
@@ -81,7 +107,7 @@ and drop any node that exists only to keep `[]` away from the library.
 - Upstream: 2026080600
 - Status: open
 - Found: 2026-10-11, Chapter 5 plans of the Axler project (5D convention D5)
-- Fix: proposed upstream from branch `iss1903`, under review on GitHub (2026-10-13)
+- Fix: not in dev yet (checked 2026-10-14); proposed from branch `iss1903`, under review on GitHub (2026-10-13)
 
 **Defect.** In `stack/maxima/contrib/eigenlib.mac` (line 46), the
 three-argument form of `eigenvectorp` tests

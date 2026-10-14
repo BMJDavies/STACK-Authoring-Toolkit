@@ -131,7 +131,8 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
   `/* <id> */` code comments (style guide, "Workarounds for STACK defects").
   Use only workarounds with an entry in `stack-workarounds.md`; if you find a
   new defect, escalate with a draft entry rather than inventing a workaround
-  silently.
+  silently, having checked whether STACK's `dev` branch already fixes it
+  (`stack-workarounds.md`, "Check `dev` first").
 - **JSXGraph board ids must be unique across the file.** Pattern:
   `<section-id>-q<N>-board`.
 

@@ -207,9 +207,9 @@ every STACK upgrade, and whenever asked, run
 tools/check-workarounds.sh            # --offline to skip GitHub
 ```
 
-It reads the register `stack-workarounds.md`, and for each open entry reports
-the GitHub issue's state, the installed STACK version and the questions that
-use it. An entry marked READY TO REMOVE is handed to the enricher to restore
+It reads the register `stack-workarounds.md`, and for each entry not removed
+reports the GitHub issue's state (or that the fix is already in STACK's `dev`
+branch), the installed STACK version and the questions that use it. An entry marked READY TO REMOVE is handed to the enricher to restore
 the plain code; ask before re-publishing.
 
 ## Removing questions from a quiz

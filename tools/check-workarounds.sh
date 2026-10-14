@@ -5,11 +5,14 @@
 #   tools/check-workarounds.sh [--offline]
 #
 # For each entry that is not "removed" it prints the GitHub issue's state, the
-# STACK version installed in this Moodle, and the project's questions that
-# carry the workaround's id (in todo tags or code comments). An entry is
-# READY TO REMOVE when its issue is closed and the installed version is larger
-# than the entry's Upstream version: then restore the plain code in the
-# questions listed (style guide, "Workarounds for STACK defects").
+# fix commit on STACK's dev branch if there is one, the STACK version installed
+# in this Moodle, and the project's questions that carry the workaround's id
+# (in todo tags or code comments). An entry is READY TO REMOVE when its fix is
+# in dev (the issue is closed, or the status is "fixed in dev") and the
+# installed version is larger than the entry's Upstream version, the version
+# on master, STACK's current release, when the entry was written: then restore
+# the plain code in the questions listed (style guide, "Workarounds for STACK
+# defects").
 #
 # GitHub is read through its public API, without credentials. --offline skips
 # it. Nothing is written anywhere.
@@ -38,13 +41,14 @@ done
 echo "Installed STACK version: ${INSTALLED:-unknown (is $LIVE_CONTAINER running?)}"
 echo
 
-# One line per entry: id|issue|upstream|status
+# One line per entry: id|issue|upstream|status|fix
 entries="$(awk '
-    /^### / { if (id != "") print id "|" issue "|" up "|" st; id = $2; issue = ""; up = ""; st = "" }
+    /^### / { if (id != "") print id "|" issue "|" up "|" st "|" fix; id = $2; issue = ""; up = ""; st = ""; fix = "" }
     /^- Issue:/    { sub(/^- Issue: */, ""); issue = $0 }
     /^- Upstream:/ { sub(/^- Upstream: */, ""); up = $0 }
     /^- Status:/   { sub(/^- Status: */, ""); st = $0 }
-    END { if (id != "") print id "|" issue "|" up "|" st }
+    /^- Fix:/      { sub(/^- Fix: */, ""); gsub(/\|/, "/"); fix = $0 }
+    END { if (id != "") print id "|" issue "|" up "|" st "|" fix }
 ' <(sed -n '/^## Entries/,$p' "$REGISTER"))"
 
 if [ -z "$entries" ]; then
@@ -53,7 +57,7 @@ if [ -z "$entries" ]; then
 fi
 
 ready=0
-while IFS='|' read -r id issue upstream status; do
+while IFS='|' read -r id issue upstream status fix; do
     [ "$status" = "removed" ] && continue
     echo "== $id ($status)"
 
@@ -67,9 +71,12 @@ while IFS='|' read -r id issue upstream status; do
             state="${state:-unknown (GitHub did not answer)}"
         fi
         echo "   Issue #$num: $state"
+    elif [ "$status" = "fixed in dev" ]; then
+        echo "   Issue: none, the fix is already in dev"
     else
         echo "   Issue: not raised yet. Raise it from the entry's draft, then rename the id."
     fi
+    [ -n "$fix" ] && echo "   Fix: $fix"
 
     echo "   Upstream $upstream, installed ${INSTALLED:-unknown}"
 
@@ -83,7 +90,9 @@ while IFS='|' read -r id issue upstream status; do
         echo "   Used in: no question in $PROJECT_DIR/content/"
     fi
 
-    if [ "$state" = "closed" ] && [ -n "$INSTALLED" ] && [ "$INSTALLED" -gt "$upstream" ]; then
+    infix=0
+    { [ "$state" = "closed" ] || [ "$status" = "fixed in dev" ]; } && infix=1
+    if [ "$infix" = 1 ] && [ -n "$INSTALLED" ] && [ "$INSTALLED" -gt "$upstream" ]; then
         echo "   READY TO REMOVE: restore the plain code in the questions above."
         ready=$((ready + 1))
     fi

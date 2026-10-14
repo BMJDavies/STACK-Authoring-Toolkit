@@ -107,8 +107,11 @@ structure and the exact test inputs.
    defect in STACK, use the entry in `stack-workarounds.md` and name its id in
    the item. For a defect not yet in the register, write a draft entry in the
    plan (id `stack-wa-<slug>`, minimal reproduction, `Upstream` from STACK's
-   `master` on GitHub) and list it under "Editorial flags" for the user to
-   raise as a GitHub issue (style guide, "Workarounds for STACK defects").
+   `master` on GitHub). Check STACK's `dev` branch first: if it already fixes
+   the defect, record the commit and mark the entry `fixed in dev`; otherwise
+   list the entry under "Editorial flags" for the user to raise as a GitHub
+   issue (style guide, "Workarounds for STACK defects"; the register says how
+   to check `dev`).
 
 8. **Write the plan** to `project/content/plans/<section-id>.md`.
 
