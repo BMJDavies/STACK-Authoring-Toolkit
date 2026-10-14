@@ -181,6 +181,13 @@ rules and forbidwords are ordinary style rules, not workarounds.
 - **A comment at the code,** `/* stack-1901 */`, on each line of the workaround
   in the question variables, feedback variables or PRT, so it is found without
   the todo page.
+- **Widespread workarounds: one entry, no blocks.** Where a workaround is in
+  dozens of questions and one fixed text already finds every use (a validator
+  name, for example), the user may decide to track it by its register entry
+  alone. The entry then has a `Marker:` line with that text, the questions carry
+  no todo block and no `/* <id> */` comment, and `tools/check-workarounds.sh`
+  lists the questions containing the marker. Use this only on the user's
+  decision; the register says which entries do.
 - **These blocks stay** while the workaround is needed. They do not count as
   open review notes, so a section is finished with them in place, and STACK's
   todo page lists them under the tag `stack-workaround`. To count only the
@@ -249,11 +256,13 @@ When displaying randomised expressions:
   terms stay in order, or name the scalar in the prose ("where \(k = {@k@}\)").
   This came up in both 3B and 3D.
 - **Never put `\\` directly before `{@...@}` in CASText.** STACK drops a
-  backslash, so `\begin{pmatrix}{@a@}\\{@b@}\end{pmatrix}` renders as
+  backslash (STACK issue #1910, found in STACK 4.13.1), so `\begin{pmatrix}{@a@}\\{@b@}\end{pmatrix}` renders as
   `{-5}\{3}` on every seed. Interpolate the whole matrix (`{@matrix([a],[b])@}`),
   or put a space after the line break: `\\ {@b@}`. Neither `test-question.sh`
   nor `render-check` catches this, so only rendering the seeds and looking at
-  the result will find it.
+  the result will find it. The same applies to any single `\` directly before
+  `{@`. Both replacements are good LaTeX in any case, so this is a style rule,
+  not a workaround, and there is nothing to restore when #1910 is fixed.
 - **`{@ex@}` keeps its braces:** it becomes `{…}` around the LaTeX of `ex`, so `\frac{@a@}{@b@}` is correct and renders as \(\frac{a}{b}\). Do not flag it as missing braces.
 
 ### Currency: always use a rounded display variable

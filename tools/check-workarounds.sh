@@ -7,7 +7,8 @@
 # For each entry that is not "removed" it prints the GitHub issue's state, the
 # fix commit on STACK's dev branch if there is one, the STACK version installed
 # in this Moodle, and the project's questions that carry the workaround's id
-# (in todo tags or code comments). An entry is READY TO REMOVE when its fix is
+# (in todo tags or code comments), or, for an entry with a "Marker:" line,
+# the questions containing that text. An entry is READY TO REMOVE when its fix is
 # in dev (the issue is closed, or the status is "fixed in dev") and the
 # installed version is larger than the entry's Upstream version, the version
 # on master, STACK's current release, when the entry was written: then restore
@@ -41,14 +42,15 @@ done
 echo "Installed STACK version: ${INSTALLED:-unknown (is $LIVE_CONTAINER running?)}"
 echo
 
-# One line per entry: id|issue|upstream|status|fix
+# One line per entry: id|issue|upstream|status|fix|marker
 entries="$(awk '
-    /^### / { if (id != "") print id "|" issue "|" up "|" st "|" fix; id = $2; issue = ""; up = ""; st = ""; fix = "" }
+    /^### / { if (id != "") print id "|" issue "|" up "|" st "|" fix "|" mk; id = $2; issue = ""; up = ""; st = ""; fix = ""; mk = "" }
     /^- Issue:/    { sub(/^- Issue: */, ""); issue = $0 }
     /^- Upstream:/ { sub(/^- Upstream: */, ""); up = $0 }
     /^- Status:/   { sub(/^- Status: */, ""); st = $0 }
     /^- Fix:/      { sub(/^- Fix: */, ""); gsub(/\|/, "/"); fix = $0 }
-    END { if (id != "") print id "|" issue "|" up "|" st "|" fix }
+    /^- Marker:/   { sub(/^- Marker: */, ""); gsub(/`/, ""); mk = $0 }
+    END { if (id != "") print id "|" issue "|" up "|" st "|" fix "|" mk }
 ' <(sed -n '/^## Entries/,$p' "$REGISTER"))"
 
 if [ -z "$entries" ]; then
@@ -57,7 +59,7 @@ if [ -z "$entries" ]; then
 fi
 
 ready=0
-while IFS='|' read -r id issue upstream status fix; do
+while IFS='|' read -r id issue upstream status fix marker; do
     [ "$status" = "removed" ] && continue
     echo "== $id ($status)"
 
@@ -80,11 +82,14 @@ while IFS='|' read -r id issue upstream status fix; do
 
     echo "   Upstream $upstream, installed ${INSTALLED:-unknown}"
 
-    files="$(grep -l -- "$id" "$PROJECT_DIR"/content/approved/*.xml "$PROJECT_DIR"/content/drafts/*.xml 2>/dev/null || true)"
+    # Questions are found by the id, or by the entry's Marker text if it has one.
+    pat="$id"
+    [ -n "$marker" ] && pat="$marker" && echo "   Marker: $marker"
+    files="$(grep -lF -- "$pat" "$PROJECT_DIR"/content/approved/*.xml "$PROJECT_DIR"/content/drafts/*.xml 2>/dev/null || true)"
     if [ -n "$files" ]; then
         echo "   Used in:"
         for f in $files; do
-            echo "     ${f#"$PROJECT_DIR"/} ($(grep -c -- "$id" "$f") mentions)"
+            echo "     ${f#"$PROJECT_DIR"/} ($(grep -cF -- "$pat" "$f") mentions)"
         done
     else
         echo "   Used in: no question in $PROJECT_DIR/content/"

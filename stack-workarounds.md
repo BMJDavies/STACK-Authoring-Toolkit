@@ -21,6 +21,7 @@ are read by `tools/check-workarounds.sh`, so keep them as written.
     - Status: open | fixed in dev | removed
     - Found: <date>, <where>
     - Fix: <the commit on dev that fixes it, once there is one>
+    - Marker: <text that finds the questions, only for a widespread workaround>
 
     **Defect.** What goes wrong, with a minimal reproduction: the call, the
     result expected, the result returned. Name the file and line in STACK.
@@ -60,6 +61,14 @@ closed with a fix in `dev`, set `fixed in dev` and record the commit under
 An entry is ready to remove when the fix is in `dev` (its issue is closed, or
 its status is `fixed in dev`) and the installed STACK's version is larger than
 `Upstream`.
+
+**Widespread workarounds.** Normally each question carries a todo block and
+`/* <id> */` comments. Where a workaround is in dozens of questions and is
+already found by one fixed text (a validator name, for example), the user may
+choose one register entry instead: give it a `Marker:` line with that text,
+and add no blocks or comments. `tools/check-workarounds.sh` then lists the
+questions containing the marker. The entry's **Restore** says what to change
+and which uses to leave alone.
 
 **Raising the issue.** The planner or author drafts the entry, including the
 reproduction; the user raises the issue on GitHub (the assistant never posts
@@ -129,3 +138,76 @@ and reject the zero vector separately, which `eigenvectorp` does itself.
 **Restore.**
 
     eigenvectorp(v, M, L)
+
+### stack-1912
+
+- Issue: https://github.com/maths/moodle-qtype_stack/issues/1912
+- Upstream: 2026080600
+- Status: open
+- Found: 2026-10-05, Section 3F of the Axler project; diagnosed 2026-10-14
+- Fix: not in dev yet (checked 2026-10-14)
+
+**Defect.** In `stack/maxima/stackmaxima.mac` (line 882), `stack_matrix_disp`,
+the `texput` for `matrix`, raises "stack_matrix_disp: argument must be a
+matrix." when given an unevaluated `matrix(w)` whose arguments are not lists,
+as in the body of a lambda: `f: lambda([w], matrix(w)); tex1(f);` fails, though
+`f([1,2])` gives `matrix([1,2])`. In a question, a variable whose value holds
+such a lambda makes every CAS call fail with "CAS failed to return any data
+due to timeout", even if it is never called. Inline lambdas (inside `sublist`)
+and function definitions `f(w) := matrix(w)` are not affected.
+
+**Workaround.** In a lambda bound to a question variable:
+
+    apply(matrix, [w])  /* stack-1912 */
+
+for `matrix(w)`, and `transpose(apply(matrix, [w]))` for a column.
+
+**Restore.**
+
+    matrix(w)
+
+Restoring is optional, since the two forms are equivalent.
+
+**Questions to mark** (Axler project, not yet marked; to be done in the
+Chapter 3 clean-up after Chapter 5). Each binds a lambda using
+`apply(matrix, [...])` to a question variable:
+
+- `Ch3_F.xml`: 3F_P02b_DualBasisCompute (`ok4`), 3F_P03b_DualMapCompute
+  (`ok6`), 3F_P04b_DualOfProduct (`ok8`)
+- `Ch3_F_further.xml`: 3F_P15b_RangeDualCompute (`okc`, `ok31b`),
+  3F_P23a_Ex32_DoubleDual (`vals46`)
+
+Twelve other Chapter 3 questions use `apply(matrix, [q])` inside an inline
+`sublist` lambda, which is never stored: not a workaround, so leave them
+unmarked.
+
+### stack-1911
+
+- Issue: https://github.com/maths/moodle-qtype_stack/issues/1911
+- Upstream: 2026080600
+- Status: open
+- Found: 2026-10-05, Section 3E of the Axler project; reviewed 2026-10-14
+- Fix: not in dev yet (checked 2026-10-14); proposed from branch `iss1911` (adds the `realnum` option)
+- Marker: `validator:validate_numeric`
+
+**Defect.** A missing feature: the numerical input accepts complex numbers
+(`i`, `2*i`, `sqrt(-4)` are valid), and none of its options (`floatnum`,
+`intnum`, `rationalnum`) asks for "any real number". In a question set over
+\(\mathbf{R}\) and graded by a property, a complex entry can pass the check.
+
+**Workaround.** A bespoke validator on each such input, defined in the
+question variables, which also rejects letters with `simp:false`:
+
+    validate_numeric(ex) := block([sx], sx: ev(ex, simp), if listofvars(ex) = [] and freeof(%i, sx) then "" else "Enter a real number, not an expression containing a letter, a variable or i.");
+
+with the extra option `validator:validate_numeric`. One entry, no todo blocks
+(user decision, 2026-10-14): in the Axler project it is on 194 inputs in about
+60 Chapter 3 questions.
+
+**Restore.** Once a release with the option is installed: on `numerical`
+inputs, replace `validator:validate_numeric` with the new option (`realnum` in
+the proposed fix; use whatever name is released), and delete the
+`validate_numeric` definition where no other input uses it. Leave the
+validator where the box must also reject `0*t`, which the numerical input
+accepts by design (3B_P09c in the Axler project). Algebraic and matrix inputs
+keep the validator. Run `test-question.sh` on each file changed.
