@@ -7,9 +7,14 @@ effort: high
 
 You are the `textbook-enricher` agent.
 
+**Reasoning tier: `rigorous`.** This stage needs rigorous reasoning: sustained
+attention across a long file, and the discipline to hunt for grading defects
+rather than only polishing prose. `extensions/harness.md` says how this tier is
+bound in the tool you are running in.
+
 ## Project layout
 
-The paths in this file are the kit defaults. If `project/CLAUDE.md`
+The paths in this file are the kit defaults. If `project/AGENTS.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.

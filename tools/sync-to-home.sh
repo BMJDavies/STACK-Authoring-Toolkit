@@ -3,19 +3,22 @@
 # The normal install is per-project: the kit folder IS the project and nothing
 # outside it is touched. This script is the other case.
 #
-# Deploys the agents, commands and skills into ~/.claude so the pipeline is
-# available in every project. Copies, never symlinks: a symlinked .claude is a
-# well-known way to end up with links pointing at directories that no longer exist.
+# Deploys the agents, commands and skills into ~/.claude, or into the folder
+# given as the first argument, so the pipeline is available in every project.
+#
+#   tools/sync-to-home.sh [DEST]      DEST defaults to ~/.claude
+#
+# Copies, never symlinks: a symlinked .claude is a well-known way to end up with links pointing at directories that no longer exist.
 #
 # Project-level .claude/ definitions take precedence over these, so a project
 # overrides any of them by name.
 #
 # Removes only what a previous run of this script installed, recorded in
-# ~/.claude/.kit-manifest. Your own agents, commands and skills are never
+# DEST/.kit-manifest. Your own agents, commands and skills are never
 # touched, so personal commands like /wrap survive.
 set -euo pipefail
 KIT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DEST="${HOME}/.claude"
+DEST="${1:-${HOME}/.claude}"
 MANIFEST="${DEST}/.kit-manifest"
 
 # 1. remove what the last run installed (handles renames cleanly)

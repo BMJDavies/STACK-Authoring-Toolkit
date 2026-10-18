@@ -1,16 +1,24 @@
 # Onboarding
 
-**Audience: the assistant. Follow this when `project/CLAUDE.md` does not exist.**
+**Audience: the assistant. Follow this when `project/AGENTS.md` does not exist,
+or Stage 0 alone when `extensions/harness.md` does not.**
 
 The kit (this folder) is generic and is never edited during onboarding.
 Everything you create belongs to the user's project, in `project/`, which is a
 separate git repository that the kit ignores.
 
 Onboarding may already have been started and left unfinished: `project/` exists,
-or `project/CLAUDE.md` is still the template with its `<...>` placeholders. Work
+or `project/AGENTS.md` is still the template with its `<...>` placeholders. Work
 out how far it got and resume from there rather than starting again. Detection
 below tells you what is already in place, and the steps are written so that
 re-running one is harmless.
+
+**If `project/CLAUDE.md` or `extensions/CLAUDE.md` exists, this is not a new
+project: stop.** The project was set up before the kit renamed its instruction
+files to `AGENTS.md`. Onboarding would treat it as new and put a blank template
+beside the real instructions. Point the user to `UPGRADING.md`,
+"Instruction files renamed to `AGENTS.md`", and offer to do the two renames with
+them.
 
 ## Who you are working with
 
@@ -36,10 +44,38 @@ docker ps -a --format '{{.Names}}'       # containers that exist but are stopped
 uname -sm                                # OS and architecture
 git -C . rev-parse --is-inside-work-tree # is the kit under version control (it should be)
 ls project/ 2>/dev/null                  # has a project folder been started
+ls project/CLAUDE.md extensions/CLAUDE.md 2>/dev/null   # old names: see above
 ```
 
 Report what you found in one short paragraph before asking anything. If Moodle is
 already running, say so rather than asking whether it is.
+
+## Stage 0: record your harness
+
+Skip this if `extensions/harness.md` exists and no longer says "Template from
+the kit".
+
+You know what tool you are running in; the kit does not. Write it down, so that
+every later session and `tools/run-role.sh` dispatch the roles the same way.
+
+1. Create `extensions/` if needed (`[ -d extensions ] || cp -r templates/extensions
+   extensions`), and copy `templates/extensions/harness.md` there if it is
+   missing.
+2. Answer each question in it about yourself, from what you know and what you
+   can check: run your own `--help` or `--version` rather than recalling flags.
+   Where you cannot tell, write "unsure", not a guess.
+3. Bind the three reasoning tiers. If you do not know your own model or effort
+   settings, use the strongest available for `deepest` and defaults elsewhere.
+   Never invent a flag or model name.
+4. Fill in the `run-role.` lines only with flags you have confirmed.
+5. Delete the comment at the top, and show the user what you wrote. Ask them to
+   check the tier bindings and the permission flags in particular: a model's
+   report of its own settings is not reliable, and the permission flags decide
+   what a role run without them present may do.
+
+If anything in the four joints listed in the kit's `AGENTS.md` ("If you are not
+Claude Code") does not work here, record it under "Known degradations" and tell
+the user now.
 
 ## Stage A: their environment
 
@@ -77,7 +113,7 @@ copy across only what is missing:
 cp -rn templates/project/. project/      # adds missing files, overwrites nothing
 ```
 
-This gives `project/CLAUDE.md` (a template to fill in later), `project.conf`,
+This gives `project/AGENTS.md` (a template to fill in later), `project.conf`,
 `style-guide.md`, `content/`, `feedback/` and `sources/`, each with a short
 explanation. Explain to the user that `project/` is their own repository: the
 kit ignores it, so updating the kit never touches their work.
@@ -100,7 +136,7 @@ not assume, `git -C extensions init` if they want it under version control.
 3b. Where in the world are the students? Currency, names, places and units in
    worded questions follow from this, and the agents will otherwise default to
    wherever their training leans without saying so. Record it in
-   `project/CLAUDE.md`.
+   `project/AGENTS.md`.
 
 4. **Get the material into `project/sources/` before going further.** Ask them
    to put it there, then confirm it has arrived and that you can actually read it:
@@ -135,10 +171,10 @@ plainly rather than improvising it.
 
 ## What to do with the answers
 
-Fill in `project/CLAUDE.md`: replace every `<...>` in the template with their
+Fill in `project/AGENTS.md`: replace every `<...>` in the template with their
 answers, and delete the comment at the top. Keep it short: it is loaded on every
 request, so length here costs them on every interaction. Generic instructions
-are already in the kit's `CLAUDE.md`; do not copy them across.
+are already in the kit's `AGENTS.md`; do not copy them across.
 
 Then fill in `project/project.conf` with the ids that `SETUP.md` section 6
 prints, and offer to walk them through their first section using `WORKFLOW.md`.

@@ -1,8 +1,12 @@
 # Project instructions
 
-<!-- Template from the kit (templates/project/CLAUDE.md). Onboarding copies it to
-project/CLAUDE.md and fills in every <...>. The kit's own CLAUDE.md imports this
-file, so keep it to facts about this project: generic rules belong in the kit. -->
+<!-- Template from the kit (templates/project/AGENTS.md). Onboarding copies it to
+project/AGENTS.md and fills in every <...>. The kit's own AGENTS.md reads this
+file at the start of every session, so keep it to facts about this project:
+generic rules belong in the kit. -->
+
+Authoritative for this project: where this file disagrees with the kit's
+generic rules or with the user's extensions, this file wins.
 
 ## What this project is
 

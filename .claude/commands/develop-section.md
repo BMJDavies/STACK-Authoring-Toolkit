@@ -6,7 +6,8 @@ argument-hint: "<chapter> <section> [source path]"
 You are coordinating one section through three agents in sequence: planner,
 author, reviewer. You run in the main conversation, so you can spawn them
 directly. A subagent cannot spawn subagents, so this coordination must stay here
-rather than being delegated.
+rather than being delegated. If your tool has no subagents, dispatch each agent
+the way `extensions/harness.md` says.
 
 Your job is coordination. You do not read XML, write questions, or make detailed
 structural decisions: that is what the agents are for. You review their output at
@@ -15,8 +16,8 @@ editorial judgement is needed.
 
 ## Step 1: gather the spec
 
-Ask the user, in a single compact turn, for anything not clear from `$ARGUMENTS`
-or the conversation:
+Ask the user, in a single compact turn, for anything not clear from the section
+reference they gave you (`$ARGUMENTS`) or from the conversation:
 
 1. Topic or book identifier
 2. Chapter number and name

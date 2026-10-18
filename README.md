@@ -12,16 +12,17 @@ definitions in `.claude/`. Nothing is installed elsewhere on your machine, so th
 whole thing is undone by deleting the folder. If you later run several authoring
 projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
 
-It was built for and tested with Claude Code. The content, the style guide, the
-checklist and the tools are not tool-specific, and `AGENTS.md` explains how to
-drive the same pipeline from another assistant. As of late 2026, I am working on
-an LLM-agnostic version of this project but for now, you will need to use Claude Code
-or manually adapt this infrastructure for your own purposes.
+It was built for and tested with Claude Code, and is written to work with any
+command-line AI assistant that reads `AGENTS.md`, such as GitHub Copilot CLI,
+Codex CLI or Gemini CLI. The content, the style guide, the checklist and the
+tools are not tool-specific. On first use your assistant records how it runs the
+pipeline in `extensions/harness.md`; check what it writes there. Tools other
+than Claude Code have not yet been tested end to end.
 
 ## Getting started
 
-Open your Claude Code Assistant **in this folder** and type `/start`, or ask it
-to follow `ONBOARDING.md`. The folder has to be the working directory itself: if
+Open your assistant **in this folder** and type `/start`, or ask it to follow
+`ONBOARDING.md`. The folder has to be the working directory itself: if
 you open a session in the parent, nothing here loads, and you get an ordinary
 assistant that has never heard of the pipeline and cannot tell you so. It will work out what you already have installed, ask what it
 cannot detect, and configure the kit for your project.
@@ -61,14 +62,15 @@ ignores: `project/`, a separate git repository for one course, and
 
 ```
 stack-authoring-kit/          the kit: clone this, and run the assistant here
-├── CLAUDE.md                 standing instructions; imports extensions/CLAUDE.md
-│                             and project/CLAUDE.md
+├── AGENTS.md                 standing instructions; reads extensions/AGENTS.md
+│                             and project/AGENTS.md
 ├── .claude/  tools/  style-guide.md  reference/  ...
 ├── extensions/               yours, across projects: optionally its own repository
-│   ├── CLAUDE.md             an index of your extension files
+│   ├── AGENTS.md             an index of your extension files
+│   ├── harness.md            how your assistant tool runs the pipeline
 │   └── ...                   your own instructions, guidance and templates
 └── project/                  your project: its own git repository
-    ├── CLAUDE.md             what the project is: sources, locale, Moodle site
+    ├── AGENTS.md             what the project is: sources, locale, Moodle site
     ├── project.conf          your Moodle ids
     ├── style-guide.md        rules for this project only
     ├── content/              plans, drafts, approved questions
@@ -93,16 +95,16 @@ then extensions, then project, and the later one wins where they disagree.
 ```
 README.md                  this file, for you
 ONBOARDING.md              setup interview, for your assistant
-AGENTS.md                  portable entry point for a non-Claude assistant
-CLAUDE.md                  standing instructions for the assistant (never rewritten)
+AGENTS.md                  standing instructions for the assistant (never rewritten)
+CLAUDE.md  GEMINI.md       one-line stubs that import AGENTS.md
 SETUP.md                   from nothing to a working install
 WORKFLOW.md                using the pipeline day to day
 LESSONS.md                 why the rules are the rules
 style-guide.md             content conventions: the agents' authority
 reviewing-checklist.md     what the reviewer works through
 MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
-UPGRADING.md               only for kits set up before October 2026: moving a
-                           project out of the kit's own folders
+UPGRADING.md               only for kits set up with an earlier version: the
+                           AGENTS.md rename and the project/ layout
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
@@ -120,6 +122,7 @@ tools/
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
+  run-role.sh              run one role as its own process, with any assistant tool
   migrate-to-project-folder.sh  only for kits set up before October 2026
   ...and several smaller utilities
 
@@ -159,7 +162,8 @@ problems back, and publishes what passes.
 better feedback, more diagnostics, and an adversarial hunt for questions that
 would mark a student wrongly.
 
-Two slash commands drive them: `/develop-section` and `/develop-chapter`.
+Two slash commands drive them: `/develop-section` and `/develop-chapter`. If
+your assistant has no slash commands, ask in words: "develop Ch5 Section B".
 
 ### Why bother with four agents
 
@@ -202,7 +206,7 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 
 ## Realistic expectations
 
-- Setup is mostly downloads. Do it with Claude Code alongside you.
+- Setup is mostly downloads. Do it with your assistant alongside you.
 - Start with one small section, not a chapter. Most of the time goes on
   validation.
 - Validation is slow and produces no output while running. That is normal. Let
@@ -210,16 +214,17 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 
 ---
 
-## If you are new to Claude Code
+## If you are new to working with an AI assistant
 
 You do not need to understand the internals to use this. A few things that make
 the difference:
 
-- You will need to set-up Claude Code on your own before using this toolkit.
-  Here is Anthropic's quickstart guide: https://code.claude.com/docs/en/quickstart
-- `CLAUDE.md` is read at the start of every session, together with
-  `project/CLAUDE.md`. Your project's standing instructions go in
-  `project/CLAUDE.md`. Keep it short: it costs context on every request.
+- You will need to set up your assistant on your own before using this toolkit.
+  For Claude Code, here is Anthropic's quickstart guide:
+  https://code.claude.com/docs/en/quickstart
+- `AGENTS.md` is read at the start of every session, together with
+  `project/AGENTS.md`. Your project's standing instructions go in
+  `project/AGENTS.md`. Keep it short: it costs context on every request.
 - Correct the system in the moment, rather than waiting. "Stop, do Y instead" mid-task works,
   and is far better than letting it finish something wrong.
 - Ask it to explain before acting while you are learning: "tell me what this
@@ -241,7 +246,7 @@ working with it on the questions afterwards.
 Most of the kit is subject-neutral. The places where you will want to make it
 yours:
 
-- `project/CLAUDE.md`: what the project is, where questions come from, how you
+- `project/AGENTS.md`: what the project is, where questions come from, how you
   want to be worked with. Onboarding fills in every placeholder.
 - `project/style-guide.md`: rules for your project only. The kit's
   `style-guide.md` holds the rules for every project: the prose-anchor table and

@@ -5,14 +5,15 @@ argument-hint: "<chapter> [source path]"
 
 You are running a full chapter. You work in the main conversation so that you
 can spawn the planner, author and reviewer agents directly. A subagent cannot
-spawn subagents, so this coordination cannot itself be delegated.
+spawn subagents, so this coordination cannot itself be delegated. If your tool
+has no subagents, dispatch each agent the way `extensions/harness.md` says.
 
 Follow the protocol below. The supervision is the point: verify each step
 yourself rather than trusting an agent's report of success.
 
 ## Step 1: gather the chapter spec
 
-From `$ARGUMENTS` or by asking:
+From the chapter reference the user gave you (`$ARGUMENTS`), or by asking:
 
 1. Topic or book identifier
 2. Chapter number and name
@@ -24,7 +25,7 @@ From `$ARGUMENTS` or by asking:
 Do not start without at least 1 to 3.
 
 Course ids, question bank ids and `--course=` keys are in `project/project.conf`
-and summarised in `project/CLAUDE.md`. Read them rather than assuming.
+and summarised in `project/AGENTS.md`. Read them rather than assuming.
 
 ## Step 2: session startup
 

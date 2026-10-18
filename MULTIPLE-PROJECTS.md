@@ -31,15 +31,15 @@ STACK_PROJECT=calculus tools/test-question.sh calculus/content/approved/Ch1_A.xm
 Add each such folder to the kit's `.gitignore`, as `project/` is.
 
 The limitation: `STACK_PROJECT` changes where the **tools** look. The assistant
-always imports `project/CLAUDE.md`, so it does not follow the setting. Either
+always reads `project/AGENTS.md`, so it does not follow the setting. Either
 tell it explicitly which folder you are working on and which instructions to
 read, or keep the project you are actively working on in `project/` and rename
 folders to switch. For regular work on two projects, separate clones are less
 error-prone.
 
 **If you are the assistant and the user names a project folder other than
-`project/`:** the import at the top of the kit's `CLAUDE.md` has given you the
-wrong project's instructions. Read that folder's `CLAUDE.md` instead, and take
+`project/`:** the kit's `AGENTS.md` has given you the wrong project's
+instructions. Read that folder's `AGENTS.md` instead, and take
 every path from it — `<folder>/content/`, `<folder>/sources/`,
 `<folder>/project.conf` — rather than from `project/`. Pass the same folder to
 the tools as `STACK_PROJECT`, so you and they agree on which project this is.
@@ -61,7 +61,9 @@ for every project on the machine:
 tools/sync-to-home.sh
 ```
 
-Copies `.claude/agents`, `.claude/commands` and `.claude/skills` into `~/.claude/`.
+Copies `.claude/agents`, `.claude/commands` and `.claude/skills` into `~/.claude/`,
+or into another folder given as the first argument, for an assistant that reads
+its definitions from elsewhere.
 Copies, never symlinks: a symlinked `.claude` is a well-known way to end up with
 links pointing at directories that no longer exist.
 

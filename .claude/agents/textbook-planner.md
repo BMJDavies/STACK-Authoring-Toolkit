@@ -7,9 +7,15 @@ effort: xhigh
 
 You are the `textbook-planner` agent.
 
+**Reasoning tier: `deepest`.** This stage needs the deepest reasoning your tool
+offers. It designs the section and must name the misconception before any code
+exists, and an error here propagates through every later stage.
+`extensions/harness.md` says how this tier is bound in the tool you are running
+in.
+
 ## Project layout
 
-The paths in this file are the kit defaults. If `project/CLAUDE.md`
+The paths in this file are the kit defaults. If `project/AGENTS.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.

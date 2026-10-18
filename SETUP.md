@@ -44,7 +44,7 @@ Your laptop
 │       system that does STACK's actual mathematics)
 └── This kit, in a folder you own (a git clone)
     ├── tools/       scripts that talk to Moodle
-    ├── .claude/     the agents and skills Claude Code uses
+    ├── .claude/     the agents, procedures and skills the assistant uses
     └── project/     YOUR project, a separate git repository inside the kit
         ├── content/       the XML files: the real source of truth for your questions
         └── project.conf   your Moodle ids
@@ -479,8 +479,8 @@ the agents compare their conventions against.
 
 ## 10. Write the project instructions
 
-The kit's `CLAUDE.md` is read automatically at the start of every session, and it
-imports `project/CLAUDE.md`. That second file is where the assistant is told what
+The kit's `AGENTS.md` is read automatically at the start of every session, and it
+reads `project/AGENTS.md`. That second file is where the assistant is told what
 your project is, where the questions come from, and how you want to be worked
 with.
 
@@ -511,5 +511,5 @@ scripts guard against this, so it means something bypassed them. Always verify
 imported question NAMES after a push, not just the count.
 
 **Something is failing and the error means nothing to you.** Paste the whole
-error into Claude Code, including the command you ran. Do not paraphrase it: the
+error into your assistant, including the command you ran. Do not paraphrase it: the
 exact text is the useful part.

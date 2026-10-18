@@ -34,7 +34,8 @@ Four agents, in `.claude/agents/`:
   at the bottom of this file.
 
 Two slash commands drive them: `/develop-section` for one section,
-`/develop-chapter` for a whole chapter.
+`/develop-chapter` for a whole chapter. If your assistant has no slash
+commands, ask in words: "develop Ch5 Section B".
 
 ## Why it is split up
 
@@ -165,6 +166,20 @@ The agents are available individually, without the slash commands:
 Useful when you are fixing one thing, or when a run died partway and you want to
 pick it up rather than start again.
 
+Each role can also run as its own process, outside any conversation, using the
+assistant tool recorded in `extensions/harness.md`:
+
+```bash
+tools/run-role.sh --check                                  # does the tool answer
+tools/run-role.sh planner "Ch5 Section B"
+tools/run-role.sh author project/content/plans/Ch5_B.md
+tools/run-role.sh reviewer project/content/drafts/Ch5_B.xml
+```
+
+A separate process starts with a clean context, so the reviewer cannot have
+seen the author's reasoning. Use it when your assistant has no subagents, or
+for scripted runs.
+
 ---
 
 ## The commands you will actually type
@@ -192,11 +207,11 @@ tools/                       scripts
 templates/project/           the skeleton a new project is created from
 
 In your project (project/, its own git repository):
-project/CLAUDE.md            what the project is: sources, locale, Moodle site
+project/AGENTS.md            what the project is: sources, locale, Moodle site
 project/project.conf         all the Moodle ids
 project/style-guide.md       rules for this project only
 project/content/drafts/      the author writes here (naming is your project's
-                             to choose; record it in project/CLAUDE.md)
+                             to choose; record it in project/AGENTS.md)
 project/content/approved/    the reviewer promotes here; the source of truth
 project/content/plans/       plan documents
 project/feedback/            one document per section, plus lessons-learned.md
@@ -289,11 +304,11 @@ time and nothing to show for it, or none at all.
 
 ---
 
-## Working with Claude Code, if it is new to you
+## Working with an AI assistant, if it is new to you
 
-- `CLAUDE.md` is read at the start of every session, together with
-  `project/CLAUDE.md`, which it imports. Your project's standing instructions go
-  in `project/CLAUDE.md`. Keep it short, because it costs context every time.
+- `AGENTS.md` is read at the start of every session, together with
+  `project/AGENTS.md`, which it reads. Your project's standing instructions go
+  in `project/AGENTS.md`. Keep it short, because it costs context every time.
 - Correct it when it goes wrong, in the moment. "Don't do X, do Y instead" in
   the middle of a task works, and is much better than letting it finish
   something wrong.

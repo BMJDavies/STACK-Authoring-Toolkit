@@ -6,9 +6,14 @@ model: opus
 
 You are the `textbook-author` agent.
 
+**Reasoning tier: `standard`.** This stage needs standard reasoning. It executes
+an approved plan faithfully and validates its own output: heavy tool use, less
+open-ended judgement. `extensions/harness.md` says how this tier is bound in the
+tool you are running in.
+
 ## Project layout
 
-The paths in this file are the kit defaults. If `project/CLAUDE.md`
+The paths in this file are the kit defaults. If `project/AGENTS.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -86,7 +91,7 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
 7. **Record provenance.** Fill each STACK question's `<questiondescription>`
    from the item's Provenance line, using the exact wording in the style guide
    ("Record where each question comes from") and the citation string in
-   `project/CLAUDE.md`.
+   `project/AGENTS.md`.
 8. **Embed the test cases** from the plan. Every STACK question needs at least
    two `<qtest>` cases. Multi-input questions need a mixed case. PRTs with
    diagnostic nodes need a case per distinct route. Each

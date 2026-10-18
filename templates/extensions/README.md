@@ -12,11 +12,13 @@ for a kind of question the kit does not cover.
 - It can be its own git repository if you want your extensions under version
   control: `git -C extensions init`.
 - Onboarding copies it from `templates/extensions/`. A fresh copy contains only
-  this file and `CLAUDE.md`, and that is a valid state: you need not add anything.
+  this file, `AGENTS.md` and `harness.md`. Onboarding fills in `harness.md`, which
+  records how your assistant tool runs the pipeline; beyond that you need not add
+  anything.
 
 ## How the assistant uses it
 
-The kit's `CLAUDE.md` imports `extensions/CLAUDE.md` at the start of every
+The kit's `AGENTS.md` reads `extensions/AGENTS.md` at the start of every
 session, so keep that file short: it costs context on every request. Use it as
 an index. List your other files there, each with a line saying when to read it,
 and put the substance in those files. The assistant reads them when you ask, or
@@ -36,7 +38,7 @@ of a path says which one it means. Never write `project/` or `../`.
 | A bare path | Relative to the project folder | `content/assessment/2026-test-1.tex` |
 | The bare name of an instruction file in this folder | That file here | `Assessment-guidance.md` |
 | A path starting `extensions/` | Anything else here | `extensions/assessment-reference/template.tex` |
-| "the project's `X`", "the kit's `X`" | A name that exists in more than one place | the project's `CLAUDE.md` |
+| "the project's `X`", "the kit's `X`" | A name that exists in more than one place | the project's `AGENTS.md` |
 
 Because no path names `project/`, an extension works unchanged with any project,
 including one selected with `STACK_PROJECT`.

@@ -1,7 +1,50 @@
-# Upgrading to the project/ layout
+# Upgrading
 
 **Audience: you, the human, if you set up a project with an earlier version of
-the kit.**
+the kit.** Newest change first. If your kit predates both, do the older one
+first.
+
+## Instruction files renamed to `AGENTS.md` (October 2026)
+
+**If you are the assistant, sent here because `project/CLAUDE.md` or
+`extensions/CLAUDE.md` exists: do not run onboarding.** Explain the change below
+and offer to make it with the user.
+
+The kit's standing instructions moved from `CLAUDE.md` to `AGENTS.md`, the file
+most assistant tools read, so that tools other than Claude Code can drive the
+kit. The kit's `CLAUDE.md` is now a one-line stub that imports `AGENTS.md`. Your
+project's and your extensions' instruction files are renamed to match, and the
+kit no longer loads them under the old name.
+
+`git pull` works as usual: the kit tracks neither file. Then rename them:
+
+```bash
+git -C project mv CLAUDE.md AGENTS.md      # plain mv if project/ is not a repository
+mv extensions/CLAUDE.md extensions/AGENTS.md
+```
+
+If `project/AGENTS.md` already exists and still says "Template from the kit"
+(the older migration below adds one), delete it before the rename.
+
+Then:
+
+1. Look for any remaining mentions of the old name and change them to
+   `AGENTS.md`: `grep -n CLAUDE project/*.md extensions/*.md`.
+2. Add this line to the list of files in `extensions/AGENTS.md`, copied from
+   `templates/extensions/AGENTS.md`:
+
+   ```
+   - `harness.md`: how the kit is bound to the assistant tool in use. Read it
+     before dispatching a role or starting a section.
+   ```
+
+3. Start a session. The assistant finds `extensions/harness.md` missing and
+   fills it in (`ONBOARDING.md`, Stage 0), recording how your tool runs the
+   pipeline. Check what it writes.
+
+Nothing in Moodle changes, and nothing else in `project/` moves.
+
+## The project/ layout (October 2026)
 
 Earlier versions kept your project inside the kit's own folders: onboarding
 rewrote the kit's `CLAUDE.md`, your Moodle ids were in `tools/project.conf`, and
@@ -16,14 +59,14 @@ real one while the user's work stayed stranded in the kit's own folders. Explain
 the reorganisation and offer to walk them through the migration below, starting
 with the dry run.
 
-## Why a plain `git pull` will not work
+### Why a plain `git pull` will not work
 
 Your kit folder has local changes to two files the kit tracks, `CLAUDE.md` and
 `tools/project.conf`, and the update changes both. `git pull` will stop with
 "Your local changes would be overwritten". Do not resolve that by taking the
 kit's versions: your project instructions and Moodle ids would be lost.
 
-## Upgrade in three commands
+### Upgrade in three commands
 
 From the root of your kit folder, without pulling first:
 
@@ -56,7 +99,7 @@ It never touches Moodle: question names and quiz ids do not change, so your
 published quizzes carry on as they are. The kit folder keeps its path, so your
 local settings and your assistant's memory for this folder carry over too.
 
-## Afterwards
+### Afterwards
 
 - **Read `project/CLAUDE.md`.** It is your old project instructions with the
   paths updated. Sections that repeat the kit's generic instructions (content
@@ -72,7 +115,7 @@ local settings and your assistant's memory for this folder carry over too.
 - **Commit your project work in `project/`** from now on. The kit's own
   repository is only for changes to the kit.
 
-## Options
+### Options
 
 | Option | Use it when |
 |---|---|
@@ -82,7 +125,7 @@ local settings and your assistant's memory for this folder carry over too.
 | `--no-commit` | You want to make the project's first commit yourself |
 | `--backup-dir DIR` | The backup should go somewhere other than your home folder |
 
-## If something goes wrong
+### If something goes wrong
 
 The script stops at the first problem and says what to do. Your project is
 always in at least one of: its original place, `project/`, the backup archive,
@@ -93,11 +136,11 @@ update the kit by hand, then re-run with `--no-update` to finish.
 If you prefer to stay on the old layout for now, the last version of the kit
 before this change is tagged `v1-flat-layout`.
 
-## The extensions folder
+### The extensions folder
 
 Later versions of the kit add `extensions/`, for your own instructions across
 projects (`README.md`, "The kit and your project"). There is nothing to migrate:
 the assistant creates it from `templates/extensions/` at the start of the next
 session, and `git pull` adds the matching line to the kit's `.gitignore`. If you
 already keep personal instruction files somewhere else, move them in and list
-them in `extensions/CLAUDE.md`.
+them in `extensions/AGENTS.md`.

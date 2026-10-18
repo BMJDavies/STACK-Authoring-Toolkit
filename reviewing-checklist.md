@@ -12,7 +12,7 @@ records in the feedback document.
 
 ## Question settings
 
-- [ ] `<stackversion>` equals the STACK version stamp in `project/CLAUDE.md`, not
+- [ ] `<stackversion>` equals the STACK version stamp in `project/AGENTS.md`, not
       a value copied from a template or an older question
 - [ ] **Provenance note.** Every STACK question's `<questiondescription>`
       uses one of the four forms in the style guide ("Record where each

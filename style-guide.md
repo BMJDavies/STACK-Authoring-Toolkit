@@ -62,7 +62,7 @@ understand why, you will spot the next variant of the same problem.
 ### Stamp the target STACK version
 
 Every STACK question's `<stackversion>` is the STACK version of the target
-Moodle, given in `project/CLAUDE.md`. Never copy the value from a template, the
+Moodle, given in `project/AGENTS.md`. Never copy the value from a template, the
 showcase or an older question.
 
 Why: STACK reads this field as the version the question was last edited with.
@@ -74,7 +74,7 @@ old value misstates what the question needs. Our questions depend on 4.13
 features (route expectations, the commonstring feedback keys), so claiming an
 older version misleads anyone who maintains them later.
 
-When STACK is upgraded, update `project/CLAUDE.md`, then re-stamp a file the next
+When STACK is upgraded, update `project/AGENTS.md`, then re-stamp a file the next
 time you touch it.
 
 ### Record where each question comes from
@@ -96,7 +96,7 @@ the next subsection. Use exactly one of these four forms:
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
-`<citation>` is the project's fixed citation string, given in `project/CLAUDE.md`.
+`<citation>` is the project's fixed citation string, given in `project/AGENTS.md`.
 In kit reference material (the showcase and prototypes), write "original to
 this kit" instead.
 
