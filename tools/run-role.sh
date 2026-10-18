@@ -3,11 +3,12 @@
 #
 #   tools/run-role.sh <role> <input...>             run the role
 #   tools/run-role.sh --dry-run <role> <input...>   print the command and prompt only
-#   tools/run-role.sh --check                       confirm the configured tool answers
+#   tools/run-role.sh --check                       can a role edit files and run tools unattended
 #
 # <role> is planner, author, reviewer or enricher; its prompt is the body of
 # .claude/agents/textbook-<role>.md. <input> is what the role works on: a
-# section reference for the planner, a plan or XML path for the others.
+# section reference for the planner, plan or XML paths, quiz id and notes for
+# the others, as free text.
 #
 # The assistant tool and its flags come from the run-role.* lines in
 # extensions/harness.md, which onboarding (Stage 0) fills in. Each run is a
@@ -67,17 +68,33 @@ build_cmd() {
 DRY_RUN=0
 case "${1:-}" in
     --check)
+        # Proves what a role needs with nobody present: the tool answers, may
+        # create a file, and may run a kit tool. The file is checked on disk;
+        # the tool run is checked from the reply, as api-check.sh with no
+        # arguments prints a usage line and touches nothing.
         load_harness
-        build_cmd "Reply with the single word READY and nothing else." "$ARGS"
+        nonce="check-$$-$RANDOM"
+        probe="extensions/.run-role-check"
+        rm -f "$KIT_DIR/$probe"
+        build_cmd "This is a permissions check; do nothing else. 1. Using your file-writing tool, create the file $probe containing exactly: $nonce
+2. Run this shell command from the current folder: tools/api-check.sh
+3. Reply with the first line that command printed, or with DENIED if you were not allowed to do step 1 or step 2." "$ARGS"
         echo "Tool: $CLI ($("$CLI" --version 2>/dev/null | head -n 1 || echo "version unknown"))"
-        echo "Asking it to answer..."
+        echo "Asking it to create a file and run a kit tool..."
         out="$(cd "$KIT_DIR" && "${CMD[@]}" 2>&1)" || die "$CLI exited with an error:
 $out"
-        if printf '%s' "$out" | grep -q READY; then
-            echo "OK: $CLI answered."
+        wrote=no; ran=no
+        grep -qx "$nonce" "$KIT_DIR/$probe" 2>/dev/null && wrote=yes
+        rm -f "$KIT_DIR/$probe"
+        printf '%s' "$out" | grep -q "Usage:" && ran=yes
+        echo "  answers:            yes"
+        echo "  may create files:   $wrote"
+        echo "  may run kit tools:  $ran"
+        if [ "$wrote" = yes ] && [ "$ran" = yes ]; then
+            echo "OK: roles can run unattended with these settings."
             exit 0
         fi
-        die "$CLI ran but did not answer as asked. It said:
+        die "roles would stall or fail with these settings: change run-role.args in $HARNESS. $CLI said:
 $out"
         ;;
     --dry-run) DRY_RUN=1; shift ;;
@@ -101,6 +118,21 @@ ROLE_FILE="$KIT_DIR/.claude/agents/textbook-$ROLE.md"
 # The role body without its YAML header.
 BODY="$(awk 'NR==1 && $0=="---" {h=1; next} h && $0=="---" {h=0; next} !h' "$ROLE_FILE")"
 
+load_harness
+
+# Whether this run may write to Moodle is the user's decision, recorded in
+# harness.md. Anything but "yes" means no, matching the kit's ask-first rule.
+if [ "$(setting moodle-writes)" = yes ]; then
+    MOODLE_NOTE="The user has agreed in advance that this run may write to Moodle
+(publish, create or change quizzes) where your role says to."
+else
+    MOODLE_NOTE="Do not write to Moodle. Validation is allowed (\`tools/api-check.sh\`,
+\`tools/test-question.sh\`, which uses the sandbox). Publishing and previewing
+(\`tools/push-live.sh\`, \`tools/push-review.sh\`) and creating or changing quizzes
+are not: where your role says to do one, stop there and report what you would
+have done, to which quiz."
+fi
+
 PROJECT_NOTE=""
 if [ -n "${STACK_PROJECT:-}" ]; then
     PROJECT_NOTE="
@@ -118,12 +150,13 @@ during the run. Read the kit's \`AGENTS.md\` and the layer files it names first,
 if they are not already in your context.$PROJECT_NOTE
 
 Where your role says to ask or escalate to the user, stop at that point and put
-the question in your final report instead of waiting. Your final output is your
-hand-off report.
+the question in your final report instead of waiting.
+
+$MOODLE_NOTE
+
+Your final output is your hand-off report.
 
 Your input: $INPUT"
-
-load_harness
 TIER_ARGS="$(setting "args.$TIER")"
 build_cmd "$PROMPT" "${ARGS:+$ARGS }$TIER_ARGS"
 

@@ -9,5 +9,4 @@ the kit's defaults; the project's own instructions override them.
 
 Files in `extensions/`, and when to read them:
 
-- `harness.md`: how the kit is bound to the assistant tool in use. Read it
-  before dispatching a role or starting a section.
+- (none yet; `harness.md` is read by the kit itself)

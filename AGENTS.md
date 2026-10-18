@@ -23,8 +23,9 @@ the project's override the extensions'. That holds however they reached you,
 including when all three appear in your context with no stated order.
 
 Before dispatching a role or starting a section, also read
-`extensions/harness.md`. It records how this kit is bound to the tool you are
-running in, and its bindings override the defaults below.
+`extensions/harness.md`. It records, for the tool you are running in, how the
+roles are dispatched, which model each reasoning tier gets, and what a role run
+with nobody present may do.
 
 ## Before anything else
 
@@ -38,16 +39,13 @@ running in, and its bindings override the defaults below.
 ## If you are not Claude Code
 
 This kit was written and tested with Claude Code, and its mechanisms checked
-against GitHub Copilot CLI, Codex CLI and Gemini CLI. If you are a different
-harness, four joints need re-examining before you rely on the pipeline:
-**(a) instruction layering**: did you read the two layer files named above, and
-do you honour them overriding this file? **(b) role dispatch**: do you have
-subagents, or must the four roles run as four separate sessions? **(c)
-procedures**: do you have `/develop-section`, or must you follow its file as a
-procedure? **(d) reasoning tiers**: can you honour the `deepest` / `rigorous` /
-`standard` bindings in `extensions/harness.md`? If any answer is "no" or
-"unsure", say so to the user before starting a section rather than discovering
-it halfway through.
+against the documentation of GitHub Copilot CLI, Codex CLI and Gemini CLI. Four
+things differ between tools: whether the layer files load by themselves,
+whether roles can run as subagents, whether `/develop-section` exists as a
+command, and which models and settings the tiers can bind to. Stage 0 of
+`ONBOARDING.md` tests each and records the result in `extensions/harness.md`.
+If that file records a failure, say so to the user before starting a section
+rather than discovering it halfway through.
 
 ## How this folder is organised
 
@@ -85,8 +83,8 @@ authored file, because recent files drift.
 | reviewer | `.claude/agents/textbook-reviewer.md` | `rigorous` | an approved file, published |
 | enricher | `.claude/agents/textbook-enricher.md` | `rigorous` | improved feedback on live content |
 
-Each role file is a plain markdown prompt. The YAML header is Claude Code's
-binding; the body is portable. Skills in `.claude/skills/*/SKILL.md` are plain
+Each role file is a plain markdown prompt. The YAML header is read only by
+Claude Code, which takes the subagent's model from it; the body is portable. Skills in `.claude/skills/*/SKILL.md` are plain
 reference documents: read one when its description fits the task.
 
 The value is in the separation, not the mechanism. The planner must name the

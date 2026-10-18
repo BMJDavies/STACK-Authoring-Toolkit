@@ -30,17 +30,9 @@ Then:
 
 1. Look for any remaining mentions of the old name and change them to
    `AGENTS.md`: `grep -n CLAUDE project/*.md extensions/*.md`.
-2. Add this line to the list of files in `extensions/AGENTS.md`, copied from
-   `templates/extensions/AGENTS.md`:
-
-   ```
-   - `harness.md`: how the kit is bound to the assistant tool in use. Read it
-     before dispatching a role or starting a section.
-   ```
-
-3. Start a session. The assistant finds `extensions/harness.md` missing and
-   fills it in (`ONBOARDING.md`, Stage 0), recording how your tool runs the
-   pipeline. Check what it writes.
+2. Start a session. The assistant finds `extensions/harness.md` missing and
+   fills it in (`ONBOARDING.md`, Stage 0): it tests what your tool can do, and
+   asks you which models to use and whether roles may run unattended.
 
 Nothing in Moodle changes, and nothing else in `project/` moves.
 

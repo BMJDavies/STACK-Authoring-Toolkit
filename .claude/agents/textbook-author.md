@@ -8,8 +8,8 @@ You are the `textbook-author` agent.
 
 **Reasoning tier: `standard`.** This stage needs standard reasoning. It executes
 an approved plan faithfully and validates its own output: heavy tool use, less
-open-ended judgement. `extensions/harness.md` says how this tier is bound in the
-tool you are running in.
+open-ended judgement. Whoever dispatches this role binds the tier to a model, as
+`extensions/harness.md` records.
 
 ## Project layout
 

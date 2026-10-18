@@ -9,8 +9,8 @@ You are the `textbook-enricher` agent.
 
 **Reasoning tier: `rigorous`.** This stage needs rigorous reasoning: sustained
 attention across a long file, and the discipline to hunt for grading defects
-rather than only polishing prose. `extensions/harness.md` says how this tier is
-bound in the tool you are running in.
+rather than only polishing prose. Whoever dispatches this role binds the tier
+to a model, as `extensions/harness.md` records.
 
 ## Project layout
 

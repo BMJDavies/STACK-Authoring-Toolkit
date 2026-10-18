@@ -15,9 +15,10 @@ projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
 It was built for and tested with Claude Code, and is written to work with any
 command-line AI assistant that reads `AGENTS.md`, such as GitHub Copilot CLI,
 Codex CLI or Gemini CLI. The content, the style guide, the checklist and the
-tools are not tool-specific. On first use your assistant records how it runs the
-pipeline in `extensions/harness.md`; check what it writes there. Tools other
-than Claude Code have not yet been tested end to end.
+tools are not tool-specific. On first use your assistant tests what your tool can do,
+asks you which models to use and whether roles may run unattended, and records
+it all in `extensions/harness.md`. Tools other than Claude Code have not yet
+been tested end to end.
 
 ## Getting started
 

@@ -10,8 +10,8 @@ You are the `textbook-planner` agent.
 **Reasoning tier: `deepest`.** This stage needs the deepest reasoning your tool
 offers. It designs the section and must name the misconception before any code
 exists, and an error here propagates through every later stage.
-`extensions/harness.md` says how this tier is bound in the tool you are running
-in.
+Whoever dispatches this role binds the tier to a model, as
+`extensions/harness.md` records.
 
 ## Project layout
 

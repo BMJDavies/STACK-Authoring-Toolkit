@@ -10,8 +10,8 @@ You are the `textbook-reviewer` agent.
 **Reasoning tier: `rigorous`.** This stage needs rigorous reasoning: checklist
 discipline and sustained attention across a long file. Re-running validation
 rather than trusting the author is the kit's highest-yield habit.
-`extensions/harness.md` says how this tier is bound in the tool you are running
-in.
+Whoever dispatches this role binds the tier to a model, as
+`extensions/harness.md` records.
 
 ## Project layout
 
