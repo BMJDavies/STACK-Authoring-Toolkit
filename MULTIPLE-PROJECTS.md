@@ -61,9 +61,7 @@ for every project on the machine:
 tools/sync-to-home.sh
 ```
 
-Copies `.claude/agents`, `.claude/commands` and `.claude/skills` into `~/.claude/`,
-or into another folder given as the first argument, for an assistant that reads
-its definitions from elsewhere.
+Copies `.claude/agents`, `.claude/commands` and `.claude/skills` into `~/.claude/`.
 Copies, never symlinks: a symlinked `.claude` is a well-known way to end up with
 links pointing at directories that no longer exist.
 

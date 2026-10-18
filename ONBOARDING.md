@@ -53,42 +53,29 @@ already running, say so rather than asking whether it is.
 ## Stage 0: record your harness
 
 Skip this if `extensions/harness.md` exists and no longer says "Template from
-the kit".
+the kit". It takes a minute and needs nothing from the user.
 
-The kit does not know which assistant tool is running it. Record that, so every
-later session and `tools/run-role.sh` dispatch the roles the same way. Test
-rather than describe: your account of your own tool is not reliable, and the
-user cannot check it for you.
+Record which assistant tool is running the kit, so every later session
+dispatches the roles the same way. Test rather than describe: your account of
+your own tool is not reliable.
 
 1. Create `extensions/` if needed (`[ -d extensions ] || cp -r templates/extensions
    extensions`), and copy `templates/extensions/harness.md` there if it is
    missing.
-2. Take the tool and version from its own `--version`.
-3. Run the tests under "Tested here" and record each result:
-   - **Layer files:** were the contents of `extensions/AGENTS.md` in your
-     context before you read it? If you have already read it this session, ask
-     a fresh non-interactive run of the tool instead, with no tools allowed.
-   - **Subagents:** give a subagent a trivial task ("read the first line of
-     `style-guide.md` and report it").
-   - **Commands:** is `/develop-section` among your commands?
-   - **`tools/run-role.sh --check`:** only if unattended runs will be used (step
-     4); run it after filling in the settings.
-4. Ask the user the decisions under "The user's decisions", in one turn, with
-   your proposal for each:
-   - **Models per tier**, from the models your `--help` or model list shows.
-     Propose the strongest for `deepest`; say what each choice costs relative
-     to the others, if you know.
-   - **Unattended runs**: will they use `tools/run-role.sh`? If your tool has
-     subagents, they probably need not, and you can say so. If they will: may an
-     unattended role write to Moodle (propose no), and narrow or everything
-     permissions (propose narrow).
-5. Fill in the `run-role.` lines from their answers, using only flags your
-   `--help` shows. If unattended runs are used, run `tools/run-role.sh --check`
-   and adjust the flags until it passes or you have to give up; record the
-   result either way.
-6. Record anything that failed under "Known degradations", delete the comment
-   at the top, and tell the user in a few lines what works here and what does
-   not.
+2. Fill it in. Take the version from the tool's own `--version`. For "Tested
+   here": were the contents of `extensions/AGENTS.md` in your context before you
+   read it; can a subagent do a trivial task ("read the first line of
+   `style-guide.md`"); is `/develop-section` among your commands. For the
+   models, use only names your tool lists: the strongest for `deepest`, and
+   your judgement for the rest. If your tool takes a subagent's model from the
+   role file's header (Claude Code does), record what the headers say.
+3. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
+   --help` describes and run `tools/run-role.sh --check` until it passes. If it
+   will not, record that roles run in this one conversation instead.
+4. Delete the comment at the top. Tell the user in two or three sentences what
+   you found and which models the roles will use. If you chose them, say they
+   can ask you to change them; never edit the role files, which belong to the
+   kit.
 
 ## Stage A: their environment
 

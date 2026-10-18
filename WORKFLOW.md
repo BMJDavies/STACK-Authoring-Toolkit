@@ -166,22 +166,8 @@ The agents are available individually, without the slash commands:
 Useful when you are fixing one thing, or when a run died partway and you want to
 pick it up rather than start again.
 
-Each role can also run as its own process, outside any conversation, using the
-assistant tool recorded in `extensions/harness.md`:
-
-```bash
-tools/run-role.sh --check        # can a role edit files and run tools unattended
-tools/run-role.sh planner "Ch5 Section B"
-tools/run-role.sh author project/content/plans/Ch5_B.md
-tools/run-role.sh reviewer project/content/drafts/Ch5_B.xml plan project/content/plans/Ch5_B.md, quiz 412
-```
-
-Everything after the role name is passed to it as written, so give it what
-`/develop-section` would: paths, quiz id, notes. A separate process starts with
-a clean context, so the reviewer cannot have seen the author's reasoning. Use
-it when your assistant has no subagents, or for scripted runs. Unless you said
-otherwise during setup, a role run this way does not write to Moodle: it stops
-before publishing and reports what it would have published.
+If your assistant has no subagents, it runs each role as a separate process
+with `tools/run-role.sh` instead. You do not need to run it yourself.
 
 ---
 

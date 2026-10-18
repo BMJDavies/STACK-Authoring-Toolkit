@@ -24,8 +24,7 @@ including when all three appear in your context with no stated order.
 
 Before dispatching a role or starting a section, also read
 `extensions/harness.md`. It records, for the tool you are running in, how the
-roles are dispatched, which model each reasoning tier gets, and what a role run
-with nobody present may do.
+roles are dispatched and which model each reasoning tier gets.
 
 ## Before anything else
 
@@ -93,10 +92,15 @@ fails validation. The reviewer re-runs validation instead of trusting the
 author, which is the single habit that catches the most defects.
 
 - Dispatch each role the way `extensions/harness.md` says. With no subagents,
-  run the roles as separate sessions, or as separate processes with
-  `tools/run-role.sh <role> <input>`. Carry only the artefacts between them (the
-  plan, the XML, the review notes), never the reasoning: a reviewer that has
-  just watched itself author the file is not an independent reviewer.
+  run each role as its own process with `tools/run-role.sh <role> <input>`; such
+  a run does not publish, so publish yourself afterwards, asking first. Carry
+  only the artefacts between roles (the plan, the XML, the review notes), never
+  the reasoning: a reviewer that has just watched itself author the file is not
+  an independent reviewer.
+- If neither works, perform the roles yourself in this conversation, in
+  sequence, re-reading each role file as you start it. That loses some of the
+  independence, so keep the hand-offs as files and re-run validation as the
+  reviewer rather than trusting your own earlier result.
 - Roles run in the foreground, one at a time. The pipeline is sequential, and
   two roles touching Moodle at once collide.
 - The author validates its own work and hands off only files that pass.

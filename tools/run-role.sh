@@ -1,19 +1,40 @@
 #!/usr/bin/env bash
-# run-role.sh: run one pipeline role as its own non-interactive process.
+# run-role.sh: run one pipeline role as its own non-interactive process, for an
+# assistant tool without subagents. The coordinating session runs it; the user
+# normally does not.
 #
 #   tools/run-role.sh <role> <input...>             run the role
 #   tools/run-role.sh --dry-run <role> <input...>   print the command and prompt only
 #   tools/run-role.sh --check                       can a role edit files and run tools unattended
 #
 # <role> is planner, author, reviewer or enricher; its prompt is the body of
-# .claude/agents/textbook-<role>.md. <input> is what the role works on: a
-# section reference for the planner, plan or XML paths, quiz id and notes for
-# the others, as free text.
+# .claude/agents/textbook-<role>.md. <input> is free text: a section reference
+# for the planner; plan or XML paths, quiz id and notes for the others.
 #
-# The assistant tool and its flags come from the run-role.* lines in
-# extensions/harness.md, which onboarding (Stage 0) fills in. Each run is a
-# fresh process with a fresh context, so a role sees only its inputs and the
-# files on disk, never an earlier role's reasoning.
+# A role run this way never writes to Moodle: it validates, then stops where its
+# role says to publish and reports what it would have done. The coordinating
+# session, which the user is watching, publishes after asking.
+#
+# Settings, as lines in extensions/harness.md:
+#
+#   run-role.cli: claude | copilot | codex | gemini
+#   run-role.args: flags for every role, split on spaces, no shell quoting
+#   run-role.args.deepest: extra flags for the planner (optional: model choice)
+#   run-role.args.rigorous: extra flags for the reviewer and enricher (optional)
+#   run-role.args.standard: extra flags for the author (optional)
+#
+# Nobody is present to approve anything, so run-role.args must allow editing
+# files and running tools/*, docker, pdftotext, git and grep. Use the narrowest
+# flags that make --check pass. Starting points (only Claude Code tested):
+#
+#   claude   --permission-mode acceptEdits --allowedTools Bash(tools/*)
+#            Bash(docker:*) Bash(pdftotext:*) Bash(git:*) Bash(grep:*)
+#   copilot  --allow-tool=write --allow-tool=shell(tools/*) --allow-tool=shell(docker:*) ...
+#   codex    --sandbox workspace-write  (its sandbox may block docker)
+#   gemini   --approval-mode=auto_edit, or yolo if shell commands are refused
+#
+# Each run is a fresh process with a fresh context, so a role sees only its
+# inputs and the files on disk, never an earlier role's reasoning.
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/project.sh
@@ -24,7 +45,7 @@ HARNESS="$KIT_DIR/extensions/harness.md"
 die() { echo "run-role: $*" >&2; exit 1; }
 
 usage() {
-    sed -n '4,6p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//' >&2
+    sed -n '2,/^set -euo/p' "${BASH_SOURCE[0]}" | sed '$d; s/^# \{0,1\}//' >&2
     exit 2
 }
 
@@ -94,7 +115,7 @@ $out"
             echo "OK: roles can run unattended with these settings."
             exit 0
         fi
-        die "roles would stall or fail with these settings: change run-role.args in $HARNESS. $CLI said:
+        die "roles would stall or fail with these settings: change run-role.args in $HARNESS (see --help). $CLI said:
 $out"
         ;;
     --dry-run) DRY_RUN=1; shift ;;
@@ -120,19 +141,6 @@ BODY="$(awk 'NR==1 && $0=="---" {h=1; next} h && $0=="---" {h=0; next} !h' "$ROL
 
 load_harness
 
-# Whether this run may write to Moodle is the user's decision, recorded in
-# harness.md. Anything but "yes" means no, matching the kit's ask-first rule.
-if [ "$(setting moodle-writes)" = yes ]; then
-    MOODLE_NOTE="The user has agreed in advance that this run may write to Moodle
-(publish, create or change quizzes) where your role says to."
-else
-    MOODLE_NOTE="Do not write to Moodle. Validation is allowed (\`tools/api-check.sh\`,
-\`tools/test-question.sh\`, which uses the sandbox). Publishing and previewing
-(\`tools/push-live.sh\`, \`tools/push-review.sh\`) and creating or changing quizzes
-are not: where your role says to do one, stop there and report what you would
-have done, to which quiz."
-fi
-
 PROJECT_NOTE=""
 if [ -n "${STACK_PROJECT:-}" ]; then
     PROJECT_NOTE="
@@ -152,11 +160,16 @@ if they are not already in your context.$PROJECT_NOTE
 Where your role says to ask or escalate to the user, stop at that point and put
 the question in your final report instead of waiting.
 
-$MOODLE_NOTE
+Do not write to Moodle. Validation is allowed (\`tools/api-check.sh\`,
+\`tools/test-question.sh\`, which uses the sandbox). Publishing and previewing
+(\`tools/push-live.sh\`, \`tools/push-review.sh\`) and creating or changing quizzes
+are not: where your role says to do one, stop there and report what you would
+have done, to which quiz.
 
 Your final output is your hand-off report.
 
 Your input: $INPUT"
+
 TIER_ARGS="$(setting "args.$TIER")"
 build_cmd "$PROMPT" "${ARGS:+$ARGS }$TIER_ARGS"
 

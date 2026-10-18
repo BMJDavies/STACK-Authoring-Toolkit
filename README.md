@@ -15,10 +15,10 @@ projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
 It was built for and tested with Claude Code, and is written to work with any
 command-line AI assistant that reads `AGENTS.md`, such as GitHub Copilot CLI,
 Codex CLI or Gemini CLI. The content, the style guide, the checklist and the
-tools are not tool-specific. On first use your assistant tests what your tool can do,
-asks you which models to use and whether roles may run unattended, and records
-it all in `extensions/harness.md`. Tools other than Claude Code have not yet
-been tested end to end.
+tools are not tool-specific. On first use your assistant checks what your tool
+can do and records it in `extensions/harness.md`, which takes a minute and needs
+nothing from you. Tools other than Claude Code have not yet been tested end to
+end.
 
 ## Getting started
 
@@ -123,7 +123,7 @@ tools/
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
-  run-role.sh              run one role as its own process, with any assistant tool
+  run-role.sh              runs a role as its own process, for assistants without subagents
   migrate-to-project-folder.sh  only for kits set up before October 2026
   ...and several smaller utilities
 
