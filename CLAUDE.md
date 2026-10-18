@@ -2,9 +2,10 @@
 
 **Audience: the assistant. The human reader wants README.md.**
 
-Read at the start of every session. It belongs to the kit and is never
-rewritten. Imported below, in order and each overriding the last: the user's own
-instructions, which apply across all their projects, then the project's.
+This file is read at the start of every session. It belongs to the kit and is
+never rewritten. Imported below, in order and each overriding the last: the
+user's own instructions, which apply across all their projects, then the
+project's.
 
 @extensions/CLAUDE.md
 @project/CLAUDE.md
@@ -44,6 +45,7 @@ authored file, because recent files drift.
 
 /develop-section -> planner -> author -> validate -> reviewer -> approved -> live
 
+- Agents are in `.claude/agents/`, skills in `.claude/skills/`.
 - Agents run in the foreground, never backgrounded. The pipeline is sequential,
   and two agents touching Moodle at once collide.
 - The author validates its own work and hands off only files that pass.
