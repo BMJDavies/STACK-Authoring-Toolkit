@@ -12,10 +12,8 @@ instructions, which apply across all their projects, then the project's.
 ## Before anything else
 
 No `project/CLAUDE.md`, or it still says "Template from the kit": do not author,
-validate or publish — follow `ONBOARDING.md`. If `tools/project.conf` or
-`CLAUDE_loc.md` exists at the kit root instead, follow `UPGRADING.md`. No
-`extensions/`: `cp -r templates/extensions extensions` (local, ignored, needs no
-permission).
+validate or publish — follow `ONBOARDING.md`. No `extensions/`:
+`cp -r templates/extensions extensions` (local, ignored, needs no permission).
 
 ## How this folder is organised
 
