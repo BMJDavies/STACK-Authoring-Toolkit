@@ -48,12 +48,12 @@ Probe the validation layer as well (style guide, "Inputs"). For any input
 graded by membership or a property, try a symbolic entry: a parameter in a
 number box (`v1+t`), or a stray variable in a formula (`t*(x1-x2)`). If it
 reaches the PRT and scores, that is a grading defect: a whole parametrised line
-can score full marks this way. Fix it at validation, never with a new
-PRT node: change a single-number box to the `numerical` input type, or add a
-bespoke validator, and add an invalid-input test (`NULL`). Equally, a PRT node
-that only rejects answers of the wrong kind (wrong variables, a float, the
-wrong type) is a validation check in the wrong place; move it to the input,
-which saves the student a penalty.
+can score full marks this way. Fix it at validation, never with a new PRT node:
+change a single-number box to the `numerical` input type, or add a bespoke
+validator, and add an invalid-input test (`NULL`). Equally, a PRT node that only
+rejects answers of the wrong kind (wrong variables, a float, the wrong type) is
+a validation check in the wrong place; move it to the input, which saves the
+student a penalty.
 
 Fix what you can fix safely and re-validate. Flag the rest prominently, in
 your report and in the question itself, as a
