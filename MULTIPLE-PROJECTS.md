@@ -37,6 +37,13 @@ read, or keep the project you are actively working on in `project/` and rename
 folders to switch. For regular work on two projects, separate clones are less
 error-prone.
 
+**If you are the assistant and the user names a project folder other than
+`project/`:** the import at the top of the kit's `CLAUDE.md` has given you the
+wrong project's instructions. Read that folder's `CLAUDE.md` instead, and take
+every path from it — `<folder>/content/`, `<folder>/sources/`,
+`<folder>/project.conf` — rather than from `project/`. Pass the same folder to
+the tools as `STACK_PROJECT`, so you and they agree on which project this is.
+
 ## Your extensions across projects
 
 `extensions/` belongs to the kit folder, not to a project. With several project

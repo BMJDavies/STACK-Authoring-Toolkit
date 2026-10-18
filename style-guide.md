@@ -254,7 +254,6 @@ When displaying randomised expressions:
   this prints "0 v₁", "1 e₁" or "(−1) v₂". Interpolate the product instead,
   `{@k*x@}` or `{@b1*v1+b2*v2@}`, with the symbol added to `ordergreat` so the
   terms stay in order, or name the scalar in the prose ("where \(k = {@k@}\)").
-  This came up in both 3B and 3D.
 - **Never put `\\` directly before `{@...@}` in CASText.** STACK drops a
   backslash (STACK issue #1910, found in STACK 4.13.1), so `\begin{pmatrix}{@a@}\\{@b@}\end{pmatrix}` renders as
   `{-5}\{3}` on every seed. Interpolate the whole matrix (`{@matrix([a],[b])@}`),
@@ -331,11 +330,10 @@ whether the mathematics is correct.
   needs referring to twice, restructure the question or refer to it in prose.
 - **A single number uses the `numerical` input type, not `algebraic`.** The numerical type
   rejects letters itself, so these boxes need no bespoke validator. Use
-  `forbidfloat` 1, `requirelowestterms` 0 and no extra options (confirmed under
-  the API in 3F). With these settings `1/2`, `-3`, `2/4` and `sqrt(2)` are
-  accepted and reach the PRT as exact values. `0.5` is rejected as a float, and
-  `t` or `x1` is rejected with "This input expects a number, and so may not
-  contain variables".
+  `forbidfloat` 1, `requirelowestterms` 0 and no extra options. With these
+  settings `1/2`, `-3`, `2/4` and `sqrt(2)` are accepted and reach the PRT as
+  exact values. `0.5` is rejected as a float, and `t` or `x1` is rejected with
+  "This input expects a number, and so may not contain variables".
 - **A matrix input of numbers can use the bespoke numeric validator,** where appropriate
   because a matrix grid accepts symbolic entries:
   `validate_numeric(ex) := if listofvars(ex) = [] then "" else "Enter a number, not an expression containing a letter or variable.";`
@@ -373,11 +371,11 @@ whether the mathematics is correct.
   `validate_x3(ex) := if every(lambda([v], member(v, [x1, x2, x3])), listofvars(ex)) then "" else "Use only the variables x1, x2, x3.";`
   Do not use `subsetp(setify(listofvars(ex)), {x1, x2, x3})`: validators run with
   `simp:false`, the set literal is not put into canonical order, and correct
-  entries such as `x2+x1` are rejected (found in 3F). A validator is a pure
-  function of one argument and cannot see question variables, so define one
-  per variable set. Where a question's variable set depends on the seed, allow
-  the largest set. The allowed variable names must not also be question variables, because
-  STACK forbids students from typing question-variable names.  
+  entries such as `x2+x1` are rejected. A validator is a pure function of one
+  argument and cannot see question variables, so define one per variable set.
+  Where a question's variable set depends on the seed, allow the largest set.
+  The allowed variable names must not also be question variables, because STACK
+  forbids students from typing question-variable names.
 
 ### Forbidden words (`forbidwords`)
 
