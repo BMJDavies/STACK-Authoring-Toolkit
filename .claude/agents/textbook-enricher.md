@@ -47,8 +47,8 @@ can therefore never fire, is a defect too.
 Probe the validation layer as well (style guide, "Inputs"). For any input
 graded by membership or a property, try a symbolic entry: a parameter in a
 number box (`v1+t`), or a stray variable in a formula (`t*(x1-x2)`). If it
-reaches the PRT and scores, that is a grading defect: Section 3E found a whole
-parametrised line scoring full marks. Fix it at validation, never with a new
+reaches the PRT and scores, that is a grading defect: a whole parametrised line
+can score full marks this way. Fix it at validation, never with a new
 PRT node: change a single-number box to the `numerical` input type, or add a
 bespoke validator, and add an invalid-input test (`NULL`). Equally, a PRT node
 that only rejects answers of the wrong kind (wrong variables, a float, the
