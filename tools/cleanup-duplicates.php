@@ -25,7 +25,7 @@ for ($i = 1; $i < $argc; $i++) {
 }
 if (!$categoryid) {
     echo "Usage: php cleanup-duplicates.php --categoryid=<n>\n";
-    echo "Use DEV_CATEGORYID from tools/project.conf.\n";
+    echo "Use DEV_CATEGORYID from project/project.conf.\n";
     exit(1);
 }
 

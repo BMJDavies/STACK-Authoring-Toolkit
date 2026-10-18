@@ -6,7 +6,7 @@ description: JSXGraph figure templates for STACK questions. How to embed a board
 # JSXGraph in STACK questions
 
 > Content rules (when to use it, accessibility, label overlap) are in
-> `style-guide.md`. This skill covers implementation.
+> `style-guide.md` (and `project/style-guide.md`). This skill covers implementation.
 
 JSXGraph is the only figure library used in this project. Every interactive
 figure goes through it.
@@ -112,7 +112,7 @@ with no `<input>`, no `<prt>` and no `<qtest>`.
   <defaultgrade>0</defaultgrade>
   <penalty>0</penalty>
   <hidden>0</hidden>
-  <stackversion><text><!-- the STACK version stamp in CLAUDE.md --></text></stackversion>
+  <stackversion><text><!-- the STACK version stamp in project/CLAUDE.md --></text></stackversion>
   <questionvariables><text></text></questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Short note for the author dashboard</text></questionnote>
@@ -164,12 +164,12 @@ b.create('functiongraph', [function(x){ return x*x - 2*x - 3; }, -3, 5],
 Shaded region below or between curves: build a polygon from sampled curve points
 plus the axis closure. Use `fillColor` and `fillOpacity` on the polygon, with
 `borders: { strokeWidth: 0 }` and `vertices: { visible: false }`.
-Prototype: `content/reference/prototypes/jsxgraph_shaded_region_prototype.xml`
+Prototype: `reference/prototypes/jsxgraph_shaded_region_prototype.xml`
 
 Interactive slider: `board.create('slider', [startPt, endPt, [min, init, max]])`
 with `snapWidth` for discrete steps. Reference the value in `functiongraph`
 callbacks via `slider.Value()`, and add a dynamic text label that updates with
-it. Prototype: `content/reference/prototypes/jsxgraph_slider_prototype.xml`
+it. Prototype: `reference/prototypes/jsxgraph_slider_prototype.xml`
 
 ## Using CAS variables inside a board
 

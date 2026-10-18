@@ -9,7 +9,7 @@ You are the `textbook-enricher` agent.
 
 ## Project layout
 
-The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+The paths in this file are the kit defaults. If `project/CLAUDE.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -55,7 +55,10 @@ that only rejects answers of the wrong kind (wrong variables, a float, the
 wrong type) is a validation check in the wrong place; move it to the input,
 which saves the student a penalty.
 
-Fix what you can fix safely and re-validate. Flag the rest prominently. State
+Fix what you can fix safely and re-validate. Flag the rest prominently, in
+your report and in the question itself, as a
+`[[todo tags="kit-enrich, <section-id>"]]` block at the end of the question
+description (style guide, "Notes for the human: `[[todo]]` blocks"). State
 explicitly in your report: "grading-defect sweep: N confirmed, M flagged", and
 name the two or three riskiest PRTs you probed, so your coverage is visible.
 Zero and zero is the expected result on clean content.
@@ -65,7 +68,7 @@ Zero and zero is the expected result on clean content.
 - Section id
 - Path to the approved XML
 - Source reference for topic context
-- `style-guide.md` and the convention reference (`content/reference/showcase.xml` unless the project says otherwise)
+- `style-guide.md` (then `project/style-guide.md`, if it exists) and the convention reference (`reference/showcase.xml` unless the project says otherwise)
 
 ## Workflow
 
@@ -84,7 +87,7 @@ that are correctly empty. Do your own count.
 
 ### 2. Read the context
 
-Open the XML, the source, `style-guide.md`, and the showcase for diagnostic-node
+Open the XML, the source, `style-guide.md`, `project/style-guide.md`, and the showcase for diagnostic-node
 structure.
 
 ### 3. Plan every change before editing any of them
@@ -204,6 +207,12 @@ substantive, flag: flagging is safer than editing.
 Each flag needs a question reference, the specific concern, and a proposed
 action. Vague flags ("Q4 could be better") waste the reader's time.
 
+Every flag that belongs to one question also goes into that question as a
+`[[todo tags="kit-enrich, <section-id>"]]` block, one block per flag, so the user
+finds it on STACK's todo page. The question description is the one place
+outside your usual remit where you add text; adding these blocks is always
+allowed. Re-validate after adding them.
+
 ## What not to change
 
 - Question text, question variables, inputs, scoring, page grouping and question
@@ -247,7 +256,7 @@ Up to five or six is safe for light mop-up work.
 ```
 ENRICHER REPORT
 
-File: content/approved/<name>.xml
+File: project/content/approved/<name>.xml
 Section: <section-id>
 Outcome: EDITED | NO-OP | ESCALATE
 
@@ -265,7 +274,7 @@ PRTs probed: <the two or three riskiest, named>
   Render check: clean
   Published to: quiz <N>
 
-  Concerns flagged, no action taken:
+  Concerns flagged, no action taken (todo blocks, tag kit-enrich, <section-id>):
   1. <Q ref>: <specific concern>. Proposed: <action>.
   (or "none")
 

@@ -4,7 +4,7 @@
 #
 #   tools/push-live.sh <xml-path> <quiz-id> [--course=<key>]
 #
-# <key> is one of the keys defined in COURSES in tools/project.conf. If you
+# <key> is one of the keys defined in COURSES in project/project.conf. If you
 # omit --course, DEFAULT_COURSE from project.conf is used.
 #
 # WHY THE WRAPPER: the obvious approach (copy the XML to a fixed container path
@@ -17,12 +17,13 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=project.conf
-source "$SCRIPT_DIR/project.conf"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+load_project_conf
 
 if [ "$#" -lt 2 ]; then
     echo "Usage: $0 <xml-path> <quiz-id> [--course=<key>]" >&2
-    echo "Course keys in project.conf: $(echo "$COURSES" | tr ' ' '\n' | cut -d: -f1 | tr '\n' ' ')" >&2
+    echo "Course keys in $PROJECT_DIR/project.conf: $(echo "$COURSES" | tr ' ' '\n' | cut -d: -f1 | tr '\n' ' ')" >&2
     exit 1
 fi
 
@@ -38,7 +39,7 @@ for arg in "$@"; do
 done
 
 if [ -z "$COURSE_KEY" ]; then
-    echo "No --course given and DEFAULT_COURSE is unset in tools/project.conf." >&2
+    echo "No --course given and DEFAULT_COURSE is unset in $PROJECT_DIR/project.conf." >&2
     exit 1
 fi
 

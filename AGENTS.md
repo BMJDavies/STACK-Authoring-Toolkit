@@ -8,7 +8,7 @@ file is the portable entry point.
 
 ## Start here
 
-If `CLAUDE.md` still carries a "not set up yet" notice, follow `ONBOARDING.md`
+If `project/CLAUDE.md` does not exist yet, follow `ONBOARDING.md`
 before doing anything else.
 
 ## What the pipeline is
@@ -41,6 +41,22 @@ Carry only the artefacts between them: the plan document, the XML file, the
 review notes. Do not carry the reasoning. A reviewer that has just watched itself
 author the file is not an independent reviewer.
 
+## Leaving decisions for the user
+
+The reviewer and the enricher put each item that needs the user's decision into
+the question itself, as well as into their report: a STACK
+`[[todo tags="kit-review, <section-id>"]]…[[/todo]]` block at the end of the
+question description (`kit-enrich` for the enricher). Students never see it, and
+STACK lists every such question, grouped by tag, at
+`<moodle>/question/type/stack/adminui/todo.php`, so the user works through them
+in Moodle. The format rules are in `style-guide.md`, "Notes for the human:
+`[[todo]]` blocks". The user's side is in `WORKFLOW.md`, "Your to-do list in
+Moodle".
+
+When the user answers in the conversation, change the XML, delete the block,
+re-validate and re-publish. When the user has edited in Moodle, pull their edits
+back into the approved file before any re-publish, or they are overwritten.
+
 ## What the assistant must not do
 
 - Background a validation run and poll for it. It is slow and silent by design.
@@ -51,5 +67,6 @@ author the file is not an independent reviewer.
 ## Reference
 
 `style-guide.md` is authoritative for content conventions and is where the
-hard-won rules live. `reviewing-checklist.md` is what the reviewer works through.
+hard-won rules live; `project/style-guide.md`, if present, adds rules for one
+project. `reviewing-checklist.md` is what the reviewer works through.
 `LESSONS.md` explains why the rules exist and is worth reading once, early.

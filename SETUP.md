@@ -42,15 +42,19 @@ Your laptop
 │   ├── a database container
 │   └── Maxima, installed inside the Moodle container (the computer algebra
 │       system that does STACK's actual mathematics)
-└── This kit, in a folder you own
-    ├── content/     the XML files: the real source of truth for your questions
+└── This kit, in a folder you own (a git clone)
     ├── tools/       scripts that talk to Moodle
-    └── .claude/     the agents and skills Claude Code uses
+    ├── .claude/     the agents and skills Claude Code uses
+    └── project/     YOUR project, a separate git repository inside the kit
+        ├── content/       the XML files: the real source of truth for your questions
+        └── project.conf   your Moodle ids
 ```
 
-The XML files in `content/` are the master copy. Moodle is a rendering target.
-If the Moodle installation is lost you re-import; if the XML is lost, the work is gone.
-Put the kit folder under version control on day one.
+The XML files in `project/content/` are the master copy. Moodle is a rendering
+target. If the Moodle installation is lost you re-import; if the XML is lost, the
+work is gone. `project/` is its own git repository from the moment it is created;
+commit to it from day one. The kit's repository ignores it, so updating the kit
+never touches your work.
 
 ---
 
@@ -105,7 +109,7 @@ re-run them in every new terminal before `bin/moodle-docker-compose` works.
 
 Note the container names Docker gives you (`docker ps` will show them, typically
 `moodle-docker-webserver-1` and `moodle-docker-db-1`). You need them for
-`tools/project.conf`.
+`project/project.conf`.
 
 ---
 
@@ -197,7 +201,8 @@ docker exec <webserver-container> \
 (for moodle-docker it is usually `moodle-docker_default`). On one x86 machine
 this cut the showcase from 51 to 20 seconds, and a 28-item section from over an
 hour to about two minutes. The image is amd64-only, so on Apple Silicon it runs
-under emulation (see section 8). When you upgrade STACK, replace the container
+under emulation (see section 8). Where it cannot run at all, see "When
+goemaxima is not available" below. When you upgrade STACK, replace the container
 with the matching tag, or every question fails with a library-version error.
 
 Keep `maxima-sage` installed as the fallback. The `linux` settings below still
@@ -245,6 +250,66 @@ that is green, STACK works.
 The page also writes `stackmaximaversion`, which the commands above do not set,
 so visit it once even if the CLI settings all applied.
 
+### When goemaxima is not available: SBCL Maxima and an optimised image
+
+goemaxima is published for amd64 only. Where it cannot run natively (a
+Raspberry Pi or other ARM Linux machine), or cannot run at all, the next best
+thing is Maxima built on SBCL inside the webserver container, with STACK's
+`linux-optimised` image. On a Raspberry Pi 5 this took one CAS session from
+2.9 seconds with `maxima-sage` to 0.1 seconds. Nothing here is ARM-specific; it
+should work on any machine without goemaxima.
+
+**It needs STACK commit
+[c58aa98](https://github.com/maths/moodle-qtype_stack/commit/c58aa9860f21fd6f9aeb1338c1f95322a033bc57)**
+("Update for Maxima 5.49.0 on SBCL"), which will be in the release after STACK
+4.13.1 (2026080600). Without it, saving the image fails with "The function
+MAXIMA::RUN is undefined". On 4.13.1 or earlier, apply the commit to your STACK
+checkout first; it touches three files, and the two `.mac` files matter as much
+as the PHP, because the libraries are baked into the image:
+
+```bash
+cd $MOODLE_DOCKER_WWWROOT/question/type/stack
+curl -sSL https://github.com/maths/moodle-qtype_stack/commit/c58aa9860f21fd6f9aeb1338c1f95322a033bc57.patch \
+    | git apply
+```
+
+Build Maxima from the release source inside the container. Debian's packaged
+Maxima is GCL, which section 4 rules out. The compile takes a while.
+
+```bash
+curl -sSL -o maxima-5.49.0.tar.gz \
+    https://sourceforge.net/projects/maxima/files/Maxima-source/5.49.0-source/maxima-5.49.0.tar.gz/download
+docker cp maxima-5.49.0.tar.gz <webserver-container>:/usr/local/src/
+docker exec <webserver-container> bash -c '
+    apt-get install -y sbcl make texinfo &&
+    cd /usr/local/src && tar xzf maxima-5.49.0.tar.gz && cd maxima-5.49.0 &&
+    ./configure --enable-sbcl --enable-sbcl-exec --prefix=/opt/maxima &&
+    make -j4 && make install'
+```
+
+Then point STACK at it and build the image. Run the build as `www-data`, so the
+image in moodledata belongs to the web server:
+
+```bash
+cd $MOODLE_DOCKER_WWWROOT
+for kv in platform=linux maximacommand=/opt/maxima/bin/maxima; do
+    docker exec <webserver-container> php admin/cli/cfg.php \
+        --component=qtype_stack --name="${kv%%=*}" --set="${kv#*=}"
+done
+docker exec -w /var/www/html <webserver-container> su -s /bin/bash www-data \
+    -c "php question/type/stack/cli/build_maxima_optimised.php"
+docker exec <webserver-container> php question/type/stack/cli/clearcascache.php
+```
+
+On success it prints `DONE.` and the path `/var/www/moodledata/stack/maxima_opt_auto`,
+and STACK switches itself to `platform=linux-optimised`.
+
+**Rebuild after every STACK upgrade,** and always set both settings above
+first, as shown. A rebuild started from `linux-optimised` blanks
+`maximacommand`, so STACK falls back to plain `maxima`, which does not exist
+here. The build then fails with "CAS returned some data as expected, but there
+were errors", and the log shows CAS return value 127 (command not found).
+
 ### If you ever recreate the containers
 
 Restarting containers (`stop` then `start`) is safe and changes nothing.
@@ -254,19 +319,30 @@ hand inside them, which means Maxima and the custom theme. You will have to
 redo steps 4 and 7. The symptom is that every STACK question suddenly fails
 with a CAS error, which looks alarming and is not. With the goemaxima server,
 the CAS survives, because it is its own container and the settings are in the
-database. Only the theme needs redoing.
+database. Only the theme needs redoing. The SBCL route does not survive either:
+`/opt/maxima` is inside the container, and moodle-docker keeps moodledata (and
+so the optimised image) in an anonymous volume that `down` discards.
 
 ---
 
 ## 5. Start version control
 
-If you cloned this kit and intend to work in the clone, that folder is already
-your project. Point its remote at your own repository and commit; there is
-nothing to move.
+If you cloned this kit and intend to work in the clone, then point its
+remote at your own repository and commit.
 
 If you are copying it somewhere else, note that `.claude` starts with a dot and
 a plain `cp -R dir/*` silently misses it. That directory is where the agents
 live, so without it nothing works.
+
+This kit may also contain other subdirectories, such as `project`, which are
+under version control of their own.
+
+If you have not created your project folder yet, create it now from the kit's skeleton:
+
+```bash
+cp -r templates/project project
+git -C project init -q
+```
 
 ---
 
@@ -281,7 +357,8 @@ docker cp tools/setup-workspace.php <webserver-container>:/tmp/setup.php
 docker exec <webserver-container> php /tmp/setup.php
 ```
 
-It prints a block of ids. Paste them into `tools/project.conf`.
+It prints a block of ids. They go into your project's settings file. Then 
+paste the ids into `project/project.conf`.
 
 Then a course to actually publish into:
 
@@ -291,11 +368,11 @@ docker exec <webserver-container> php /tmp/clc.php \
     --key=alg --shortname="Algebra 1" --fullname="Algebra 1 (interactive)"
 ```
 
-It prints a `COURSES` line. Add that to `tools/project.conf` too, and set
+It prints a `COURSES` line. Add that to `project/project.conf` too, and set
 `DEFAULT_COURSE` to the key you chose.
 
 Finally fill in the container names and site URL at the top of
-`tools/project.conf`. That file is the only place ids live: nothing else should
+`project/project.conf`. That file is the only place ids live: nothing else should
 have a hardcoded number in it.
 
 ---
@@ -340,7 +417,7 @@ takes minutes. The fast one posts to a standalone STACK API and takes seconds.
 You want the fast one for the authoring loop.
 
 ```bash
-tools/api-check.sh content/reference/showcase.xml
+tools/api-check.sh reference/showcase.xml
 ```
 
 The first run pulls two Docker images and takes a few minutes. After that it is
@@ -387,8 +464,8 @@ docker exec <webserver-container> php /tmp/qa.php create \
     --courseid=<your course id> --name="Showcase" --section=1
 
 # Validate it, then publish it
-tools/test-question.sh content/reference/showcase.xml
-tools/push-live.sh content/reference/showcase.xml <the quiz id it printed>
+tools/test-question.sh reference/showcase.xml
+tools/push-live.sh reference/showcase.xml <the quiz id it printed>
 ```
 
 Open the quiz. You should see ten questions covering key point boxes, algebraic
@@ -402,12 +479,14 @@ the agents compare their conventions against.
 
 ## 10. Write the project instructions
 
-`CLAUDE.md` currently carries a "not set up yet" notice. It is read automatically
-at the start of every session, so it is where the assistant is told what the
-project is, where the questions come from, and how you want to be worked with.
+The kit's `CLAUDE.md` is read automatically at the start of every session, and it
+imports `project/CLAUDE.md`. That second file is where the assistant is told what
+your project is, where the questions come from, and how you want to be worked
+with.
 
 Do not write it by hand. Ask your assistant to follow `ONBOARDING.md`, or type
-`/start`. It will ask what it needs and write the file for you.
+`/start`. It will ask what it needs and write the file for you, creating
+`project/` first if you have not already done so in section 6.
 
 Then read `WORKFLOW.md`, which covers using the pipeline day to day.
 

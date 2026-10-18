@@ -1,5 +1,5 @@
 ---
-description: Set up this kit for a new project. Detects what is installed, asks what it cannot detect, and writes the project instructions.
+description: Set up a project for this kit. Detects what is installed, asks what it cannot detect, creates the project/ folder (its own repository) from templates/project/ and the extensions/ folder from templates/extensions/, and writes the project instructions.
 ---
 
 Follow `ONBOARDING.md` in the root of this repository.

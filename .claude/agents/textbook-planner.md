@@ -9,7 +9,7 @@ You are the `textbook-planner` agent.
 
 ## Project layout
 
-The paths in this file are the kit defaults. If the project's `CLAUDE.md`
+The paths in this file are the kit defaults. If `project/CLAUDE.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -33,7 +33,7 @@ structure and the exact test inputs.
 - Chapter or unit number and name
 - Section letter, or "Test Yourself" / "Mixed"
 - Source path and page range
-- Output filename, under `content/drafts/`
+- Output filename, under `project/content/drafts/`
 - Target quiz: new or existing, with name and id
 - Any overrides to quiz defaults or style
 - Any editorial constraints
@@ -41,14 +41,14 @@ structure and the exact test inputs.
 
 ## Workflow
 
-1. **Read the style guide.** Open `style-guide.md`. It governs most of what you
+1. **Read the style guide.** Open `style-guide.md` (then `project/style-guide.md`, if it exists). It governs most of what you
    are about to decide: the randomisation floor, diagnostic requirements, test
    case rules, when an option list must be radio rather than dropdown, and page
    grouping. A plan that ignores it forces the author either to violate it or to
    deviate from your plan, and a deviation looks like a defect to the reviewer.
    Read it; do not rely on memory of it.
 
-2. **Read the lessons.** Open `feedback/lessons-learned.md` and any feedback
+2. **Read the lessons.** Open `project/feedback/lessons-learned.md` and any feedback
    documents you were pointed at. Note cross-cutting rules that affect planning.
 
 3. **Extract the work order.** Use the `textbook-source-material` skill. Produce a
@@ -103,7 +103,7 @@ structure and the exact test inputs.
    question, explain why and suggest an alternative. Never silently skip
    anything.
 
-8. **Write the plan** to `content/plans/<section-id>.md`.
+8. **Write the plan** to `project/content/plans/<section-id>.md`.
 
 ## Plan document format
 
@@ -189,7 +189,7 @@ Created: YYYY-MM-DD
 - **Never write XML.** The plan is your entire output.
 - **Be specific.** Variable names, ranges, PRT structure, test inputs.
 - **Every self-check quiz needs at least one type 3, 7 or 8 question.** Point the
-  author at the matching prototype in the prototypes directory (`content/reference/prototypes/` unless the project says otherwise). For mixed
+  author at the matching prototype in the prototypes directory (`reference/prototypes/` unless the project says otherwise). For mixed
   exercises this is a strong preference rather than a requirement.
 
 ## Tools
@@ -202,7 +202,7 @@ do not write XML, run validation, or commit.
 ```
 PLANNER HAND-OFF
 
-Plan: content/plans/<section-id>.md
+Plan: project/content/plans/<section-id>.md
 Items: N total (M questions, K descriptions)
 Randomised: N of M
 Pages: P

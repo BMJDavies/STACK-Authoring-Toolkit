@@ -9,15 +9,16 @@
 # Exit 0 = everything passed. Exit 1 = at least one failure.
 #
 # --sandbox runs against the optional second Moodle stack (SANDBOX_CONTAINER in
-# project.conf), so a long validation can run while a push-to-live is happening
+# project/project.conf), so a long validation can run while a push-to-live is happening
 # on the main stack. STACK's grading is plugin-level and identical across the
 # two, so results transfer. Leave the flag off if you only have one stack.
 
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=project.conf
-source "$SCRIPT_DIR/project.conf"
+# shellcheck source=lib/project.sh
+source "$SCRIPT_DIR/lib/project.sh"
+load_project_conf
 
 XML_FILE="${1:-}"
 shift 2>/dev/null
@@ -36,7 +37,7 @@ fi
 
 if [ "$USE_SANDBOX" = "1" ]; then
     if [ -z "${SANDBOX_CONTAINER:-}" ]; then
-        echo "--sandbox requested but SANDBOX_CONTAINER is empty in tools/project.conf" >&2
+        echo "--sandbox requested but SANDBOX_CONTAINER is empty in $PROJECT_DIR/project.conf" >&2
         exit 1
     fi
     CONTAINER="$SANDBOX_CONTAINER"

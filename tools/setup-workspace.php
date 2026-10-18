@@ -10,7 +10,7 @@
  * Both are created hidden. Idempotent: run it as often as you like, it reuses
  * anything that already exists.
  *
- * At the end it prints the exact lines to paste into tools/project.conf.
+ * At the end it prints the exact lines to paste into project/project.conf.
  *
  * Usage:
  *   docker cp tools/setup-workspace.php <container>:/tmp/setup.php
@@ -164,7 +164,7 @@ $rev = ensure_course('authoring-review', 'Authoring review (draft preview)',
 [$revquiz, $revcmid] = ensure_quiz((int)$rev->id, 'Draft preview');
 
 echo "\n=========================================================\n";
-echo "Paste these into tools/project.conf:\n";
+echo "Paste these into project/project.conf:\n";
 echo "=========================================================\n\n";
 echo "DEV_CATEGORYID={$devcat}\n";
 echo "DEV_CONTEXTID={$devctx}\n";

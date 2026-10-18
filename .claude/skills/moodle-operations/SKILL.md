@@ -6,7 +6,7 @@ description: Runbook for the validate, preview, publish and sync workflow. Wraps
 # Moodle operations runbook
 
 Every operation runs inside the Moodle Docker container. Container names, ids
-and URLs all come from `tools/project.conf`. The shell wrappers read that file
+and URLs all come from `project/project.conf`. The shell wrappers read that file
 for you: do not hardcode an id into a command.
 
 ## Fast check, during authoring
@@ -175,11 +175,29 @@ If someone edits a question in the Moodle UI, the repo is now stale:
 ```bash
 docker cp tools/sync-from-moodle.php <container>:/tmp/sync.php
 docker exec <container> php /tmp/sync.php <quizid> /tmp/export.xml
-docker cp <container>:/tmp/export.xml content/approved/<filename>.xml
-git diff content/approved/<filename>.xml
+docker cp <container>:/tmp/export.xml project/content/approved/<filename>.xml
+git diff project/content/approved/<filename>.xml
 ```
 
 Use this only to reconcile hand edits. Read the diff before accepting it.
+
+## Questions with `[[todo]]` blocks
+
+Notes for the user are `[[todo]]` blocks in the question description (style
+guide, "Notes for the human: `[[todo]]` blocks"). STACK lists every question
+with one, grouped by tag, at
+
+    <moodle>/question/type/stack/adminui/todo.php
+
+and the same list is on disk:
+
+```bash
+grep -l '\[\[todo' project/content/approved/*.xml
+```
+
+A todo block does not stop validation, publishing or rendering, and students
+never see it. STACK's bulk tester reports each one as needing attention, which
+is intended.
 
 ## Removing questions from a quiz
 
@@ -203,14 +221,14 @@ docker exec <container> php /tmp/add-resource.php \
 ## The whole pipeline
 
 ```
-(1) write XML into content/drafts/<file>.xml
+(1) write XML into project/content/drafts/<file>.xml
 (2) tools/api-check.sh          -> fast green light while authoring
     tools/render-sweep.sh       -> displayed maths is right on every seed
 (3) tools/test-question.sh      -> the real gate
-(4) reviewer approves           -> file moves to content/approved/
+(4) reviewer approves           -> file moves to project/content/approved/
 (5) tools/push-live.sh          -> live course
 (6) tools/render-check.sh       -> confirm it renders
-(7) the file stays in content/approved/ as the source of truth
+(7) the file stays in project/content/approved/ as the source of truth
 ```
 
 ## Looking up a quiz id

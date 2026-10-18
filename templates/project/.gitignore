@@ -1,0 +1,9 @@
+# The project's own repository. (The kit's .gitignore ignores this whole folder.)
+
+# Runtime noise
+*.log
+
+# Source material: usually third-party copyright. Remove these two lines if the
+# material is yours to distribute.
+sources/*
+!sources/README.md

@@ -4,8 +4,8 @@
 assistant.**
 
 This repo holds a pipeline for writing STACK questions for Moodle with an AI assistant: agents,
-skills, tooling, content rules and a theme. It assumes no particular subject, level or syllabus. You point it at your own
-material and your own Moodle site.
+skills, tooling, content rules and a theme. It assumes no particular subject, level or syllabus. 
+You point it at your own material and your own Moodle site.
 
 This folder becomes your project. Everything lives inside it, including the agent
 definitions in `.claude/`. Nothing is installed elsewhere on your machine, so the
@@ -46,9 +46,48 @@ The old 'garbage in, garbage out' mantra very much applies here.
 What it does contain is the method: agents, commands, skills, tooling, the style
 guide and the reviewing checklist, plus a Moodle theme.
 
-`tools/project.conf` ships with the default local development database password
-used by moodle-docker, so that a fresh copy works immediately. Repoint it before
+The project settings template, `templates/project/project.conf`, ships with the
+default local development database password used by moodle-docker, so that a
+fresh copy works immediately. Repoint your copy, `project/project.conf`, before
 using the kit against any server that matters.
+
+---
+
+## The kit and your project
+
+This folder is the kit. Your own work lives inside it, in two folders the kit
+ignores: `project/`, a separate git repository for one course, and
+`extensions/`, your own instructions that apply across all your projects:
+
+```
+stack-authoring-kit/          the kit: clone this, and run the assistant here
+├── CLAUDE.md                 standing instructions; imports extensions/CLAUDE.md
+│                             and project/CLAUDE.md
+├── .claude/  tools/  style-guide.md  reference/  ...
+├── extensions/               yours, across projects: optionally its own repository
+│   ├── CLAUDE.md             an index of your extension files
+│   └── ...                   your own instructions, guidance and templates
+└── project/                  your project: its own git repository
+    ├── CLAUDE.md             what the project is: sources, locale, Moodle site
+    ├── project.conf          your Moodle ids
+    ├── style-guide.md        rules for this project only
+    ├── content/              plans, drafts, approved questions
+    ├── feedback/             section reviews
+    └── sources/              your source material
+```
+
+Onboarding (`/start`) creates `project/` for you from `templates/project/`, and
+`extensions/` from `templates/extensions/`. Updating the kit is a `git pull` in
+this folder, and it never touches either. Commit your project's work inside
+`project/`.
+
+`extensions/` is for things you want in every project but that are not part of
+the kit: for example, how you write paper-based assessments. Instructions are layered: kit,
+then extensions, then project, and the later one wins where they disagree.
+`templates/extensions/README.md` explains how to write extension files.
+ If you already use an
+earlier version of the kit, where project files sat in the kit's own folders,
+see `UPGRADING.md`.
 
 ---
 
@@ -58,13 +97,14 @@ using the kit against any server that matters.
 README.md                  this file, for you
 ONBOARDING.md              setup interview, for your assistant
 AGENTS.md                  portable entry point for a non-Claude assistant
-CLAUDE.md                  project instructions, rewritten during setup
+CLAUDE.md                  standing instructions for the assistant (never rewritten)
 SETUP.md                   from nothing to a working install
 WORKFLOW.md                using the pipeline day to day
 LESSONS.md                 why the rules are the rules
 style-guide.md             content conventions: the agents' authority
 reviewing-checklist.md     what the reviewer works through
 MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
+UPGRADING.md               moving a project from an earlier version of the kit
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
@@ -73,7 +113,6 @@ MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
                            quiz settings, reading source material
 
 tools/
-  project.conf             the one file you edit: all your Moodle ids
   setup-workspace.php      creates the sandbox and review courses
   create-live-course.php   creates a course to publish into
   api-check.sh             fast validation, seconds per question
@@ -83,12 +122,18 @@ tools/
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
+  migrate-to-project-folder.sh  upgrades a kit set up before project/ existed
   ...and several smaller utilities
 
-content/
-  reference/showcase.xml   ten questions, one per pattern: the golden reference
-  reference/prototypes/    working templates for the harder patterns
-  drafts/ approved/ plans/ where work happens
+reference/
+  showcase.xml             ten questions, one per pattern: the golden reference
+  prototypes/              working templates for the harder patterns
+
+templates/project/         the skeleton onboarding copies to project/
+templates/extensions/      the skeleton onboarding copies to extensions/
+
+extensions/                your own cross-project instructions (not part of the kit)
+project/                   your project (not part of the kit; see above)
 
 moodle-theme/textbook/     a Boost child theme that makes quizzes read as
                            textbook pages rather than as tests
@@ -174,8 +219,9 @@ the difference:
 
 - You will need to set-up Claude Code on your own before using this toolkit.
   Here is Anthropic's quickstart guide: https://code.claude.com/docs/en/quickstart
-- `CLAUDE.md` is read at the start of every session. It is where standing
-  instructions go. Keep it short: it costs context on every request.
+- `CLAUDE.md` is read at the start of every session, together with
+  `project/CLAUDE.md`. Your project's standing instructions go in
+  `project/CLAUDE.md`. Keep it short: it costs context on every request.
 - Correct the system in the moment, rather than waiting. "Stop, do Y instead" mid-task works,
   and is far better than letting it finish something wrong.
 - Ask it to explain before acting while you are learning: "tell me what this
@@ -197,12 +243,14 @@ working with it on the questions afterwards.
 Most of the kit is subject-neutral. The places where you will want to make it
 yours:
 
-- `CLAUDE.md`: what the project is, where questions come from, how you want to
-  be worked with. Fill in every placeholder.
-- `style-guide.md`: the rules are the interesting part. The prose-anchor table
-  and the common-error table are examples of a form you should extend with your
-  own topics. There is a section at the end on adapting to a different level.
-- `tools/project.conf`: your Moodle ids. The only place ids should live.
+- `project/CLAUDE.md`: what the project is, where questions come from, how you
+  want to be worked with. Onboarding fills in every placeholder.
+- `project/style-guide.md`: rules for your project only. The kit's
+  `style-guide.md` holds the rules for every project: the prose-anchor table and
+  the common-error table are examples of a form you can extend with your own
+  topics, and there is a section at the end on adapting to a different level. A
+  rule that would hold for any textbook is worth proposing for the kit.
+- `project/project.conf`: your Moodle ids. The only place ids should live.
 - `moodle-theme/textbook/scss/textbook.scss`: colours and typography are SCSS
   variables at the top. The CSS class prefix is `tb-`; rename it if you like, but
   rename it in the theme, the style guide and the showcase together.
@@ -223,13 +271,13 @@ interactive STACK content. It has been exercised across three books. A case stud
 describing that project is forthcoming on the STACK site, at
 stack-assessment.org/CaseStudies/. Nothing from that project's content is
 included here, and neither are its conventions: the style guide names no
-syllabus, phase or exam board, and has been used unchanged at other levels and
+syllabus, phase or awarding body, and has been used unchanged at other levels and
 in other countries. No knowledge of that project is needed to use this kit.
 
 The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
 header is a placeholder to fill in.
 
-The reference XML under `content/reference/` consists of purpose-written
+The reference XML under `reference/` consists of purpose-written
 exemplars demonstrating each question pattern. The mathematics in them is
 standard school and early-undergraduate material.
 

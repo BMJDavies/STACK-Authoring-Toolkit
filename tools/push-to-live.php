@@ -8,7 +8,7 @@
  *            --categoryid=<n> --contextid=<n> [--label="Course name"] [--url=http://...]
  *
  * You will normally not call this directly. Use the host-side wrapper
- * tools/push-live.sh, which reads tools/project.conf, resolves --course=<key>
+ * tools/push-live.sh, which reads project/project.conf, resolves --course=<key>
  * into the right category/context ids, and copies everything into the
  * container under a unique filename.
  */
@@ -19,7 +19,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/lib.php');
 require_once($CFG->libdir . '/questionlib.php');
 
-// --- Target question bank (supplied by the wrapper from tools/project.conf) ---
+// --- Target question bank (supplied by the wrapper from project/project.conf) ---
 $categoryid  = 0;
 $contextid   = 0;
 $courselabel = 'target course';
@@ -36,7 +36,7 @@ for ($i = 1; $i < $argc; $i++) {
 
 if (count($positional) < 2 || !$categoryid || !$contextid) {
     echo "Usage: php push-to-live.php <xml-path> <quiz-id> --categoryid=<n> --contextid=<n> [--label=...] [--url=...]\n";
-    echo "Normally invoked via tools/push-live.sh, which fills these in from tools/project.conf.\n";
+    echo "Normally invoked via tools/push-live.sh, which fills these in from project/project.conf.\n";
     exit(1);
 }
 

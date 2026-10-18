@@ -23,7 +23,7 @@ or the conversation:
 3. Section letter, or "Test Yourself" / "Mixed"
 4. Source path and page range
 5. Page range, if source-led
-6. Output filename under `content/drafts/` (suggest one from the naming
+6. Output filename under `project/content/drafts/` (suggest one from the naming
    convention and let the user accept or override)
 7. Target quiz: new or existing? If new, what name and which course section
    number? If existing, what quiz id?
@@ -38,7 +38,7 @@ Do not start until you have 1 to 7. Items 8 and 9 can be "none".
 Invoke the `textbook-planner` agent with the full spec, any constraints the user gave, and
 pointers to relevant feedback documents.
 
-Wait for the plan at `content/plans/<section-id>.md`.
+Wait for the plan at `project/content/plans/<section-id>.md`.
 
 If the planner escalates (garbled source, pedagogic ambiguity), surface it to
 the user and pause.
@@ -92,7 +92,25 @@ rounds, then escalate to the user regardless of state.
 
 - Pass: path to the approved file, path to the feedback document, one-line
   summary, minor fixes the reviewer made, any new rules for the style guide.
+  If the reviewer left todo blocks, list them, and give the link to STACK's
+  todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
+  look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
+
+## Step 9: when the user has worked through the todo list
+
+The user resolves each note either in Moodle or by answering you.
+
+- **Answered in the conversation:** make the change in
+  `project/content/approved/<file>.xml` (dispatch the author for anything
+  beyond a trivial edit), delete that todo block, re-validate, re-publish.
+- **Edited in Moodle:** pull the quiz back first, and take only the user's edits
+  into the approved file. Do not re-publish before this, or their Moodle edits
+  are overwritten.
+
+Then confirm none of this section's blocks remain:
+`grep -c '\[\[todo' project/content/approved/<file>.xml` should be 0, unless the
+user has chosen to leave one open.
 
 ## First section of a new chapter
 
@@ -107,7 +125,7 @@ Check whether they already exist first.
 
 ## Progress log
 
-Keep `content/progress.log` current so the user can check status without
+Keep `project/content/progress.log` current so the user can check status without
 interrupting you.
 
 - At the start of a section: `tools/log.sh --clear "MANAGER [<section-id>]: starting"`
@@ -140,7 +158,7 @@ section is in flight. Use `tools/log.sh`, not a raw `echo` with an inline
 The user can also invoke pieces of this directly:
 
 - "Run the planner on Ch5 Section B"
-- "Run the author on content/plans/Ch5_B.md"
-- "Run the reviewer on content/drafts/Ch5_B.xml"
+- "Run the author on project/content/plans/Ch5_B.md"
+- "Run the reviewer on project/content/drafts/Ch5_B.xml"
 
 Each is available at any time.

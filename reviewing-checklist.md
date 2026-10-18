@@ -12,7 +12,7 @@ records in the feedback document.
 
 ## Question settings
 
-- [ ] `<stackversion>` equals the STACK version stamp in `CLAUDE.md`, not
+- [ ] `<stackversion>` equals the STACK version stamp in `project/CLAUDE.md`, not
       a value copied from a template or an older question
 - [ ] **Provenance note.** Every STACK question's `<questiondescription>`
       uses one of the four forms in the style guide ("Record where each
@@ -146,10 +146,10 @@ You cannot test every combination. Test at least a couple of examples per path.
 
 ## Formatting and style
 
-- [ ] Every applicable rule in `style-guide.md` followed
+- [ ] Every applicable rule in `style-guide.md` and `project/style-guide.md` followed
 - [ ] Explanatory comments in the code
 - [ ] Alt text on every image and figure
-- [ ] Conventions checked against `content/reference/showcase.xml`, NOT against
+- [ ] Conventions checked against `reference/showcase.xml`, NOT against
       a recently authored file. Recent files drift. Flag any drift you find.
 
 ---
