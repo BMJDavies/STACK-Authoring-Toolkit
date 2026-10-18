@@ -63,8 +63,7 @@ your own tool is not reliable.
    extensions`), and copy `templates/extensions/harness.md` there if it is
    missing.
 2. Fill it in. Take the version from the tool's own `--version`. For "Tested
-   here": were the contents of `extensions/AGENTS.md` in your context before you
-   read it; can a subagent do a trivial task ("read the first line of
+   here": can a subagent do a trivial task ("read the first line of
    `style-guide.md`"); is `/develop-section` among your commands. For the
    models, use only names your tool lists: the strongest for `deepest`, and
    your judgement for the rest. If your tool takes a subagent's model from the

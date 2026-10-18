@@ -182,8 +182,8 @@ Do not commit. That is the user's call.
 - Retry a failed spawn once, then escalate. Do not loop.
 - Never author XML yourself. Always use the `textbook-author` agent.
 - Never commit.
-- Run agents in the foreground. The pipeline is sequential and two agents
-  touching Moodle at once collide.
+- One agent at a time, as `AGENTS.md` says: wait for each to report back
+  before the next. Two agents touching Moodle at once collide.
 - If a subagent appears to have failed, check the disk before concluding
   anything. Agents reported as failed have often carried on and written their
   file successfully.

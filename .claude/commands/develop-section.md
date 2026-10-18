@@ -149,8 +149,9 @@ section is in flight. Use `tools/log.sh`, not a raw `echo` with an inline
 - Do not read or evaluate detailed XML. Trust the agents and review at summary
   level.
 - Only escalate genuine editorial judgement calls.
-- **Always run agents in the foreground.** The pipeline is sequential and
-  concurrent Moodle operations collide.
+- **One agent at a time,** as `AGENTS.md` says: wait for each to report back
+  before the next. The pipeline is sequential and concurrent Moodle operations
+  collide.
 - **When creating a quiz, always pass `--section=N`.** The default is section 0,
   which is wrong.
 
