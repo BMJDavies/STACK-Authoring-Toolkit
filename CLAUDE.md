@@ -83,3 +83,4 @@ Runbook: `.claude/skills/moodle-operations/`.
 | `WORKFLOW.md` | Before producing a section, and when something goes wrong |
 | `LESSONS.md` | Once, early. It explains why the rules exist |
 | `SETUP.md` | While installing, or when changing the Moodle setup |
+| `MULTIPLE-PROJECTS.md` | When the user is working in a project folder other than `project/` |
