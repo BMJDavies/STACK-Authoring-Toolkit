@@ -2,79 +2,39 @@
 
 **Audience: the assistant. The human reader wants README.md.**
 
-This file is read automatically at the start of every session in this folder. It
-belongs to the kit, is the same for every project, and is never rewritten. The
-user's personal instructions, which apply across all their projects, are in
-`extensions/CLAUDE.md`. The project's own instructions are in
-`project/CLAUDE.md`. Both are imported here, in that order:
+Read at the start of every session. It belongs to the kit and is never
+rewritten. Imported below, in order and each overriding the last: the user's own
+instructions, which apply across all their projects, then the project's.
 
 @extensions/CLAUDE.md
 @project/CLAUDE.md
 
 ## Before anything else
 
-If `extensions/` does not exist, copy the kit's template into place. It is
-local, ignored by the kit's git, and overwrites nothing, so it needs no
-permission:
-
-    [ -d extensions ] || cp -r templates/extensions extensions
-
-If `project/CLAUDE.md` does not exist, no project has been configured. If it
-still begins with the comment "Template from the kit", onboarding was started but
-not finished. In either case do not author, validate or publish anything: read
-`ONBOARDING.md` and follow it, resuming where it left off.
-
-**Old layout.** If `project/CLAUDE.md` does not exist but there are signs of a
-project set up with an earlier version of the kit (`tools/project.conf` exists,
-`CLAUDE_loc.md` exists, or `content/approved/` holds XML files), do not run
-onboarding: that would start a second project beside the real one. Explain the
-reorganisation to the user, point them to `UPGRADING.md`, and offer to run
-`tools/migrate-to-project-folder.sh --dry-run` with them.
+No `project/CLAUDE.md`, or it still says "Template from the kit": do not author,
+validate or publish — follow `ONBOARDING.md`. If `tools/project.conf` or
+`CLAUDE_loc.md` exists at the kit root instead, follow `UPGRADING.md`. No
+`extensions/`: `cp -r templates/extensions extensions` (local, ignored, needs no
+permission).
 
 ## How this folder is organised
 
-This folder is the kit: a pipeline for writing STACK questions for Moodle with an
-AI assistant. Everything about one particular textbook or course lives in
-`project/`, and the user's own cross-project additions live in `extensions/`.
-Both are folders the kit ignores, and each may be its own git repository. Both
-are created by copying a skeleton from `templates/`.
+The kit is generic: nothing in it belongs to one course or one user. Two folders
+beside it do, and the kit's git ignores both — `project/` is one course,
+`extensions/` is this user across every project. Path conventions for extension
+files are in `templates/extensions/README.md`.
 
-| Kit (generic, shared) | Extensions (`extensions/`, this user, every project) | Project (`project/`, specific to one course) |
-|---|---|---|
-| `.claude/`: agents, commands, skills | `CLAUDE.md`: an index of the user's extension files and when to read them | `CLAUDE.md`: what the project is, sources, locale, Moodle site, STACK version stamp, citation |
-| `tools/`: shell and PHP tools | Any other files the user adds: instructions, guidance, templates | `project.conf`: Moodle ids and courses |
-| `style-guide.md`, `reviewing-checklist.md` | | `style-guide.md`: optional rules for this project only |
-| `reference/`: the showcase of every question pattern | | `content/plans/`, `content/drafts/`, `content/approved/`, `content/progress.log` |
-| `WORKFLOW.md`, `SETUP.md`, `ONBOARDING.md`, `LESSONS.md` | | `feedback/`: section reviews |
-| `moodle-theme/`, `templates/` | | `sources/`: the source material |
-
-Never put project-specific or personal content in a kit file. A rule for one
-course goes in `project/style-guide.md`; a habit or workflow of this user's that
-spans courses goes in `extensions/`; a rule that would hold for any textbook and
-any user goes in the kit's `style-guide.md`.
-
-Instructions are layered: kit, then extensions, then project, and where they
-disagree the later one wins. Read extension files when the user asks for them or
-when `extensions/CLAUDE.md` says to.
-
-Paths in extension files: a bare path (`content/assessment/x.tex`) is relative to the
-project folder (`project/`, or the folder the user names); a path starting
-`extensions/`, or the bare name of an extension instruction file
-(`Assessment-guidance.md`), is in `extensions/`; "the project's `X`" and "the kit's
-`X`" name a file that exists in more than one place. The rules are in
-`templates/extensions/README.md`.
-
-The tools accept `STACK_PROJECT` to name a different project folder. This file
-still imports `project/CLAUDE.md` for the project, so if the user says they are working in
-another folder, read that folder's `CLAUDE.md` and use its paths instead of
-`project/` (see `MULTIPLE-PROJECTS.md`).
+Instructions layer kit, then extensions, then project; where they disagree the
+later one wins. Write each rule at the level it actually applies to: one course
+to `project/style-guide.md`, this user's habits to `extensions/`, anything true
+for any textbook and any user to the kit's `style-guide.md`. Never put project
+or personal content in a kit file.
 
 ## Content rules
 
 `style-guide.md`, then `project/style-guide.md` if it exists, are the single
-source of truth for content conventions. Agents read them before writing or
-reviewing anything, rather than relying on memory. Where they disagree, the
-project's file wins for that project.
+source of truth for content conventions. Read them before writing or reviewing
+anything, rather than relying on memory.
 
 `reviewing-checklist.md` is the reviewer's checklist.
 
@@ -86,7 +46,6 @@ authored file, because recent files drift.
 
 /develop-section -> planner -> author -> validate -> reviewer -> approved -> live
 
-- Agents are in `.claude/agents/`, skills in `.claude/skills/`.
 - Agents run in the foreground, never backgrounded. The pipeline is sequential,
   and two agents touching Moodle at once collide.
 - The author validates its own work and hands off only files that pass.
@@ -121,10 +80,6 @@ Runbook: `.claude/skills/moodle-operations/`.
 
 | File | Read it when |
 |---|---|
-| `ONBOARDING.md` | Now, if `project/CLAUDE.md` does not exist |
 | `WORKFLOW.md` | Before producing a section, and when something goes wrong |
-| `style-guide.md` | Before writing or reviewing any question |
-| `reviewing-checklist.md` | When reviewing |
 | `LESSONS.md` | Once, early. It explains why the rules exist |
 | `SETUP.md` | While installing, or when changing the Moodle setup |
-| `AGENTS.md` | If you are not Claude Code: the portable description of the pipeline |
