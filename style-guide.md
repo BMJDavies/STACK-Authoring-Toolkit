@@ -845,6 +845,15 @@ required precision, so the diagnostic misfires on exactly those seeds.
   against float literals `{98.9, 261.1}`, every entry reports as both wrong and
   missing, and the correct answer scores 0. Wrap the rounding in `float(...)`.
 
+### Matrices: never use `addrow`
+
+Do not use Maxima's `addrow` (or `addcol`). Its behaviour has changed between
+versions, and it is easily confused with STACK's row operation
+`rowadd(M,i,j,k)`, which returns `M` with row `i` replaced by row `i` plus `k`
+times row `j`. For a row operation use `rowadd`. To stack rows into a matrix,
+build it directly from lists: `matrix(list_matrix_entries(r1),
+list_matrix_entries(r2))`.
+
 ### Never interpolate the graded answer into the stem
 
 A stem like `Show that log … = {@ta1@}` prints the very value the student is
