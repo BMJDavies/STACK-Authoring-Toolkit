@@ -85,9 +85,6 @@ this folder, and it never touches either. Commit your project's work inside
 the kit: for example, how you write paper-based assessments. Instructions are layered: kit,
 then extensions, then project, and the later one wins where they disagree.
 `templates/extensions/README.md` explains how to write extension files.
- If you already use an
-earlier version of the kit, where project files sat in the kit's own folders,
-see `UPGRADING.md`.
 
 ---
 
@@ -104,7 +101,8 @@ LESSONS.md                 why the rules are the rules
 style-guide.md             content conventions: the agents' authority
 reviewing-checklist.md     what the reviewer works through
 MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
-UPGRADING.md               moving a project from an earlier version of the kit
+UPGRADING.md               only for kits set up before October 2026: moving a
+                           project out of the kit's own folders
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
@@ -122,7 +120,7 @@ tools/
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
   quiz-admin.php           create and configure quizzes
-  migrate-to-project-folder.sh  upgrades a kit set up before project/ existed
+  migrate-to-project-folder.sh  only for kits set up before October 2026
   ...and several smaller utilities
 
 reference/

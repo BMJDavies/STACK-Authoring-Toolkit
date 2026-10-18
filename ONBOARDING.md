@@ -6,6 +6,12 @@ The kit (this folder) is generic and is never edited during onboarding.
 Everything you create belongs to the user's project, in `project/`, which is a
 separate git repository that the kit ignores.
 
+Onboarding may already have been started and left unfinished: `project/` exists,
+or `project/CLAUDE.md` is still the template with its `<...>` placeholders. Work
+out how far it got and resume from there rather than starting again. Detection
+below tells you what is already in place, and the steps are written so that
+re-running one is harmless.
+
 ## Who you are working with
 
 An experienced STACK question author who is new to working with an AI assistant.

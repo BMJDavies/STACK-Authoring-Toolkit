@@ -9,6 +9,13 @@ your work was in `content/`, `feedback/` and `sources/`. Now your project lives 
 `project/`, a separate git repository inside the kit, and the kit never changes
 it. `README.md` ("The kit and your project") shows the new layout.
 
+**If you are the assistant, sent here because `tools/project.conf` or
+`CLAUDE_loc.md` exists at the kit root: do not run onboarding.** It would create
+a fresh `project/` from the template, leaving an empty second project beside the
+real one while the user's work stayed stranded in the kit's own folders. Explain
+the reorganisation and offer to walk them through the migration below, starting
+with the dry run.
+
 ## Why a plain `git pull` will not work
 
 Your kit folder has local changes to two files the kit tracks, `CLAUDE.md` and
