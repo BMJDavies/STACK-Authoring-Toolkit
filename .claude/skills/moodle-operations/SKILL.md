@@ -32,6 +32,18 @@ older than `tools/stack-version` allows, or if the validation service is still
 running images older than its pin. The message gives the command to fix it; ask
 the user before recreating containers.
 
+## Completeness audit, before hand-off
+
+```bash
+tools/audit-draft.py path/to/file.xml
+```
+
+No Maxima, no Moodle, about a second. Catches an unfinished file that still
+grades its own tests: placeholder text a student would see, marked questions
+with fewer than two test cases, and page codes that are missing from some names
+or out of order. FAIL blocks the hand-off; WARN (an empty terminal false branch,
+no worked solution, no provenance note) needs a look.
+
 ## Display check, before hand-off
 
 ```bash
@@ -96,8 +108,10 @@ tools/push-review.sh path/to/draft.xml
 
 Imports into the review question bank and appends any new questions to the
 preview quiz. Dedupes by question name, so re-pushing after edits does not stack
-duplicate pages. No Maxima or PRT validation happens here: that is
-`test-question.sh`'s job.
+duplicate pages. New questions with page codes in their names (`_P03_`) share
+pages as the plan groups them; questions already in the quiz keep their page,
+so a question added on a later push lands on a page of its own. No Maxima or
+PRT validation happens here: that is `test-question.sh`'s job.
 
 The script prints the preview URL when it finishes.
 

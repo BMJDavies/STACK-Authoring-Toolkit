@@ -817,6 +817,25 @@ are admin-only and never student-facing, so prose style rules do not apply to
 them. If a name genuinely must change, clean up the duplicate afterwards with
 `remove-from-quiz.php`.
 
+### Page codes in question names
+
+A quiz's page breaks live in Moodle, not in the XML, so the XML carries them in
+the question names. Put `_P<NN>_` in every name, where `<NN>` is the plan's page
+number (`E1_Ch1_A_P03_Exercise_A_Q2`). A letter may follow the digits
+(`_P04b_`); it does not change the page.
+
+- Every question in the file gets a code, descriptions included, or none does.
+  `push-live.sh` uses the codes only when every slot in the live quiz has one,
+  and otherwise falls back to grouping by count.
+- A page's questions are consecutive in the file. Moodle adds slots in file
+  order, so a `_P01_` after a `_P02_` starts a new page.
+- `push-review.sh` follows the codes too, so the reviewer sees the planned
+  pages.
+- Choose the codes before the first publish: they are part of the name, and
+  names are immutable.
+
+`tools/audit-draft.py` checks both rules.
+
 ### Telling real failures from infrastructure flakes
 
 Not every red result is a bug in your question. Two false-failure patterns are

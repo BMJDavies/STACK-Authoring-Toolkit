@@ -156,9 +156,14 @@ You cannot test every combination. Test at least a couple of examples per path.
 
 ## Plan faithfulness
 
+- [ ] **`tools/audit-draft.py` reports no FAIL**, re-run by you
 - [ ] Every planned item is present
 - [ ] Question types match the plan
-- [ ] Page grouping is as specified
+- [ ] Page grouping is as specified: every name carries the plan's page code,
+      and each page's questions are consecutive
+- [ ] **Every value a student needs is on screen**, and the source data in the
+      plan matches the source. Any "Plan corrections" the author recorded are
+      checked against the source
 - [ ] The author's reported deviations are the only differences. Undocumented
       deviations may be fine, but they should have been deliberate.
 

@@ -49,6 +49,9 @@ the user and pause.
 Read the plan at a high level. You are checking:
 
 - Does it cover everything in the source? Compare the item count.
+- Does it have a source-data table, marked as reconciled with the items?
+  Spot-check two or three values against the source page yourself.
+- Does every item have a name with a page code that matches its page?
 - Are there flagged items needing the user's input?
 - Do the editorial decisions look reasonable?
 - Is at least a third of the section randomised?
@@ -73,9 +76,11 @@ adjusting the plan or explaining why it stands.
 
 ## Step 5: validate it yourself
 
-Run `tools/test-question.sh <path>`. The author's loop uses the fast API check,
-so this is the first real Moodle-import validation. Do not skip it because the
-author said it passed.
+Run `tools/audit-draft.py <path>`, then `tools/test-question.sh <path>`. The
+audit catches an unfinished file that still grades its own tests; the author's
+loop uses the fast API check, so `test-question.sh` is the first real
+Moodle-import validation. Do not skip either because the author said it passed.
+An audit FAIL goes straight back to the author.
 
 Foreground, blocking. Do not background and poll.
 

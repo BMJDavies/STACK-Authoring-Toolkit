@@ -59,8 +59,11 @@ first topic is section 1) before you run the command.
 ## Page grouping
 
 `quiz-admin.php` only creates the shell. Grouping questions onto pages happens
-automatically when you run `push-live.sh`, which keeps descriptions with the
-questions that follow them and avoids stranding a single item on its own page.
+when you run `push-live.sh`. If every question name carries a page code
+(`_P03_`; style guide, "Page codes in question names"), pages follow the codes.
+Otherwise it groups by count, keeping descriptions with the questions that
+follow them and never stranding a single item on its own page. Prefer the codes:
+they are the plan's pages, and the review quiz follows them as well.
 
 If you need bespoke grouping beyond that, do it in Moodle's Edit Quiz screen and
 flag it, because the next push will regroup and undo your work. If you have hand

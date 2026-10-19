@@ -86,8 +86,17 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    to implement (a range that produces ugly numbers, a PRT that needs an extra
    node, test cases that will collide). Minor adjustments are fine, and go in
    your hand-off notes. Anything that changes the plan's intent escalates.
+
+   Check the plan's source-data table against the source pages. If the plan
+   mistranscribed the source (a value outside a planned range, a missing stem,
+   too few inputs for the data), follow the source, and add the correction to
+   a "Plan corrections" section at the end of the plan file: what the plan
+   said, what the source says, what you built. Only transcription goes this
+   way. A change to the design (question type, PRT, what is being assessed)
+   escalates.
 6. **Write the XML**, following the item-by-item specs and the page grouping.
-   For any figure, use the `jsxgraph` skill.
+   Use the question names from the plan, with their page codes. For any figure,
+   use the `jsxgraph` skill.
 7. **Record provenance.** Fill each STACK question's `<questiondescription>`
    from the item's Provenance line, using the exact wording in the style guide
    ("Record where each question comes from") and the citation string in
@@ -120,16 +129,31 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    flag as the style guide's "Sign handling in displayed expressions" and
    "Deployed seeds" sections describe, then re-run both checks. A source warning
    (`coeff-src`) is not a failure, but look at each one.
-10. **Hand off** when both checks are green: the file path, a summary of what
-   you produced, any deviations from the plan, and any flags for the reviewer.
+10. **Audit what a student will see.** The checks above prove the file grades
+   its own tests, not that a student can answer it. Run
+   `tools/audit-draft.py project/content/drafts/<file>.xml`: fix every FAIL,
+   and fix or explain every WARN in your hand-off. Then go through the plan
+   item by item and confirm, for each:
+   - it is in the file, under the planned name and page code
+   - every value the student needs is shown in the question text, and each
+     randomised teacher answer is computed from values the student can see
+   - the planned figure or table is there
+   - the planned diagnostic nodes, feedback and test routes are all there
+   - the provenance note is filled in
+   No placeholder text survives anywhere, including text the audit cannot
+   recognise as a placeholder ("Question text here", a stem that only names the
+   topic).
+11. **Hand off** when all three checks are green: the file path, a summary of
+   what you produced, any deviations from the plan, and any flags for the
+   reviewer.
 
 ## Hard rules
 
 - **Follow the plan.** The planner made those decisions for a reason. Do not
   second-guess question types, variable schemes or page grouping without
   escalating.
-- **Never hand off a file that fails validation** or has `render-sweep.sh`
-  flags. Escalate instead.
+- **Never hand off a file that fails validation**, has `render-sweep.sh`
+  flags, or has an `audit-draft.py` FAIL. Escalate instead.
 - **Apply every rule in `style-guide.md` and `project/style-guide.md`.** Read
   them; do not rely on memory.
 - **JSXGraph board ids must be unique across the file.** Pattern:
@@ -161,6 +185,8 @@ Items: N descriptions, M STACK questions (X algebraic, Y numerical, Z dropdown,
 Randomised: N of M
 Validation: PASS (all seeds, all test cases)
 Render sweep: 0 flags (N source warnings, each checked)
+Audit: 0 FAIL (each WARN fixed or explained below); item-by-item check done
+Plan corrections: <none, or "see the plan's Plan corrections section">
 
 Plan deviations:
 - <adjustments made, with justification, or "none">
