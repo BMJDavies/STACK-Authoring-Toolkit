@@ -125,6 +125,26 @@ Moodle") is the user's side of this.
 - **Tags:** `tags="<raised-by>, <section-id>"`. The first tag is `kit-review`
   for the reviewer and `kit-enrich` for the enricher; the second is the section
   id, for example `Ch5A`.
+- **Visual checks get their own blocks.** Anything a human must look at in the
+  browser once the question is live (a figure, a wide grid or table, a long
+  radio, a drag area) goes in a block tagged `visual-check, <section-id>`,
+  one block per thing to look at, saying what to check:
+  `[[todo tags="visual-check, Ch5D"]][[escape]]Visual check: the 4x4 matrix grids: check they display cleanly.[[/escape]][[/todo]]`.
+  The reviewer adds them for every visual check in its report, so the user can
+  find them all on the todo page. They are removed when the user reports the
+  check done.
+- **Layout:** one blank line before and after each block in the XML source
+  (user, 2026-10-19), so each block stands on its own lines and is easy to
+  find:
+
+      <questiondescription format="html"><text><![CDATA[This question is … (Springer, 2024).
+
+      [[todo tags="kit-review, Ch5A"]][[escape]]…[[/escape]][[/todo]]
+
+      [[todo tags="visual-check, Ch5A"]][[escape]]Visual check: …[[/escape]][[/todo]]
+
+      ]]></text></questiondescription>
+
 - **One block per issue.** Each says where the issue is (question part, PRT
   node, test case, sentence of the worked solution), what is wrong or
   undecided, and the proposed action. Make it short enough to read in the edit

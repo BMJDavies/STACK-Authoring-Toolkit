@@ -211,3 +211,32 @@ the proposed fix; use whatever name is released), and delete the
 validator where the box must also reject `0*t`, which the numerical input
 accepts by design (3B_P09c in the Axler project). Algebraic and matrix inputs
 keep the validator. Run `test-question.sh` on each file changed.
+
+### stack-1931
+
+- Issue: https://github.com/maths/moodle-qtype_stack/issues/1931
+- Upstream: 2026101500
+- Status: open
+- Found: 2026-10-14 (complex, 5B of the Axler project) and 2026-10-19 (real surds, 5D); raised 2026-10-19
+- Fix: not in dev yet (checked 2026-10-19); proposed as an uncommitted change to `ATSet` in the user's clone
+
+**Defect.** In `stack/maxima/stackmaxima.mac`, `ATSet` (reached from
+`ATAlgEquiv` when both arguments are sets) simplifies each element with
+`ATSets_prepare` and then compares the sets structurally with `subsetp`. Equal
+elements written differently are not identified:
+`ATAlgEquiv({1/2+sqrt(5)/2, 1/2-sqrt(5)/2}, {(1+sqrt(5))/2, (1-sqrt(5))/2})`
+and `ATAlgEquiv({-4*(1+%i), -4+4*%i, 3}, {-4-4*%i, -4+4*%i, 3})` give
+`false` (`ATSet_wrongentries`), where `true` is expected. `rectform` on each
+element fixes the complex case only. The Sets answer test (`ATSets`) uses the
+same comparison.
+
+**Workaround.** In the feedback variables, compare element by element in both
+directions with a length check, and test the boolean in the node:
+
+    smk: lambda([AA, BB], is(length(AA) = length(BB)) and every(lambda([x], some(lambda([y], algebraic_equivalence(x, y)), BB)), AA) and every(lambda([y], some(lambda([x], algebraic_equivalence(x, y)), AA)), BB)); /* stack-1931 */
+    esk: smk(listify(ansk), listify(tans)); /* stack-1931 */
+
+with node sans `esk`, tans `true`, and one such boolean per diagnostic set.
+
+**Restore.** Delete the marked lines, and give each node sans `ansk` and tans
+the set it compared with, as each question's todo block lists.
