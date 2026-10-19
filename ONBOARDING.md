@@ -179,7 +179,11 @@ request, so length here costs them on every interaction. Generic instructions
 are already in the kit's `AGENTS.md`; do not copy them across.
 
 Then fill in `project/project.conf` with the ids that `SETUP.md` section 6
-prints, and offer to walk them through their first section using `WORKFLOW.md`.
+prints, and run `tools/check-stack-version.sh`. If it fails, stop: a STACK older
+than 4.13.0 fails every route-style question test, so nothing can be validated
+until it is upgraded. Say which service is too old and point to the `SETUP.md`
+section the script names. Only when it passes, offer to walk them through their
+first section using `WORKFLOW.md`.
 
 If they want you to commit, make the first commit in `project/`, never in the
 kit.

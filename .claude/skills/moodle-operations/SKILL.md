@@ -27,6 +27,11 @@ before changing anything.
 The first run brings up two Docker containers and takes a minute. After that it
 is fast.
 
+Both validators first run `tools/check-stack-version.sh` and stop if a STACK is
+older than `tools/stack-version` allows, or if the validation service is still
+running images older than its pin. The message gives the command to fix it; ask
+the user before recreating containers.
+
 ## Display check, before hand-off
 
 ```bash

@@ -98,8 +98,8 @@ $CFG->inputmustverify = 1;
 $CFG->inputshowvalidation = 1;
 
 // These should match the version of goemaxima in docker-compose.
-$CFG->stackmaximaversion = "2026010500";
-$CFG->version = "2026010500";
+$CFG->stackmaximaversion = "2026062900";
+$CFG->version = "2026062900";
 
 // Do not change this setting.
 $CFG->mathsdisplay = 'api';
