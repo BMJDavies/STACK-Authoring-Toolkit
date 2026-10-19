@@ -231,12 +231,16 @@ element fixes the complex case only. The Sets answer test (`ATSets`) uses the
 same comparison.
 
 **Workaround.** In the feedback variables, compare element by element in both
-directions with a length check, and test the boolean in the node:
+directions, and test the boolean in the node:
 
-    smk: lambda([AA, BB], is(length(AA) = length(BB)) and every(lambda([x], some(lambda([y], algebraic_equivalence(x, y)), BB)), AA) and every(lambda([y], some(lambda([x], algebraic_equivalence(x, y)), AA)), BB)); /* stack-1931 */
+    smk: lambda([AA, BB], every(lambda([x], some(lambda([y], algebraic_equivalence(x, y)), BB)), AA) and every(lambda([y], some(lambda([x], algebraic_equivalence(x, y)), AA)), BB)); /* stack-1931 */
     esk: smk(listify(ansk), listify(tans)); /* stack-1931 */
 
 with node sans `esk`, tans `true`, and one such boolean per diagnostic set.
+Inclusion both ways is set equality, so no length check: a correct set that
+lists one value twice in different forms, such as `{5, -3, 5*(1+i)-5*i}`
+against `{5, -3}`, must score (user, 2026-10-19; found in 5E of the Axler
+project).
 
 **Restore.** Delete the marked lines, and give each node sans `ansk` and tans
 the set it compared with, as each question's todo block lists.
