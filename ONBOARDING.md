@@ -68,6 +68,9 @@ your own tool is not reliable.
    models, use only names your tool lists: the strongest for `deepest`, and
    your judgement for the rest. If your tool takes a subagent's model from the
    role file's header (Claude Code does), record what the headers say.
+   Otherwise the header is ignored or rejected, so every dispatch must name the
+   recorded model itself: say so under "Dispatching the roles", and run the
+   trivial subagent task again with the `deepest` model named, to prove it.
 3. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
    --help` describes and run `tools/run-role.sh --check` until it passes. If it
    will not, record that roles run in this one conversation instead.

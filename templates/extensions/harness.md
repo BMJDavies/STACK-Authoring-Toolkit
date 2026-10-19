@@ -17,7 +17,8 @@ Tool and version: <from the tool's own --version>. Recorded <date>.
 ## Dispatching the roles
 
 <Subagents, one role at a time / no subagents: `tools/run-role.sh`, or all four
-roles in this one conversation if that fails.>
+roles in this one conversation if that fails.> <If the tool ignores the role
+files' `model:` header: name the model from the table below in every dispatch.>
 
 ## Models
 
