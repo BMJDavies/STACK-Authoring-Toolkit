@@ -27,6 +27,13 @@ Do not start without at least 1 to 3.
 Course ids, question bank ids and `--course=` keys are in `project/project.conf`
 and summarised in `project/AGENTS.md`. Read them rather than assuming.
 
+Then show the user the model and effort level for each tier from
+`extensions/harness.md`, and ask in one line whether they still suit this
+chapter: a newer model, a quota or budget that may not cover a whole chapter,
+or review findings from the last chapter that the plan should have prevented.
+`WORKFLOW.md`, "Choosing models and effort", has the trade-offs. Record any
+change in `extensions/harness.md` before starting.
+
 ## Step 2: session startup
 
 Make sure the container has current copies of the scripts that get copied in:

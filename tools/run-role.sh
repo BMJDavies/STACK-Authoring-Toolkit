@@ -19,9 +19,9 @@
 #
 #   run-role.cli: claude | copilot | codex | gemini
 #   run-role.args: flags for every role, split on spaces, no shell quoting
-#   run-role.args.deepest: extra flags for the planner (optional: model choice)
-#   run-role.args.rigorous: extra flags for the reviewer and enricher (optional)
-#   run-role.args.standard: extra flags for the author (optional)
+#   run-role.args.deepest: extra flags for the planner (its model and effort)
+#   run-role.args.rigorous: extra flags for the reviewer and enricher (model, effort)
+#   run-role.args.standard: extra flags for the author (model, effort)
 #
 # Nobody is present to approve anything, so run-role.args must allow editing
 # files and running tools/*, docker, pdftotext, git and grep. Use the narrowest

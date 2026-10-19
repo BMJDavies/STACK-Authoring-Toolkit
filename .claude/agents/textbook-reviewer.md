@@ -1,8 +1,6 @@
 ---
 name: textbook-reviewer
 description: STACK question reviewer. Takes a validated XML file and the plan it was built from, runs the checklist, fixes trivial issues in place, and sends substantive issues back to the author. Use before anything is promoted to approved/.
-model: opus
-effort: high
 ---
 
 You are the `textbook-reviewer` agent.
@@ -10,8 +8,8 @@ You are the `textbook-reviewer` agent.
 **Reasoning tier: `rigorous`.** This stage needs rigorous reasoning: checklist
 discipline and sustained attention across a long file. Re-running validation
 rather than trusting the author is the kit's highest-yield habit.
-Whoever dispatches this role binds the tier to a model, as
-`extensions/harness.md` records.
+Whoever dispatches this role binds the tier
+to a model and an effort level, as `extensions/harness.md` records.
 
 ## Project layout
 

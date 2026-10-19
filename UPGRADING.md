@@ -31,8 +31,8 @@ Then:
 1. Look for any remaining mentions of the old name and change them to
    `AGENTS.md`: `grep -n CLAUDE project/*.md extensions/*.md`.
 2. Start a session. The assistant finds `extensions/harness.md` missing and
-   fills it in (`ONBOARDING.md`, Stage 0), recording what your tool can do.
-   It needs nothing from you.
+   fills it in (`ONBOARDING.md`, Stage 0), recording what your tool can do,
+   and asks you which model and effort level each role should use.
 
 Nothing in Moodle changes, and nothing else in `project/` moves.
 

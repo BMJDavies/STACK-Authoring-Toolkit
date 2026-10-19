@@ -17,16 +17,22 @@ Tool and version: <from the tool's own --version>. Recorded <date>.
 ## Dispatching the roles
 
 <Subagents, one role at a time / no subagents: `tools/run-role.sh`, or all four
-roles in this one conversation if that fails.> <If the tool ignores the role
-files' `model:` header: name the model from the table below in every dispatch.>
+roles in this one conversation if that fails.> Name the model and effort level
+from the table below in every dispatch: the role files do not carry them.
+<Where the tool cannot set effort per dispatch, say so here: the session's
+effort applies to every role.>
 
-## Models
+## Models and effort
 
-| Tier | Roles | Model here |
-|---|---|---|
-| `deepest` | planner | <...> |
-| `rigorous` | reviewer, enricher | <...> |
-| `standard` | author | <...> |
+Chosen by the user at onboarding, from the guidance in `WORKFLOW.md`, "Choosing
+models and effort". Reviewed before each chapter.
+
+| Role | Tier | Model here | Effort here |
+|---|---|---|---|
+| planner | `deepest` | <...> | <...> |
+| reviewer | `rigorous` | <...> | <...> |
+| enricher | `rigorous` | <...> | <...> |
+| author | `standard` | <...> | <...> |
 
 ## `tools/run-role.sh`
 

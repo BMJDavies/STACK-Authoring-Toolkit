@@ -24,7 +24,7 @@ including when all three appear in your context with no stated order.
 
 Before dispatching a role or starting a section, also read
 `extensions/harness.md`. It records, for the tool you are running in, how the
-roles are dispatched and which model each reasoning tier gets.
+roles are dispatched, and the model and effort level each reasoning tier gets.
 
 ## Before anything else
 
@@ -32,8 +32,9 @@ roles are dispatched and which model each reasoning tier gets.
   needs no permission).
 - No `project/AGENTS.md`, or it still says "Template from the kit": do not
   author, validate or publish. Follow `ONBOARDING.md`.
-- No `extensions/harness.md`, or it still says "Template from the kit": follow
-  Stage 0 of `ONBOARDING.md` before the first section.
+- No `extensions/harness.md`, or it still says "Template from the kit", or it
+  has no "Effort here" column: follow Stage 0 of `ONBOARDING.md` before the
+  first section.
 
 ## If you are not Claude Code
 
@@ -81,8 +82,10 @@ authored file, because recent files drift.
 | reviewer | `.claude/agents/textbook-reviewer.md` | `rigorous` | an approved file, published |
 | enricher | `.claude/agents/textbook-enricher.md` | `rigorous` | improved feedback on live content |
 
-Each role file is a plain markdown prompt. The YAML header is read only by
-Claude Code, which takes the subagent's model from it; the body is portable.
+Each role file is a plain markdown prompt. Its YAML header holds only a name and
+a description, which Claude Code uses to register the role; the body is
+portable. No role file names a model or an effort level: those come from
+`extensions/harness.md` and are named at each dispatch.
 Skills in `.claude/skills/*/SKILL.md` are plain reference documents: read one
 when its description fits the task.
 
