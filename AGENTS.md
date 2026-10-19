@@ -38,11 +38,10 @@ roles are dispatched and which model each reasoning tier gets.
 ## If you are not Claude Code
 
 This kit was written and tested with Claude Code, and its mechanisms checked
-against the documentation of GitHub Copilot CLI, Codex CLI and Gemini CLI. Four
-things differ between tools: whether the layer files load by themselves,
-whether roles can run as subagents, whether `/develop-section` exists as a
-command, and which models and settings the tiers can bind to. Stage 0 of
-`ONBOARDING.md` tests each and records the result in `extensions/harness.md`.
+against the documentation of GitHub Copilot CLI, Codex CLI and Gemini CLI.
+Three things differ between tools: whether roles can run as subagents, whether
+`/develop-section` exists as a command, and which models the tiers can bind
+to. Stage 0 of `ONBOARDING.md` records each in `extensions/harness.md`.
 If that file records a failure, say so to the user before starting a section
 rather than discovering it halfway through.
 
@@ -83,8 +82,9 @@ authored file, because recent files drift.
 | enricher | `.claude/agents/textbook-enricher.md` | `rigorous` | improved feedback on live content |
 
 Each role file is a plain markdown prompt. The YAML header is read only by
-Claude Code, which takes the subagent's model from it; the body is portable. Skills in `.claude/skills/*/SKILL.md` are plain
-reference documents: read one when its description fits the task.
+Claude Code, which takes the subagent's model from it; the body is portable.
+Skills in `.claude/skills/*/SKILL.md` are plain reference documents: read one
+when its description fits the task.
 
 The value is in the separation, not the mechanism. The planner must name the
 misconception before any code exists. The author cannot hand off a file that
@@ -101,8 +101,10 @@ author, which is the single habit that catches the most defects.
   sequence, re-reading each role file as you start it. That loses some of the
   independence, so keep the hand-offs as files and re-run validation as the
   reviewer rather than trusting your own earlier result.
-- Roles run in the foreground, one at a time. The pipeline is sequential, and
-  two roles touching Moodle at once collide.
+- One role at a time. Wait until a role has reported back before dispatching
+  the next, whether your tool's dispatch call blocks or returns at once and
+  notifies you later; do not poll it. Nothing else touches Moodle while a role
+  is running: two at once collide.
 - The author validates its own work and hands off only files that pass.
 - The reviewer re-runs validation rather than trusting the author.
 

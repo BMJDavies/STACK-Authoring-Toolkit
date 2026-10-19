@@ -11,7 +11,6 @@ Tool and version: <from the tool's own --version>. Recorded <date>.
 
 ## Tested here
 
-- Layer files loaded automatically: <yes / no: read each session instead>
 - Subagents: <yes / no>
 - `/develop-section` as a command: <yes / no: the user asks in words>
 
