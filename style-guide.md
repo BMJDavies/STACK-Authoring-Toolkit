@@ -7,6 +7,12 @@ this before writing or reviewing anything. Implementation patterns (XML
 skeletons, PRT wiring, JSXGraph templates) live in the skill packages under
 `.claude/skills/`; this file is about what standards the content must meet.
 
+This file builds on STACK's own essentials file, the technical requirements for
+any STACK question. Read it first, verbatim, with
+`curl -sL https://raw.githubusercontent.com/maths/moodle-qtype_stack/iss1925/agents/stack_essentials.md`
+(not a tool that summarises the page). Where the two disagree, this file wins.
+When STACK issue #1925 is merged, change `iss1925` in that URL to `master`.
+
 Almost every rule below was written after something went wrong. Where the reason
 is not obvious, it is stated. Treat the "why" as part of the rule: if you
 understand why, you will spot the next variant of the same problem.

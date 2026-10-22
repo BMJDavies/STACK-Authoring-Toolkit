@@ -33,7 +33,8 @@ or personal content in a kit file.
 
 `style-guide.md`, then `project/style-guide.md` if it exists, are the single
 source of truth for content conventions. Read them before writing or reviewing
-anything, rather than relying on memory.
+anything, rather than relying on memory. `style-guide.md` builds on STACK's
+essentials file and says where to fetch it.
 
 `reviewing-checklist.md` is the reviewer's checklist.
 
