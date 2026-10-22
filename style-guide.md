@@ -67,18 +67,13 @@ understand why, you will spot the next variant of the same problem.
 
 ### Stamp the target STACK version
 
-Every STACK question's `<stackversion>` is the STACK version of the target
-Moodle, given in `project/CLAUDE.md`. Never copy the value from a template, the
-showcase or an older question.
+STACK's essentials file gives the rule and why it matters. In this kit the
+value is the STACK version stamp in `project/CLAUDE.md`. Never copy it from a
+template, the showcase or an older question.
 
-Why: STACK reads this field as the version the question was last edited with.
-Saving in Moodle's edit form stamps the current version, but an XML import
-keeps whatever the file says. STACK uses it in `validate_against_stackversion()`
-(the question dashboard, the bulk tester and the API's `/test` route) to flag
-features removed after a given version, and the dashboard reports it. A copied
-old value misstates what the question needs. Our questions depend on 4.13
-features (route expectations, the commonstring feedback keys), so claiming an
-older version misleads anyone who maintains them later.
+The showcase depends on 4.13 features (route expectations, the commonstring
+feedback keys), so claiming an older version misleads anyone who maintains
+these questions later.
 
 When STACK is upgraded, update `project/CLAUDE.md`, then re-stamp a file the next
 time you touch it.
