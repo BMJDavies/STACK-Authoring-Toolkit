@@ -226,12 +226,21 @@ Maxima check.
 
 ### XML and entity rules
 
-- **Escape `<` and `>` inside Maxima code** (`<value>`, `<tans>`, `<sans>`).
-  A raw `<` causes `XML_ERR_NAME_REQUIRED` on import. Use `&lt;` / `&gt;` or
-  wrap in CDATA.
-- **No named HTML entities** like `&ge;`, `&le;`, `&ne;`. Moodle's XML parser
-  only defines `&lt; &gt; &amp; &apos; &quot;`. Use the unicode character
-  directly (`≥`, `≤`, `≠`) or a numeric entity (`&#8805;`).
+STACK's essentials file gives the structure of a question's XML and the
+escaping rules. This kit differs from STACK's minimal form as follows.
+
+- **Write every element.** Copy a question from `reference/showcase.xml`, which
+  writes every element as a Moodle export does, rather than relying on STACK's
+  defaults. Why: STACK fills omitted options from the site's settings, which
+  differ between sites, so explicit values keep a question the same everywhere.
+- **The kit's values are style, not STACK's defaults.** In particular
+  `<multiplicationsign>none</multiplicationsign>` (STACK: `dot`),
+  `<mustverify>0</mustverify>` and usually `<showvalidation>0</showvalidation>`
+  (STACK: `1` and `1`), a `<boxsize>` sized to the answer (STACK: `15`), and
+  `format="moodle_auto_format"` on most question notes (STACK: `html`). Take
+  them from the showcase and the rules in this file, not from STACK's defaults.
+- **No named HTML entities anywhere**, even inside CDATA, where STACK would
+  allow them. Write `≥`, `≤`, `≠` directly, or a numeric entity (`&#8805;`).
 
 ---
 
