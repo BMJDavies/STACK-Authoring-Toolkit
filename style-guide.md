@@ -585,8 +585,7 @@ Three traps when adding a diagnostic:
 3. **Make the matched branch terminal.** Set the diagnostic's true-branch
    `nextnode` to -1. It is better pedagogy to stop once the misconception is
    identified. Then add the diagnostic to the route of every test that passes
-   through it (see "`<expectedanswernote>` is the full route through the
-   PRT"). Inserting the node changes the route of the existing wrong-answer
+   through it (see "Question tests" below). Inserting the node changes the route of the existing wrong-answer
    test too.
 
 ### The diagnostic must be reachable and distinct on every seed
@@ -598,98 +597,51 @@ randomisation so the two can never coincide, and drive both the node `<tans>`
 and the qtest `<value>` from the same bound question variable so they cannot
 drift apart.
 
-### `<expectedscore>` is the raw PRT score
+### Question tests
 
-`<expectedscore>` is what the PRT returns (1.0 or 0.0), not the weighted
-contribution to the question total. Correct cases use `1.0000000`, wrong cases
-`0.0000000`. Never fractional.
+STACK's essentials file, "Test every question", gives the rules for tests:
+which tests every question needs, how to build test inputs, and how STACK
+matches the expected answer note against the full route through the PRT. This
+kit follows it, and adds the following.
 
-### `<expectedanswernote>` is the full route through the PRT
+- **Scores are `1.0000000` or `0.0000000`.** `<expectedscore>` is the raw PRT
+  score, and in this kit a PRT scores 1 or 0, never a fraction. Write scores
+  and penalties with seven decimal places, as in `reference/showcase.xml`.
+- **Every expectation is the full route**, as a bare list such as
+  `prt1-1-F | prt1-2-F`, with no brackets and no `AT...` notes. Never use `()`.
+  Why, from this kit's showcase: in Showcase 3, prt1 checks the x-coordinate,
+  then the y-coordinate, and both branches of the x node lead to the y node.
+  "x right, y wrong" and "both wrong" both end at `prt1-2-F`. Only the routes
+  `prt1-1-T | prt1-2-F` and `prt1-1-F | prt1-2-F` tell them apart, and each
+  needs its own test.
+- **The route comes from the plan**, never from the validator's output. When a
+  route test fails, the output shows `note=<actual trail> (exp <your route>)`.
+  Decide which one is wrong (the test or the tree) before changing either.
+- **Older questions** with single terminal notes still pass. Upgrade them to
+  full routes when you next touch the question.
+- **Integration exception to offsets.** When the teacher's answer contains
+  `+c`, a wrong test uses `x^99`, not `ta+1`. The `+1` vanishes on
+  differentiation, so `diff(ta+1, x)` still equals the integrand and the
+  "forgot +c" diagnostic fires on what should be a completely wrong answer.
+- **Non-tautological tests: an example.** Where `val2: k2^2*n` defines the
+  displayed value and `ta2: k2*sqrt(n)` is the simplified form the student
+  types, the correct test uses the derivation:
 
-Since STACK 4.13.0 a test's expected answer note can specify the route through
-the tree, not just where it ends (STACK docs: `STACK_question_admin/Testing.md`,
-"Answer note expectation construction"). Use this in every test. For each PRT,
-list the answer note of **every node the response visits, in order**, separated
-by ` | `:
+  ```xml
+  <!-- BAD: tautological, never catches a val/ta inconsistency -->
+  <testinput><name>ans2</name><value>ta2</value></testinput>
 
-    <expectedanswernote>prt1-1-F | prt1-2-F</expectedanswernote>
+  <!-- GOOD: tests the derivation -->
+  <testinput><name>ans2</name><value>sqrt(val2)/sqrt(n)</value></testinput>
+  ```
 
-Why: a terminal note alone cannot tell routes apart that end at the same leaf.
-In Showcase 3, prt1 checks the x-coordinate, then the y-coordinate, and both
-branches of the x node lead to the y node. "x right, y wrong" and "both wrong"
-both end at `prt1-2-F`. Only the routes `prt1-1-T | prt1-2-F` and
-`prt1-1-F | prt1-2-F` distinguish them. A test that pins the whole route also
-catches a mis-wired `nextnode`, which a terminal-only test passes silently.
-
-How STACK matches (`questiontestresult.php`, `test_answer_note`):
-
-- The expected notes must all appear in the actual trail **in order**. Extra
-  actual notes are condoned.
-- The **last** expected note must equal the last actual note. This end anchor
-  is the default, written `(...]`.
-- Leave off the brackets: write the bare list. **Do not start-anchor** with
-  `[...]`. The trail also contains the answer test's own notes
-  (`ATAlgEquiv_String | prt1-1-F`, `ATSet_wrongentries. | prt1-1-F`), even
-  on quiet nodes. They usually come first, so a start anchor fails.
-- **Never put answer-test notes (`AT...`) in the expectation.** They depend on
-  the input and are not part of the route you designed.
-- Special values: `NULL` means the PRT did not fire (invalid or blank input).
-  `prt1-bail` means it bailed out in the feedback variables, and is never
-  anchored. `()` accepts anything, so never use it in this kit.
-- A single-node PRT has a one-note route (`prt1-1-T`), which is the same as the
-  old form.
-
-The route comes from the design, never from the validator's output. Write the
-route the plan intends, and let the validator confirm it. Copying the actual
-trail back into the test turns it into a snapshot that tests nothing. When a
-route test fails, the output shows `note=<actual trail> (exp <your route>)`.
-Decide which one is wrong (the test or the tree) before changing either.
-
-Answer notes are matched as exact strings, so every node's `trueanswernote`
-and `falseanswernote` must be unique within its PRT. The `prtN-K-T/F`
-convention guarantees this.
-
-Re-check every route in a question whenever you insert, remove or re-wire a
-node.
-
-Older questions with single terminal notes still pass, because a bare note is
-read as `(note]`. Upgrade them when you next touch the question.
-
-### Wrong test cases use offsets, not independent values
-
-Wrong test inputs must be offsets from the teacher's answer (`ta+1`, `ta-1`),
-not independent random values that could accidentally equal the correct answer.
-
-Exception for integration: when the teacher answer contains `+c`, use `x^99`
-rather than `ta+1`. The `+1` vanishes on differentiation, so `diff(ta+1, x)`
-still equals the integrand and the "forgot +c" diagnostic fires on what should
-be a completely wrong answer.
-
-### Test every leaf path
-
-If a PRT has a diagnostic node, include a test case that exercises that specific
-path, not just correct and completely-wrong. Aim for one test case per distinct
-route, not just per leaf. Where two routes reach the same leaf (as in
-Showcase 3), each needs its own test, with its own full-route expectation.
-
-### Non-tautological test inputs
-
-When the correct answer is derived from a separately defined question variable
-(say `val2: k2^2*n` defines the displayed value and `ta2: k2*sqrt(n)` is the
-simplified form the student must type), the correct-answer qtest must use the
-**derivation expression**, not the `ta` variable:
-
-```xml
-<!-- BAD: tautological, never catches a val/ta inconsistency -->
-<testinput><name>ans2</name><value>ta2</value></testinput>
-
-<!-- GOOD: tests the derivation -->
-<testinput><name>ans2</name><value>sqrt(val2)/sqrt(n)</value></testinput>
-```
-
-We found a live question where `val2` and `ta2` were inconsistent. The
-tautological test passed happily while students typing the actually-correct
-answer were marked wrong.
+  We found a live question where `val2` and `ta2` were inconsistent. The
+  tautological test passed while students typing the correct answer were
+  marked wrong.
+- **Invalid-input tests.** For example, put one symbolic entry in a single
+  numerical input and fill every other input with a correct value. The PRT
+  that reads the rejected input expects a blank score, a blank penalty and
+  `NULL`; the other PRTs expect their normal correct route.
 
 ### Form checks: when "correct value" is not enough
 
@@ -846,15 +798,6 @@ worth recognising before you send an agent off to fix a phantom:
   SCATTERED seeds while the identical test passes elsewhere. Confirm by isolating
   that question into a throwaway file and re-running.
 
-### Invalid-input tests
-
-- For every question that relies on a bespoke validatorm or where an invalid input
-  is likely, create a test case of an invalid input.
-  For example, put one symbolic entry in a single numerical input and fill every
-  other input with a correct value. The PRT that reads the rejected input
-  expects a blank score, a blank penalty and the answer note `NULL`. The other
-  PRTs expect their normal correct route.
-
 ---
 
 ## JSXGraph
@@ -968,15 +911,16 @@ Give both a course-page description so students can tell them apart.
 
 ### Deployed seeds
 
-This section is the single statement of seed policy. The deployed seeds initiate
-Maxima's pseudo-random number generator are responsible for the variants students
-see, and they are the variants every validator tests.
+This section is the single statement of seed policy. STACK's essentials file,
+"Deploy variants of a randomised question", gives the checks every seed must
+pass: a distinct question note, no runtime errors, every test passing, no
+degenerate variant. This kit fixes the numbers, and also deploys seeds where
+STACK needs none.
 
-- **Randomised questions:** deploy one seed per distinct variant, up to 10 `<deployedseed>`
-  values. Check each one renders a distinct, non-degenerate variant.  Variants are
-  distinct if and only if the value of the instantiated question note is distinct.
-  Check this variant throws no run-time errors.  Replace any duplicates if possible.
-- **Fixed questions:** exactly one `<deployedseed>`.
+- **Randomised questions:** one seed per distinct variant, up to 10
+  `<deployedseed>` values. Replace any seed that duplicates another's note.
+- **Fixed questions:** exactly one `<deployedseed>`. STACK needs none here,
+  but this kit's tools expect every question to carry its own seeds (below).
 - **Parsons problems:** about 3, so students see different shuffles.
 - **Descriptions** have none.
 
