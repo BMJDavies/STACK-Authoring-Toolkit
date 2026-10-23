@@ -9,11 +9,13 @@
 services:
   maxima:
     platform: linux/amd64
-    # Pin these to the STACK version installed in YOUR Moodle: check
-    # question/type/stack/version.php ($plugin->version). rand() sequences and
-    # grading change between STACK versions, so a mismatch can cause false
-    # fails, or pass while grading differently. Bump both tags together.
-    image: mathinstitut/goemaxima:2026010500-latest
+    # The version comes from STACK_VERSION in tools/stackapi/.env, which is
+    # machine-local and not in git (see .env.example and SETUP.md). It must be
+    # the STACK version installed in YOUR Moodle: question/type/stack/version.php
+    # ($plugin->version). rand() sequences and grading change between STACK
+    # versions, so a mismatch can cause false fails, or pass while grading
+    # differently.
+    image: mathinstitut/goemaxima:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-latest
     tmpfs:
       - "/tmp"
     restart: unless-stopped
@@ -27,8 +29,13 @@ services:
     read_only: true
   stack:
     platform: linux/amd64
-    image: stackmaths/stackapi:2026010500-latest
+    # STACKAPI_IMAGE defaults to the published image. Where Docker Hub has none
+    # for your version, build one and set STACKAPI_IMAGE=stackapi-local in .env:
+    # see SETUP.md, "Build the API image".
+    image: ${STACKAPI_IMAGE:-stackmaths/stackapi}:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-latest
     restart: unless-stopped
+    environment:
+      STACK_VERSION: ${STACK_VERSION}
     volumes:
       - ./config.php:/srv/stack/api/config.php:ro
     ports:

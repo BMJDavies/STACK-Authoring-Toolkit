@@ -97,9 +97,9 @@ $CFG->inputcheckanswertype = 1;
 $CFG->inputmustverify = 1;
 $CFG->inputshowvalidation = 1;
 
-// These should match the version of goemaxima in docker-compose.
-$CFG->stackmaximaversion = "2026010500";
-$CFG->version = "2026010500";
+// The version of goemaxima in docker-compose: STACK_VERSION in tools/stackapi/.env.
+$CFG->stackmaximaversion = getenv('STACK_VERSION');
+$CFG->version = getenv('STACK_VERSION');
 
 // Do not change this setting.
 $CFG->mathsdisplay = 'api';
