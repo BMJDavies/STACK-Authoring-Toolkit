@@ -19,9 +19,8 @@
 #
 #   run-role.cli: claude | copilot | codex | gemini
 #   run-role.args: flags for every role, split on spaces, no shell quoting
-#   run-role.args.deepest: extra flags for the planner (its model and effort)
-#   run-role.args.rigorous: extra flags for the reviewer and enricher (model, effort)
-#   run-role.args.standard: extra flags for the author (model, effort)
+#   run-role.args.planner: extra flags for that role: its model and effort
+#   run-role.args.author, run-role.args.reviewer, run-role.args.enricher: likewise
 #
 # Nobody is present to approve anything, so run-role.args must allow editing
 # files and running tools/*, docker, pdftotext, git and grep. Use the narrowest
@@ -127,9 +126,7 @@ ROLE="$1"; shift
 INPUT="$*"
 
 case "$ROLE" in
-    planner)           TIER=deepest ;;
-    reviewer|enricher) TIER=rigorous ;;
-    author)            TIER=standard ;;
+    planner|author|reviewer|enricher) ;;
     *) die "unknown role '$ROLE'; expected planner, author, reviewer or enricher." ;;
 esac
 
@@ -170,21 +167,21 @@ Your final output is your hand-off report.
 
 Your input: $INPUT"
 
-TIER_ARGS="$(setting "args.$TIER")"
-build_cmd "$PROMPT" "${ARGS:+$ARGS }$TIER_ARGS"
+ROLE_ARGS="$(setting "args.$ROLE")"
+build_cmd "$PROMPT" "${ARGS:+$ARGS }$ROLE_ARGS"
 
 if [ "$DRY_RUN" = 1 ]; then
     shown=()
     for a in "${CMD[@]}"; do
         if [ "$a" = "$PROMPT" ]; then shown+=("<prompt below>"); else shown+=("$a"); fi
     done
-    echo "Role: $ROLE (tier $TIER), tool: $CLI"
+    echo "Role: $ROLE, tool: $CLI"
     echo "Command: ${shown[*]}"
     echo "----- prompt -----"
     printf '%s\n' "$PROMPT"
     exit 0
 fi
 
-echo "run-role: $ROLE (tier $TIER) via $CLI, input: $INPUT" >&2
+echo "run-role: $ROLE via $CLI, input: $INPUT" >&2
 cd "$KIT_DIR"
 exec "${CMD[@]}"

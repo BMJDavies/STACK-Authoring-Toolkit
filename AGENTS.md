@@ -24,7 +24,7 @@ including when all three appear in your context with no stated order.
 
 Before dispatching a role or starting a section, also read
 `extensions/harness.md`. It records, for the tool you are running in, how the
-roles are dispatched, and the model and effort level each reasoning tier gets.
+roles are dispatched, and the model and effort level each role gets.
 
 ## Before anything else
 

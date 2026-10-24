@@ -71,12 +71,12 @@ your own tool is not reliable.
    reasoning levels it offers, and whether a dispatch can set each one. Run the
    trivial subagent task again naming a model and an effort level, to prove a
    dispatch can set them, and record whether effort can be set per dispatch.
-4. Ask the user to choose a model and an effort level for each tier. Explain
+4. Ask the user to choose a model and an effort level for each role. Explain
    the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
    effort", and offer a proposal they can accept as it is, built from what step
    3 found. Use only names your tool lists. Record their choice.
 5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
-   --help` describes, with the chosen model and effort as each tier's flags,
+   --help` describes, with the chosen model and effort as each role's flags,
    and run `tools/run-role.sh --check` until it passes. If it will not, set
    "Route" to this conversation. With subagents, delete the `run-role.sh`
    section.
