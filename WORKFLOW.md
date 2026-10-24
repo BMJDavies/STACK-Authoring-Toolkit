@@ -54,6 +54,53 @@ the whole pipeline.
 
 ---
 
+## Choosing models and effort
+
+The kit names no models. Which ones exist, what they cost and how good they are
+changes every few months and differs between tools, so you choose, and
+`extensions/harness.md` records your choice. Your assistant asks you at
+onboarding and again before each chapter. This section is what to weigh.
+
+Two settings matter for each role: the model, and the effort (some tools call it
+reasoning effort or thinking). They matter about equally. A strong model at a
+low effort setting plans like a weaker one: it answers quickly and plausibly,
+and skips the checking that catches a wrong answer key. A good default is to
+leave no role below your tool's middle setting, and to put the planner at the
+top.
+
+What each role needs:
+
+- The planner (`deepest`) decides everything downstream: which items, which
+  misconception, which data, which answers. An error here, such as a
+  mistranscribed data value, survives every later stage, because the author
+  builds the plan faithfully and validation only checks that the questions
+  agree with themselves. Give it your strongest model at the highest effort.
+  It runs once per section, so this is cheap.
+- The reviewer (`rigorous`) is the only stage that reads the whole file against
+  the source with fresh eyes. Give it a strong model at high effort. If you can,
+  make it a different model from the author's, or at least a fresh session: a
+  reviewer shares the blind spots of whatever wrote the file.
+- The author (`standard`) executes a plan and iterates against the validators.
+  It makes the most calls by far, so it dominates the cost. A capable model at
+  medium or high effort is usually enough, because the validators catch its
+  mechanical errors. They do not catch content errors, which is what the
+  reviewer is for.
+- The enricher (`rigorous`) is an independent second read of live content. Use
+  a different model from the one that authored and reviewed the file.
+
+When the strong model is rationed (a monthly quota, a credit limit, a cost you
+care about), economise on the author first, then the enricher. Keep the planner
+and the reviewer strong. Running out partway through a section is worse than
+choosing modestly at the start: the work stops between roles, often after the
+author and before the review. Before a chapter, check that your allowance covers
+it.
+
+Revisit the choice when a new model appears, when your tool changes, when your
+quota or budget changes, and whenever a section's review finds errors the plan
+should have prevented.
+
+---
+
 ## Your first section
 
 Start small. One section, five or six questions.
@@ -244,7 +291,8 @@ different from the reviewer's:
 
 Run it with a different model from the one that authored and reviewed the file.
 Independence is the point, and a second opinion from the same model is not a
-second opinion. The agent is configured for Sonnet for exactly this reason.
+second opinion. Record the enricher's model in `extensions/harness.md` with that
+in mind.
 
 Cap it at three concurrent enrichers on substantive files. Maxima contention
 scales badly: three each get a session and finish, four or more queue up and one

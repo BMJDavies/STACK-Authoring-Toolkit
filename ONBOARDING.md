@@ -52,8 +52,9 @@ already running, say so rather than asking whether it is.
 
 ## Stage 0: record your harness
 
-Skip this if `extensions/harness.md` exists and no longer says "Template from
-the kit". It takes a minute and needs nothing from the user.
+Skip this if `extensions/harness.md` exists, no longer says "Template from
+the kit", and has an "Effort here" column. It takes a few minutes, and asks the
+user one thing: which model and effort level each role should use.
 
 Record which assistant tool is running the kit, so every later session
 dispatches the roles the same way. Test rather than describe: your account of
@@ -64,20 +65,22 @@ your own tool is not reliable.
    missing.
 2. Fill it in. Take the version from the tool's own `--version`. For "Tested
    here": can a subagent do a trivial task ("read the first line of
-   `style-guide.md`"); is `/develop-section` among your commands. For the
-   models, use only names your tool lists: the strongest for `deepest`, and
-   your judgement for the rest. If your tool takes a subagent's model from the
-   role file's header (Claude Code does), record what the headers say.
-   Otherwise the header is ignored or rejected, so every dispatch must name the
-   recorded model itself: say so under "Dispatching the roles", and run the
-   trivial subagent task again with the `deepest` model named, to prove it.
-3. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
-   --help` describes and run `tools/run-role.sh --check` until it passes. If it
-   will not, record that roles run in this one conversation instead.
-4. Delete the comment at the top. Tell the user in two or three sentences what
-   you found and which models the roles will use. If you chose them, say they
-   can ask you to change them; never edit the role files, which belong to the
-   kit.
+   `style-guide.md`"); is `/develop-section` among your commands.
+3. Find out what can be chosen: the models your tool lists, the effort or
+   reasoning levels it offers, and whether a dispatch can set each one. Run the
+   trivial subagent task again naming a model and an effort level, to prove a
+   dispatch can set them. Where it cannot set effort, record that the session's
+   effort applies to every role.
+4. Ask the user to choose a model and an effort level for each tier. Explain
+   the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
+   effort", and offer a proposal they can accept as it is, built from what step
+   3 found. Use only names your tool lists. Record their choice.
+5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
+   --help` describes, with the chosen model and effort as each tier's flags,
+   and run `tools/run-role.sh --check` until it passes. If it will not, record
+   that roles run in this one conversation instead.
+6. Delete the comment at the top. Tell the user in two or three sentences what
+   you found. Never edit the role files, which belong to the kit.
 
 ## Stage A: their environment
 

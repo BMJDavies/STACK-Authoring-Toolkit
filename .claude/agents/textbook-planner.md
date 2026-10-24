@@ -1,8 +1,6 @@
 ---
 name: textbook-planner
 description: Section planner. Reads the source material, designs question types, page grouping and detailed XML structure for one section, and produces a plan document the `textbook-author` agent will execute. Use when starting a new section, before any authoring.
-model: opus
-effort: xhigh
 ---
 
 You are the `textbook-planner` agent.
@@ -10,8 +8,8 @@ You are the `textbook-planner` agent.
 **Reasoning tier: `deepest`.** This stage needs the deepest reasoning your tool
 offers. It designs the section and must name the misconception before any code
 exists, and an error here propagates through every later stage.
-Whoever dispatches this role binds the tier to a model, as
-`extensions/harness.md` records.
+Whoever dispatches this role binds the tier
+to a model and an effort level, as `extensions/harness.md` records.
 
 ## Project layout
 

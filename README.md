@@ -16,9 +16,10 @@ It was built for and tested with Claude Code, and is written to work with any
 command-line AI assistant that reads `AGENTS.md`, such as GitHub Copilot CLI,
 Codex CLI or Gemini CLI. The content, the style guide, the checklist and the
 tools are not tool-specific. On first use your assistant checks what your tool
-can do and records it in `extensions/harness.md`, which takes a minute and needs
-nothing from you. Tools other than Claude Code have not yet been tested end to
-end.
+can do and records it in `extensions/harness.md`. It asks you one thing: which
+model and effort level each role should use. The kit names no models;
+`WORKFLOW.md`, "Choosing models and effort", explains what to weigh. Tools
+other than Claude Code have not yet been tested end to end.
 
 ## Getting started
 
