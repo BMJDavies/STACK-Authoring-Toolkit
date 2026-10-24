@@ -249,17 +249,10 @@ Do not invent edits.
 
 ## Frictions
 
-Note anything in the kit or in STACK that got in the way of this task: an
-instruction that was unclear or contradicted another, a tool that failed or
-misled, a STACK bug, missing feature or misleading error. A workaround counts
-even when it worked.
-
-Report only what happened in this task, with what it cost (a re-run, a
-workaround, a guess). Your job here is adversarial towards the questions, not
-towards the kit: do not go looking for faults in the kit or STACK, suggest
-general improvements, or list things that might go wrong. "None" is the usual
-answer, and a good one. Grading defects are findings, not frictions. See
-`WORKFLOW.md`, "Frictions".
+Report frictions with the kit or STACK that happened during this task, each
+with its cost (a re-run, a workaround, a guess). Do not hunt for faults or
+suggest general improvements; "none" is the usual answer. Grading defects are
+findings, not frictions. See `WORKFLOW.md`, "Frictions".
 
 ## Concurrency, for whoever dispatches you
 

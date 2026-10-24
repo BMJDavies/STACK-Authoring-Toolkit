@@ -158,17 +158,10 @@ the style guide later.
 
 ## Frictions
 
-Note anything in the kit or in STACK that got in the way of this review: an
-instruction or checklist item that was unclear or contradicted another, a tool
-that failed or misled, a STACK bug, missing feature or misleading error. A
-workaround counts even when it worked, including one the author used and
-described in the hand-off.
-
-Report only what happened in this task, with what it cost (a re-run, a
-workaround, a guess). Do not go looking for faults, suggest general
-improvements, or list things that might go wrong. "None" is the usual answer,
-and a good one. Problems with the questions themselves are review findings,
-not frictions. See `WORKFLOW.md`, "Frictions".
+Report frictions with the kit or STACK that happened during this task, each
+with its cost (a re-run, a workaround, a guess). Do not hunt for faults or
+suggest general improvements; "none" is the usual answer. Problems with the
+questions are findings, not frictions. See `WORKFLOW.md`, "Frictions".
 
 ## Hard rules
 

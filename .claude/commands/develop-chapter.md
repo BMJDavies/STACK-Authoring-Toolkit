@@ -182,12 +182,7 @@ STACK:
 - <what happened> (<n> times). Suggest: pull request | issue | nothing. <why>
 ```
 
-For each friction, suggest a pull request when the fix is small and obvious,
-an issue when it needs a design decision or is a STACK bug (say whether a
-minimal example question exists to attach), and nothing when it is a one-off,
-already known upstream, or by design. Do not pad the list: an empty one is a
-good outcome. Do not file anything; offer to draft what the user chooses. See
-`WORKFLOW.md`, "Frictions".
+Choose each suggestion as `WORKFLOW.md`, "Frictions" says. Do not file anything.
 
 Every "for your review" item that belongs to a single question also has a todo
 block in that question (style guide, "Notes for the human: `[[todo]]` blocks").
