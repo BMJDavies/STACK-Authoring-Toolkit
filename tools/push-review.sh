@@ -28,11 +28,13 @@ fi
 
 CPATH="$(docker exec "$LIVE_CONTAINER" mktemp /tmp/ptr_XXXXXX.xml)"
 PTR="/tmp/ptr_$$.php"
+LIB="/tmp/ptr_$$_lib.php"
 
-cleanup() { docker exec "$LIVE_CONTAINER" rm -f "$CPATH" "$PTR" >/dev/null 2>&1 || true; }
+cleanup() { docker exec "$LIVE_CONTAINER" rm -f "$CPATH" "$PTR" "$LIB" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
 docker cp "$SCRIPT_DIR/push-to-review.php" "${LIVE_CONTAINER}:${PTR}"
+docker cp "$SCRIPT_DIR/lib/publish.php" "${LIVE_CONTAINER}:${LIB}"
 docker cp "$XML" "${LIVE_CONTAINER}:${CPATH}"
 
 docker exec "$LIVE_CONTAINER" php "$PTR" "$CPATH" "$QUIZ" \

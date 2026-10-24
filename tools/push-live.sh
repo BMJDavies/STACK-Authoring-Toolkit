@@ -65,12 +65,15 @@ fi
 # Unique container paths (mktemp reserves the name atomically inside the container).
 CPATH="$(docker exec "$LIVE_CONTAINER" mktemp /tmp/ptl_XXXXXX.xml)"
 PTL="/tmp/ptl_$$.php"
+LIB="/tmp/ptl_$$_lib.php"
 
-cleanup() { docker exec "$LIVE_CONTAINER" rm -f "$CPATH" "$PTL" >/dev/null 2>&1 || true; }
+cleanup() { docker exec "$LIVE_CONTAINER" rm -f "$CPATH" "$PTL" "$LIB" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
-# Ship a fresh copy of the importer under a unique name too, then the XML.
+# Ship a fresh copy of the importer and its library under unique names too,
+# then the XML. The importer finds the library by its own name plus _lib.
 docker cp "$SCRIPT_DIR/push-to-live.php" "${LIVE_CONTAINER}:${PTL}"
+docker cp "$SCRIPT_DIR/lib/publish.php" "${LIVE_CONTAINER}:${LIB}"
 docker cp "$XML" "${LIVE_CONTAINER}:${CPATH}"
 
 docker exec "$LIVE_CONTAINER" php "$PTL" "$CPATH" "$QUIZ" \
