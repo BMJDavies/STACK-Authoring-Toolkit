@@ -102,10 +102,9 @@ rounds, then escalate to the user regardless of state.
   todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
   look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
-- Either way: the frictions from all the hand-offs and reports, merged and
-  with a suggestion for each, or "none": a pull request if the fix is small
-  and obvious, an issue if it needs a design decision or is a STACK bug,
-  nothing for one-offs or behaviour by design. Do not file anything.
+- Either way: briefly raise any frictions from the hand-offs and reports, say
+  which look worth an issue or a small pull request, and ask whether the user
+  wants to discuss or draft one. Do not file anything.
 
 ## Step 9: when the user has worked through the todo list
 

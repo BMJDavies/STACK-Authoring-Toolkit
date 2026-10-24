@@ -149,6 +149,9 @@ Reviewed: YYYY-MM-DD | Outcome: PASS / REVISE / ESCALATE
 
 ## Lessons for next section
 - <what the author should do differently, specific and actionable>
+
+## Frictions
+- <yours and the author's, or "none">
 ```
 
 Keep it short and actionable. Whoever dispatched you feeds this into the next

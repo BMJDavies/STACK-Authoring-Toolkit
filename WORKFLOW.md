@@ -287,11 +287,13 @@ workaround counts even when it worked. Agents report only what happened, and
 "none" is the usual answer: asked to look for problems, an assistant will find
 some.
 
-The end-of-run summary lists the frictions, with repeats merged, each with a
-suggested pull request, issue or nothing. Nothing is filed automatically; the
-assistant drafts what you choose. STACK issues go to
-`github.com/maths/moodle-qtype_stack`. The rules agents follow are in their own
-files in `.claude/agents/`.
+At the end of a run the assistant mentions what came up, says which look worth
+an issue or a small pull request, and asks whether you want to discuss any.
+That is a nudge: nothing is filed unless you ask, and the assistant drafts what
+you choose. STACK issues go to `github.com/maths/moodle-qtype_stack`. The
+author's and reviewer's frictions are also kept in each section's feedback
+document. The rules agents
+follow are in their own files in `.claude/agents/`.
 
 ---
 
