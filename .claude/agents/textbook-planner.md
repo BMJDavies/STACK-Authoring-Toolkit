@@ -224,10 +224,12 @@ Reconciled with the items below: <yes, or each discrepancy and how it was resolv
 
 ## Frictions
 
-Report frictions with the kit or STACK that happened during this task, each
-with its cost (a re-run, a workaround, a guess). Do not hunt for faults or
-suggest general improvements; "none" is the usual answer. See `WORKFLOW.md`,
-"Frictions".
+Report what in the kit or STACK got in the way of this task (unclear or
+conflicting instructions, a failing or misleading tool, no STACK question type
+that fits), each with its cost: a re-run, a workaround, a guess. A workaround
+counts even when it worked. Report only what happened; do not hunt for faults
+or suggest general improvements. "None" is the usual answer. Source-material
+problems are flags, not frictions.
 
 ## Tools
 

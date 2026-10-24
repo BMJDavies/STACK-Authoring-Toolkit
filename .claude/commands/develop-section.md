@@ -103,8 +103,9 @@ rounds, then escalate to the user regardless of state.
   look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
 - Either way: the frictions from all the hand-offs and reports, merged and
-  with a suggestion for each (pull request, issue or nothing), or "none". See
-  `WORKFLOW.md`, "Frictions". Do not file anything.
+  with a suggestion for each, or "none": a pull request if the fix is small
+  and obvious, an issue if it needs a design decision or is a STACK bug,
+  nothing for one-offs or behaviour by design. Do not file anything.
 
 ## Step 9: when the user has worked through the todo list
 
