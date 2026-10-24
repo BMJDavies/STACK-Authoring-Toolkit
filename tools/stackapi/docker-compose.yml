@@ -12,8 +12,9 @@ services:
     # Pin these to the STACK version installed in YOUR Moodle: check
     # question/type/stack/version.php ($plugin->version). rand() sequences and
     # grading change between STACK versions, so a mismatch can cause false
-    # fails, or pass while grading differently. Bump both tags together.
-    image: mathinstitut/goemaxima:2026062900-latest
+    # fails, or pass while grading differently. Bump both tags together, and
+    # pin exact builds, never -latest: 2026062900-latest points at a broken build.
+    image: mathinstitut/goemaxima:2026062900-1.2.0
     tmpfs:
       - "/tmp"
     restart: unless-stopped
@@ -27,7 +28,7 @@ services:
     read_only: true
   stack:
     platform: linux/amd64
-    image: stackmaths/stackapi:2026062900-latest
+    image: stackmaths/stackapi:2026062900-1
     restart: unless-stopped
     volumes:
       - ./config.php:/srv/stack/api/config.php:ro
