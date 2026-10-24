@@ -11,9 +11,11 @@
 # .claude/agents/textbook-<role>.md. <input> is free text: a section reference
 # for the planner; plan or XML paths, quiz id and notes for the others.
 #
-# A role run this way never writes to Moodle: it validates, then stops where its
-# role says to publish and reports what it would have done. The coordinating
-# session, which the user is watching, publishes after asking.
+# A role run this way is told not to write to Moodle: to validate, then stop
+# where its role says to publish and report what it would have done. The
+# coordinating session, which the user is watching, publishes after asking.
+# Nothing enforces this, so do not give a role run this way permissions you
+# would not give it unwatched.
 #
 # Settings, as lines in extensions/harness.md:
 #

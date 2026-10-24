@@ -95,7 +95,7 @@ author, which is the single habit that catches the most defects.
 
 - Dispatch each role the way `extensions/harness.md` says. With no subagents,
   run each role as its own process with `tools/run-role.sh <role> <input>`; such
-  a run does not publish, so publish yourself afterwards, asking first. Carry
+  a run is told not to publish, so publish yourself afterwards, asking first. Carry
   only the artefacts between roles (the plan, the XML, the review notes), never
   the reasoning: a reviewer that has just watched itself author the file is not
   an independent reviewer.
