@@ -39,19 +39,20 @@ check_validator() {
         FAIL=1
         return
     fi
-    if grep -q "stackmaxima.*$PIN" <(curl -s -m 5 -X POST http://localhost:3080/render \
-            -H 'Content-Type: application/json' \
-            -d '{"questionDefinition":"<quiz><question type=\"stack\"></question></quiz>"}'); then
-        echo "ok   validation service (localhost:3080): STACK $PIN"
-        return
-    fi
-    local running
-    running=$(docker compose -f "$COMPOSE" -p stackapi ps --format '{{.Image}}' 2>/dev/null | tr '\n' ' ')
+    # The API's replies carry no version, so compare the running images with
+    # the ones docker-compose.yml pins.
+    local running pinned
+    running=$(docker compose -f "$COMPOSE" -p stackapi ps --format '{{.Image}}' 2>/dev/null | sort | tr '\n' ' ')
+    pinned=$(docker compose -f "$COMPOSE" config --images 2>/dev/null | sort | tr '\n' ' ')
     if [ -z "$running" ]; then
         echo "ok   validation service: not running; it will start at STACK $PIN"
         return
     fi
-    echo "FAIL validation service: running $running but docker-compose.yml pins $PIN."
+    if [ "$running" = "$pinned" ]; then
+        echo "ok   validation service (localhost:3080): STACK $PIN"
+        return
+    fi
+    echo "FAIL validation service: running ${running% } but docker-compose.yml pins ${pinned% }."
     echo "     Editing the pin does not upgrade running containers. Recreate them:"
     echo "     docker compose -f $COMPOSE -p stackapi up -d --force-recreate"
     FAIL=1
