@@ -68,14 +68,14 @@ understand why, you will spot the next variant of the same problem.
 ### Stamp the target STACK version
 
 STACK's essentials file gives the rule and why it matters. In this kit the
-value is the STACK version stamp in `project/CLAUDE.md`. Never copy it from a
+value is the STACK version stamp in `project/AGENTS.md`. Never copy it from a
 template, the showcase or an older question.
 
 The showcase depends on 4.13 features (route expectations, the commonstring
 feedback keys), so claiming an older version misleads anyone who maintains
 these questions later.
 
-When STACK is upgraded, update `project/CLAUDE.md`, then re-stamp a file the next
+When STACK is upgraded, update `project/AGENTS.md`, then re-stamp a file the next
 time you touch it.
 
 ### Record where each question comes from
@@ -97,7 +97,7 @@ the next subsection. Use exactly one of these four forms:
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
-`<citation>` is the project's fixed citation string, given in `project/CLAUDE.md`.
+`<citation>` is the project's fixed citation string, given in `project/AGENTS.md`.
 In kit reference material (the showcase and prototypes), write "original to
 this kit" instead.
 
@@ -778,6 +778,25 @@ new slot and orphans the old one as a stale, un-updated duplicate. Question name
 are admin-only and never student-facing, so prose style rules do not apply to
 them. If a name genuinely must change, clean up the duplicate afterwards with
 `remove-from-quiz.php`.
+
+### Page codes in question names
+
+A quiz's page breaks live in Moodle, not in the XML, so the XML carries them in
+the question names. Put `_P<NN>_` in every name, where `<NN>` is the plan's page
+number (`E1_Ch1_A_P03_Exercise_A_Q2`). A letter may follow the digits
+(`_P04b_`); it does not change the page.
+
+- Every question in the file gets a code, descriptions included, or none does.
+  `push-live.sh` uses the codes only when every slot in the live quiz has one,
+  and otherwise falls back to grouping by count.
+- A page's questions are consecutive in the file. Moodle adds slots in file
+  order, so a `_P01_` after a `_P02_` starts a new page.
+- `push-review.sh` follows the codes too, so the reviewer sees the planned
+  pages.
+- Choose the codes before the first publish: they are part of the name, and
+  names are immutable.
+
+`tools/audit-draft.py` checks both rules.
 
 ### Telling real failures from infrastructure flakes
 

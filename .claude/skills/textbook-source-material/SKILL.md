@@ -9,7 +9,7 @@ Input: a section of an existing document.
 Output: a numbered work order listing every item the author should produce.
 
 There are two paths. Pick the one that matches your project and say which in
-`project/CLAUDE.md`, so agents do not have to guess.
+`project/AGENTS.md`, so agents do not have to guess.
 
 ---
 
