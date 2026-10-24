@@ -65,22 +65,24 @@ your own tool is not reliable.
    missing.
 2. Fill it in. Take the version from the tool's own `--version`. For "Tested
    here": can a subagent do a trivial task ("read the first line of
-   `style-guide.md`"); is `/develop-section` among your commands.
+   `style-guide.md`"); is `/develop-section` among your commands. Set "Route"
+   from the result.
 3. Find out what can be chosen: the models your tool lists, the effort or
    reasoning levels it offers, and whether a dispatch can set each one. Run the
    trivial subagent task again naming a model and an effort level, to prove a
-   dispatch can set them. Where it cannot set effort, record that the session's
-   effort applies to every role.
+   dispatch can set them, and record whether effort can be set per dispatch.
 4. Ask the user to choose a model and an effort level for each tier. Explain
    the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
    effort", and offer a proposal they can accept as it is, built from what step
    3 found. Use only names your tool lists. Record their choice.
 5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
    --help` describes, with the chosen model and effort as each tier's flags,
-   and run `tools/run-role.sh --check` until it passes. If it will not, record
-   that roles run in this one conversation instead.
-6. Delete the comment at the top. Tell the user in two or three sentences what
-   you found. Never edit the role files, which belong to the kit.
+   and run `tools/run-role.sh --check` until it passes. If it will not, set
+   "Route" to this conversation. With subagents, delete the `run-role.sh`
+   section.
+6. Check that no `<...>` is left, and delete the comment at the top. Tell the
+   user in two or three sentences what you found. Never edit the role files,
+   which belong to the kit.
 
 ## Stage A: their environment
 

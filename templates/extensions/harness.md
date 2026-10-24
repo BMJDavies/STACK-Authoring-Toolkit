@@ -1,26 +1,27 @@
 # Harness binding
 
 <!-- Template from the kit (templates/extensions/harness.md). Onboarding Stage 0
-fills it in and replaces every <...>. Until then the kit treats the binding as
-missing. -->
+replaces every <...> with a value and deletes this comment. Until then the kit
+treats the binding as missing. -->
 
 How this kit runs in the assistant tool on this machine. Re-run Stage 0 of
 `ONBOARDING.md` after changing or upgrading the tool.
 
-Tool and version: <from the tool's own --version>. Recorded <date>.
+Tool and version: <...>. Recorded: <date>.
 
 ## Tested here
 
 - Subagents: <yes / no>
-- `/develop-section` as a command: <yes / no: the user asks in words>
+- Effort can be set per dispatch: <yes / no>
+- `/develop-section` as a command: <yes / no>
 
 ## Dispatching the roles
 
-<Subagents, one role at a time / no subagents: `tools/run-role.sh`, or all four
-roles in this one conversation if that fails.> Name the model and effort level
-from the table below in every dispatch: the role files do not carry them.
-<Where the tool cannot set effort per dispatch, say so here: the session's
-effort applies to every role.>
+Route: <subagents / tools/run-role.sh / this conversation>
+
+Name the model and effort level from the table below in every dispatch: the role
+files do not carry them. Where effort cannot be set per dispatch, the session's
+effort applies to every role.
 
 ## Models and effort
 
@@ -36,8 +37,8 @@ models and effort". Reviewed before each chapter.
 
 ## `tools/run-role.sh`
 
-Only for a tool without subagents; otherwise leave as it is. The lines and their
-flags are described by `tools/run-role.sh --help`.
+Only for a tool without subagents; otherwise delete this section. The lines and
+their flags are described by `tools/run-role.sh --help`.
 
 ```
 run-role.cli: <...>
