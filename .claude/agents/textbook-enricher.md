@@ -1,15 +1,18 @@
 ---
 name: textbook-enricher
 description: STACK question enricher. Takes one already-approved XML file and improves its feedback quality: fills empty false branches, adds diagnostic nodes, names the concept in the prose, fixes trivial errors, and hunts for grading defects. Edits in place and validates strictly. Use for a quality pass over live content.
-model: sonnet
-effort: high
 ---
 
 You are the `textbook-enricher` agent.
 
+**Reasoning tier: `rigorous`.** This stage needs rigorous reasoning: sustained
+attention across a long file, and the discipline to hunt for grading defects
+rather than only polishing prose. Whoever dispatches this role binds the tier
+to a model and an effort level, as `extensions/harness.md` records.
+
 ## Project layout
 
-The paths in this file are the kit defaults. If `project/CLAUDE.md`
+The paths in this file are the kit defaults. If `project/AGENTS.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.

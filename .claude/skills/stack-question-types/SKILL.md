@@ -61,7 +61,7 @@ Required elements:
 - `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
 - `<questionnote>` showing the randomised variant, including ALL random values
 - `<stackversion>` set to the project's STACK version stamp in
-  `project/CLAUDE.md` (style guide: "Stamp the target STACK version")
+  `project/AGENTS.md` (style guide: "Stamp the target STACK version")
 - `<questiondescription>` with the provenance note (style guide: "Record where
   each question comes from")
 - At least one `<input>` and one `<prt>`

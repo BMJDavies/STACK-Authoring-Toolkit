@@ -1,0 +1,9 @@
+# The oldest STACK this kit supports, in Moodle and in the validation service.
+# The one place this number lives: tools/check-stack-version.sh reads it.
+#
+# 4.13.0 is the first release that compares a question test's full route
+# through each PRT (prt1-1-F | prt1-2-T), which style-guide.md requires.
+# Raise it only when the kit starts to depend on something newer.
+
+MIN_STACK_VERSION=2026062900
+MIN_STACK_RELEASE=4.13.0

@@ -136,6 +136,11 @@ $next_page = $max_slot + 1;
 
 $quiz = $DB->get_record('quiz', ['id' => $quizid], '*', MUST_EXIST);
 
+// New questions whose names carry the same page code (_P04_, see the style
+// guide) share a page, as push-live.sh will place them; everything else gets a
+// page of its own. Questions already in the quiz keep their page.
+$prev_code = null;
+
 $added = 0;
 $updated = 0;
 $orphaned_qbes = []; // old qbe ids to clean up
@@ -155,10 +160,14 @@ foreach ($imported as $q) {
         }
         continue;
     }
+    $code = preg_match('/_P(\d+)[a-z]?_/', $q->name, $m) ? $m[1] : null;
+    if ($added > 0 && ($code === null || $code !== $prev_code)) {
+        $next_page++;
+    }
+    $prev_code = $code;
     $maxmark = ($q->qtype === 'description') ? 0 : null;
     quiz_add_quiz_question($q->id, $quiz, $next_page, $maxmark);
     echo "  Added [{$q->qtype}] id={$q->id} '{$q->name}' on page $next_page\n";
-    $next_page++;
     $added++;
 }
 

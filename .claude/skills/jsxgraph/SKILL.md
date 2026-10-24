@@ -112,7 +112,7 @@ with no `<input>`, no `<prt>` and no `<qtest>`.
   <defaultgrade>0</defaultgrade>
   <penalty>0</penalty>
   <hidden>0</hidden>
-  <stackversion><text><!-- the STACK version stamp in project/CLAUDE.md --></text></stackversion>
+  <stackversion><text><!-- the STACK version stamp in project/AGENTS.md --></text></stackversion>
   <questionvariables><text></text></questionvariables>
   <specificfeedback format="html"><text></text></specificfeedback>
   <questionnote><text>Short note for the author dashboard</text></questionnote>

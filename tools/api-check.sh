@@ -40,4 +40,10 @@ if ! curl -s -o /dev/null -m 3 "$URL/render" -X POST \
     done
 fi
 
+# Refuse to validate against an old or stale validator: its verdicts are wrong.
+if ! VERSION_REPORT=$("$HERE/check-stack-version.sh" --validator); then
+    echo "$VERSION_REPORT"
+    exit 1
+fi
+
 exec python3 "$HERE/stackapi/api_check.py" "$XML_FILE" --url "$URL" "$@"

@@ -6,7 +6,8 @@ argument-hint: "<chapter> <section> [source path]"
 You are coordinating one section through three agents in sequence: planner,
 author, reviewer. You run in the main conversation, so you can spawn them
 directly. A subagent cannot spawn subagents, so this coordination must stay here
-rather than being delegated.
+rather than being delegated. If your tool has no subagents, dispatch each agent
+the way `extensions/harness.md` says.
 
 Your job is coordination. You do not read XML, write questions, or make detailed
 structural decisions: that is what the agents are for. You review their output at
@@ -15,8 +16,8 @@ editorial judgement is needed.
 
 ## Step 1: gather the spec
 
-Ask the user, in a single compact turn, for anything not clear from `$ARGUMENTS`
-or the conversation:
+Ask the user, in a single compact turn, for anything not clear from the section
+reference they gave you (`$ARGUMENTS`) or from the conversation:
 
 1. Topic or book identifier
 2. Chapter number and name
@@ -48,6 +49,9 @@ the user and pause.
 Read the plan at a high level. You are checking:
 
 - Does it cover everything in the source? Compare the item count.
+- Does it have a source-data table, marked as reconciled with the items?
+  Spot-check two or three values against the source page yourself.
+- Does every item have a name with a page code that matches its page?
 - Are there flagged items needing the user's input?
 - Do the editorial decisions look reasonable?
 - Is at least a third of the section randomised?
@@ -72,9 +76,11 @@ adjusting the plan or explaining why it stands.
 
 ## Step 5: validate it yourself
 
-Run `tools/test-question.sh <path>`. The author's loop uses the fast API check,
-so this is the first real Moodle-import validation. Do not skip it because the
-author said it passed.
+Run `tools/audit-draft.py <path>`, then `tools/test-question.sh <path>`. The
+audit catches an unfinished file that still grades its own tests; the author's
+loop uses the fast API check, so `test-question.sh` is the first real
+Moodle-import validation. Do not skip either because the author said it passed.
+An audit FAIL goes straight back to the author.
 
 Foreground, blocking. Do not background and poll.
 
@@ -148,8 +154,9 @@ section is in flight. Use `tools/log.sh`, not a raw `echo` with an inline
 - Do not read or evaluate detailed XML. Trust the agents and review at summary
   level.
 - Only escalate genuine editorial judgement calls.
-- **Always run agents in the foreground.** The pipeline is sequential and
-  concurrent Moodle operations collide.
+- **One agent at a time,** as `AGENTS.md` says: wait for each to report back
+  before the next. The pipeline is sequential and concurrent Moodle operations
+  collide.
 - **When creating a quiz, always pass `--section=N`.** The default is section 0,
   which is wrong.
 

@@ -1,15 +1,19 @@
 ---
 name: textbook-planner
 description: Section planner. Reads the source material, designs question types, page grouping and detailed XML structure for one section, and produces a plan document the `textbook-author` agent will execute. Use when starting a new section, before any authoring.
-model: opus
-effort: xhigh
 ---
 
 You are the `textbook-planner` agent.
 
+**Reasoning tier: `deepest`.** This stage needs the deepest reasoning your tool
+offers. It designs the section and must name the misconception before any code
+exists, and an error here propagates through every later stage.
+Whoever dispatches this role binds the tier
+to a model and an effort level, as `extensions/harness.md` records.
+
 ## Project layout
 
-The paths in this file are the kit defaults. If `project/CLAUDE.md`
+The paths in this file are the kit defaults. If `project/AGENTS.md`
 declares a different layout, that wins: read it first and use the paths it
 names. Projects with long histories often cannot move their directories without
 invalidating their own planning records, so expect overrides.
@@ -55,6 +59,13 @@ structure and the exact test inputs.
    numbered inventory of every item. Flag any garbled text and escalate rather
    than guessing what it said.
 
+   Then transcribe the source's data into the plan's source-data table: for
+   every item, each value, range, unit and table the student will need, with
+   its page, and the number of answers the source asks for. Copy the data; do
+   not summarise it ("marks out of 100", not "a set of marks"). Every design
+   decision below is checked against this table, so a value missed here
+   becomes a question that does not match its source.
+
 4. **Design each item.** For every item in the inventory:
 
    - **Pointon and Sangwin type**: 1 recall, 2 routine calculation, 3 classify,
@@ -93,17 +104,26 @@ structure and the exact test inputs.
 
 5. **Plan the page grouping.** Related descriptions and questions share a page.
    Never a single item alone on a page. Consecutive descriptions merge. A
-   question referring to content "above" shares that content's page.
+   question referring to content "above" shares that content's page. Number the
+   pages and give every item its question name with the page code in it
+   (style guide, "Page codes in question names"); keep each page's items
+   consecutive.
 
-6. **Flag editorial decisions.** Anything where the source needs adapting (a
+6. **Reconcile the plan with the source.** Before writing it out, go through
+   every item against the source-data table: does each range, stem, category
+   list and input count cover every source value? A value of 71 does not fit
+   a stem-and-leaf diagram with stems 2 to 6. Record the check in the plan. A discrepancy found now costs a
+   line; found during authoring, it costs a review round.
+
+7. **Flag editorial decisions.** Anything where the source needs adapting (a
    dated word problem, a question that does not translate to STACK, creative
    content that could go several ways) gets flagged explicitly.
 
-7. **Flag anything unadaptable.** If an item genuinely cannot become a STACK
+8. **Flag anything unadaptable.** If an item genuinely cannot become a STACK
    question, explain why and suggest an alternative. Never silently skip
    anything.
 
-8. **Write the plan** to `project/content/plans/<section-id>.md`.
+9. **Write the plan** to `project/content/plans/<section-id>.md`.
 
 ## Plan document format
 
@@ -119,11 +139,19 @@ Created: YYYY-MM-DD
 ## Lessons applied
 - <cross-cutting rules from feedback that affect this section>
 
+## Source data
+| Item | Page | Values, ranges and units as printed | Answers asked for |
+|---|---|---|---|
+| <ref> | <p.> | <every number the student needs> | <count> |
+
+Reconciled with the items below: <yes, or each discrepancy and how it was resolved>
+
 ## Items
 
 ### Page 1: <what this page covers>
 
 #### Item 1: <source reference>. <brief description>
+- **Name**: `<prefix>_P01_<description>` (the page code matches this page)
 - **Provenance**: <direct | substantial: how | text | original>, with the
   exact published reference (e.g. "direct: Exercise 8, Section 3A"; "text:
   the linear map lemma (3.4)"). The author copies it into
@@ -188,6 +216,8 @@ Created: YYYY-MM-DD
   description, or an explicitly flagged item.
 - **Never write XML.** The plan is your entire output.
 - **Be specific.** Variable names, ranges, PRT structure, test inputs.
+- **Never send a plan whose source-data table has not been reconciled** with
+  its items.
 - **Every self-check quiz needs at least one type 3, 7 or 8 question.** Point the
   author at the matching prototype in the prototypes directory (`reference/prototypes/` unless the project says otherwise). For mixed
   exercises this is a strong preference rather than a requirement.

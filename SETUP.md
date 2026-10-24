@@ -14,8 +14,11 @@ sections you need. Someone with Moodle and STACK already running usually needs
 four of the ten below. It will also ask what it needs to know about your project,
 which this file does not cover.
 
-Everything below was verified on macOS (Apple Silicon) against Moodle 5.0.6 and
-STACK 4.11.1. Version numbers move; the shape does not.
+Everything below was verified on macOS (Apple Silicon) against Moodle 5.0.6.
+Version numbers move; the shape does not. The one exception is STACK itself:
+the kit needs 4.13.0 or later, in Moodle and in the validator (section 8).
+`tools/stack-version` holds that minimum, and `tools/check-stack-version.sh`
+checks everything against it.
 
 ---
 
@@ -40,15 +43,27 @@ Your laptop
 ├── Docker
 │   ├── a Moodle container      (the site: courses, quizzes, question banks)
 │   ├── a database container
-│   └── Maxima, installed inside the Moodle container (the computer algebra
-│       system that does STACK's actual mathematics)
+│   ├── Maxima, installed inside the Moodle container (the computer algebra
+│   │   system that does STACK's actual mathematics)
+│   └── the validation service, two more containers (section 8)
 └── This kit, in a folder you own (a git clone)
     ├── tools/       scripts that talk to Moodle
-    ├── .claude/     the agents and skills Claude Code uses
+    ├── .claude/     the agents, procedures and skills the assistant uses
     └── project/     YOUR project, a separate git repository inside the kit
         ├── content/       the XML files: the real source of truth for your questions
         └── project.conf   your Moodle ids
 ```
+
+Two different things check and show your questions, and it helps to keep them
+apart:
+
+| Name | Where | What it is for |
+|---|---|---|
+| Moodle | `localhost:8000` (from `project.conf`) | The site students use. Also runs the final test of each file (`test-question.sh`) |
+| Validation service | `localhost:3080` | A standalone STACK API with its own Maxima. Checks XML in seconds while authoring (`api-check.sh`). Students never see it, and it has no database |
+| Sandbox question bank | inside Moodle, the "dev" course | Where `test-question.sh` imports files to test them |
+| Review quiz | inside Moodle, hidden from students | Where the reviewer previews a section before it goes live |
+| Live course | inside Moodle | What students see |
 
 The XML files in `project/content/` are the master copy. Moodle is a rendering
 target. If the Moodle installation is lost you re-import; if the XML is lost, the
@@ -439,6 +454,16 @@ grep 'image:' tools/stackapi/docker-compose.yml
 
 A mismatch does not always fail loudly. It can pass everything and still be
 grading against different random sequences than your Moodle will.
+`tools/check-stack-version.sh` compares them for you, and both validators run it
+before they start.
+
+Editing the tags does not upgrade containers that are already running.
+`api-check.sh` refuses to run until they match, and prints the command that
+recreates them:
+
+```bash
+docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d --force-recreate
+```
 
 **Never pin below STACK 4.13.0 (2026062900), in Moodle or in these images.**
 The style guide requires question tests to give the full route through each PRT
@@ -479,8 +504,8 @@ the agents compare their conventions against.
 
 ## 10. Write the project instructions
 
-The kit's `CLAUDE.md` is read automatically at the start of every session, and it
-imports `project/CLAUDE.md`. That second file is where the assistant is told what
+The kit's `AGENTS.md` is read automatically at the start of every session, and it
+reads `project/AGENTS.md`. That second file is where the assistant is told what
 your project is, where the questions come from, and how you want to be worked
 with.
 
@@ -511,5 +536,5 @@ scripts guard against this, so it means something bypassed them. Always verify
 imported question NAMES after a push, not just the count.
 
 **Something is failing and the error means nothing to you.** Paste the whole
-error into Claude Code, including the command you ran. Do not paraphrase it: the
+error into your assistant, including the command you ran. Do not paraphrase it: the
 exact text is the useful part.
