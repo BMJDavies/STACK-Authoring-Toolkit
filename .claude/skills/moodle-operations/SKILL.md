@@ -200,6 +200,20 @@ git diff project/content/approved/<filename>.xml
 
 Use this only to reconcile hand edits. Read the diff before accepting it.
 
+## Exporting one question
+
+Section files hold every question in the section. To get one question as a
+Moodle XML file of its own (to share it, import it by hand, or use Moodle's
+"Import as new version", which takes one question per file):
+
+```bash
+tools/extract-question.py project/content/approved/<file>.xml --list
+tools/extract-question.py project/content/approved/<file>.xml "<question name>" -o <out>.xml
+```
+
+The question is copied unchanged from the master copy, so no Moodle access is
+needed. To export a question as it now stands in Moodle, sync first (above).
+
 ## Questions with `[[todo]]` blocks
 
 Notes for the user are `[[todo]]` blocks in the question description (style
