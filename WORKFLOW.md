@@ -278,6 +278,49 @@ are tedious to unpick.
 
 ---
 
+## Frictions: problems with the kit and with STACK
+
+Workarounds keep a chapter moving, but they fix nothing for the next person.
+So while a chapter is produced, every agent notes the frictions it met, and the
+end-of-run summary hands them to you with a suggestion for each.
+
+A friction is something in the kit or in STACK that got in the way of the task
+at hand:
+
+- **Kit:** an instruction that was unclear or contradicted another, a missing
+  or failing tool, output that misled.
+- **STACK:** a bug, a missing feature, a misleading error message, a gap in the
+  documentation, anything that forced a workaround. A workaround counts even
+  when it worked.
+
+Problems with the source material or with this project's Moodle setup are not
+frictions. They go in the usual flags.
+
+**Report what happened, not what might.** Asked to look for problems, an
+assistant will find some. To keep the list worth reading:
+
+- Only things that happened during this task, each with what it cost: a re-run,
+  a workaround, a guess.
+- No general suggestions for improvement, style opinions or hypothetical risks.
+- "None" is the usual answer, and a good one.
+
+The coordinator collects the frictions from every hand-off, drops any that have
+no concrete cost, merges repeats with a count, and suggests one of these for
+each:
+
+- **Pull request:** the fix is small and obvious.
+- **Issue:** the fix needs a design decision, or it is a STACK bug. For STACK,
+  say whether a minimal example question exists to attach.
+- **Nothing:** a one-off, already known upstream, or behaviour that is by
+  design.
+
+These are recommendations. Nothing is filed automatically: filing an issue or a
+pull request is your call, and the assistant drafts it for you if you ask. Kit
+issues go to this kit's repository, STACK issues to
+`github.com/maths/moodle-qtype_stack`.
+
+---
+
 ## Enrichment: the later quality pass
 
 Once a chapter is live and settled, the enricher goes back over it. Its job is

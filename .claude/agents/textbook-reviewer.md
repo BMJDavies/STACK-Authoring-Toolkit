@@ -156,6 +156,20 @@ author spawn. If a lesson applies broadly rather than just to this section, say
 so, and it gets promoted into `project/feedback/lessons-learned.md` for migration into
 the style guide later.
 
+## Frictions
+
+Note anything in the kit or in STACK that got in the way of this review: an
+instruction or checklist item that was unclear or contradicted another, a tool
+that failed or misled, a STACK bug, missing feature or misleading error. A
+workaround counts even when it worked, including one the author used and
+described in the hand-off.
+
+Report only what happened in this task, with what it cost (a re-run, a
+workaround, a guess). Do not go looking for faults, suggest general
+improvements, or list things that might go wrong. "None" is the usual answer,
+and a good one. Problems with the questions themselves are review findings,
+not frictions. See `WORKFLOW.md`, "Frictions".
+
 ## Hard rules
 
 - **Re-run validation every time.** Do not trust the author's pass.
@@ -203,4 +217,8 @@ Outcome: PASS | REVISE | ESCALATE
   Reason: <why I stopped>
   What I tried: <what has been done>
   What I need: <the specific decision>
+
+Frictions (every outcome):
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```

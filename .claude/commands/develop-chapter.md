@@ -143,6 +143,10 @@ Print the quiz URL. Record the section as complete.
 
 - Print a one-line summary.
 - List accumulated issues.
+- **Collect frictions:** add the "Frictions" entries from this section's
+  hand-offs and reports to a running list, merging repeats with a count. Drop
+  any entry that names no concrete cost. Keep the list through context
+  compaction: it is needed in full at wrap-up.
 - **Carry feedback forward:** read the feedback document the reviewer just
   wrote, and include its "lessons for next section" items in the next author
   spawn.
@@ -170,7 +174,20 @@ Notes left in the questions: <N>, on STACK's todo page
 
 Feedback docs written:
 - project/feedback/<section-id>.md
+
+Frictions (or "none"):
+Kit:
+- <what happened> (<n> times). Suggest: pull request | issue | nothing. <why>
+STACK:
+- <what happened> (<n> times). Suggest: pull request | issue | nothing. <why>
 ```
+
+For each friction, suggest a pull request when the fix is small and obvious,
+an issue when it needs a design decision or is a STACK bug (say whether a
+minimal example question exists to attach), and nothing when it is a one-off,
+already known upstream, or by design. Do not pad the list: an empty one is a
+good outcome. Do not file anything; offer to draft what the user chooses. See
+`WORKFLOW.md`, "Frictions".
 
 Every "for your review" item that belongs to a single question also has a todo
 block in that question (style guide, "Notes for the human: `[[todo]]` blocks").

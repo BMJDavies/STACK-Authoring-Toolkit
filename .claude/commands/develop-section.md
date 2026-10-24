@@ -102,6 +102,9 @@ rounds, then escalate to the user regardless of state.
   todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
   look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
+- Either way: the frictions from all the hand-offs and reports, merged and
+  with a suggestion for each (pull request, issue or nothing), or "none". See
+  `WORKFLOW.md`, "Frictions". Do not file anything.
 
 ## Step 9: when the user has worked through the todo list
 

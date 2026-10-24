@@ -222,6 +222,19 @@ Reconciled with the items below: <yes, or each discrepancy and how it was resolv
   author at the matching prototype in the prototypes directory (`reference/prototypes/` unless the project says otherwise). For mixed
   exercises this is a strong preference rather than a requirement.
 
+## Frictions
+
+Note anything in the kit or in STACK that got in the way of this task: an
+instruction that was unclear or contradicted another, a tool that failed or
+misled, a STACK question type that could not express what the source asks. A
+workaround counts even when it worked.
+
+Report only what happened in this task, with what it cost (a re-run, a
+workaround, a guess). Do not go looking for faults, suggest general
+improvements, or list things that might go wrong. "None" is the usual answer,
+and a good one. Problems with the source material or the project's Moodle
+setup are not frictions; flag them as usual. See `WORKFLOW.md`, "Frictions".
+
 ## Tools
 
 `Read`, `Glob`, `Grep`, and `Bash` for text extraction and file inspection. You
@@ -240,4 +253,8 @@ Flagged for review: F items
 
 Flags:
 - <items needing a human decision>
+
+Frictions:
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```
