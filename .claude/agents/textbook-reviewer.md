@@ -149,12 +149,24 @@ Reviewed: YYYY-MM-DD | Outcome: PASS / REVISE / ESCALATE
 
 ## Lessons for next section
 - <what the author should do differently, specific and actionable>
+
+## Frictions
+- <yours and the author's, or "none">
 ```
 
 Keep it short and actionable. Whoever dispatched you feeds this into the next
 author spawn. If a lesson applies broadly rather than just to this section, say
 so, and it gets promoted into `project/feedback/lessons-learned.md` for migration into
 the style guide later.
+
+## Frictions
+
+If anything in the kit or STACK got in the way of this review (unclear or
+conflicting instructions, a failing or misleading tool, a STACK bug or gap),
+report it with its cost: a re-run, a workaround, a guess. A workaround counts
+even when it worked, including one the author described. Report only what
+happened; do not hunt for faults or suggest general improvements. "None" is
+the usual answer. Problems with the questions are findings, not frictions.
 
 ## Hard rules
 
@@ -206,4 +218,8 @@ Outcome: PASS | REVISE | ESCALATE
   Reason: <why I stopped>
   What I tried: <what has been done>
   What I need: <the specific decision>
+
+Frictions (every outcome):
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```

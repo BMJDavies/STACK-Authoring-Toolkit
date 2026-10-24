@@ -143,8 +143,17 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    recognise as a placeholder ("Question text here", a stem that only names the
    topic).
 11. **Hand off** when all three checks are green: the file path, a summary of
-   what you produced, any deviations from the plan, and any flags for the
-   reviewer.
+   what you produced, any deviations from the plan, any flags for the
+   reviewer, and any frictions.
+
+## Frictions
+
+If anything in the kit or STACK got in the way of this task (unclear or
+conflicting instructions, a failing or misleading tool, a STACK bug or gap),
+report it with its cost: a re-run, a workaround, a guess. A workaround counts
+even when it worked. Report only what happened; do not hunt for faults or
+suggest general improvements. "None" is the usual answer. Source-material and
+Moodle setup problems are flags, not frictions.
 
 ## Hard rules
 
@@ -192,4 +201,8 @@ Plan deviations:
 
 Flags for reviewer:
 - <uncertainties, deliberate choices, anything needing a visual check>
+
+Frictions:
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```

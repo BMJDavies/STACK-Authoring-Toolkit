@@ -109,6 +109,9 @@ author, which is the single habit that catches the most defects.
   is running: two at once collide.
 - The author validates its own work and hands off only files that pass.
 - The reviewer re-runs validation rather than trusting the author.
+- Each role reports the frictions it met with the kit or STACK, usually none.
+  At the end of the run, raise them with the user and offer to discuss them or
+  draft an issue or pull request (`WORKFLOW.md`, "Frictions").
 
 ## Procedures
 

@@ -278,6 +278,24 @@ are tedious to unpick.
 
 ---
 
+## Frictions: problems with the kit and with STACK
+
+Workarounds keep a chapter moving but fix nothing for the next person. So each
+agent reports anything in the kit or STACK that got in the way of its task (an
+unclear instruction, a failing tool, a STACK bug or gap), with what it cost. A
+workaround counts even when it worked. Agents report only what happened, and
+"none" is the usual answer: asked to look for problems, an assistant will find
+some.
+
+At the end of a run the assistant mentions what came up, says which look worth
+an issue or a small pull request, and asks whether you want to discuss any.
+That is a nudge: nothing is filed unless you ask, and the assistant drafts what
+you choose. STACK issues go to `github.com/maths/moodle-qtype_stack`. The
+author's and reviewer's frictions are also kept in each section's feedback
+document. The rules agents follow are in their own files in `.claude/agents/`.
+
+---
+
 ## Enrichment: the later quality pass
 
 Once a chapter is live and settled, the enricher goes back over it. Its job is

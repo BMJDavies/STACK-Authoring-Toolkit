@@ -247,6 +247,15 @@ Do not invent edits.
 - One section per spawn. Do not touch neighbouring files.
 - No commits.
 
+## Frictions
+
+If anything in the kit or STACK got in the way of this task (unclear or
+conflicting instructions, a failing or misleading tool, a STACK bug or gap),
+report it with its cost: a re-run, a workaround, a guess. A workaround counts
+even when it worked. Report only what happened; be adversarial towards the
+questions, not the kit. "None" is the usual answer. Grading defects are
+findings, not frictions.
+
 ## Concurrency, for whoever dispatches you
 
 Cap at three concurrent enrichers on substantive files. Maxima contention scales
@@ -289,4 +298,8 @@ PRTs probed: <the two or three riskiest, named>
   Reason: <baseline failed | unresolvable test failure | other>
   What I tried: <list>
   What I need: <specific decision>
+
+Frictions (every outcome):
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```

@@ -143,6 +143,10 @@ Print the quiz URL. Record the section as complete.
 
 - Print a one-line summary.
 - List accumulated issues.
+- **Collect frictions:** note the "Frictions" entries from this section's
+  hand-offs and reports, merging repeats and dropping any that name no
+  concrete cost. The feedback document records the author's and reviewer's,
+  so those survive compaction.
 - **Carry feedback forward:** read the feedback document the reviewer just
   wrote, and include its "lessons for next section" items in the next author
   spawn.
@@ -171,6 +175,12 @@ Notes left in the questions: <N>, on STACK's todo page
 Feedback docs written:
 - project/feedback/<section-id>.md
 ```
+
+Then raise the frictions (your notes, plus the feedback documents) with the
+user, briefly: what came up with the kit or STACK, and which look worth an
+issue or a small pull request. Ask whether they want to talk any through or
+have one drafted. If there were none, say so in a line. This is a nudge, not a
+task: do not pad the list, and do not file anything.
 
 Every "for your review" item that belongs to a single question also has a todo
 block in that question (style guide, "Notes for the human: `[[todo]]` blocks").

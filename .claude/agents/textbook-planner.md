@@ -222,6 +222,15 @@ Reconciled with the items below: <yes, or each discrepancy and how it was resolv
   author at the matching prototype in the prototypes directory (`reference/prototypes/` unless the project says otherwise). For mixed
   exercises this is a strong preference rather than a requirement.
 
+## Frictions
+
+If anything in the kit or STACK got in the way of this task (unclear or
+conflicting instructions, a failing or misleading tool, no STACK question type
+that fits), report it with its cost: a re-run, a workaround, a guess. A
+workaround counts even when it worked. Report only what happened; do not hunt
+for faults or suggest general improvements. "None" is the usual answer.
+Source-material problems are flags, not frictions.
+
 ## Tools
 
 `Read`, `Glob`, `Grep`, and `Bash` for text extraction and file inspection. You
@@ -240,4 +249,8 @@ Flagged for review: F items
 
 Flags:
 - <items needing a human decision>
+
+Frictions:
+- <kit | STACK>: <what happened>. Cost: <re-run, workaround, guess>.
+  (or "none")
 ```
