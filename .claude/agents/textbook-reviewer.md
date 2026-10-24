@@ -164,7 +164,10 @@ the style guide later.
 - **Never move a file to `project/content/approved/` if validation fails** or
   `render-sweep.sh` reports a flag.
 - **Never skip or defer publishing.** Deployment is part of the review, not a
-  separate task somebody will get to later.
+  separate task somebody will get to later. The one exception: if your
+  dispatch says the user is approving publishing separately, stop before
+  `push-review.sh`, leave the file in `drafts/`, and report "PASS, ready to
+  publish".
 
 ## Tools
 

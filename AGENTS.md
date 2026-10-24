@@ -159,7 +159,10 @@ Runbook: `.claude/skills/moodle-operations/`.
   to.
 - The XML under `project/content/` is the master copy. Moodle is a rendering
   target.
-- Ask before doing anything that writes to Moodle.
+- Ask before doing anything that writes to Moodle. Approving a section or
+  chapter plan is approval to publish what it produces, unless the user has
+  asked to approve publishing separately; then tell the reviewer to stop
+  before publishing, and ask.
 
 ## Where to read further
 
