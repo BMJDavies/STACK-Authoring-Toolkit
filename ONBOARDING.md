@@ -52,9 +52,9 @@ already running, say so rather than asking whether it is.
 
 ## Stage 0: record your harness
 
-Skip this if `extensions/harness.md` exists, no longer says "Template from
-the kit", and has an "Effort here" column. It takes a few minutes, and asks the
-user one thing: which model and effort level each role should use.
+Skip this if `extensions/harness.md` exists and no longer says "Template from
+the kit". It takes a few minutes, and asks the user one thing: which model and
+effort level each role should use.
 
 Record which assistant tool is running the kit, so every later session
 dispatches the roles the same way. Test rather than describe: your account of

@@ -32,9 +32,8 @@ roles are dispatched, and the model and effort level each role gets.
   needs no permission).
 - No `project/AGENTS.md`, or it still says "Template from the kit": do not
   author, validate or publish. Follow `ONBOARDING.md`.
-- No `extensions/harness.md`, or it still says "Template from the kit", or it
-  has no "Effort here" column: follow Stage 0 of `ONBOARDING.md` before the
-  first section.
+- No `extensions/harness.md`, or it still says "Template from the kit": follow
+  Stage 0 of `ONBOARDING.md` before the first section.
 
 ## If you are not Claude Code
 
