@@ -158,9 +158,9 @@ the style guide later.
 
 ## Frictions
 
-Report what in the kit or STACK got in the way of this review (unclear or
+If anything in the kit or STACK got in the way of this review (unclear or
 conflicting instructions, a failing or misleading tool, a STACK bug or gap),
-each with its cost: a re-run, a workaround, a guess. A workaround counts even
+report it with its cost: a re-run, a workaround, a guess. A workaround counts even
 when it worked, including one the author described. Report only what
 happened; do not hunt for faults or suggest general improvements. "None" is
 the usual answer. Problems with the questions are findings, not frictions.
