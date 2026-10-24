@@ -177,10 +177,10 @@ Feedback docs written:
 ```
 
 Then raise the frictions (your notes, plus the feedback documents) with the
-user, briefly: what came up with the kit or STACK, and which look worth an issue or a small pull request. Ask whether they
-want to talk any through or have one drafted. If there were none, say so in a
-line. This is a nudge, not a task: do not pad the list, and do not file
-anything.
+user, briefly: what came up with the kit or STACK, and which look worth an
+issue or a small pull request. Ask whether they want to talk any through or
+have one drafted. If there were none, say so in a line. This is a nudge, not a
+task: do not pad the list, and do not file anything.
 
 Every "for your review" item that belongs to a single question also has a todo
 block in that question (style guide, "Notes for the human: `[[todo]]` blocks").

@@ -292,8 +292,7 @@ an issue or a small pull request, and asks whether you want to discuss any.
 That is a nudge: nothing is filed unless you ask, and the assistant drafts what
 you choose. STACK issues go to `github.com/maths/moodle-qtype_stack`. The
 author's and reviewer's frictions are also kept in each section's feedback
-document. The rules agents
-follow are in their own files in `.claude/agents/`.
+document. The rules agents follow are in their own files in `.claude/agents/`.
 
 ---
 
