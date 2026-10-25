@@ -5,14 +5,15 @@ argument-hint: "<chapter> [source path]"
 
 You are running a full chapter. You work in the main conversation so that you
 can spawn the planner, author and reviewer agents directly. A subagent cannot
-spawn subagents, so this coordination cannot itself be delegated.
+spawn subagents, so this coordination cannot itself be delegated. If your tool
+has no subagents, dispatch each agent the way `extensions/harness.md` says.
 
 Follow the protocol below. The supervision is the point: verify each step
 yourself rather than trusting an agent's report of success.
 
 ## Step 1: gather the chapter spec
 
-From `$ARGUMENTS` or by asking:
+From the chapter reference the user gave you (`$ARGUMENTS`), or by asking:
 
 1. Topic or book identifier
 2. Chapter number and name
@@ -24,7 +25,14 @@ From `$ARGUMENTS` or by asking:
 Do not start without at least 1 to 3.
 
 Course ids, question bank ids and `--course=` keys are in `project/project.conf`
-and summarised in `project/CLAUDE.md`. Read them rather than assuming.
+and summarised in `project/AGENTS.md`. Read them rather than assuming.
+
+Then show the user the model and effort level for each role from
+`extensions/harness.md`, and ask in one line whether they still suit this
+chapter: a newer model, a quota or budget that may not cover a whole chapter,
+or review findings from the last chapter that the plan should have prevented.
+`WORKFLOW.md`, "Choosing models and effort", has the trade-offs. Record any
+change in `extensions/harness.md` before starting.
 
 ## Step 2: session startup
 
@@ -135,6 +143,10 @@ Print the quiz URL. Record the section as complete.
 
 - Print a one-line summary.
 - List accumulated issues.
+- **Collect frictions:** note the "Frictions" entries from this section's
+  hand-offs and reports, merging repeats and dropping any that name no
+  concrete cost. The feedback document records the author's and reviewer's,
+  so those survive compaction.
 - **Carry feedback forward:** read the feedback document the reviewer just
   wrote, and include its "lessons for next section" items in the next author
   spawn.
@@ -167,6 +179,12 @@ Feedback docs written:
 - project/feedback/<section-id>.md
 ```
 
+Then raise the frictions (your notes, plus the feedback documents) with the
+user, briefly: what came up with the kit or STACK, and which look worth an
+issue or a small pull request. Ask whether they want to talk any through or
+have one drafted. If there were none, say so in a line. This is a nudge, not a
+task: do not pad the list, and do not file anything.
+
 Every "for your review" item that belongs to a single question also has a todo
 block in that question (style guide, "Notes for the human: `[[todo]]` blocks").
 The user can work through the list in Moodle or answer here. Resolve them as
@@ -184,8 +202,8 @@ Do not commit. That is the user's call.
 - Retry a failed spawn once, then escalate. Do not loop.
 - Never author XML yourself. Always use the `textbook-author` agent.
 - Never commit.
-- Run agents in the foreground. The pipeline is sequential and two agents
-  touching Moodle at once collide.
+- One agent at a time, as `AGENTS.md` says: wait for each to report back
+  before the next. Two agents touching Moodle at once collide.
 - If a subagent appears to have failed, check the disk before concluding
   anything. Agents reported as failed have often carried on and written their
   file successfully.

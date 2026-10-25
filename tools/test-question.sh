@@ -47,6 +47,11 @@ else
     ENV_ARGS=(-e "VALIDATE_CATEGORYID=$DEV_CATEGORYID" -e "VALIDATE_CONTEXTID=$DEV_CONTEXTID")
 fi
 
+# Route-style tests need STACK 4.13.0 or later in this Moodle.
+if ! "$SCRIPT_DIR/check-stack-version.sh" --moodle "$CONTAINER"; then
+    exit 1
+fi
+
 # Make sure the container has the current validator.
 docker cp "$SCRIPT_DIR/validate-questions.php" "$CONTAINER:/opt/validate-questions.php" >/dev/null
 

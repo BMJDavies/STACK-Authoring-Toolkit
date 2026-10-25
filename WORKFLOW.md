@@ -34,7 +34,8 @@ Four agents, in `.claude/agents/`:
   at the bottom of this file.
 
 Two slash commands drive them: `/develop-section` for one section,
-`/develop-chapter` for a whole chapter.
+`/develop-chapter` for a whole chapter. If your assistant has no slash
+commands, ask in words: "develop Ch5 Section B".
 
 ## Why it is split up
 
@@ -50,6 +51,53 @@ cannot hand off anything that fails validation. The reviewer has fresh eyes and
 an explicit checklist. None of them is optional, and the reviewer re-running
 validation rather than believing the author is the single most valuable habit in
 the whole pipeline.
+
+---
+
+## Choosing models and effort
+
+The kit names no models. Which ones exist, what they cost and how good they are
+changes every few months and differs between tools, so you choose, and
+`extensions/harness.md` records your choice. Your assistant asks you at
+onboarding and again before each chapter. This section is what to weigh.
+
+Two settings matter for each role: the model, and the effort (some tools call it
+reasoning effort or thinking). They matter about equally. A strong model at a
+low effort setting plans like a weaker one: it answers quickly and plausibly,
+and skips the checking that catches a wrong answer key. A good default is to
+leave no role below your tool's middle setting, and to put the planner at the
+top.
+
+What each role needs:
+
+- The planner (`deepest`) decides everything downstream: which items, which
+  misconception, which data, which answers. An error here, such as a
+  mistranscribed data value, survives every later stage, because the author
+  builds the plan faithfully and validation only checks that the questions
+  agree with themselves. Give it your strongest model at the highest effort.
+  It runs once per section, so this is cheap.
+- The reviewer (`rigorous`) is the only stage that reads the whole file against
+  the source with fresh eyes. Give it a strong model at high effort. If you can,
+  make it a different model from the author's, or at least a fresh session: a
+  reviewer shares the blind spots of whatever wrote the file.
+- The author (`standard`) executes a plan and iterates against the validators.
+  It makes the most calls by far, so it dominates the cost. A capable model at
+  medium or high effort is usually enough, because the validators catch its
+  mechanical errors. They do not catch content errors, which is what the
+  reviewer is for.
+- The enricher (`rigorous`) is an independent second read of live content. Use
+  a different model from the one that authored and reviewed the file.
+
+When the strong model is rationed (a monthly quota, a credit limit, a cost you
+care about), economise on the author first, then the enricher. Keep the planner
+and the reviewer strong. Running out partway through a section is worse than
+choosing modestly at the start: the work stops between roles, often after the
+author and before the review. Before a chapter, check that your allowance covers
+it.
+
+Revisit the choice when a new model appears, when your tool changes, when your
+quota or budget changes, and whenever a section's review finds errors the plan
+should have prevented.
 
 ---
 
@@ -183,7 +231,7 @@ workaround, and records it so that it can be taken out once STACK is fixed:
    posts to GitHub itself. Before drafting, the assistant checks `dev`: if the
    defect is already fixed there, the entry records the commit, its status is
    `fixed in dev`, and there is nothing to raise.
-2. **After upgrading STACK,** update the version stamp in `project/CLAUDE.md`
+2. **After upgrading STACK,** update the version stamp in `project/AGENTS.md`
    and ask the assistant to run `tools/check-workarounds.sh`. It reports, for
    each entry, whether the fix is in `dev` (issue closed, or status
    `fixed in dev`), which questions use it, and whether the installed STACK
@@ -203,6 +251,9 @@ The agents are available individually, without the slash commands:
 
 Useful when you are fixing one thing, or when a run died partway and you want to
 pick it up rather than start again.
+
+If your assistant has no subagents, it runs each role as a separate process
+with `tools/run-role.sh` instead. You do not need to run it yourself.
 
 ---
 
@@ -231,11 +282,11 @@ tools/                       scripts
 templates/project/           the skeleton a new project is created from
 
 In your project (project/, its own git repository):
-project/CLAUDE.md            what the project is: sources, locale, Moodle site
+project/AGENTS.md            what the project is: sources, locale, Moodle site
 project/project.conf         all the Moodle ids
 project/style-guide.md       rules for this project only
 project/content/drafts/      the author writes here (naming is your project's
-                             to choose; record it in project/CLAUDE.md)
+                             to choose; record it in project/AGENTS.md)
 project/content/approved/    the reviewer promotes here; the source of truth
 project/content/plans/       plan documents
 project/feedback/            one document per section, plus lessons-learned.md
@@ -266,6 +317,24 @@ are tedious to unpick.
 
 ---
 
+## Frictions: problems with the kit and with STACK
+
+Workarounds keep a chapter moving but fix nothing for the next person. So each
+agent reports anything in the kit or STACK that got in the way of its task (an
+unclear instruction, a failing tool, a STACK bug or gap), with what it cost. A
+workaround counts even when it worked. Agents report only what happened, and
+"none" is the usual answer: asked to look for problems, an assistant will find
+some.
+
+At the end of a run the assistant mentions what came up, says which look worth
+an issue or a small pull request, and asks whether you want to discuss any.
+That is a nudge: nothing is filed unless you ask, and the assistant drafts what
+you choose. STACK issues go to `github.com/maths/moodle-qtype_stack`. The
+author's and reviewer's frictions are also kept in each section's feedback
+document. The rules agents follow are in their own files in `.claude/agents/`.
+
+---
+
 ## Enrichment: the later quality pass
 
 Once a chapter is live and settled, the enricher goes back over it. Its job is
@@ -279,7 +348,8 @@ different from the reviewer's:
 
 Run it with a different model from the one that authored and reviewed the file.
 Independence is the point, and a second opinion from the same model is not a
-second opinion. The agent is configured for Sonnet for exactly this reason.
+second opinion. Record the enricher's model in `extensions/harness.md` with that
+in mind.
 
 Cap it at three concurrent enrichers on substantive files. Maxima contention
 scales badly: three each get a session and finish, four or more queue up and one
@@ -328,11 +398,11 @@ time and nothing to show for it, or none at all.
 
 ---
 
-## Working with Claude Code, if it is new to you
+## Working with an AI assistant, if it is new to you
 
-- `CLAUDE.md` is read at the start of every session, together with
-  `project/CLAUDE.md`, which it imports. Your project's standing instructions go
-  in `project/CLAUDE.md`. Keep it short, because it costs context every time.
+- `AGENTS.md` is read at the start of every session, together with
+  `project/AGENTS.md`, which it reads. Your project's standing instructions go
+  in `project/AGENTS.md`. Keep it short, because it costs context every time.
 - Correct it when it goes wrong, in the moment. "Don't do X, do Y instead" in
   the middle of a task works, and is much better than letting it finish
   something wrong.

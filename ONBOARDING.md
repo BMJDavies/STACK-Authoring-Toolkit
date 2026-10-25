@@ -1,16 +1,24 @@
 # Onboarding
 
-**Audience: the assistant. Follow this when `project/CLAUDE.md` does not exist.**
+**Audience: the assistant. Follow this when `project/AGENTS.md` does not exist,
+or Stage 0 alone when `extensions/harness.md` does not.**
 
 The kit (this folder) is generic and is never edited during onboarding.
 Everything you create belongs to the user's project, in `project/`, which is a
 separate git repository that the kit ignores.
 
 Onboarding may already have been started and left unfinished: `project/` exists,
-or `project/CLAUDE.md` is still the template with its `<...>` placeholders. Work
+or `project/AGENTS.md` is still the template with its `<...>` placeholders. Work
 out how far it got and resume from there rather than starting again. Detection
 below tells you what is already in place, and the steps are written so that
 re-running one is harmless.
+
+**If `project/CLAUDE.md` or `extensions/CLAUDE.md` exists, this is not a new
+project: stop.** The project was set up before the kit renamed its instruction
+files to `AGENTS.md`. Onboarding would treat it as new and put a blank template
+beside the real instructions. Point the user to `UPGRADING.md`,
+"Instruction files renamed to `AGENTS.md`", and offer to do the two renames with
+them.
 
 ## Who you are working with
 
@@ -36,10 +44,45 @@ docker ps -a --format '{{.Names}}'       # containers that exist but are stopped
 uname -sm                                # OS and architecture
 git -C . rev-parse --is-inside-work-tree # is the kit under version control (it should be)
 ls project/ 2>/dev/null                  # has a project folder been started
+ls project/CLAUDE.md extensions/CLAUDE.md 2>/dev/null   # old names: see above
 ```
 
 Report what you found in one short paragraph before asking anything. If Moodle is
 already running, say so rather than asking whether it is.
+
+## Stage 0: record your harness
+
+Skip this if `extensions/harness.md` exists and no longer says "Template from
+the kit". It takes a few minutes, and asks the user one thing: which model and
+effort level each role should use.
+
+Record which assistant tool is running the kit, so every later session
+dispatches the roles the same way. Test rather than describe: your account of
+your own tool is not reliable.
+
+1. Create `extensions/` if needed (`[ -d extensions ] || cp -r templates/extensions
+   extensions`), and copy `templates/extensions/harness.md` there if it is
+   missing.
+2. Fill it in. Take the version from the tool's own `--version`. For "Tested
+   here": can a subagent do a trivial task ("read the first line of
+   `style-guide.md`"); is `/develop-section` among your commands. Set "Route"
+   from the result.
+3. Find out what can be chosen: the models your tool lists, the effort or
+   reasoning levels it offers, and whether a dispatch can set each one. Run the
+   trivial subagent task again naming a model and an effort level, to prove a
+   dispatch can set them, and record whether effort can be set per dispatch.
+4. Ask the user to choose a model and an effort level for each role. Explain
+   the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
+   effort", and offer a proposal they can accept as it is, built from what step
+   3 found. Use only names your tool lists. Record their choice.
+5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
+   --help` describes, with the chosen model and effort as each role's flags,
+   and run `tools/run-role.sh --check` until it passes. If it will not, set
+   "Route" to this conversation. With subagents, delete the `run-role.sh`
+   section.
+6. Check that no `<...>` is left, and delete the comment at the top. Tell the
+   user in two or three sentences what you found. Never edit the role files,
+   which belong to the kit.
 
 ## Stage A: their environment
 
@@ -77,7 +120,7 @@ copy across only what is missing:
 cp -rn templates/project/. project/      # adds missing files, overwrites nothing
 ```
 
-This gives `project/CLAUDE.md` (a template to fill in later), `project.conf`,
+This gives `project/AGENTS.md` (a template to fill in later), `project.conf`,
 `style-guide.md`, `content/`, `feedback/` and `sources/`, each with a short
 explanation. Explain to the user that `project/` is their own repository: the
 kit ignores it, so updating the kit never touches their work.
@@ -100,7 +143,7 @@ not assume, `git -C extensions init` if they want it under version control.
 3b. Where in the world are the students? Currency, names, places and units in
    worded questions follow from this, and the agents will otherwise default to
    wherever their training leans without saying so. Record it in
-   `project/CLAUDE.md`.
+   `project/AGENTS.md`.
 
 4. **Get the material into `project/sources/` before going further.** Ask them
    to put it there, then confirm it has arrived and that you can actually read it:
@@ -135,13 +178,17 @@ plainly rather than improvising it.
 
 ## What to do with the answers
 
-Fill in `project/CLAUDE.md`: replace every `<...>` in the template with their
+Fill in `project/AGENTS.md`: replace every `<...>` in the template with their
 answers, and delete the comment at the top. Keep it short: it is loaded on every
 request, so length here costs them on every interaction. Generic instructions
-are already in the kit's `CLAUDE.md`; do not copy them across.
+are already in the kit's `AGENTS.md`; do not copy them across.
 
 Then fill in `project/project.conf` with the ids that `SETUP.md` section 6
-prints, and offer to walk them through their first section using `WORKFLOW.md`.
+prints, and run `tools/check-stack-version.sh`. If it fails, stop: a STACK older
+than 4.13.0 fails every route-style question test, so nothing can be validated
+until it is upgraded. Say which service is too old and point to the `SETUP.md`
+section the script names. Only when it passes, offer to walk them through their
+first section using `WORKFLOW.md`.
 
 If they want you to commit, make the first commit in `project/`, never in the
 kit.
