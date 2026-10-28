@@ -466,7 +466,9 @@ When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
   will pick it without engaging. When several inputs share one option list (for
   example, justification dropdowns for the steps of a proof), do not order the
   list by step: the positions of the correct options must not climb with the
-  steps, or the answers can be read off the pattern.
+  steps, or the answers can be read off the pattern. Across a quiz, vary the
+  position of the correct option; it must not sit in the same place in most
+  questions.
 - **PRT `tans`:** use `first(mcq_correct(options))`, not `mcq_correct(options)`.
   The latter returns a single-element list, but the student's answer is a
   scalar, so `AlgEquiv(scalar, list)` fails with `ATAlgEquiv_SA_not_list`.
