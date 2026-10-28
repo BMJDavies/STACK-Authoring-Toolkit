@@ -1,8 +1,13 @@
 <?php
 /**
- * Import an XML file into a live course question bank and add it to a quiz.
- * If questions with the same name already exist in the quiz, updates the slot
- * to point to the new version and cleans up the old bank entry.
+ * Publish an XML file into a live course question bank and quiz.
+ *
+ * A question already in the quiz (matched by <name>) gets a new version of its
+ * existing bank entry, through the qbank_importasversion plugin that STACK
+ * requires. Its quiz slot, history and students' attempts are untouched: an
+ * attempt in progress finishes on the version it started with. A question
+ * whose content has not changed is left alone, so republishing a section only
+ * versions what was edited. A question new to the quiz is imported and added.
  *
  * Usage: php push-to-live.php <xml-path> <quiz-id> \
  *            --categoryid=<n> --contextid=<n> [--label="Course name"] [--url=http://...]
@@ -18,6 +23,8 @@ require_once($CFG->dirroot . '/question/format/xml/format.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/lib.php');
 require_once($CFG->libdir . '/questionlib.php');
+// tools/lib/publish.php, copied beside this script by push-live.sh.
+require(preg_replace('/\.php$/', '_lib.php', __FILE__));
 
 // --- Target question bank (supplied by the wrapper from project/project.conf) ---
 $categoryid  = 0;
@@ -47,123 +54,104 @@ if (!file_exists($xmlpath)) {
     die("File not found: $xmlpath\n");
 }
 
+kit_require_importasversion();
+
 $admin = get_admin();
 \core\session\manager::set_user($admin);
-
-$context = context::instance_by_id($contextid);
 
 // Get quiz info
 $quiz = $DB->get_record('quiz', ['id' => $quizid], '*', MUST_EXIST);
 $cm = get_coursemodule_from_instance('quiz', $quiz->id, $quiz->course, false, MUST_EXIST);
 
-// 1. Import XML
-echo "=== Import into $courselabel (cat $categoryid) ===\n";
-
-$format = new qformat_xml();
-$format->setCategory((object)['id' => $categoryid, 'contextid' => $contextid]);
-$format->setContexts([$context]);
-$format->setCatfromfile(false);
-$format->setMatchgrades('error');
-$format->setStoponerror(false);
-$format->setFilename($xmlpath);
-
-ob_start();
-$import_ok = $format->importprocess();
-$raw = ob_get_clean();
-$clean = html_entity_decode(strip_tags($raw), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-$clean = preg_replace('/\n{3,}/', "\n\n", trim($clean));
-echo $clean . "\n";
-
-if (!$import_ok) {
-    echo "=== FAILED ===\n";
+// 1. Split the XML into one file per question.
+$workdir = make_request_directory();
+$incoming = kit_split_questions($xmlpath, $workdir);
+if ($incoming === null) {
+    echo "=== FAILED: $xmlpath is not well-formed XML ===\n";
     exit(1);
 }
-
-$imported_ids = $format->questionids ?? [];
-echo "Imported " . count($imported_ids) . " question(s).\n\n";
-
-if (empty($imported_ids)) {
-    echo "Nothing imported.\n";
+if (empty($incoming)) {
+    echo "No questions in $xmlpath.\n";
     exit(0);
 }
 
-// 2. Build a map of existing quiz slots: name => [slot_id, ref_id, bankentryid]
-$existing_slots = [];
+// 2. The latest version of each question already in the quiz, by name.
 $slots = $DB->get_records('quiz_slots', ['quizid' => $quizid], 'slot');
-foreach ($slots as $slot) {
-    $ref = $DB->get_record('question_references', [
-        'component' => 'mod_quiz',
-        'questionarea' => 'slot',
-        'itemid' => $slot->id
-    ]);
-    if ($ref) {
-        $ver = $DB->get_records('question_versions', ['questionbankentryid' => $ref->questionbankentryid], 'version DESC', '*', 0, 1);
-        $ver = reset($ver);
-        if ($ver) {
-            $q = $DB->get_record('question', ['id' => $ver->questionid]);
-            if ($q) {
-                $existing_slots[$q->name] = [
-                    'slot_id' => $slot->id,
-                    'ref_id' => $ref->id,
-                    'old_bankentryid' => $ref->questionbankentryid,
-                    'page' => $slot->page,
-                ];
-            }
-        }
-    }
-}
+$existing = kit_quiz_questions($quizid);
 
-// 3. Process each imported question: update existing slot or add new
+// 3. Each question: a new version if it is in the quiz and has changed, left
+//    alone if unchanged, added to the quiz if new.
+echo "=== Publish into $courselabel (cat $categoryid) ===\n";
 $maxpage = 0;
 foreach ($slots as $slot) {
     $maxpage = max($maxpage, $slot->page);
 }
 
-$updated = 0;
+$versioned = 0;
+$unchanged = 0;
 $added = 0;
+$replaced = 0;
+$failed = 0;
+$changed_ids = []; // question ids created by this run
 
-foreach ($imported_ids as $qid) {
-    $q = $DB->get_record('question', ['id' => $qid]);
-    // Find the new bank entry for this imported question
-    $new_ver = $DB->get_record('question_versions', ['questionid' => $qid]);
-    $new_bankentryid = $new_ver->questionbankentryid;
+foreach ($incoming as $item) {
+    $name = $item['name'];
+    $info = $existing[$name] ?? null;
 
-    if (isset($existing_slots[$q->name])) {
-        // Question already in quiz: repoint the slot to the new bank entry
-        $info = $existing_slots[$q->name];
-        $old_bankentryid = $info['old_bankentryid'];
-
-        // Update the question_references row to point to new bank entry
-        $DB->set_field('question_references', 'questionbankentryid', $new_bankentryid, ['id' => $info['ref_id']]);
-
-        // Delete the old bank entry and its questions (cleanup)
-        if ($old_bankentryid != $new_bankentryid) {
-            $old_versions = $DB->get_records('question_versions', ['questionbankentryid' => $old_bankentryid]);
-            foreach ($old_versions as $ov) {
-                question_delete_question($ov->questionid);
-            }
-            $DB->delete_records('question_versions', ['questionbankentryid' => $old_bankentryid]);
-            $DB->delete_records('question_bank_entries', ['id' => $old_bankentryid]);
+    if ($info && $info->qtype === $item['qtype']) {
+        $changed = kit_changed_fields($info->questionid, $item['file'], $workdir);
+        if (!$changed) {
+            echo "  Unchanged (v{$info->version}): $name\n";
+            $unchanged++;
+            continue;
         }
-
-        echo "  Updated (p{$info['page']}): {$q->name}\n";
-        $updated++;
+        [$newid, $error] = kit_add_version($info->questionid, $item['file']);
+        if (!$newid) {
+            echo "  FAILED to add a version: $name: $error\n";
+            $failed++;
+            continue;
+        }
+        $changed_ids[] = $newid;
+        $v = $info->version + 1;
+        echo "  New version (v{$v}, changed: " . implode(', ', $changed) . "): $name\n";
+        $versioned++;
+    } else if ($info) {
+        // Moodle cannot version a question into a different type. Import a new
+        // bank entry and point the slot at it; the old entry stays in the bank.
+        $newid = kit_import_new($item['file'], $categoryid, $contextid);
+        if (!$newid) {
+            echo "  FAILED to import: $name\n";
+            $failed++;
+            continue;
+        }
+        $new_ver = $DB->get_record('question_versions', ['questionid' => $newid]);
+        $DB->set_field('question_references', 'questionbankentryid', $new_ver->questionbankentryid, ['id' => $info->ref_id]);
+        $changed_ids[] = $newid;
+        echo "  [WARN] Replaced (type {$info->qtype} -> {$item['qtype']}, so not a new version): $name\n";
+        echo "         The old {$info->qtype} question is still in the bank; delete it there if it is not needed.\n";
+        $replaced++;
     } else {
-        // New question: add to quiz on a new page
+        $newid = kit_import_new($item['file'], $categoryid, $contextid);
+        if (!$newid) {
+            echo "  FAILED to import: $name\n";
+            $failed++;
+            continue;
+        }
         $maxpage++;
-        quiz_add_quiz_question($qid, $quiz, $maxpage);
-        echo "  Added (p{$maxpage}): {$q->name}\n";
+        quiz_add_quiz_question($newid, $quiz, $maxpage);
+        $changed_ids[] = $newid;
+        echo "  Added (p{$maxpage}): $name\n";
         $added++;
     }
 }
 
-// 4. Reorder slots to match XML import order
-// Build name→position map from the imported questions (XML order is authoritative)
-$xml_order = [];
-foreach ($imported_ids as $pos => $qid) {
-    $q = $DB->get_record('question', ['id' => $qid]);
-    if ($q) $xml_order[$q->name] = $pos;
+if ($failed > 0) {
+    echo "\n=== $failed question(s) FAILED; the rest were published ===\n";
 }
+
+// 4. Reorder slots to match XML order (XML order is authoritative)
+$xml_names = array_column($incoming, 'name');
+$xml_order = array_flip($xml_names);
 
 // Re-fetch slots and resolve each to its question name
 $slots = $DB->get_records('quiz_slots', ['quizid' => $quizid], 'slot');
@@ -288,11 +276,11 @@ for ($i = 0; !$use_page_codes && $i < $count; $i++) {
 }
 echo "\nRegrouped quiz into $page page(s).\n";
 
-// 5. Deployed seeds come from the XML (style-guide.md, "Deployed seeds"), so a
+// 6. Deployed seeds come from the XML (style-guide.md, "Deployed seeds"), so a
 // question that has any is left alone. Only a STACK question with none gets 5
 // random seeds, with a warning, because those seeds have not been validated.
 $deployed_count = 0;
-foreach ($imported_ids as $qid) {
+foreach ($changed_ids as $qid) {
     $q = question_bank::load_question($qid);
     if (!($q instanceof qtype_stack_question)) continue;
     if (count($q->deployedseeds) > 0) continue;
@@ -314,17 +302,6 @@ foreach ($imported_ids as $qid) {
 }
 if ($deployed_count > 0) {
     echo "Deployed variants for STACK questions ($deployed_count seeds).\n";
-}
-
-// 6. Delete any in-progress attempts (they reference old question versions)
-$attempts = $DB->get_records('quiz_attempts', ['quiz' => $quizid, 'state' => 'inprogress']);
-$deleted_attempts = 0;
-foreach ($attempts as $attempt) {
-    quiz_delete_attempt($attempt, $quiz);
-    $deleted_attempts++;
-}
-if ($deleted_attempts > 0) {
-    echo "\nDeleted $deleted_attempts in-progress attempt(s) (stale after update).\n";
 }
 
 // 7. Recalculate quiz sumgrades
@@ -352,11 +329,6 @@ foreach ($final_slots as $s) {
 }
 
 // Check 1: slot order matches XML order
-$xml_names = [];
-foreach ($imported_ids as $qid) {
-    $q = $DB->get_record('question', ['id' => $qid]);
-    if ($q) $xml_names[] = $q->name;
-}
 $quiz_names = array_column($final_info, 'name');
 // Only check the imported questions (quiz may have other questions not in this XML)
 $quiz_imported = array_values(array_intersect($quiz_names, $xml_names));
@@ -396,5 +368,9 @@ if ($verify_ok) {
     echo "All checks passed.\n";
 }
 
-echo "\nDone. Updated: $updated, Added: $added.\n";
+echo "\nDone. New versions: $versioned, Unchanged: $unchanged, Added: $added, Replaced: $replaced, Failed: $failed.\n";
 echo "URL: {$siteurl}/mod/quiz/view.php?id={$cm->id}\n";
+
+if ($failed > 0) {
+    exit(1);
+}
