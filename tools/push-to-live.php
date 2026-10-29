@@ -305,8 +305,8 @@ if ($deployed_count > 0) {
 }
 
 // 7. Recalculate quiz sumgrades
-$quiz = $DB->get_record('quiz', ['id' => $quizid], '*', MUST_EXIST);
-quiz_update_sumgrades($quiz);
+\mod_quiz\grade_calculator::create(\mod_quiz\quiz_settings::create($quizid))
+    ->recompute_quiz_sumgrades();
 
 // 8. Verify: slot order matches XML, no lonely pages, descriptions grouped with questions
 echo "\n=== Verification ===\n";

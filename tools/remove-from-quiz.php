@@ -115,7 +115,7 @@ foreach ($remaining as $s) {
 }
 
 // Recalculate sumgrades
-$quiz = $DB->get_record('quiz', ['id' => $quizid]);
-quiz_update_sumgrades($quiz);
+\mod_quiz\grade_calculator::create(\mod_quiz\quiz_settings::create($quizid))
+    ->recompute_quiz_sumgrades();
 
 echo "\nDone. Remaining slots renumbered.\n";
