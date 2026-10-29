@@ -468,7 +468,9 @@ When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
   list by step: the positions of the correct options must not climb with the
   steps, or the answers can be read off the pattern. Across a quiz, vary the
   position of the correct option; it must not sit in the same place in most
-  questions.
+  questions. Yes/No and True/False dropdowns are the exception: keep Yes
+  before No (True before False) on every row, even when the answer is Yes,
+  and vary which rows of a table are Yes instead.
 - **PRT `tans`:** use `first(mcq_correct(options))`, not `mcq_correct(options)`.
   The latter returns a single-element list, but the student's answer is a
   scalar, so `AlgEquiv(scalar, list)` fails with `ATAlgEquiv_SA_not_list`.

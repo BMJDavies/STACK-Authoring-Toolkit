@@ -244,3 +244,50 @@ project).
 
 **Restore.** Delete the marked lines, and give each node sans `ansk` and tans
 the set it compared with, as each question's todo block lists.
+
+### stack-1944
+
+- Issue: https://github.com/maths/moodle-qtype_stack/issues/1944
+- Upstream: 2026101500
+- Status: open
+- Found: 2026-10-18, Section 6B plan of the Axler project (finding 17(b)); drafted 2026-10-27 in the 7D plan as `stack-wa-orthonormal-hermitian`; raised 2026-10-28
+- Fix: not in dev yet (checked 2026-10-28); proposed as an uncommitted change on branch `iss1944` of the user's clone
+
+**Defect.** The linear algebra functions use the real dot product on complex
+vectors, never the conjugate transpose. In `stack/maxima/contrib/matrix.mac`
+(compiled from `stack/maximasrc/linearalgebra/predicates/orthogonal_predicates.mac`),
+`_orthogonal_check_matrix` computes `transpose(M) . M` (or
+`transpose(M) . sp . M`), and `orthogonal_columnsp`, `orthonormal_columnsp`
+and `orth_matrixp` are built on it, so no library predicate tests
+orthonormality in \(\mathbf{C}^n\) or unitarity. Reproduction (STACK 4.13.1,
+2026080600): `orth_matrixp(matrix([3,4*%i],[4*%i,3])/5)` gives `false`, where
+`true` is expected (the matrix is unitary);
+`orthonormal_columnsp(matrix([sqrt(2),%i],[%i,-sqrt(2)]))` gives `true`, where
+`false` is expected (both columns have norm \(\sqrt3\)). Separately, for real
+data too, `orthonormal_columnsp` is `false` on every single column
+(`orthonormal_columnsp(matrix([1],[0]))`): a one-column product is a number,
+not `matrix([1])`. The same issue covers `proj`, `orthogonalize`,
+`normalize`, `basisify(M, true)` and `projection_matrix` in
+`contrib/vectorspaces.mac`, and `mat_solve(A, b, true)` in
+`linearalgebra_core.mac`; for example `projection_matrix(matrix([1],[%i]))`
+stops with "expt: undefined: 0 to a negative exponent". On real data all of
+these are correct, apart from the single-column case.
+
+**Workaround.** On complex data, do not call these functions. Test
+orthonormality, unitarity and norms with the conjugate transpose in the
+question or feedback variables, marked with the comment:
+
+    isop: lambda([MM], block([nq], nq: length(MM[1]), is(ratsimp(radcan(rectform(ctranspose(MM) . MM))) = ident(nq)))); /* stack-1944 */
+
+or, for a list of column vectors or a single column, the inner products
+\(\langle u,v\rangle = u^{\mathrm t}\bar v\) one by one (a one-column
+`ctranspose(B) . B` is a number, so compare it with `1`, not `ident(1)`). Build
+projections as `B . invert(ctranspose(B) . B) . ctranspose(B)`. Real data may
+keep the library calls, as long as no call is on a single column.
+
+**Restore.** Once a release with the fix is installed, replace each marked
+test with the library call: `isop(MM)` by `orth_matrixp(MM)` for a square
+matrix, or `orthonormal_columnsp(MM)` for a list or a non-square matrix; an
+inner-product check by `orthonormal_columnsp` or `orthogonal_columnsp` on the
+list; then delete `isop` and re-validate. Each question's todo block lists its
+lines.
