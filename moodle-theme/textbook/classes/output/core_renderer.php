@@ -20,7 +20,7 @@
  * Extends Boost's renderer to load this theme's JavaScript modules.
  *
  * @package    theme_textbook
- * @copyright  2026 Ben Davies
+ * @copyright  2026 Ben Davies and the University of Southampton
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

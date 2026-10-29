@@ -304,7 +304,7 @@ says what to do when they do.
 
 ## Licence
 
-Copyright 2026 Ben Davies.
+Copyright 2026 Ben Davies and the University of Southampton.
 
 The kit is free software: you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
