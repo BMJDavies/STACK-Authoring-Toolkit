@@ -6,7 +6,7 @@
  * handle re-renders after Check button clicks (AJAX replaces DOM).
  *
  * @module     theme_textbook/dropdown_placeholder
- * @copyright  2026 Your institution
+ * @copyright  2026 Ben Davies
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 define([], function() {

@@ -19,7 +19,7 @@
  * Sets up language customisations for quiz labels.
  *
  * @package    theme_textbook
- * @copyright  2026 Your institution
+ * @copyright  2026 Ben Davies
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

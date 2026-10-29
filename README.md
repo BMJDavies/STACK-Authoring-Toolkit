@@ -96,6 +96,8 @@ then extensions, then project, and the later one wins where they disagree.
 
 ```
 README.md                  this file, for you
+LICENSE                    GNU GPL v3, the licence for the whole kit
+VERSION  CHANGELOG.md      the kit's version, and what changed in each release
 ONBOARDING.md              setup interview, for your assistant
 AGENTS.md                  standing instructions for the assistant (never rewritten)
 CLAUDE.md  GEMINI.md       one-line stubs that import AGENTS.md
@@ -279,11 +281,42 @@ included here, and neither are its conventions: the style guide names no
 syllabus, phase or awarding body, and has been used unchanged at other levels and
 in other countries. No knowledge of that project is needed to use this kit.
 
-The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
-header is a placeholder to fill in.
+The theme is a Boost child theme and, like Moodle, is GPL v3 or later.
+`tools/stackapi/config.php` is taken from STACK and keeps STACK's copyright
+header.
 
 The reference XML under `reference/` consists of purpose-written
 exemplars demonstrating each question pattern. The mathematics in them is
 standard school and early-undergraduate material.
 
 STACK is GPL, and is maintained by Chris Sangwin and colleagues at The University of Edinburgh.
+
+---
+
+## Version
+
+The kit's version is in `VERSION`, and `CHANGELOG.md` lists what changed in
+each release. Releases are tagged in git (`v0.1.0` and so on). Before 1.0 the
+layout and the instructions may still change between releases; `UPGRADING.md`
+says what to do when they do.
+
+---
+
+## Licence
+
+Copyright 2026 Ben Davies.
+
+The kit is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. This covers everything in the kit: the tools, the theme, the agent
+definitions, the documentation, the templates and the reference questions. The
+full text is in `LICENSE`.
+
+The kit is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+The licence covers the kit, not what you make with it. The questions, plans and
+other content you produce in `project/`, and your own files in `extensions/`,
+are yours, to license however you choose.
