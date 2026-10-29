@@ -79,6 +79,26 @@ if (empty($incoming)) {
 $slots = $DB->get_records('quiz_slots', ['quizid' => $quizid], 'slot');
 $existing = kit_quiz_questions($quizid);
 
+// Refuse, before changing anything, if the quiz holds questions this file does
+// not. The file sets the slot order, so they would be moved to the end: pushing
+// Section B alone into a quiz that also holds Section A would put B first. A
+// quiz is one section (style-guide.md), and a renamed question leaves its old
+// name behind, so either way the fix is the user's, not this script's.
+$others = array_diff(array_keys($existing), array_column($incoming, 'name'));
+if ($others) {
+    echo "=== REFUSED: quiz $quizid holds " . count($others) . " question(s) that are not in $xmlpath ===\n";
+    foreach ($others as $name) {
+        echo "  $name\n";
+    }
+    echo "Nothing was changed. Publishing would move them to the end of the quiz.\n";
+    echo "- Another section's questions: publish each section into its own quiz.\n";
+    echo "- A question renamed in the file: remove the old name from the quiz first\n";
+    echo "  (tools/remove-from-quiz.php), then publish again.\n";
+    echo "- A one-question file: publish the whole section file instead. Unchanged\n";
+    echo "  questions are left alone.\n";
+    exit(1);
+}
+
 // 3. Each question: a new version if it is in the quiz and has changed, left
 //    alone if unchanged, added to the quiz if new.
 echo "=== Publish into $courselabel (cat $categoryid) ===\n";
@@ -170,7 +190,8 @@ foreach ($slots as $s) {
                     'xml_pos' => isset($xml_order[$q->name]) ? $xml_order[$q->name] : -1];
 }
 
-// Sort by XML position (questions not in XML keep their relative order at the end)
+// Sort by XML position. Every named question is in the XML (checked above), so
+// only a slot whose question could not be resolved lands at the end.
 usort($slot_info, function($a, $b) {
     if ($a['xml_pos'] === -1 && $b['xml_pos'] === -1) return 0;
     if ($a['xml_pos'] === -1) return 1;
@@ -330,7 +351,6 @@ foreach ($final_slots as $s) {
 
 // Check 1: slot order matches XML order
 $quiz_names = array_column($final_info, 'name');
-// Only check the imported questions (quiz may have other questions not in this XML)
 $quiz_imported = array_values(array_intersect($quiz_names, $xml_names));
 if ($quiz_imported !== $xml_names) {
     echo "WARNING: Slot order does not match XML order.\n";
