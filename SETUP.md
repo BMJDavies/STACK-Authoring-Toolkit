@@ -459,6 +459,13 @@ every question fails with "The version of the STACK-Maxima libraries being
 used ... does not match what is expected", the images and the configuration
 disagree: recreate the containers with that command.
 
+By default the images are each version's `-latest` build on Docker Hub, and a
+publisher can point `-latest` at a broken build: `stackmaths/stackapi:2026062900-latest`
+ships empty PHP files. To pin an exact build, set `GOEMAXIMA_BUILD` and
+`STACKAPI_BUILD` in `tools/stackapi/.env` to the part of the tag after the
+version (for 2026062900, `1.2.0` and `1`), then recreate the containers with
+`--force-recreate`. Like the version, the pin is per machine.
+
 ### Build the API image
 
 `mathinstitut/goemaxima` is published for every STACK release, but
@@ -488,7 +495,7 @@ grading against different random sequences than your Moodle will.
 `tools/check-stack-version.sh` compares them for you, and both validators run it
 before they start.
 
-Editing the tags does not upgrade containers that are already running.
+Editing `tools/stackapi/.env` does not upgrade containers that are already running.
 `api-check.sh` refuses to run until they match, and prints the command that
 recreates them:
 
@@ -496,7 +503,7 @@ recreates them:
 docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d --force-recreate
 ```
 
-**Never pin below STACK 4.13.0 (2026062900), in Moodle or in these images.**
+**Never set STACK_VERSION below 4.13.0 (2026062900), and never run Moodle below it.**
 The style guide requires question tests to give the full route through each PRT
 (`prt1-1-F | prt1-2-T`). This form was added in 4.13.0. Older STACK compares
 only a single final note, so every route-style test fails there, even though

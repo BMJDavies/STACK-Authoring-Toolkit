@@ -14,8 +14,10 @@ services:
     # the STACK version installed in YOUR Moodle: question/type/stack/version.php
     # ($plugin->version). rand() sequences and grading change between STACK
     # versions, so a mismatch can cause false fails, or pass while grading
-    # differently.
-    image: mathinstitut/goemaxima:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-latest
+    # differently. GOEMAXIMA_BUILD, also in .env, pins an exact build of that
+    # version; it defaults to latest, which a publisher can point at a broken
+    # build.
+    image: mathinstitut/goemaxima:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-${GOEMAXIMA_BUILD:-latest}
     tmpfs:
       - "/tmp"
     restart: unless-stopped
@@ -31,8 +33,9 @@ services:
     platform: linux/amd64
     # STACKAPI_IMAGE defaults to the published image. Where Docker Hub has none
     # for your version, build one and set STACKAPI_IMAGE=stackapi-local in .env:
-    # see SETUP.md, "Build the API image".
-    image: ${STACKAPI_IMAGE:-stackmaths/stackapi}:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-latest
+    # see SETUP.md, "Build the API image". STACKAPI_BUILD pins an exact build,
+    # as GOEMAXIMA_BUILD does above.
+    image: ${STACKAPI_IMAGE:-stackmaths/stackapi}:${STACK_VERSION:?Set STACK_VERSION in tools/stackapi/.env, see SETUP.md}-${STACKAPI_BUILD:-latest}
     restart: unless-stopped
     environment:
       STACK_VERSION: ${STACK_VERSION}

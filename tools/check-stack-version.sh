@@ -10,7 +10,8 @@
 # image. The message says what to run.
 #
 # The minimum lives in tools/stack-version and nowhere else. The validator's
-# version is the image tag in tools/stackapi/docker-compose.yml.
+# version is the image tag in tools/stackapi/docker-compose.yml, or STACK_VERSION
+# in tools/stackapi/.env when the compose file takes it from there.
 
 set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -39,13 +40,13 @@ check_validator() {
     # The validation service: the standalone STACK API and its Maxima, in two
     # Docker containers on localhost:3080. It checks XML; students never see it.
     if [ -z "$PIN" ] || [ "$PIN" -lt "$MIN_STACK_VERSION" ]; then
-        echo "FAIL validation service: docker-compose.yml pins ${PIN:-nothing}, below the minimum $MIN_STACK_VERSION ($MIN_STACK_RELEASE)."
+        echo "FAIL validation service: configured for STACK ${PIN:-nothing}, below the minimum $MIN_STACK_VERSION ($MIN_STACK_RELEASE)."
         echo "     Raise STACK_VERSION in tools/stackapi/.env (or the image tags in $COMPOSE)."
         FAIL=1
         return
     fi
     # The API's replies carry no version, so compare the running images with
-    # the ones docker-compose.yml pins.
+    # the ones docker-compose.yml and .env select.
     local running pinned
     running=$(docker compose -f "$COMPOSE" -p stackapi ps --format '{{.Image}}' 2>/dev/null | sort | tr '\n' ' ')
     pinned=$(docker compose -f "$COMPOSE" config --images 2>/dev/null | sort | tr '\n' ' ')
@@ -57,7 +58,7 @@ check_validator() {
         echo "ok   validation service (localhost:3080): STACK $PIN"
         return
     fi
-    echo "FAIL validation service: running ${running% } but docker-compose.yml pins ${pinned% }."
+    echo "FAIL validation service: running ${running% } but docker-compose.yml and tools/stackapi/.env select ${pinned% }."
     echo "     Editing the pin does not upgrade running containers. Recreate them:"
     echo "     docker compose -f $COMPOSE -p stackapi up -d --force-recreate"
     FAIL=1
@@ -78,7 +79,7 @@ check_moodle() {
         echo "     Route-style question tests fail on older STACK. Upgrade it: SETUP.md section 3."
         FAIL=1
     elif [ -n "$PIN" ] && [ "$v" != "$PIN" ]; then
-        echo "warn Moodle ($c): STACK $v, but the validation service pins $PIN. Random"
+        echo "warn Moodle ($c): STACK $v, but the validation service runs $PIN. Random"
         echo "     sequences can differ between versions. Align them: SETUP.md section 8."
     else
         echo "ok   Moodle ($c): STACK $v"
