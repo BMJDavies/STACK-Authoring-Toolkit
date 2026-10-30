@@ -21,6 +21,7 @@ define('CLI_SCRIPT', true);
 require('/var/www/html/config.php');
 require_once($CFG->dirroot . '/question/engine/bank.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
+require_once($CFG->dirroot . '/question/editlib.php'); // get_questions_category(), used by the exporter
 
 global $DB;
 
@@ -65,8 +66,10 @@ foreach ($rows as $r) {
 
 echo "Exporting " . count($question_ids) . " question(s) from quiz $quizid...\n";
 
-// Use Moodle's qformat_xml exporter. It needs a category context; we pick the
-// context of the first question's category.
+// Use Moodle's qformat_xml exporter. It needs a context; we pick the context
+// of the first question's category. Do not give it the category itself: with
+// one set, the exporter ignores setQuestions() and exports every question in
+// the category, which for a course bank is every section.
 $first_cat_sql = 'SELECT qbe.questioncategoryid, qc.contextid
                   FROM {question} q
                   JOIN {question_versions} qv ON qv.questionid = q.id
@@ -78,7 +81,6 @@ $catrow = $DB->get_record_sql($first_cat_sql, ['qid' => $question_ids[0]]);
 $context = context::instance_by_id($catrow->contextid);
 
 $format = new qformat_xml();
-$format->setCategory((object)['id' => $catrow->questioncategoryid, 'contextid' => $catrow->contextid]);
 $format->setContexts([$context]);
 $format->setCattofile(false);
 $format->setQuestions(array_map(function($qid) { global $DB; return $DB->get_record('question', ['id' => $qid]); }, $question_ids));
