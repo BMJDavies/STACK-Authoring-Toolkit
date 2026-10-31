@@ -438,26 +438,64 @@ tools/api-check.sh reference/showcase.xml
 The first run pulls two Docker images and takes a few minutes. After that it is
 quick.
 
-One thing to keep an eye on: `tools/stackapi/docker-compose.yml` pins the STACK
-and Maxima image versions. **They must match the STACK version installed in your
-Moodle** (check `question/type/stack/version.php`, the `$plugin->version`
-number). Random number sequences and grading behaviour change between STACK
-versions, so a mismatch produces confusing false failures. When you upgrade
-STACK, bump both image tags together.
-
-The shipped pins go stale as soon as STACK moves, so check rather than assume:
+First tell it your STACK version. Copy `tools/stackapi/.env.example` to
+`tools/stackapi/.env` and set `STACK_VERSION` to the `$plugin->version` number
+in your Moodle's `question/type/stack/version.php`. This file is machine-local
+and not in git, because each machine's Moodle may run a different STACK. Both
+Docker images and `tools/stackapi/config.php` take the version from it, so it
+is the only place the number is written.
 
 ```bash
+cp tools/stackapi/.env.example tools/stackapi/.env
 grep 'plugin->version' $MOODLE_DOCKER_WWWROOT/question/type/stack/version.php
-grep 'image:' tools/stackapi/docker-compose.yml
 ```
+
+**It must match the STACK version installed in your Moodle.** Random number
+sequences and grading behaviour change between STACK versions, so a mismatch
+produces confusing false failures. When you upgrade STACK, change
+`STACK_VERSION` and restart the API:
+`docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d`. If
+every question fails with "The version of the STACK-Maxima libraries being
+used ... does not match what is expected", the images and the configuration
+disagree: recreate the containers with that command.
+
+By default the images are each version's `-latest` build on Docker Hub, and a
+publisher can point `-latest` at a broken build: `stackmaths/stackapi:2026062900-latest`
+ships empty PHP files. To pin an exact build, set `GOEMAXIMA_BUILD` and
+`STACKAPI_BUILD` in `tools/stackapi/.env` to the part of the tag after the
+version (for 2026062900, `1.2.0` and `1`), then recreate the containers with
+`--force-recreate`. Like the version, the pin is per machine.
+
+### Build the API image
+
+`mathinstitut/goemaxima` is published for every STACK release, but
+`stackmaths/stackapi` is not published for some (check its tags on Docker
+Hub). When there is no API image for your version, build it from STACK's
+source at your release tag, and set `STACKAPI_IMAGE=stackapi-local` in
+`tools/stackapi/.env`:
+
+```bash
+RELEASE=v4.13.1     # your STACK release tag
+git clone --depth 1 --branch "$RELEASE" \
+    https://github.com/maths/moodle-qtype_stack.git /tmp/stack-src
+. tools/stackapi/.env
+grep 'plugin->version' /tmp/stack-src/version.php   # must equal $STACK_VERSION
+cp /tmp/stack-src/api/config_sample.txt /tmp/stack-src/api/config.php
+docker build -f /tmp/stack-src/api/docker/Dockerfile --target production \
+    -t stackapi-local:"$STACK_VERSION"-latest /tmp/stack-src
+docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d
+```
+
+The build needs `api/config.php` in the source and fails without it. It takes
+several minutes and needs a network connection. Each machine needs its own
+build: the image is local and is not pulled from anywhere.
 
 A mismatch does not always fail loudly. It can pass everything and still be
 grading against different random sequences than your Moodle will.
 `tools/check-stack-version.sh` compares them for you, and both validators run it
 before they start.
 
-Editing the tags does not upgrade containers that are already running.
+Editing `tools/stackapi/.env` does not upgrade containers that are already running.
 `api-check.sh` refuses to run until they match, and prints the command that
 recreates them:
 
@@ -465,7 +503,7 @@ recreates them:
 docker compose -f tools/stackapi/docker-compose.yml -p stackapi up -d --force-recreate
 ```
 
-**Never pin below STACK 4.13.0 (2026062900), in Moodle or in these images.**
+**Never set STACK_VERSION below 4.13.0 (2026062900), and never run Moodle below it.**
 The style guide requires question tests to give the full route through each PRT
 (`prt1-1-F | prt1-2-T`). This form was added in 4.13.0. Older STACK compares
 only a single final note, so every route-style test fails there, even though

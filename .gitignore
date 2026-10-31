@@ -20,3 +20,6 @@
 
 # Claude Code local settings (keep .claude/agents, commands and skills tracked)
 .claude/settings.local.json
+
+# Machine-local STACK API settings (see tools/stackapi/.env.example)
+tools/stackapi/.env

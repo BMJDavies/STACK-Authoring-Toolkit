@@ -146,15 +146,30 @@ docker exec <container> php /tmp/qa.php create \
 tools/push-live.sh path/to/approved.xml <quiz-id> --course=<key>
 ```
 
-Imports into the target course's question bank. For questions already in the
-quiz, matched BY NAME, it updates in place: it repoints the quiz slot at the new
-import and deletes the old bank entry. New questions are added on fresh pages.
-It also reorders slots to match the XML sequence, regroups pages, deploys 5
-variants per STACK question, deletes stale in-progress attempts, and runs a
-verification pass checking slot order, lonely pages and orphaned descriptions.
+Publishes into the target course's question bank, question by question. A
+question already in the quiz, matched BY NAME, gets a new version of its
+existing bank entry if its content has changed (Moodle's "Import as new
+version", from the `qbank_importasversion` plugin that STACK requires), and is
+left alone if not; the output names the fields that changed. Nothing is
+deleted: the version history stays in the bank, and a student part-way through
+an attempt finishes on the version they started with. New questions are added
+on fresh pages. It also reorders slots to match the XML sequence, regroups
+pages, deploys 5 unvalidated seeds to any STACK question whose XML has none
+(with a warning), and runs a verification pass checking slot order, lonely
+pages and orphaned descriptions.
 
-Safe to re-run on the same file. Create the target quiz first if it does not
-exist.
+A question whose type changed under the same name (a description that became a
+STACK question, say) cannot be a new version. It is imported as a new bank
+entry, the slot is pointed at it, and a warning says the old one is still in
+the bank.
+
+Safe to re-run on the same file: unchanged questions are reported as such.
+Create the target quiz first if it does not exist. `push-review.sh` works the
+same way for the review quiz.
+
+If someone has edited a question in Moodle, pull the edit back first (below).
+A re-push from a file without it makes a newer version that drops the edit; the
+edit survives only in the history.
 
 Two things to know:
 
@@ -165,8 +180,9 @@ Two things to know:
   count. A wrong-content import keeps the same count, which is exactly why it is
   easy to miss.
 
-Re-pushing a file rebuilds all the question ids. If you are about to send
-someone preview links, query for the ids again after the push, not before.
+Each new version is a new question id, so a re-push changes the id of every
+question it versions. If you are about to send someone preview links, query for
+the ids again after the push, not before.
 
 ## Checking what the page actually looks like
 
@@ -199,6 +215,20 @@ git diff project/content/approved/<filename>.xml
 ```
 
 Use this only to reconcile hand edits. Read the diff before accepting it.
+
+## Exporting one question
+
+Section files hold every question in the section. To get one question as a
+Moodle XML file of its own (to share it, import it by hand, or use Moodle's
+"Import as new version", which takes one question per file):
+
+```bash
+tools/extract-question.py project/content/approved/<file>.xml --list
+tools/extract-question.py project/content/approved/<file>.xml "<question name>" -o <out>.xml
+```
+
+The question is copied unchanged from the master copy, so no Moodle access is
+needed. To export a question as it now stands in Moodle, sync first (above).
 
 ## Questions with `[[todo]]` blocks
 
