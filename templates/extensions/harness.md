@@ -23,6 +23,16 @@ Name the model and effort level from the table below in every dispatch: the role
 files do not carry them. Where effort cannot be set per dispatch, the session's
 effort applies to every role.
 
+## Long commands
+
+`tools/test-question.sh` can run for many minutes, and the roles must wait for
+it without polling (`AGENTS.md`, "Standing rules"). How to do that here:
+
+- Longest timeout for one blocking command, and how to ask for it: <...>
+- What happens to a command that outlasts it: <killed / moved to the background
+  with a notice when it ends / moved to the background silently>
+- So the roles: <...>
+
 ## Models and effort
 
 Chosen by the user at onboarding, from the guidance in `WORKFLOW.md`, "Choosing

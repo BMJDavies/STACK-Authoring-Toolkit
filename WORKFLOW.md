@@ -383,8 +383,12 @@ believing it. Agents reported as dead have frequently carried on and written
 their file successfully.
 
 **Validation seems to have hung.** It produces no output while running, so
-silence is normal and can last a long time. Wait. Do not background it and poll:
-that is the most reliable way to lose a run that was about to succeed.
+silence is normal and can last a long time. Wait. Do not poll it, write sleep
+loops, or start other work on Moodle meanwhile: that is the most reliable way to
+lose a run that was about to succeed. Some tools move a long command to the
+background on their own and say when it ends; that is fine, as long as you wait
+for the notice. `extensions/harness.md`, "Long commands", records what your tool
+does. A finished run prints its elapsed time on the last line.
 
 Silence is also what a genuinely wedged run looks like, so if you need to tell
 them apart, check for a live process rather than guessing from elapsed time:

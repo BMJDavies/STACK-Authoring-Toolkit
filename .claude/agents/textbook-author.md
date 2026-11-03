@@ -111,7 +111,9 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    fast loop: seconds per question, no Moodle import, safe to run alongside
    other work. Read the failures, fix, re-run. Loop until green, or until you
    are genuinely stuck after three rounds, at which point escalate with the
-   specific error.
+   specific error. If it stops with exit 3 ("cannot run on this machine"),
+   the API's images do not run here: use `tools/test-question.sh` as the
+   loop instead.
 
    Known caveat: the API check can false-fail a randomised question whose test
    input is a teacher expression (`ans1: ta`) rather than a literal, and some

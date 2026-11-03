@@ -30,9 +30,9 @@
  */
 
 define('CLI_SCRIPT', true);
-require_once('/var/www/html/config.php');
-require_once('/var/www/html/question/engine/bank.php');
-require_once('/var/www/html/question/engine/lib.php');
+require_once((getenv('MOODLE_ROOT') ?: '/var/www/html') . '/config.php');
+require_once($CFG->dirroot . '/question/engine/bank.php');
+require_once($CFG->dirroot . '/question/engine/lib.php');
 
 global $DB, $PAGE;
 

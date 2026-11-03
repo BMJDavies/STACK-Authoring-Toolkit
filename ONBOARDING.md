@@ -75,12 +75,19 @@ your own tool is not reliable.
    the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
    effort", and offer a proposal they can accept as it is, built from what step
    3 found. Use only names your tool lists. Record their choice.
-5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
+5. Fill in "Long commands" from your tool's documentation of its shell
+   command: the longest timeout a single command can have and how to request
+   it, and what happens to a command that runs past it. Then write the rule
+   the roles follow: request that timeout for `tools/test-question.sh`, and
+   if the tool backgrounds the command and says when it ends, wait for the
+   notice. If it kills the command, say so: the roles must split a large
+   file, or run validation themselves outside the tool.
+6. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
    --help` describes, with the chosen model and effort as each role's flags,
    and run `tools/run-role.sh --check` until it passes. If it will not, set
    "Route" to this conversation. With subagents, delete the `run-role.sh`
    section.
-6. Check that no `<...>` is left, and delete the comment at the top. Tell the
+7. Check that no `<...>` is left, and delete the comment at the top. Tell the
    user in two or three sentences what you found. Never edit the role files,
    which belong to the kit.
 

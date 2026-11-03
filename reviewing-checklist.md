@@ -99,7 +99,10 @@ You cannot test every combination. Test at least a couple of examples per path.
 - [ ] **BLOCKING.** `tools/render-sweep.sh <file>` reports no flags. It renders
       every deployed seed and catches `\\` before `{@...@}`, 0 or ±1
       coefficients before a symbol, a negative value after `+`, `-`, `\cdot`
-      or `\times`, and repeated question notes. Each `coeff-src` source warning
+      or `\times`, a surd printed as a fractional power (`2^{3/2}`), a raw
+      Maxima list, unprocessed `{@` or `matrix(`, and repeated question
+      notes. It runs on any machine: where the STACK API cannot, it renders
+      in Moodle. Each `coeff-src` source warning
       has been looked at.
 
 ---

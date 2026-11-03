@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-r"""Render every deployed seed of every STACK question through the STACK API and
-look for display defects that grade correctly but read wrongly.
+r"""Render every deployed seed of every STACK question and look for display
+defects that grade correctly but read wrongly.
 
 Usage:  render_sweep.py <file.xml> [--url http://localhost:3080] [--verbose]
+        render_sweep.py <file.xml> --renders renders.json [--verbose]
+
+The renders come from the STACK API (--url), or, with --renders, from a file
+that tools/render-sweep-moodle.php wrote by rendering in Moodle itself, for
+machines where the API cannot run. The checks are the same either way.
 
 Checks (style-guide.md, "Sign handling in displayed expressions"):
 
@@ -17,6 +22,11 @@ Checks (style-guide.md, "Sign handling in displayed expressions"):
     FLAG  brace       `\{` followed by a number: the visible result of `linebreak`
     FLAG  coeff       0, 1 or -1 printed as a coefficient of a symbol
     FLAG  plusminus   a negative value after +, -, \cdot or \times ("+ -3", "2\cdot{-3}")
+    FLAG  fracpower   a number to a fractional power ("2^{\frac{3}{2}}"): Maxima's form
+                      of a surd such as sqrt(8) under simp
+    FLAG  rawlist     an interpolated Maxima list ("\left[ -12 , -15 \right]"); use
+                      ntuple(...) or a column matrix
+    FLAG  rawcas      CASText or Maxima left unprocessed: "{@" or "@}", or "matrix("
     FLAG  notes       two seeds give the same question note (a repeated variant)
 
 Exit 0 = no FLAG (warnings allowed); exit 1 = at least one FLAG; exit 2 = the
@@ -30,6 +40,7 @@ ap.add_argument("xmlfile")
 ap.add_argument("--url", default="http://localhost:3080")
 ap.add_argument("--timeout", type=int, default=180)
 ap.add_argument("--verbose", action="store_true")
+ap.add_argument("--renders", help="JSON written by tools/render-sweep-moodle.php, instead of the API")
 args = ap.parse_args()
 
 # Same fallback as api_check.py and validate-questions.php.
@@ -51,6 +62,11 @@ R_COEFF = re.compile(r"\{\s*(\(-1\)|\\left\(-1\\right\)|-1|1|0)\s*\}" + GAP + SY
 # A negative value straight after +, -, \cdot or \times: "+ -3", "2\cdot{-3}",
 # "-3-{-3}". STACK braces interpolated values, so allow "{" (but not "\{").
 R_PLUSMINUS = re.compile(r"(?:\+|-|\\cdot(?![a-z])|\\times)\s*(?:(?<!\\)\{\s*)?-")
+# A number, or a bracketed expression, raised to a power that is a fraction.
+R_FRACPOWER = re.compile(r"(?:\d|\\right\)|\))\s*\}?\s*\^\s*\{?\s*-?\s*\\frac")
+# STACK braces an interpolated value, so "{\left[" is a list from {@...@}.
+R_RAWLIST = re.compile(r"(?<!\\)\{\s*\\left\[")
+R_RAWCAS = re.compile(r"\{@|@\}|\bmatrix\(")
 MATH = re.compile(r"\\\((.*?)\\\)|\\\[(.*?)\\\]", re.S)
 
 
@@ -89,6 +105,12 @@ def coeff_hits(math):
     return hits
 
 
+RENDERS = None
+if args.renders:
+    with open(args.renders) as fh:
+        RENDERS = json.load(fh)
+
+
 def render(qxml, seed):
     payload = json.dumps({"questionDefinition": qxml, "seed": seed,
                           "renderInputs": "", "readOnly": False}).encode()
@@ -118,6 +140,15 @@ for q in questions:
 
     xml_seeds = [int(s.text) for s in q.findall("deployedseed")]
     seeds = xml_seeds or DEFAULT_SEEDS
+    if RENDERS is not None:
+        got = RENDERS.get(name, {})
+        for k, v in got.items():
+            if "error" in v:
+                flags.append(f"render     {k}: Moodle could not render it: {v['error']}")
+                nerr += 1
+        if not got:
+            flags.append("render     not in the renders file (was it imported?)")
+            nerr += 1
     if not xml_seeds:
         # The API will not render a randomised question with no deployed
         # variants, so inject the defaults (as api_check.py does).
@@ -129,7 +160,12 @@ for q in questions:
     notes = {}
     for seed in seeds:
         try:
-            r = render(qxml, seed)
+            if RENDERS is not None:
+                r = RENDERS.get(name, {}).get(str(seed))
+                if r is None:
+                    continue   # reported above
+            else:
+                r = render(qxml, seed)
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
             flags.append(f"render     seed {seed}: API error {e}")
             nerr += 1
@@ -139,12 +175,18 @@ for q in questions:
                             ("worked solution", r.get("questionsamplesolutiontext", ""))):
             for m in R_BRACE.finditer(html):
                 flags.append(f"brace      seed {seed} {label}: ...{html[max(0, m.start()-20):m.end()+10]!r}")
+            for m in R_RAWCAS.finditer(html):
+                flags.append(f"rawcas     seed {seed} {label}: ...{html[max(0, m.start()-20):m.end()+20]!r}")
             for mm in MATH.finditer(html):
                 math = mm.group(1) if mm.group(1) is not None else mm.group(2)
                 for h in coeff_hits(math):
                     flags.append(f"coeff      seed {seed} {label}: ...{h!r}")
                 for m in R_PLUSMINUS.finditer(math):
                     flags.append(f"plusminus  seed {seed} {label}: ...{math[max(0, m.start()-12):m.end()+8]!r}")
+                for m in R_FRACPOWER.finditer(math):
+                    flags.append(f"fracpower  seed {seed} {label}: ...{math[max(0, m.start()-12):m.end()+12]!r}")
+                for m in R_RAWLIST.finditer(math):
+                    flags.append(f"rawlist    seed {seed} {label}: ...{math[max(0, m.start()-4):m.end()+20]!r}")
     dup = {n: s for n, s in notes.items() if len(s) > 1}
     if dup and len(xml_seeds) > 1:   # default seeds on a fixed question repeat by design
         for n, s in dup.items():

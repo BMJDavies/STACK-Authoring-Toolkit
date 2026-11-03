@@ -27,6 +27,10 @@ before changing anything.
 The first run brings up two Docker containers and takes a minute. After that it
 is fast.
 
+The API's images are amd64-only. On a machine that cannot run them (Linux on
+ARM, such as a Raspberry Pi) it exits 3 and says so. There, `test-question.sh`
+is the inner loop as well as the gate.
+
 Both validators first run `tools/check-stack-version.sh` and stop if a STACK is
 older than `tools/stack-version` allows, or if the validation service is still
 running images older than its pin. The message gives the command to fix it; ask
@@ -51,19 +55,26 @@ tools/render-sweep.sh path/to/file.xml
 tools/render-sweep.sh path/to/file.xml -- --verbose   # list every source warning
 ```
 
-Renders every deployed seed of every STACK question through the same STACK API
-and flags defects that grade correctly but display wrongly. Neither
-`api-check.sh` nor `test-question.sh` looks for these:
+Renders every deployed seed of every STACK question and flags defects that
+grade correctly but display wrongly. It uses the STACK API where that runs, and
+otherwise renders in your Moodle (`--api` or `--moodle` forces one); the first
+line names the route, and the checks are the same. The Moodle route imports
+the file into the sandbox category. Neither `api-check.sh` nor
+`test-question.sh` looks for these:
 
 - `\\` straight before `{@...@}`, which shows a column vector as `{-5}\{3}`;
 - 0, 1 or −1 printed as the coefficient of a symbol ("1 v₁", "(−1) e₂");
-- `+ -` inside mathematics;
+- `+ -` or `- -` inside mathematics;
+- a surd printed as a fractional power (`2^{\frac{3}{2}}`), which Maxima makes
+  of `sqrt(8)` under simp;
+- an interpolated Maxima list (`\left[ -12 , -15 \right]`);
+- unprocessed `{@`, `@}` or `matrix(` text;
 - two deployed seeds with the same question note (a repeated variant).
 
 It also scans the source of every CASText field, including PRT feedback, which
 the API cannot render. Missing `<deployedseed>` is reported as a warning, and
 the default seeds are used. Exit 0 means no flags; exit 1 means at least one
-flag; exit 2 means the API failed to render something.
+flag; exit 2 means something could not be rendered.
 
 ## Full validation, the real gate
 
@@ -80,10 +91,24 @@ everything passed, exit 1 means something failed.
 Nothing is published until this returns 0. Run it yourself rather than trusting
 an agent's report that it passed.
 
-Run it in the FOREGROUND and let it block. It can run for a long time under
-load, and much longer on a big file. Backgrounding it and polling is the single
-most common way an agent loses its work: the poll gets murky, the agent gives
-up, and the run is wasted. Just wait.
+Run it as one blocking command and wait. It can run for a long time under
+load, and much longer on a big file. Polling it is the single most common way
+an agent loses its work: the poll gets murky, the agent gives up, and the run
+is wasted. Use your tool's longest timeout (`extensions/harness.md`, "Long
+commands"). If the tool backgrounds the command anyway and says when it ends,
+wait for that notice; do not read the output file meanwhile or start other
+Moodle work. The last line gives the elapsed time.
+
+`--lint-only` runs only the first stage, a check against the installed STACK
+that needs no import or CAS: variable names the security map already uses, and
+contrib functions called without their library. A second or so a file, so it
+can sweep every approved file at once.
+
+When a test fails, the report names each input STACK did not accept, with the
+test value, what it was submitted as, and STACK's message. STACK evaluates
+test inputs with `simp:false`, so an expression that does not reduce to a value
+(a sum of matrices, a call that stays unevaluated) is refused: compute such a
+value in the question variables and use its name in the test.
 
 The script produces no streamed output while it runs, so silence is not a hang.
 If you want to confirm progress, check for Maxima processes in the container.

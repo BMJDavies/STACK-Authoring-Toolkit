@@ -212,7 +212,7 @@ opens with it. It is worth 5 minutes of your time to read and understand this fi
 - Start with one small section, not a chapter. Most of the time goes on
   validation.
 - Validation is slow and produces no output while running. That is normal. Let
-  it block; do not background it and poll.
+  it block, and never poll it.
 
 ---
 

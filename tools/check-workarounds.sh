@@ -34,8 +34,9 @@ API="https://api.github.com/repos/maths/moodle-qtype_stack/issues"
 # The installed STACK version, from the Moodle container (Moodle 5.1+ keeps
 # plugins under public/).
 INSTALLED=""
-for f in /var/www/html/question/type/stack/version.php \
-         /var/www/html/public/question/type/stack/version.php; do
+MR="${MOODLE_ROOT:-/var/www/html}"
+for f in "$MR/question/type/stack/version.php" \
+         "$MR/public/question/type/stack/version.php"; do
     INSTALLED="$(docker exec "$LIVE_CONTAINER" sed -n 's/.*plugin->version *= *\([0-9]*\).*/\1/p' "$f" 2>/dev/null || true)"
     [ -n "$INSTALLED" ] && break
 done
