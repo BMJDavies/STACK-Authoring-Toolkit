@@ -125,8 +125,7 @@ fairer and it is what a human marker would do.
    `<expectedanswernote>` (it now passes through the new node), and add a test
    that exercises the diagnostic path. Every expectation is the full route of
    node notes, e.g. `prt1-1-F | prt1-2-T`, with no `AT...` notes and no
-   brackets: see the style guide, "`<expectedanswernote>` is the full route
-   through the PRT".
+   brackets: see the style guide, "Question tests".
 
 Match the structure in `reference/showcase.xml`.
 
