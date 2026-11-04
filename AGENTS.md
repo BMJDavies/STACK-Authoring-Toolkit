@@ -1,4 +1,4 @@
-# STACK authoring kit: standing instructions
+# STACK Authoring Toolkit: standing instructions
 
 **Audience: the assistant, whichever tool is driving it. The human reader wants
 README.md.**

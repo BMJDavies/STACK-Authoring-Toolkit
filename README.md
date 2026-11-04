@@ -1,4 +1,4 @@
-# STACK question authoring kit
+# STACK Authoring Toolkit
 
 **Audience: you, the human. Everything else is written to be read by your
 assistant.**
@@ -23,7 +23,14 @@ other than Claude Code have not yet been tested end to end.
 
 ## Getting started
 
-Open your assistant **in this folder** and type `/start`, or ask it to follow
+Get a copy of the toolkit (called "the kit" throughout its files):
+
+```bash
+git clone https://github.com/BMJDavies/STACK-Authoring-Toolkit.git
+cd STACK-Authoring-Toolkit
+```
+
+Then open your assistant **in this folder** and type `/start`, or ask it to follow
 `docs/ONBOARDING.md`. The folder has to be the working directory itself: if
 you open a session in the parent, nothing here loads, and you get an ordinary
 assistant that has never heard of the pipeline and cannot tell you so. It will work out what you already have installed, ask what it
@@ -63,7 +70,7 @@ ignores: `project/`, a separate git repository for one course, and
 `extensions/`, your own instructions that apply across all your projects:
 
 ```
-stack-authoring-kit/          the kit: clone this, and run the assistant here
+STACK-Authoring-Toolkit/      the kit: clone this, and run the assistant here
 ├── AGENTS.md                 standing instructions; reads extensions/AGENTS.md
 │                             and project/AGENTS.md
 ├── .claude/  tools/  style-guide.md  reference/  ...
@@ -205,7 +212,7 @@ right question. Those need your eyes. The reviewer flags them but will only reso
 in relatively trivial cases.
 
 There is also a specific bug class the tooling exists to catch but does not catch
-consistently on its own: a question that validates cleanly and marks students wrongly. docs/LESSONS.md
+consistently on its own: a question that validates cleanly and marks students wrongly. `docs/LESSONS.md`
 opens with it. It is worth 5 minutes of your time to read and understand this file.
 
 ---
