@@ -23,3 +23,6 @@
 
 # Machine-local STACK API settings (see tools/stackapi/.env.example)
 tools/stackapi/.env
+
+# R session history
+.Rhistory

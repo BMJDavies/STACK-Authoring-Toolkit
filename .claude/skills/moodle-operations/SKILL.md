@@ -320,5 +320,5 @@ Run one Moodle-touching operation at a time unless you have a second stack.
 
 **Container recreation.** Restarting the containers is safe. Recreating them
 (`docker compose down` then `up`, or a rebuild) wipes anything installed by hand
-inside them, including Maxima and any custom theme. See SETUP.md for what to
+inside them, including Maxima and any custom theme. See docs/SETUP.md for what to
 reinstall.

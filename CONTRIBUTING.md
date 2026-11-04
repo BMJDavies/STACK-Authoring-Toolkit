@@ -15,7 +15,7 @@ Open an issue. Say:
   kit's instructions.
 
 At the end of each run the kit's assistant lists the frictions it met and offers
-to draft an issue (`WORKFLOW.md`, "Frictions"). That draft is a good starting
+to draft an issue (`docs/WORKFLOW.md`, "Frictions"). That draft is a good starting
 point.
 
 Problems in STACK itself belong at
@@ -45,7 +45,7 @@ Before you send it:
   written for the kit.
 - If you change a reference question, run it through `tools/test-question.sh`.
 - If the change means existing users must do something, add a note to
-  `UPGRADING.md`, and add a line to the newest section of `CHANGELOG.md`.
+  `docs/UPGRADING.md`, and add a line to the newest section of `CHANGELOG.md`.
 
 ## Licence of contributions
 

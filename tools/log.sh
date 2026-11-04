@@ -23,7 +23,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/project.sh
 source "$SCRIPT_DIR/lib/project.sh"
 if [ ! -d "$PROJECT_DIR" ]; then
-    echo "No project folder at $PROJECT_DIR: see ONBOARDING.md." >&2
+    echo "No project folder at $PROJECT_DIR: see docs/ONBOARDING.md." >&2
     exit 1
 fi
 mkdir -p "$PROJECT_DIR/content"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # migrate-to-project-folder.sh: upgrade a kit configured before the kit/project
 # separation, where project files lived in the kit's own folders, to the layout
-# with the project in project/ (its own git repository). See UPGRADING.md.
+# with the project in project/ (its own git repository). See docs/UPGRADING.md.
 #
 # Run it from the root of your kit folder, BEFORE pulling the update. The usual
 # way is to run the new version straight from the remote, without pulling:

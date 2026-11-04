@@ -118,7 +118,7 @@ direct adaptation.
 A decision that needs the user goes into the question as well as into the
 agent's report, as a STACK `[[todo]]` block. STACK lists every question with
 one at `<moodle>/question/type/stack/adminui/todo.php`, grouped by tag, so the
-user gets a working list inside Moodle. `WORKFLOW.md` ("Your to-do list in
+user gets a working list inside Moodle. `docs/WORKFLOW.md` ("Your to-do list in
 Moodle") is the user's side of this.
 
 - **Where:** at the end of `<questiondescription>`, after the provenance

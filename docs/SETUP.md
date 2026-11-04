@@ -6,8 +6,8 @@ This walks you from a laptop with nothing installed to a working authoring
 pipeline. Most of the first run is downloads.
 
 **Do not work through this alone, and do not start at section 1.** Open your
-assistant in this folder and type `/start`, or, if your tool has no slash
-commands, ask it to follow `ONBOARDING.md`.
+assistant in the kit folder and type `/start`, or, if your tool has no slash
+commands, ask it to follow `docs/ONBOARDING.md`.
 
 It will establish what you already have installed and send you only to the
 sections you need. Someone with Moodle and STACK already running usually needs
@@ -550,11 +550,11 @@ reads `project/AGENTS.md`. That second file is where the assistant is told what
 your project is, where the questions come from, and how you want to be worked
 with.
 
-Do not write it by hand. Ask your assistant to follow `ONBOARDING.md`, or type
+Do not write it by hand. Ask your assistant to follow `docs/ONBOARDING.md`, or type
 `/start`. It will ask what it needs and write the file for you, creating
 `project/` first if you have not already done so in section 6.
 
-Then read `WORKFLOW.md`, which covers using the pipeline day to day.
+Then read `docs/WORKFLOW.md`, which covers using the pipeline day to day.
 
 ---
 
