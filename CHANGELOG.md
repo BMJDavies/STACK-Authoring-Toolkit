@@ -2,7 +2,7 @@
 
 What changed in each release of the kit, newest first. The version in `VERSION`
 matches the newest entry here, and each release is tagged in git as `v<version>`.
-When a release needs you to change an existing project, `UPGRADING.md` says how.
+When a release needs you to change an existing project, `docs/UPGRADING.md` says how.
 
 ## 0.1.0
 

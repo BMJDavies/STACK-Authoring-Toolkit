@@ -3,7 +3,7 @@
 **Audience: the assistant. Follow this when `project/AGENTS.md` does not exist,
 or Stage 0 alone when `extensions/harness.md` does not.**
 
-The kit (this folder) is generic and is never edited during onboarding.
+The kit (the folder holding `AGENTS.md`) is generic and is never edited during onboarding.
 Everything you create belongs to the user's project, in `project/`, which is a
 separate git repository that the kit ignores.
 
@@ -16,7 +16,7 @@ re-running one is harmless.
 **If `project/CLAUDE.md` or `extensions/CLAUDE.md` exists, this is not a new
 project: stop.** The project was set up before the kit renamed its instruction
 files to `AGENTS.md`. Onboarding would treat it as new and put a blank template
-beside the real instructions. Point the user to `UPGRADING.md`,
+beside the real instructions. Point the user to `docs/UPGRADING.md`,
 "Instruction files renamed to `AGENTS.md`", and offer to do the two renames with
 them.
 
@@ -37,7 +37,7 @@ Work out everything you can without asking. Every question you avoid is one they
 do not have to answer.
 
 ```bash
-command -v docker || echo NO_DOCKER      # absent: they need SETUP.md section 1
+command -v docker || echo NO_DOCKER      # absent: they need docs/SETUP.md section 1
 command -v pdftotext || echo NO_POPPLER   # absent: brew install poppler
 docker ps --format '{{.Names}}'          # is anything already running
 docker ps -a --format '{{.Names}}'       # containers that exist but are stopped
@@ -72,7 +72,7 @@ your own tool is not reliable.
    trivial subagent task again naming a model and an effort level, to prove a
    dispatch can set them, and record whether effort can be set per dispatch.
 4. Ask the user to choose a model and an effort level for each role. Explain
-   the trade-offs first, briefly, from `WORKFLOW.md`, "Choosing models and
+   the trade-offs first, briefly, from `docs/WORKFLOW.md`, "Choosing models and
    effort", and offer a proposal they can accept as it is, built from what step
    3 found. Use only names your tool lists. Record their choice.
 5. Without subagents, fill in the `run-role.` lines as `tools/run-role.sh
@@ -86,18 +86,18 @@ your own tool is not reliable.
 
 ## Stage A: their environment
 
-This decides how much of `SETUP.md` applies. Ask only what detection did not
+This decides how much of `docs/SETUP.md` applies. Ask only what detection did not
 answer.
 
 1. Do they have a working Moodle with STACK installed? The kit's setup tools
-   need Moodle 5.0 or later and fail on 4.x (`SETUP.md`, top), so if the
+   need Moodle 5.0 or later and fail on 4.x (`docs/SETUP.md`, top), so if the
    answer is yes, check the version. On 4.x, tell them before going further.
 2. If yes, is it local Docker, or local by some other means?
 3. Do they have command-line access to it? This is the real requirement. The
    tools shell into the container to run PHP. Administrator rights in the web
    interface are not sufficient on their own.
 4. Confirm the operating system and architecture you detected. On Apple Silicon
-   the standard Maxima package is not the one to install; `SETUP.md` section 4
+   the standard Maxima package is not the one to install; `docs/SETUP.md` section 4
    covers this.
 
 **A Moodle they do not control is not supported.** If they describe an
@@ -106,14 +106,14 @@ say so plainly. The pipeline publishes by executing PHP inside the Moodle
 installation. Without that access, the authoring and validation half still works
 and the publishing half does not. Do not attempt a workaround.
 
-Then send them to the parts of `SETUP.md` they actually need, rather than all ten
+Then send them to the parts of `docs/SETUP.md` they actually need, rather than all ten
 sections. Someone with Moodle and STACK already running usually needs only
 sections 5, 6, 8 and 9.
 
 ## Stage B: their project
 
 First create the project folder from the kit's skeleton, so there is somewhere
-to put their material. If `project/` already exists (`SETUP.md` section 6
+to put their material. If `project/` already exists (`docs/SETUP.md` section 6
 creates it when the ids are first pasted in), keep it and its `project.conf`, and
 copy across only what is missing:
 
@@ -185,12 +185,12 @@ answers, and delete the comment at the top. Keep it short: it is loaded on every
 request, so length here costs them on every interaction. Generic instructions
 are already in the kit's `AGENTS.md`; do not copy them across.
 
-Then fill in `project/project.conf` with the ids that `SETUP.md` section 6
+Then fill in `project/project.conf` with the ids that `docs/SETUP.md` section 6
 prints, and run `tools/check-stack-version.sh`. If it fails, stop: a STACK older
 than 4.13.0 fails every route-style question test, so nothing can be validated
-until it is upgraded. Say which service is too old and point to the `SETUP.md`
+until it is upgraded. Say which service is too old and point to the `docs/SETUP.md`
 section the script names. Only when it passes, offer to walk them through their
-first section using `WORKFLOW.md`.
+first section using `docs/WORKFLOW.md`.
 
 If they want you to commit, make the first commit in `project/`, never in the
 kit.

@@ -1,8 +1,18 @@
 # Upgrading
 
 **Audience: you, the human, if you set up a project with an earlier version of
-the kit.** Newest change first. If your kit predates both, do the older one
-first.
+the kit.** Newest change first. If your kit predates several, do the oldest
+one first.
+
+## Guides moved into `docs/` (November 2026)
+
+`SETUP.md`, `WORKFLOW.md`, `LESSONS.md`, `ONBOARDING.md`,
+`MULTIPLE-PROJECTS.md` and this file moved from the kit's root into `docs/`.
+Nothing else moved. `git pull` brings the change, and nothing in Moodle changes.
+
+If your own files name one of these guides, add `docs/` to the path: look in
+`project/AGENTS.md`, `project/style-guide.md` and `extensions/`. Your assistant
+can search for the six names and make the change with you.
 
 ## Instruction files renamed to `AGENTS.md` (October 2026)
 
@@ -31,7 +41,7 @@ Then:
 1. Look for any remaining mentions of the old name and change them to
    `AGENTS.md`: `grep -n CLAUDE project/*.md extensions/*.md`.
 2. Start a session. The assistant finds `extensions/harness.md` missing and
-   fills it in (`ONBOARDING.md`, Stage 0), recording what your tool can do,
+   fills it in (`docs/ONBOARDING.md`, Stage 0), recording what your tool can do,
    and asks you which model and effort level each role should use.
 
 Nothing in Moodle changes, and nothing else in `project/` moves.
@@ -89,7 +99,7 @@ The script:
 
 It never touches Moodle: question names and quiz ids do not change, so your
 published quizzes carry on as they are. The kit folder keeps its path, so your
-local settings and your assistant's memory for this folder carry over too.
+local settings and your assistant's memory for that folder carry over too.
 
 ### Afterwards
 

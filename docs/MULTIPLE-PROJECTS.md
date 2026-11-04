@@ -3,7 +3,7 @@
 **Audience: you, the human, and only if you run more than one project.**
 
 **Skip this unless you already have more than one authoring project.** The normal
-layout is the one `SETUP.md` describes: one kit folder, with your project inside
+layout is the one `docs/SETUP.md` describes: one kit folder, with your project inside
 it in `project/` as a separate git repository.
 
 ## Recommended: one kit clone per project

@@ -19,9 +19,9 @@ load_project_conf() {
     if [ ! -f "$PROJECT_DIR/project.conf" ]; then
         echo "No project settings at $PROJECT_DIR/project.conf." >&2
         if [ -f "$KIT_DIR/tools/project.conf" ]; then
-            echo "This kit still has the old layout (tools/project.conf). See UPGRADING.md." >&2
+            echo "This kit still has the old layout (tools/project.conf). See docs/UPGRADING.md." >&2
         else
-            echo "Set up a project first: see ONBOARDING.md (or run /start)." >&2
+            echo "Set up a project first: see docs/ONBOARDING.md (or run /start)." >&2
         fi
         exit 1
     fi

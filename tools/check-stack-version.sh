@@ -76,11 +76,11 @@ check_moodle() {
     fi
     if [ "$v" -lt "$MIN_STACK_VERSION" ]; then
         echo "FAIL Moodle ($c): STACK $v, below the minimum $MIN_STACK_VERSION ($MIN_STACK_RELEASE)."
-        echo "     Route-style question tests fail on older STACK. Upgrade it: SETUP.md section 3."
+        echo "     Route-style question tests fail on older STACK. Upgrade it: docs/SETUP.md section 3."
         FAIL=1
     elif [ -n "$PIN" ] && [ "$v" != "$PIN" ]; then
         echo "warn Moodle ($c): STACK $v, but the validation service runs $PIN. Random"
-        echo "     sequences can differ between versions. Align them: SETUP.md section 8."
+        echo "     sequences can differ between versions. Align them: docs/SETUP.md section 8."
     else
         echo "ok   Moodle ($c): STACK $v"
     fi

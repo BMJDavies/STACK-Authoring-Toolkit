@@ -31,9 +31,9 @@ roles are dispatched, and the model and effort level each role gets.
 - No `extensions/`: `cp -r templates/extensions extensions` (local, ignored,
   needs no permission).
 - No `project/AGENTS.md`, or it still says "Template from the kit": do not
-  author, validate or publish. Follow `ONBOARDING.md`.
+  author, validate or publish. Follow `docs/ONBOARDING.md`.
 - No `extensions/harness.md`, or it still says "Template from the kit": follow
-  Stage 0 of `ONBOARDING.md` before the first section.
+  Stage 0 of `docs/ONBOARDING.md` before the first section.
 
 ## If you are not Claude Code
 
@@ -41,7 +41,7 @@ This kit was written and tested with Claude Code, and its mechanisms checked
 against the documentation of GitHub Copilot CLI, Codex CLI and Gemini CLI.
 Three things differ between tools: whether roles can run as subagents, whether
 `/develop-section` exists as a command, and which models the tiers can bind
-to. Stage 0 of `ONBOARDING.md` records each in `extensions/harness.md`.
+to. Stage 0 of `docs/ONBOARDING.md` records each in `extensions/harness.md`.
 If that file records a failure, say so to the user before starting a section
 rather than discovering it halfway through.
 
@@ -111,7 +111,7 @@ author, which is the single habit that catches the most defects.
 - The reviewer re-runs validation rather than trusting the author.
 - Each role reports the frictions it met with the kit or STACK, usually none.
   At the end of the run, raise them with the user and offer to discuss them or
-  draft an issue or pull request (`WORKFLOW.md`, "Frictions").
+  draft an issue or pull request (`docs/WORKFLOW.md`, "Frictions").
 
 ## Procedures
 
@@ -123,7 +123,7 @@ read the reference the user gave you.
 |---|---|
 | develop a section ("develop Ch5 Section B", `/develop-section`) | `.claude/commands/develop-section.md` |
 | develop a chapter ("develop Ch4", `/develop-chapter`) | `.claude/commands/develop-chapter.md` |
-| set up a project (`/start`) | `ONBOARDING.md` |
+| set up a project (`/start`) | `docs/ONBOARDING.md` |
 
 ## Leaving decisions for the user
 
@@ -132,7 +132,7 @@ the question itself, as well as into their report: a STACK
 `[[todo tags="kit-review, <section-id>"]]…[[/todo]]` block at the end of the
 question description (`kit-enrich` for the enricher). The format rules are in
 `style-guide.md`, "Notes for the human: `[[todo]]` blocks"; the user's side is
-in `WORKFLOW.md`, "Your to-do list in Moodle".
+in `docs/WORKFLOW.md`, "Your to-do list in Moodle".
 
 When the user answers in the conversation, change the XML, delete the block,
 re-validate and re-publish. When the user has edited in Moodle, pull their edits
@@ -171,7 +171,7 @@ Runbook: `.claude/skills/moodle-operations/`.
 
 | File | Read it when |
 |---|---|
-| `WORKFLOW.md` | Before producing a section, and when something goes wrong |
-| `LESSONS.md` | Once, early. It explains why the rules exist |
-| `SETUP.md` | While installing, or when changing the Moodle setup |
-| `MULTIPLE-PROJECTS.md` | When the user is working in a project folder other than `project/` |
+| `docs/WORKFLOW.md` | Before producing a section, and when something goes wrong |
+| `docs/LESSONS.md` | Once, early. It explains why the rules exist |
+| `docs/SETUP.md` | While installing, or when changing the Moodle setup |
+| `docs/MULTIPLE-PROJECTS.md` | When the user is working in a project folder other than `project/` |

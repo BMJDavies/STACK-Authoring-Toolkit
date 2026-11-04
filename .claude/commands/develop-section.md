@@ -100,7 +100,7 @@ rounds, then escalate to the user regardless of state.
   summary, minor fixes the reviewer made, any new rules for the style guide.
   If the reviewer left todo blocks, list them, and give the link to STACK's
   todo page, `<moodle>/question/type/stack/adminui/todo.php`, with the tag to
-  look under (`<section-id>`). See `WORKFLOW.md`, "Your to-do list in Moodle".
+  look under (`<section-id>`). See `docs/WORKFLOW.md`, "Your to-do list in Moodle".
 - Revise or escalate: what is blocked and what the user needs to decide.
 - Either way: briefly raise any frictions from the hand-offs and reports, say
   which look worth an issue or a small pull request, and ask whether the user
