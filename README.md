@@ -302,6 +302,12 @@ says what to do when they do.
 
 ---
 
+## Contributing
+
+Reports of problems and pull requests are welcome. `CONTRIBUTING.md` says how.
+
+---
+
 ## Licence
 
 Copyright 2026 Ben Davies and the University of Southampton.

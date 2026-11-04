@@ -22,3 +22,6 @@ The first public release, under the GNU GPL v3 or later (`LICENSE`).
 - The style guide, the reviewing checklist, `reference/showcase.xml` and the
   pattern prototypes.
 - A Boost child theme that makes quizzes read as textbook pages.
+- Publishing refuses to change a quiz that holds questions the file does not,
+  so pushing one section cannot reorder another.
+- Needs Moodle 5.0 or later and STACK 4.13.0 or later.
