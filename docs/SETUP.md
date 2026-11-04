@@ -534,9 +534,10 @@ tools/test-question.sh reference/showcase.xml
 tools/push-live.sh reference/showcase.xml <the quiz id it printed>
 ```
 
-Open the quiz. You should see ten questions covering key point boxes, algebraic
-input, diagnostic feedback, faded examples, dropdowns, a Parsons problem,
-reading comprehension, randomisation and a JSXGraph figure.
+Open the quiz. You should see twelve questions covering key point boxes, algebraic
+input, diagnostic feedback, faded examples, fill-in-the-blanks, dropdowns, a
+Parsons problem, reading comprehension, randomisation, a JSXGraph figure, matrix
+input and a validation layer.
 
 If that works, everything works. Keep the showcase around: it is the reference
 the agents compare their conventions against.

@@ -66,7 +66,7 @@ run()  { if [ "$DRY" = 1 ]; then printf '  would run: %s\n' "$*"; else "$@"; fi;
 step "Checking this folder"
 TOP="$(git rev-parse --show-toplevel 2>/dev/null)" || die "not inside a git repository. Run this from your kit folder."
 [ "$TOP" = "$(pwd -P)" ] || die "run this from the root of the kit folder ($TOP), not from a subfolder."
-[ -d .claude ] && [ -f style-guide.md ] || die "this does not look like the STACK authoring kit (no .claude/ or style-guide.md)."
+[ -d .claude ] && [ -f style-guide.md ] || die "this does not look like the STACK Authoring Toolkit (no .claude/ or style-guide.md)."
 if [ -e project ]; then die "project/ already exists. If the migration ran before, there is nothing to do; otherwise move project/ aside first."; fi
 
 NOTICE="This project has not been set up yet"
