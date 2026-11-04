@@ -15,10 +15,13 @@ four of the ten below. It will also ask what it needs to know about your project
 which this file does not cover.
 
 Everything below was verified on macOS (Apple Silicon) against Moodle 5.0.6.
-Version numbers move; the shape does not. The one exception is STACK itself:
-the kit needs 4.13.0 or later, in Moodle and in the validator (section 8).
+Version numbers move; the shape does not. There are two exceptions. STACK itself
+must be 4.13.0 or later, in Moodle and in the validator (section 8).
 `tools/stack-version` holds that minimum, and `tools/check-stack-version.sh`
-checks everything against it.
+checks everything against it. Moodle must be 5.0 or later: the setup tools in
+section 6, `setup-workspace.php` and `create-live-course.php`, create question
+banks as activity modules, which Moodle 4.x does not have, and on 4.x they stop
+with an error.
 
 ---
 

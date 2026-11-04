@@ -89,7 +89,9 @@ your own tool is not reliable.
 This decides how much of `SETUP.md` applies. Ask only what detection did not
 answer.
 
-1. Do they have a working Moodle with STACK installed?
+1. Do they have a working Moodle with STACK installed? The kit's setup tools
+   need Moodle 5.0 or later and fail on 4.x (`SETUP.md`, top), so if the
+   answer is yes, check the version. On 4.x, tell them before going further.
 2. If yes, is it local Docker, or local by some other means?
 3. Do they have command-line access to it? This is the real requirement. The
    tools shell into the container to run PHP. Administrator rights in the web
