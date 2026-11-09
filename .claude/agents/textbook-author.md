@@ -100,13 +100,11 @@ Example line: `[21:04:47] AUTHOR [Ch8C]: started, reading plan (27 items)`
    from the item's Provenance line, using the exact wording in the style guide
    ("Record where each question comes from") and the citation string in
    `project/AGENTS.md`.
-8. **Embed the test cases** from the plan. Every STACK question needs at least
-   two `<qtest>` cases. Multi-input questions need a mixed case. PRTs with
-   diagnostic nodes need a case per distinct route. Each
-   `<expectedanswernote>` is the full route the plan gives (node notes in
-   order, no `AT...` notes, no brackets; see the style guide). If a route
-   test fails, decide whether the tree or the plan's route is wrong. Never
-   copy the actual trail into the test to make it pass.
+8. **Embed the test cases** from the plan, as STACK's essentials file ("Test
+   every question") and the style guide ("Question tests") require. Each
+   `<expectedanswernote>` is the full route the plan gives. If a route test
+   fails, decide whether the tree or the plan's route is wrong. Never copy the
+   actual trail into the test to make it pass.
 9. **Validate.** Run `tools/api-check.sh project/content/drafts/<file>.xml`. This is the
    fast loop: seconds per question, no Moodle import, safe to run alongside
    other work. Read the failures, fix, re-run. Loop until green, or until you

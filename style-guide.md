@@ -46,8 +46,8 @@ understand why, you will spot the next variant of the same problem.
 - Every STACK question must have:
   - Randomised numbers unless that is impossible or silly (see Randomisation).
   - A worked solution in `<generalfeedback>`, unless the question is trivial.
-  - At least **two** `<qtest>` cases (correct and wrong). Without them the PRT
-    logic is untested. Multi-input questions also need a mixed case.
+  - Question tests, as STACK's essentials file ("Test every question") and
+    "Question tests" below require.
   - Number of random variants, and `<deployedseed>` selection, must follow the
     Deployed seeds policy below.
 - Figure-only and worked-example slots use "skinny STACK", not
@@ -454,9 +454,8 @@ be translated.
   the question text.
 - **Several PRTs:** put each `[[feedback:prtN]]` inline, after the inputs for
   its part, and leave `<specificfeedback>` empty.
-- Each tag appears exactly once. STACK marks a question broken on import if the
-  question text and specific feedback together contain a tag twice, and the
-  fast validator does not catch this.
+- Each tag appears exactly once (STACK's essentials file, "The feedback tag").
+  The fast validator does not catch a repeat.
 - Never put a feedback tag inside a hidden element, such as the
   `<div style="display:none;">` that holds a JSXGraph-bound input. Students
   would never see the feedback.
@@ -468,15 +467,13 @@ it is about, which only an inline tag can do.
 
 ### Parametric references everywhere
 
-Anywhere a value depends on a randomised question variable (test inputs,
-feedback HTML, general feedback, question notes), reference the variable, not a
-number. Use `ta` / `ta1` / `ta+1` in test inputs and `{@ta1@}`, `{@a@}` in
-CASText feedback.
+Anywhere a value depends on a randomised question variable, reference the
+variable, not a number: `{@ta1@}`, `{@a@}` in CASText, and in test inputs as
+STACK's essentials file says ("Test inputs").
 
 Why: a literal that happens to match seed 1 silently breaks on every other seed.
-In a test input it produces a false PASS in the validator while marking real
-students wrong in production. In feedback it produces an incorrect worked
-solution on most seeds. Neither is visible from reading the XML.
+In feedback it produces an incorrect worked solution on most seeds, and nothing
+in the XML shows it.
 
 Applies to `<testinput>`, `<truefeedback>`, `<falsefeedback>`,
 `<generalfeedback>`, `<questionnote>`, and PRT `<tans>` / answer-test arguments.
@@ -592,12 +589,11 @@ Three traps when adding a diagnostic:
 
 ### The diagnostic must be reachable and distinct on every seed
 
-On some seeds a misconception value (add instead of multiply, say) can equal the
-correct answer. Then the "wrong" test scores full marks, hits the correct
-branch, and the diagnostic is pedagogically void on those draws. Constrain the
-randomisation so the two can never coincide, and drive both the node `<tans>`
-and the qtest `<value>` from the same bound question variable so they cannot
-drift apart.
+STACK's essentials file ("Test inputs") requires every diagnostic to be
+reachable on every deployed variant. In this kit, constrain the randomisation
+so a misconception value can never equal the correct answer, and drive both
+the node `<tans>` and the qtest `<value>` from the same question variable so
+they cannot drift apart.
 
 ### Question tests
 
@@ -609,25 +605,23 @@ kit follows it, and adds the following.
 - **Scores are `1.0000000` or `0.0000000`.** `<expectedscore>` is the raw PRT
   score, and in this kit a PRT scores 1 or 0, never a fraction. Write scores
   and penalties with seven decimal places, as in `reference/showcase.xml`.
-- **Every expectation is the full route**, as a bare list such as
-  `prt1-1-F | prt1-2-F`, with no brackets and no `AT...` notes. Never use `()`.
-  Why, from this kit's showcase: in Showcase 3, prt1 checks the x-coordinate,
-  then the y-coordinate, and both branches of the x node lead to the y node.
-  "x right, y wrong" and "both wrong" both end at `prt1-2-F`. Only the routes
+- **Full routes: the worked example.** In Showcase 3, prt1 checks the
+  x-coordinate, then the y-coordinate, and both branches of the x node lead to
+  the y node. "x right, y wrong" and "both wrong" both end at `prt1-2-F`; only
   `prt1-1-T | prt1-2-F` and `prt1-1-F | prt1-2-F` tell them apart, and each
   needs its own test.
 - **The route comes from the plan**, never from the validator's output. When a
   route test fails, the output shows `note=<actual trail> (exp <your route>)`.
   Decide which one is wrong (the test or the tree) before changing either.
-- **Older questions** with single terminal notes still pass. Upgrade them to
-  full routes when you next touch the question.
+- **Older questions** with single terminal notes: upgrade them to full routes
+  when you next touch the question.
 - **Integration exception to offsets.** When the teacher's answer contains
   `+c`, a wrong test uses `x^99`, not `ta+1`. The `+1` vanishes on
   differentiation, so `diff(ta+1, x)` still equals the integrand and the
   "forgot +c" diagnostic fires on what should be a completely wrong answer.
-- **Non-tautological tests: an example.** Where `val2: k2^2*n` defines the
-  displayed value and `ta2: k2*sqrt(n)` is the simplified form the student
-  types, the correct test uses the derivation:
+- **A derivation test: an example** of the essentials file's rule. Where
+  `val2: k2^2*n` defines the displayed value and `ta2: k2*sqrt(n)` is the
+  simplified form the student types, the correct test uses the derivation:
 
   ```xml
   <!-- BAD: tautological, never catches a val/ta inconsistency -->
@@ -640,10 +634,9 @@ kit follows it, and adds the following.
   We found a live question where `val2` and `ta2` were inconsistent. The
   tautological test passed while students typing the correct answer were
   marked wrong.
-- **Invalid-input tests.** For example, put one symbolic entry in a single
-  numerical input and fill every other input with a correct value. The PRT
-  that reads the rejected input expects a blank score, a blank penalty and
-  `NULL`; the other PRTs expect their normal correct route.
+- **Invalid-input tests:** one invalid entry, such as a symbol in a numerical
+  input, with every other input correct. The PRT that reads it expects `NULL`
+  (essentials file, "Expected answer note"); the others their normal route.
 
 ### Form checks: when "correct value" is not enough
 
@@ -963,7 +956,9 @@ structure:
 - Negative discriminants where real roots are expected.
 - Equal values that make the problem degenerate (two identical points).
 
-Use `rand_with_prohib` or explicit guards.
+Use `rand_with_prohib` or explicit guards. This kit is stricter than STACK's
+essentials file, which allows 0, 1 and zero coefficients as deliberate boundary
+cases: here they are defects.
 
 ### Question-variable gotchas
 

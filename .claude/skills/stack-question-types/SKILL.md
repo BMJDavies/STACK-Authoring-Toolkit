@@ -55,21 +55,15 @@ Do not hand-write this from scratch. Copy a `<question type="stack">` block from
 `<questionvariables>`, the input `tans` values and the PRT nodes. All the
 surrounding boilerplate stays exactly as it is.
 
-Required elements:
+What every question needs is in STACK's essentials file and `style-guide.md`
+("Question requirements"). The kit-specific elements to fill in after copying:
 
-- `<questionvariables>` with Maxima code, including the teacher's answer `ta1` corresponding to input `ans1`.
-- `<specificfeedback>` containing the `[[feedback:prt1]]` placeholder
-- `<questionnote>` naming the variant (STACK essentials, "The question note")
-- `<stackversion>` set to the project's STACK version stamp in
-  `project/AGENTS.md` (style guide: "Stamp the target STACK version")
-- `<questiondescription>` with the provenance note (style guide: "Record where
-  each question comes from")
-- At least one `<input>` and one `<prt>`
-- At least **two** `<qtest>` cases (correct scores 1, wrong scores 0)
-- `<generalfeedback>` with the worked solution
-
-Settings, input configuration, display and randomisation rules are all in
-`style-guide.md`.
+- `<questionvariables>` with the teacher's answer `ta1` for input `ans1`;
+- the feedback tags, placed as the style guide says ("Where the PRT feedback
+  tag goes");
+- `<stackversion>` from `project/AGENTS.md`;
+- `<questiondescription>` with the provenance note;
+- `<generalfeedback>` with the worked solution.
 
 ---
 
@@ -123,9 +117,8 @@ fairer and it is what a human marker would do.
 5. Clear node 0's `<falsefeedback>`: it is a routing node now.
 6. Update the route in the existing wrong-answer test's
    `<expectedanswernote>` (it now passes through the new node), and add a test
-   that exercises the diagnostic path. Every expectation is the full route of
-   node notes, e.g. `prt1-1-F | prt1-2-T`, with no `AT...` notes and no
-   brackets: see the style guide, "Question tests".
+   that exercises the diagnostic path. Every expectation is the full route,
+   e.g. `prt1-1-F | prt1-2-T` (STACK's essentials file, "Expected answer note").
 
 Match the structure in `reference/showcase.xml`.
 

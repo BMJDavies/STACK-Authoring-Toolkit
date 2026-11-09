@@ -166,8 +166,7 @@ the foreground.
 
 Expect a first-pass failure on any test case whose PRT you gave a new diagnostic
 node: its route changed. The failure output shows the actual trail. Update
-`<expectedanswernote>` to the new full route (node notes in order, no `AT...`
-notes, no brackets; see the style guide) only after confirming that the new
+`<expectedanswernote>` to the new full route only after confirming that the new
 route is the one you intended. Then add a case that exercises the diagnostic
 path. Then re-run: everything must pass across all
 seeds and all cases.
@@ -240,8 +239,6 @@ Do not invent edits.
 - Baseline validate first. Never edit a broken file.
 - Never bypass baseline validation. If validation hangs under load, wait or
   escalate. Do not proceed on the assumption it would have passed.
-- Any variable named in a qtest must be defined in `<questionvariables>`, not
-  `<feedbackvariables>`.
 - After adding a diagnostic, re-read every qtest in that question for collisions.
 - Green tests before you exit. No exceptions.
 - One section per spawn. Do not touch neighbouring files.
