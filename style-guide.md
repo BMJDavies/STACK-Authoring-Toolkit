@@ -73,8 +73,7 @@ STACK's essentials file gives the rule and why it matters. In this kit the
 value is the STACK version stamp in `project/AGENTS.md`. Never copy it from a
 template, the showcase or an older question.
 
-The showcase depends on 4.13 features (route expectations, the commonstring
-feedback keys), so claiming an older version misleads anyone who maintains
+The showcase depends on 4.13 features (route expectations), so claiming an older version misleads anyone who maintains
 these questions later.
 
 When STACK is upgraded, update `project/AGENTS.md`, then re-stamp a file the next
@@ -206,13 +205,11 @@ When displaying randomised expressions:
   this prints "0 v₁", "1 e₁" or "(−1) v₂". Interpolate the product instead,
   `{@k*x@}` or `{@b1*v1+b2*v2@}`, with the symbol added to `ordergreat` so the
   terms stay in order, or name the scalar in the prose ("where \(k = {@k@}\)").
-- **Never put `\\` directly before `{@...@}` in CASText.** STACK drops a
-  backslash, so `\begin{pmatrix}{@a@}\\{@b@}\end{pmatrix}` renders as
-  `{-5}\{3}` on every seed. Interpolate the whole matrix (`{@matrix([a],[b])@}`),
-  or put a space after the line break: `\\ {@b@}`. Neither `test-question.sh`
-  nor `render-check` catches this, so only rendering the seeds and looking at
-  the result will find it.
-- **`{@ex@}` keeps its braces:** it becomes `{…}` around the LaTeX of `ex`, so `\frac{@a@}{@b@}` is correct and renders as \(\frac{a}{b}\). Do not flag it as missing braces.
+- **`\\` before `{@...@}`, and the braces of `{@ex@}`:** STACK's essentials
+  file, "Write the text fields in CASText". Neither `test-question.sh` nor
+  `render-check` catches a lost backslash, so only rendering the seeds and
+  looking at the result will find it. Do not flag `\frac{@a@}{@b@}` as missing
+  braces.
 
 ### Currency: always use a rounded display variable
 
@@ -248,25 +245,10 @@ escaping rules. This kit differs from STACK's minimal form as follows.
 
 ## Inputs
 
-STACK makes an important distinction between validation and correctness.
-
-Validation asks whether the student's input is a valid and unambiguous response 
-that STACK can safely assess. For example, if a question asks for an equation, 
-`y=2*x+1` is valid, whereas `2*x+1` might be rejected if an equation is required. 
-Syntax errors, inappropriate mathematical objects, or forbidden constructions 
-are also dealt with at this stage.
-
-Correctness is a separate question: given a valid input, does the student's answer 
-have the mathematical properties required by the question? This is determined 
-by the question's answer tests and potential response trees.
-
-The distinction is important because students should not lose marks for technical 
-errors in entering their mathematics. Validation gives them an opportunity to 
-correct an ambiguous or malformed input before it is assessed. Only a valid
-response is passed to the marking logic.  This makes the potential response tree
-simpler and more reliable.  This separation is a fundamental design principle of 
-STACK: first make sure we understand what the student has entered and then decide 
-whether the mathematics is correct.
+STACK's essentials file, "Choose and configure inputs", gives the general rules:
+validity before correctness, each placeholder once, `<div>` not `<p>` around an
+input line, `numerical` for a single number, `checkvars` and validators,
+`consolidatesubscripts`, forbidden words and syntax hints. This kit adds:
 
 - `mustverify`: `0` on all inputs.
 - `showvalidation` depends on how complex the expected answer is:
@@ -279,68 +261,31 @@ whether the mathematics is correct.
 - `boxsize`: match the expected answer length. 4 for a single digit, 15 or more
   for a polynomial.
 - Always leave a space between the LaTeX and the input: `\(x =\) [[input:ans1]]`.
-- **Never use the same `[[input:ansN]]` placeholder twice** in one question.
-  STACK deduplicates placeholders with `array_unique()` before `format_text()`
-  but not after, which causes a mismatch and throws a coding exception. If you
-  need the same input in two places, restructure the question.
-- **Never repeat an `[[input:ansN]]` placeholder.** STACK's renderer removes
-  duplicate placeholders with `array_unique()` before formatting the text but not
-  after, and the resulting mismatch throws a coding exception. If the same input
-  needs referring to twice, restructure the question or refer to it in prose.
-- **A single number uses the `numerical` input type, not `algebraic`.** The numerical type
-  rejects letters itself, so these boxes need no bespoke validator. Use
-  `forbidfloat` 1, `requirelowestterms` 0 and no extra options. With these
-  settings `1/2`, `-3`, `2/4` and `sqrt(2)` are accepted and reach the PRT as
-  exact values. `0.5` is rejected as a float, and `t` or `x1` is rejected with
-  "This input expects a number, and so may not contain variables".
-- **A matrix input of numbers can use the bespoke numeric validator,** where appropriate
-  because a matrix grid accepts symbolic entries:
-  `validate_numeric(ex) := if listofvars(ex) = [] then "" else "Enter a number, not an expression containing a letter or variable.";`
-  with `validator:validate_numeric` in the input's options.
-
-- **Wrap input lines in `<div>`, never `<p>`.** Any HTML line containing
-  `[[input:ansN]]` must be in a `<div>`. STACK renders `[[validation:ansN]]` as a
-  block-level `<div>`, and HTML5 auto-closes an open `<p>` when it meets a block
-  element, so the paragraph terminates early and the input plus the text after it
-  end up stacked on separate lines. Wrapping in `<div>` gives valid nested divs,
-  and the empty validation divs are `display:none` in STACK's CSS so they cost
-  nothing. This applies to every input type: matrix, algebraic, numerical,
-  dropdown, multiple choice. Keep prose in a `<p>` and put the
-  input/validation/feedback line in its own `<div>`.
-  - Tooling caveat: `render-check` reads the database, not the file on disk.
-    After editing XML, re-import before re-running it, or you are checking the
-    old version.
-
-- **Subscripted variables: `consolidatesubscripts`.**
-  Every `algebraic` input whose expected answer uses atoms of the form
-  letters-then-digits (`x1`, `x2`, `y1`, `c1`) carries the extra option
-  `consolidatesubscripts`, after any validator (if used):
-  `<options>validator:validate_x3, consolidatesubscripts</options>`. STACK then
-  converts a student's `x_1` to `x1` before validation and grading. Without it,
-  `x_1` is a different atom: a variable-set validator rejects it with a
-  confusing message, and an unvalidated input marks it wrong. The teacher's
-  answer, validators and PRTs keep the form without the underscore. STACK only
-  converts the pattern `^[a-zA-Z]+_[0-9]+$`, so double or non-numeric
-  subscripts are unaffected. Each such question that is chosen for it carries
-  one test entering the answer with underscores (for example
-  `subst([x1=x_1,x2=x_2,x3=x_3], ta1)`) and expecting full marks.
-- **Bespoke validators** allow question authors to test for, and reject as invalid,
-  answers.  Consider using bespoke validators where necessary.  Where bespoke validators
-  occur in many questions, suggest adding these to the STACK code base. For example:
+- A single number: `numerical` with `forbidfloat` 1, `requirelowestterms` 0 and
+  no extra options.
+- A matrix of numbers carries `validator:validate_numeric`, defined as in the
+  essentials file. Because `mustverify` is 0, on STACK 4.14.0 and earlier its
+  invalid-entry test must also fill in a non-matrix input, or it fails as
+  "Empty question tests are not permitted!".
+- Prefer `checkvars:1` where the allowed variables are those of the teacher's
+  answer; otherwise write a variable-set validator, for example
   `validate_x3(ex) := if every(lambda([v], member(v, [x1, x2, x3])), listofvars(ex)) then "" else "Use only the variables x1, x2, x3.";`
-  Do not use `subsetp(setify(listofvars(ex)), {x1, x2, x3})`: validators run with
-  `simp:false`, the set literal is not put into canonical order, and correct
-  entries such as `x2+x1` are rejected. A validator is a pure function of one
-  argument and cannot see question variables, so define one per variable set.
-  Where a question's variable set depends on the seed, allow the largest set.
-  The allowed variable names must not also be question variables, because STACK
-  forbids students from typing question-variable names.
+  Where a question's variable set depends on the seed, the validator can read
+  it from a question variable.
+- Every `algebraic` input whose expected answer uses atoms such as `x1`, `y2`
+  carries `consolidatesubscripts`, after any validator:
+  `<options>validator:validate_x3, consolidatesubscripts</options>`. Each such
+  question carries one test entering the answer with underscores (for example
+  `subst([x1=x_1,x2=x_2,x3=x_3], ta1)`) and expecting full marks.
+- Where bespoke validators recur across questions, suggest adding them to
+  STACK.
+- Tooling caveat: `render-check` reads the database, not the file on disk.
+  After editing XML, re-import before re-running it, or you are checking the
+  old version.
 
 ### Forbidden words (`forbidwords`)
 
-When a question asks the student to do by hand something Maxima could do in one
-call, add that function name to the input's `<forbidwords>`. Otherwise a student
-can type the CAS command instead of doing the work.
+The rule is in STACK's essentials file. The usual list:
 
 | Question asks for | Forbid |
 |-------------------|--------|
@@ -351,22 +296,13 @@ can type the CAS command instead of doing the work.
 | Solution of an equation | `solve` |
 | Roots of a polynomial | `solve`, `allroots` |
 
-Only forbid the function for the operation actually being assessed. A question
-that asks for a derivative and then evaluates it forbids `diff`, not the
-evaluation.
-
 ### Syntax hints
 
-When the expected answer uses `sqrt`, `pi`, `inf` or other non-obvious notation:
-
-- Set `<syntaxhint>sqrt()</syntaxhint>` (or `pi`, etc.).
-- Set `<syntaxattribute>1</syntaxattribute>`, which makes the hint a greyed-out
-  placeholder that disappears on focus.
-- **Hints must be generic placeholders, never answer-shaped.** Use `a+sqrt(b)`
-  or `(a+sqrt(b))/c`, never the actual values (`-2+sqrt(5)`). Students read an
-  answer-shaped hint as the answer.
-- Any section that introduces new input notation should open with a short
-  description explaining how to type it ("Type `sqrt(5)` for √5").
+The rule is in STACK's essentials file. In this kit, any input expecting `sqrt`,
+`pi`, `inf` or other non-obvious notation has a generic hint (`a+sqrt(b)`, never
+`-2+sqrt(5)`) with `syntaxattribute` 1, and any section that introduces new
+input notation opens with a short description explaining how to type it
+("Type `sqrt(5)` for √5").
 
 ---
 
@@ -436,17 +372,9 @@ inside a dropdown.
 
 ### Standard PRT feedback uses commonstring
 
-`<prtcorrect>`, `<prtpartiallycorrect>` and `<prtincorrect>` take STACK's
-language-string defaults, exactly as in `reference/showcase.xml`:
-
-    [[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]
-
-and likewise with `partiallycorrect` and `incorrect` in place of `correct`.
-Never hardcode text, icons or colours in these three fields.
-
-Why: the strings then follow the site's language and STACK's own styling, and
-one change in Moodle updates every question. Hardcoded copies drift and cannot
-be translated.
+Write `<prtcorrect>`, `<prtpartiallycorrect>` and `<prtincorrect>` with STACK's
+`[[commonstring]]` defaults, as STACK's essentials file says ("Standard PRT
+feedback") and as `reference/showcase.xml` does.
 
 ### Where the PRT feedback tag goes
 
@@ -488,14 +416,10 @@ questions. Run it before approving anything.
 
 ### Careful use of answertest-generated feedback
 
-Answer tests can produce feedback of their own.  Sometimes this is meaningful to the students, 
-but sometimes it is an artefact of the question setup and should not be used.
-
-For each node of each PRT decide if the answertest feedback is meaningful or not. If the answertest feedback is not meaningful then choose the `quiet=yes` option in the PRT node (in the XML, `<quiet>1</quiet>` on that `<node>`).
-
-- If the answer test applies directly to the student's answer then the feedback from the answertest is likely to be meaningful.
-- If the answer test is applied to a variable constructed from many inputs, then the feedback from the answertest is unlikely to be meaningful.
-
+The rule is in STACK's essentials file, "Choose the answer test" ("Quiet"):
+decide for each node whether the test's own feedback is meaningful, and set
+`<quiet>1</quiet>` where it is not, typically when `<sans>` is built from
+several inputs.
 
 ### False branch feedback is mandatory
 
@@ -640,31 +564,20 @@ kit follows it, and adds the following.
 
 ### Form checks: when "correct value" is not enough
 
-When the stem demands a specific FORM ("expand", "factorise", "simplify",
-"integrate with +c"), `AlgEquiv` alone is form-blind: it gives full marks to an
-unexpanded or unfactorised answer, because `(1+2x)^3` really is equal to its own
-expansion. Guard the form with a second node.
+STACK's essentials file, "Choose the answer test", explains why `AlgEquiv` is
+form-blind and what a form test sees. This kit's recipes:
 
 | Task wording | Recipe |
 |---|---|
-| "Expand", "write in the form ax^n + …", "simplify" | `AlgEquiv` value node plus an `EqualComAss` form node, with PRT `autosimplify=0`. Use `EqualComAssRules [oneMul]` if coefficients can be fractional, because plain `EqualComAss` rejects `-1/8*x^3`. |
-| "Factorise", "as a product of factors" | Swap the scoring node to `FacForm`, `testoptions x`. Do not set autosimplify=0. `FacForm` demands every common factor pulled out and rejects partial factorisations, so it cannot grade "linear × quadratic" hence-steps; those need a bespoke structural check. |
-| Indefinite integral with +c | `Int` (`ATInt`), `tans` set to the bare antiderivative and NOT the +c form, `testoptions x`, `quiet 1`. |
+| "Expand", "write in the form ax^n + …", "simplify" | `AlgEquiv` value node plus an `EqualComAss` form node on the input itself. `EqualComAss` treats `-x^3/8` and `-1/8*x^3` as different forms; use `EqualComAssRules [oneMul]` if coefficients can be fractional. |
+| "Factorise", "as a product of factors" | Swap the scoring node to `FacForm`, `testoptions x`. `FacForm` demands every common factor pulled out and rejects partial factorisations, so it cannot grade "linear × quadratic" hence-steps; those need a bespoke structural check. |
+| Indefinite integral with +c | `Int`, `testoptions x`, `quiet 1` (essentials, "Integration"). |
 
 Include a qtest that submits the unexpanded bracket and expects score 0.
 
-`questionsimplify` 0 or 1? The trap is that `simp` runs at input-evaluation
-time, before the PRT ever sees the answer.
-
-- Expand checks on polynomials: `questionsimplify=1` is safe, because simp never
-  multiplies out `(x-a)^2`. Just add the form node and `autosimplify=0`.
-- Simplify-collect (`5*x*x^2`) and surds (`sqrt(18)`): `questionsimplify` MUST
-  be 0. Otherwise simp collapses the student's answer at input time and your
-  form node becomes a silent no-op that still awards full marks. Going to 0 then
-  forces you to wrap every rand call, list index and form-node `ta` in
-  `ev(..., simp)`, and to force simp on displays.
-- Simplest-surd form needs no new recipe: under `simp:false`, `EqualComAss`
-  already rejects `sqrt(18)` for `3*sqrt(2)`, because they are different trees.
+Write the teacher's answer for a form node so that question-level
+simplification leaves it in the required form, or set `questionsimplify` 0 and
+wrap every `rand` call, list index and computed value in `ev(..., simp)`.
 
 Form guards should test an inequality on structure, not an equality. A guard
 like `degree(denom) == 1` silently rejects legitimate equivalent forms at the
@@ -680,94 +593,47 @@ completed-square form, such as the factored `(x-r1)(x-r2)` for distinct roots.
 
 ### Integration: use `Int`, and `tans` is the antiderivative
 
-`Int` differentiates the student's answer and compares with `diff(tans, x)`. If
-`tans` is the integrand, the test compares against the derivative of the
-integrand and always fails. Compute `F_expr: integrate(f_expr, x);` in question
-variables and use `F_expr` as `tans`.
-
-`Int` defaults to `constint:true`, so it already requires a constant of
-integration and accepts any constant name.
-
-Two hard limits:
-
-- **Never apply `Int` to a definite integral, or to a "find c given a point"
-  question.** With `constint:true`, `ATInt(x^2+3, x^2+3, x)` is false: it
-  rejects the correct answer. A `+c` in the worked solution is not enough of a
-  signal. Read the stem.
-- **Do not use `Antidiff` or `AddConst`** if your STACK install behaves like the one this was built on. Both set `simp:false` inside their block without declaring it local,
-  which leaks `simp:false` into global CAS state and corrupts every later PRT
-  node and CASText. The symptoms are baffling: empty PRT results on most seeds,
-  "unevaluated casstring" warnings, and hung Maxima processes. `Int` saves and
-  restores `simp` correctly. Prototype:
-  `reference/prototypes/integration_with_antidiff_prototype.xml`.
+The rules are in STACK's essentials file, "Choose the answer test"
+("Integration"). Prototype:
+`reference/prototypes/integration_with_antidiff_prototype.xml`.
 
 ### Numerical answers: prefer tolerance over significant figures
 
-Unless the significant-figure FORM is the skill being assessed, grade "to N
-s.f." questions with `NumAbsolute` and a magnitude-appropriate tolerance, not
-`NumSigFigs`. `NumSigFigs` has three failure modes that cost three fix rounds
-on one section:
+Unless the significant-figure form is the skill being assessed, grade "to N
+s.f." questions with `NumAbsolute` or `NumRelative` and a magnitude-appropriate
+tolerance, not `NumSigFigs`. Reserve `NumSigFigs` for questions that assess the
+form, and keep it on the correct-answer node only: use `NumRelative`
+(tolerance around 0.05) on any diagnostic node.
 
-1. Trailing-zero loss: `90.0` prints as `90` and is counted as 2 s.f., so the
-   correct answer is rejected.
-2. Values of 100 or more give `dp=0`, producing integer strings that
-   `NumSigFigs` will not accept as unambiguous.
-3. A `dispdp(...)` STRING fed as a test input to a `numerical` input is a
-   string, not a number, so validation fails with an empty score.
-
-Feed rounded numbers, `float(round(v*10^k)/10^k)`, as qtest inputs. Reserve
-strict `NumSigFigs` for cases where s.f. form itself is assessed, and then
-constrain the pool so no correct value has a trailing zero at the target figure.
-
-Related: for a `NumDecPlaces` question whose answer ends in zeros at the required
-precision (`28.8000` to 4 dp), do not write the literal in the qtest. Test inputs
-are CAS-evaluated and a float carries no trailing zeros, so `28.8000` collapses
-to `28.8`, the test reads 1 dp instead of 4, and the correct answer is marked
-wrong on every seed. Feed `dispdp(float(ta),N)` instead.
-
-And for a question graded to N significant figures, keep `NumSigFigs` on the
-correct-answer node but use `NumRelative` (tolerance around 0.05) on any
-diagnostic node. `NumSigFigs` miscounts on floats with a trailing zero at the
-required precision, so the diagnostic misfires on exactly those seeds.
+Test values with trailing zeros: STACK's essentials file, "Choose the answer
+test" ("Numbers").
 
 ### Sets
 
-- **There is no `set` input type.** `<type>set</type>` throws
-  `stack_input_factory: unknown input type set` and crashes validation at the
-  first question. Use `<type>algebraic</type>`. Students type `{a, b}`, which
-  parses as a set, and `AlgEquiv` / `Sets` compares set to set.
-- **Set qtest values must be pre-evaluated bound variables.** An inline computed
-  set (`setify(...)`, `makelist(...)`, or arithmetic on elements) does not
-  resolve to a validated set answer: input validation fails and the PRT never
-  runs, leaving an empty score. Pre-evaluate each qtest set into its own question
-  variable and put only the bare name in the test input. Same for any PRT
-  `<tans>` that is a computed set. A passing correct case is not evidence that
-  the wrong and diagnostic cases pass, because the correct case usually already
-  uses a bare variable.
-- **Round-then-`Sets` grading: match rational against rational.** If the PRT
-  rounds via `round(x*10)/10` it returns exact rationals like `989/10`. Compared
-  against float literals `{98.9, 261.1}`, every entry reports as both wrong and
-  missing, and the correct answer scores 0. Wrap the rounding in `float(...)`.
+STACK's essentials file, "Choose the answer test" ("Sets", "Numbers"), covers
+the input type and float-against-rational comparison. In particular, if a PRT
+rounds with `round(x*10)/10` it returns exact rationals such as `989/10`, which
+`Sets` treats as different from the float `98.9`: wrap the rounding in
+`float(...)`.
 
 ### Matrices: never use `addrow`
 
-Do not use Maxima's `addrow` (or `addcol`). Its behaviour has changed between
-versions, and it is easily confused with STACK's row operation
-`rowadd(M,i,j,k)`, which returns `M` with row `i` replaced by row `i` plus `k`
-times row `j`. For a row operation use `rowadd`. To stack rows into a matrix,
-build it directly from lists: `matrix(list_matrix_entries(r1),
-list_matrix_entries(r2))`.
+This project runs STACK 4.13.1, where any question containing the text
+`addrow` is reported as an upgrade error and its tests do not run (STACK's
+essentials file, "Write the question variables"). For a row operation use
+`rowadd`; to stack rows, build the matrix from lists:
+`matrix(list_matrix_entries(r1), list_matrix_entries(r2))`.
 
 ### Never interpolate the graded answer into the stem
 
-A stem like `Show that log … = {@ta1@}` prints the very value the student is
-meant to produce, so the graded input is free marks. Use a neutral instruction
-("Write down the value of …") and let the PRT do the grading. This applies to
-any prompt whose target equals a graded input value.
+STACK's question review checklist covers this. Use a neutral instruction
+("Write down the value of …") rather than "Show that … = {@ta1@}".
 
 ### Question names are immutable
 
-`push-live.sh` matches questions to live quiz slots BY NAME. Changing a `<name>`
+`push-live.sh` matches questions to live quiz slots BY NAME. This is the kit's
+rule, not Moodle's: Moodle never matches by name (STACK's essentials file,
+"Update a question already in use"). Changing a `<name>`
 during an edit pass breaks the match: the re-push refuses, because the quiz
 still holds the old name and the file does not. Question names are admin-only
 and never student-facing, so prose style rules do not apply to them. If a name
@@ -962,15 +828,10 @@ cases: here they are defects.
 
 ### Question-variable gotchas
 
-- **`questionsimplify=0` runs the question variables unsimplified too**
-  (STACK's essentials file, "Randomise with STACK's functions"). The symptom
-  in validation is a qtest returning an EMPTY score, not a wrong value, because
-  the variables never set up and the PRT never ran.
-- **`tab` is a forbidden variable name** in STACK even though plain Maxima
-  accepts it. STACK's keyval parser rejects it and invalidates the entire
-  question variables block, so the question never sets up. If a short variable
-  name behaves oddly, test it against the parser before assuming the maths is
-  wrong.
+STACK's essentials file, "Write the question variables", covers assignment,
+forbidden names such as `tab`, and inputs not existing yet. An EMPTY score in a
+qtest, rather than a wrong one, usually means the question variables stopped
+with an error and the PRT never ran.
 
 ---
 

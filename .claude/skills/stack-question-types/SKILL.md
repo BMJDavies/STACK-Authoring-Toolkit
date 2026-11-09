@@ -24,7 +24,7 @@ description: Reference for STACK question types, XML skeletons, PRT patterns and
 | Proof analysis / comprehension | `stack` + mixed inputs | Pattern 8 |
 | Classify objects into categories (type 3) | `stack` + one dropdown per object | Copy `reference/prototypes/classify_objects_prototype.xml`. Parsons grades ordered proofs only, not bucket-sorting, so classification uses dropdowns. |
 | "Give an example with property P" (type 7) | `stack` + algebraic, property-checking PRT | Copy `construct_instance_prototype.xml`. The PRT checks a computed property of the answer, not equivalence to one model answer. |
-| Indefinite integral, antidifferentiation | `stack` + algebraic, `Int` PRT | Copy `integration_with_antidiff_prototype.xml`. Do NOT use `Antidiff` / `AddConst`: see style guide. |
+| Indefinite integral, antidifferentiation | `stack` + algebraic, `Int` PRT | Copy `integration_with_antidiff_prototype.xml`. Rules: STACK's essentials file, "Integration". |
 | Figure or worked example with no input | `stack` with no input, PRT or qtest | "Skinny STACK". A `description` renders `[[jsxgraph]]` as literal text. |
 
 When in doubt, copy a question of the same shape out of `reference/showcase.xml`.

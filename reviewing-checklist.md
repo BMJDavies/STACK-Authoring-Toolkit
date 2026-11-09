@@ -59,12 +59,12 @@ decides whether it is correct. See the style guide, "Inputs".
       `requirelowestterms=0` for exact answers), not `algebraic`
 - [ ] Every matrix of numbers carries `validator:validate_numeric`
 - [ ] Every formula input graded by a property (not by `AlgEquiv` against one
-      fixed answer) carries a variable-set validator
+      fixed answer) carries `checkvars:1` or a variable-set validator
 - [ ] PRT nodes typically do not check `listofvars`, the variables used, the type 
       of the answer, or floats unless that is the purpose of the question. Such 
       checks belong on the input (type, options or a bespoke validator).
-- [ ] Each bespoke validator is a pure function of one argument, uses
-      `every`/`member` rather than `subsetp`/`setify`, and its message is clear
+- [ ] Each bespoke validator meets STACK's essentials file ("Validators"):
+      one argument, set tests that work under `simp:false`, and a message that is clear
       British English that does not hint at the answer
 - [ ] Try one invalid entry yourself through the API for at least one validated
       input: it must come back invalid with the message, not marked wrong
