@@ -173,9 +173,12 @@ edit survives only in the history.
 
 Two things to know:
 
-- **Matching is by question name.** Renaming a question during an edit pass
-  breaks the match, so the re-push adds a new slot and orphans the old one as a
-  stale duplicate. Treat `<name>` as immutable.
+- **Matching is by question name, and the file must hold the whole quiz.** If
+  the quiz has a question the file does not (another section's, or the old name
+  of a renamed one), the push refuses and changes nothing, because it would
+  move that question to the end. Treat `<name>` as immutable, publish each
+  section into its own quiz, and push the whole section file rather than one
+  extracted question.
 - **After every push, verify the imported question NAMES**, not just the slot
   count. A wrong-content import keeps the same count, which is exactly why it is
   easy to miss.
@@ -317,5 +320,5 @@ Run one Moodle-touching operation at a time unless you have a second stack.
 
 **Container recreation.** Restarting the containers is safe. Recreating them
 (`docker compose down` then `up`, or a rebuild) wipes anything installed by hand
-inside them, including Maxima and any custom theme. See SETUP.md for what to
+inside them, including Maxima and any custom theme. See docs/SETUP.md for what to
 reinstall.

@@ -60,9 +60,9 @@ setting() {
 }
 
 load_harness() {
-    [ -f "$HARNESS" ] || die "no $HARNESS. Ask your assistant to follow Stage 0 of ONBOARDING.md."
+    [ -f "$HARNESS" ] || die "no $HARNESS. Ask your assistant to follow Stage 0 of docs/ONBOARDING.md."
     if grep -q "Template from the kit" "$HARNESS"; then
-        die "$HARNESS is still the template. Ask your assistant to follow Stage 0 of ONBOARDING.md."
+        die "$HARNESS is still the template. Ask your assistant to follow Stage 0 of docs/ONBOARDING.md."
     fi
     CLI="$(setting cli)"
     [ -n "$CLI" ] || die "no run-role.cli line in $HARNESS."

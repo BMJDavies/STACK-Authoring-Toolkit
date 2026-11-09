@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OPTIONAL, for people running several authoring projects. See MULTIPLE-PROJECTS.md.
+# OPTIONAL, for people running several authoring projects. See docs/MULTIPLE-PROJECTS.md.
 # The normal install is per-project: the kit folder IS the project and nothing
 # outside it is touched. This script is the other case.
 #

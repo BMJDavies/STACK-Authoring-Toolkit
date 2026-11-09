@@ -3,8 +3,8 @@
 
 <!-- ============================================================
      PROTOTYPE: Parsons problem — "Show that" minimum value
-     Source: Ch3 Section D, Q10 (D10)
-     "Show that the minimum value of x² + 4x + 11 is 7"
+     Written for the kit: complete the square on a randomised
+     quadratic to show its minimum value.
      ============================================================ -->
 <question type="stack">
   <name><text>PROTOTYPE: Parsons — show minimum value (completing the square)</text></name>

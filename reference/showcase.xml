@@ -1519,8 +1519,7 @@ ta_set: {ta1, ta2};
      it ("empty test case"). A matrix question that has a second input (or a second
      PRT with a non-NULL expectation) does get the usual invalid-input test: a letter
      in one cell, every other input correct, the PRT expecting a blank score, a
-     blank penalty and the note NULL. Checked: with mustverify 1 the test passes.
-     Source: LADR 3C, item 3C_P02b_MatrixStd, approved 2026-10-02. -->
+     blank penalty and the note NULL. Checked: with mustverify 1 the test passes. -->
 <question type="stack">
   <name><text>Showcase 11: Matrix input</text></name>
   <questiontext format="html">
