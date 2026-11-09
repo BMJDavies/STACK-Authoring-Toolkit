@@ -60,6 +60,22 @@ rarely conflict; that matters more than the override rule above.
 
 ## Content rules
 
+STACK's essentials file comes first: the technical requirements for any STACK
+question, which `style-guide.md` builds on. Before writing, validating or
+reviewing any question, read it verbatim, never from memory or a summary:
+
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/iss1925/agents/stack_essentials.md
+
+If the command fails, or what it returns does not begin with
+`# STACK essentials`, stop. Do not author, validate or review anything, and
+tell the user the essentials file could not be read. (`-f` makes a missing
+file an error; without it curl prints "404: Not Found" and succeeds.) Where
+the essentials file and the style guide disagree, the style guide wins.
+
+For the kit's maintainer: when STACK issue #1925 is merged into STACK's `dev`
+branch, change `iss1925` in that URL to `dev`; after the next STACK release,
+change it to `master`. This is the only place the URL appears.
+
 `style-guide.md`, then `project/style-guide.md` if it exists, are the single
 source of truth for content conventions. Read them before writing or reviewing
 anything, rather than relying on memory.
