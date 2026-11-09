@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Validate a Moodle-XML question file through the standalone STACK API /test route.
 
-Splits a multi-question quiz file and POSTs each STACK question to /test, which
-runs the question's embedded qtests across its deployed variants. No Moodle DB
-import, no seed-deploy, no cleanup.
+Splits a multi-question quiz file and POSTs each STACK question to /test, once
+per deployed seed, which runs the question's embedded qtests on that variant.
+No Moodle DB import, no seed-deploy, no cleanup.
+
+One request per seed: on STACK 4.14.0 and earlier, /test generates only the
+first deployed seed's variant and runs every seed's tests against it, so a
+request holding several seeds tests the first seed only.
 
 Usage:  api_check.py <file.xml> [--url http://localhost:3080] [--retries 2]
 
@@ -60,24 +64,9 @@ def is_timeout(res):
     return False
 
 
-any_fail = False
-n_pass = n_fail = n_notest = 0
-for q in questions:
-    name_el = q.find("name/text")
-    name = name_el.text if name_el is not None else "?"
-    if not q.findall("deployedseed"):
-        for s in INJECT_SEEDS:
-            ET.SubElement(q, "deployedseed").text = str(s)
-    wrapper = ET.Element("quiz")
-    wrapper.append(q)
-    xmlstr = ET.tostring(wrapper, encoding="unicode")
-    # Strip /*...*/ block comments (JS comments in JSXGraph figures, Maxima
-    # comments in castext). The API's castext validator rejects them ("no
-    # longer supported") and returns zero results, while Moodle import accepts
-    # them. They are semantically inert, and this only touches the POST
-    # payload, never the content file. New content should use // instead.
-    xmlstr = re.sub(r"/\*.*?\*/", "", xmlstr, flags=re.S)
-
+def post_with_retries(xmlstr):
+    """POST one request, retrying transient errors and emulation timeouts.
+    Returns (response, None) or (None, error message)."""
     res = None
     for attempt in range(args.retries + 1):
         try:
@@ -85,16 +74,54 @@ for q in questions:
         except Exception as e:
             if attempt < args.retries:
                 continue
-            print(f"[ERROR] {name}: {e} (after {args.retries + 1} attempts)")
-            any_fail = True
-            n_fail += 1
-            res = None
-            break
+            return None, f"{e} (after {args.retries + 1} attempts)"
         # Retry on emulation timeout, not on a genuine score mismatch.
         if is_timeout(res) and attempt < args.retries:
             continue
         break
-    if res is None:
+    return res, None
+
+
+any_fail = False
+n_pass = n_fail = n_notest = 0
+for q in questions:
+    name_el = q.find("name/text")
+    name = name_el.text if name_el is not None else "?"
+    seeds = [el.text for el in q.findall("deployedseed")] or [str(s) for s in INJECT_SEEDS]
+    for el in q.findall("deployedseed"):
+        q.remove(el)
+
+    # One request per seed, each a copy of the question with that one seed.
+    res = {"messages": "", "results": {}}
+    error = None
+    for seed in seeds:
+        seed_el = ET.SubElement(q, "deployedseed")
+        seed_el.text = seed
+        wrapper = ET.Element("quiz")
+        wrapper.append(q)
+        xmlstr = ET.tostring(wrapper, encoding="unicode")
+        q.remove(seed_el)
+        # Strip /*...*/ block comments (JS comments in JSXGraph figures, Maxima
+        # comments in castext). The API's castext validator rejects them ("no
+        # longer supported") and returns zero results, while Moodle import accepts
+        # them. They are semantically inert, and this only touches the POST
+        # payload, never the content file. New content should use // instead.
+        xmlstr = re.sub(r"/\*.*?\*/", "", xmlstr, flags=re.S)
+
+        seedres, error = post_with_retries(xmlstr)
+        if seedres is None:
+            error = f"seed {seed}: {error}"
+            break
+        if seedres.get("messages") and not res["messages"]:
+            res["messages"] = seedres["messages"]
+        res["results"].update(get_results(seedres))
+        if res["messages"]:
+            break  # A question-level error is the same for every seed.
+
+    if error:
+        print(f"[ERROR] {name}: {error}")
+        any_fail = True
+        n_fail += 1
         continue
 
     results = get_results(res)

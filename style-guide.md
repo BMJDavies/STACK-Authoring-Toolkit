@@ -924,12 +924,10 @@ Give both a course-page description so students can tell them apart.
   the start, not a separate pass later.
 - The planner marks each question "randomise" or "fixed", the author implements
   it, the reviewer enforces the threshold.
-- **Design backwards:** pick the answer first, then build the question from it.
-- **Constrain the random values** so every variant produces a nice answer (an
-  integer or a simple fraction).
-- Avoid variants where the answer is trivially 0 or 1, or where the numbers are
-  big enough that arithmetic becomes the difficulty.
-- The same solution method must work for every variant.
+- **Build backwards**, so every variant has a good answer and takes the same
+  method (STACK's essentials file, "Randomise with STACK's functions"). In this
+  kit a good answer is an integer or a simple fraction, never trivially 0 or 1,
+  and the numbers are never big enough that arithmetic becomes the difficulty.
 
 ### Deployed seeds
 
@@ -969,14 +967,10 @@ Use `rand_with_prohib` or explicit guards.
 
 ### Question-variable gotchas
 
-- **`questionsimplify=0` runs the WHOLE question under `simp:false`, including
-  the question variables block.** Under `simp:false`, list indexing like
-  `klist[rand(6)+1]` throws "subscript must be an integer", because `rand(6)+1`
-  never collapses to a number. That aborts the variable block and leaves every
-  downstream variable unbound. The symptom in validation is a qtest returning an
-  EMPTY score, not a wrong value, because the PRT never ran. Select random
-  elements with `rand([...])` instead of `list[rand(n)+1]`, and wrap any numeric
-  variable you display or feed to a test in `ev(..., simp)`.
+- **`questionsimplify=0` runs the question variables unsimplified too**
+  (STACK's essentials file, "Randomise with STACK's functions"). The symptom
+  in validation is a qtest returning an EMPTY score, not a wrong value, because
+  the variables never set up and the PRT never ran.
 - **`tab` is a forbidden variable name** in STACK even though plain Maxima
   accepts it. STACK's keyval parser rejects it and invalidates the entire
   question variables block, so the question never sets up. If a short variable
