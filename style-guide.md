@@ -1,8 +1,10 @@
 # Content rules and style guide
 
-**Audience: the assistant. This is authoritative for content conventions. Edit it to make the rules yours.**
+**Audience: the assistant. This is authoritative for content conventions. It belongs to the kit: put rules for one project in `project/style-guide.md`,
+and your own habits across projects in `extensions/`.**
 
-The single source of truth for content conventions in this project. Agents read
+The kit's content conventions, for every project; a project's
+`project/style-guide.md` adds to them or overrides them. Agents read
 this before writing or reviewing anything. Implementation patterns (XML
 skeletons, PRT wiring, JSXGraph templates) live in the skill packages under
 `.claude/skills/`; this file is about what standards the content must meet.
@@ -88,13 +90,13 @@ the next subsection. Use exactly one of these four forms:
 
 - **Direct adaptation.** The same task as a source item, possibly randomised,
   reworded, or split into parts:
-  `This question is directly adapted from Exercise 8 in Section 3A of <citation>.`
+  `This question is directly adapted from Exercise 8 in Section 4.2 of <citation>.`
 - **Substantial adaptation.** The source item's task has changed in kind, for
   example a proof turned into a Parsons problem or a computational scaffold:
-  `This question is adapted from Exercise 17 in Section 3A of <citation>: <one clause saying how it was changed>.`
+  `This question is adapted from Exercise 17 in Section 4.2 of <citation>: <one clause saying how it was changed>.`
 - **From the text.** It tests a definition, result or example in the section's
   text rather than an exercise:
-  `This question is based on <Example 3.3 / the definition of a linear map> in Section 3A of <citation>.`
+  `This question is based on <Example 4.5 / the definition of the derivative> in Section 4.2 of <citation>.`
 - **Original.** Proposed by the planner, with no source item:
   `This question is original to this project and does not come from <citation>.`
 
@@ -126,14 +128,14 @@ Moodle") is the user's side of this.
   see the question description.
 - **Tags:** `tags="<raised-by>, <section-id>"`. The first tag is `kit-review`
   for the reviewer and `kit-enrich` for the enricher; the second is the section
-  id, for example `Ch5A`.
+  id, for example `Ch2B`.
 - **One block per issue.** Each says where the issue is (question part, PRT
   node, test case, sentence of the worked solution), what is wrong or
   undecided, and the proposed action. Make it short enough to read in the edit
   form.
 - **Valid CASText.** The block's content is evaluated. Wrap anything that
   quotes code, `{@...@}`, `[[...]]` or a backslash in `[[escape]]`:
-  `[[todo tags="kit-review, Ch5A"]][[escape]]prt2 node 1 tests ans3 against {0} …[[/escape]][[/todo]]`.
+  `[[todo tags="kit-review, Ch2B"]][[escape]]prt2 node 1 tests ans3 against {0} …[[/escape]][[/todo]]`.
   Remember that `{@ex@}` keeps its braces when reading code you quote.
 - **Only for a human decision:** an editorial or pedagogic choice, a source
   ambiguity, a defect flagged but not fixed. Anything the agent can and should
@@ -269,14 +271,14 @@ input line, `numerical` for a single number, `checkvars` and validators,
   "Empty question tests are not permitted!".
 - Prefer `checkvars:1` where the allowed variables are those of the teacher's
   answer; otherwise write a variable-set validator, for example
-  `validate_x3(ex) := if every(lambda([v], member(v, [x1, x2, x3])), listofvars(ex)) then "" else "Use only the variables x1, x2, x3.";`
+  `validate_xc(ex) := if every(lambda([v], member(v, [x, c1, c2])), listofvars(ex)) then "" else "Use only the variables x, c1, c2.";`
   Where a question's variable set depends on the seed, the validator can read
   it from a question variable.
-- Every `algebraic` input whose expected answer uses atoms such as `x1`, `y2`
+- Every `algebraic` input whose expected answer uses atoms such as `c1`, `a2`
   carries `consolidatesubscripts`, after any validator:
-  `<options>validator:validate_x3, consolidatesubscripts</options>`. Each such
+  `<options>validator:validate_xc, consolidatesubscripts</options>`. Each such
   question carries one test entering the answer with underscores (for example
-  `subst([x1=x_1,x2=x_2,x3=x_3], ta1)`) and expecting full marks.
+  `subst([c1=c_1,c2=c_2], ta1)`) and expecting full marks.
 - Where bespoke validators recur across questions, suggest adding them to
   STACK.
 - Tooling caveat: `render-check` reads the database, not the file on disk.
@@ -331,8 +333,8 @@ input notation opens with a short description explaining how to type it
   saying "both move it up equally" is true, and a student who reasons correctly
   is marked wrong. Reword such options to target the genuine misconception.
   A general claim is not false enough if its only counterexample is a case the
-  question excludes: "identical rows give a range of dimension 1" fails only for
-  the zero matrix, so it is true for a question whose matrix is all ones.
+  question excludes: "\(x/x=1\)" fails only at \(x=0\), so it is true for a
+  question in which \(x\) is a length.
 - **Pattern:** define the option list in question variables using
   `mcq_correct()` / `mcq_incorrect()`, then reference it with `[[input:ansN]]`.
   Never define options inline.
@@ -616,18 +618,12 @@ rounds with `round(x*10)/10` it returns exact rationals such as `989/10`, which
 `Sets` treats as different from the float `98.9`: wrap the rounding in
 `float(...)`.
 
-### Matrices: never use `addrow`
-
-This project runs STACK 4.13.1, where any question containing the text
-`addrow` is reported as an upgrade error and its tests do not run (STACK's
-essentials file, "Write the question variables"). For a row operation use
-`rowadd`; to stack rows, build the matrix from lists:
-`matrix(list_matrix_entries(r1), list_matrix_entries(r2))`.
-
 ### Never interpolate the graded answer into the stem
 
-STACK's question review checklist covers this. Use a neutral instruction
-("Write down the value of …") rather than "Show that … = {@ta1@}".
+STACK's question review checklist (`agents/stack_question_review.md` in
+STACK's repository, "Purpose and mathematical contract") covers this. Use a
+neutral instruction ("Write down the value of …") rather than
+"Show that … = {@ta1@}".
 
 ### Question names are immutable
 
@@ -848,8 +844,8 @@ with an error and the PRT never ran.
   convert it, list the distractors with your rationale in the hand-off notes so
   the reviewer can audit them.
 - **Say when an answer is an example.** When a part asks for any one object
-  out of many that satisfy a condition (a vector in a null space, a map with a
-  given null space, two non-commuting matrices, constants for which a system
+  out of many that satisfy a condition (a point on a line, a function with a
+  given derivative, a quadratic with given roots, constants for which a system
   has no solution), write "Give an example of ...", not "Give ...". Students
   then know that any valid answer earns the marks and that they need not find
   a particular one. A part with a unique answer keep their usual wording.
@@ -857,7 +853,7 @@ with an error and the PRT never ran.
   "at least" or "at most": any weaker bound also makes the statement true, so a
   correct statement would be marked wrong. Ask for the smallest or largest
   possible value, or write the step as an equality
-  (\(\dim\operatorname{range}S+\dim\operatorname{range}T\le\dim\operatorname{range}S+\dim\operatorname{null}S=\) [input]).
+  (\(x^2+6x+10=(x+3)^2+\) [input], not \(x^2+6x+10\ge\) [input]).
   Where a bound is unavoidable, say "give the best bound". The exception is
   describing a set exactly ("find the set of values: \(k\le\) [input] or
   \(k\ge\) [input]").
@@ -875,7 +871,7 @@ with an error and the PRT never ran.
 
 The rules above were written for late-school and early-undergraduate algebra and
 calculus. If your material sits somewhere else, expect these shifts, and record
-your decisions here rather than leaving them implicit:
+your decisions in `project/style-guide.md` rather than leaving them implicit:
 
 - **Lower level:** more numerical and fewer algebraic inputs, more table-fill
   questions, more classification via dropdowns, a higher proportion of

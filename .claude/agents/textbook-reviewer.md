@@ -76,8 +76,10 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
    `project/style-guide.md` define
    the conventions. Check the author's reported deviations: are they justified?
 
-4. **Run the checklist.** Work through `reviewing-checklist.md`. Do not skim it
-   because the file "looks fine": that is exactly when things get through.
+4. **Run the checklists.** Work through `reviewing-checklist.md`, then STACK's
+   question review checklist (`agents/stack_question_review.md`, fetched as
+   the kit's `AGENTS.md` says in "Content rules"). Do not skim either because
+   the file "looks fine": that is exactly when things get through.
 
 5. **Check plan faithfulness.** Run `tools/audit-draft.py` on the draft
    yourself; a FAIL is a revision request. Are all planned items present? Do

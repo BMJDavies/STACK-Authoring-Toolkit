@@ -72,6 +72,7 @@ Zero and zero is the expected result on clean content.
 - Path to the approved XML
 - Source reference for topic context
 - `style-guide.md` (then `project/style-guide.md`, if it exists) and the convention reference (`reference/showcase.xml` unless the project says otherwise)
+- STACK's question review checklist (`agents/stack_question_review.md`, fetched as the kit's `AGENTS.md` says in "Content rules")
 
 ## Workflow
 
@@ -91,7 +92,11 @@ that are correctly empty. Do your own count.
 ### 2. Read the context
 
 Open the XML, the source, `style-guide.md`, `project/style-guide.md`, and the showcase for diagnostic-node
-structure.
+structure. Read STACK's question review checklist too, fetched as the kit's
+`AGENTS.md` says. Its section "Feedback and worked solutions", and its item on
+answers given away ("Purpose and mathematical contract"), are the ones this
+pass acts on. Where it and the kit's style guide
+disagree, the style guide wins.
 
 ### 3. Plan every change before editing any of them
 

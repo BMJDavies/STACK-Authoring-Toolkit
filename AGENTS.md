@@ -76,7 +76,21 @@ was `dev`. (`-f` makes a missing file an error; without it curl prints
 "404: Not Found" and succeeds.) Where the essentials file and the style guide
 disagree, the style guide wins.
 
-For the kit's maintainer: the file is on `dev` from STACK issue #1925, so
+STACK's question review checklist is the second source for the reviewer and
+the enricher: a quality checklist that builds on the essentials file. Before
+reviewing or enriching a question, read it verbatim in the same way, `master`
+first, then `dev`:
+
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/master/agents/stack_question_review.md
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/dev/agents/stack_question_review.md
+
+Here the check is that what is returned begins with `# Question quality
+review`. If both fail, tell the user and carry on without it rather than
+stopping (the reviewer with `reviewing-checklist.md` alone): STACK calls its
+checklist optional, and the kit's own rules stand on their own. Where STACK's checklist and the kit's style guide
+or checklist disagree, the kit's wins.
+
+For the kit's maintainer: both files are on `dev` from STACK issue #1925, so
 until the next STACK release `master` returns 404 and the `dev` copy is read.
 These are the only places the URLs appear.
 
