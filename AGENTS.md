@@ -62,19 +62,23 @@ rarely conflict; that matters more than the override rule above.
 
 STACK's essentials file comes first: the technical requirements for any STACK
 question, which `style-guide.md` builds on. Before writing, validating or
-reviewing any question, read it verbatim, never from memory or a summary:
+reviewing any question, read it verbatim, never from memory or a summary.
+Try STACK's `master` branch first, then `dev`:
 
-    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/iss1925/agents/stack_essentials.md
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/master/agents/stack_essentials.md
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/dev/agents/stack_essentials.md
 
-If the command fails, or what it returns does not begin with
-`# STACK essentials`, stop. Do not author, validate or review anything, and
-tell the user the essentials file could not be read. (`-f` makes a missing
-file an error; without it curl prints "404: Not Found" and succeeds.) Where
-the essentials file and the style guide disagree, the style guide wins.
+Run the first command. If it fails, or what it returns does not begin with
+`# STACK essentials`, run the second and apply the same check. If both fail,
+stop. Do not author, validate or review anything, and tell the user the
+essentials file could not be read. Tell the user which branch you read when it
+was `dev`. (`-f` makes a missing file an error; without it curl prints
+"404: Not Found" and succeeds.) Where the essentials file and the style guide
+disagree, the style guide wins.
 
-For the kit's maintainer: when STACK issue #1925 is merged into STACK's `dev`
-branch, change `iss1925` in that URL to `dev`; after the next STACK release,
-change it to `master`. This is the only place the URL appears.
+For the kit's maintainer: the file is on `dev` from STACK issue #1925, so
+until the next STACK release `master` returns 404 and the `dev` copy is read.
+These are the only places the URLs appear.
 
 `style-guide.md`, then `project/style-guide.md` if it exists, are the single
 source of truth for content conventions. Read them before writing or reviewing
