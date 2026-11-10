@@ -766,6 +766,12 @@ back with an empty score. Compute the value in the question variables, where
 simp is on, and put its name in the test input. The Sets rule below is one
 case of this.
 
+Arithmetic on numbers, surds and question variables is fine, although it stays
+unsimplified: `sqrt(val2)/sqrt(n)` (the example below) and `(1+2*%i)*ta1` are
+submitted as written, as a student would type them. The test is whether a
+student could type the input as an answer; a matrix sum, a call to the
+question's own lambda or a contrib call is not one.
+
 When a test fails this way, `tools/test-question.sh` names each input STACK
 did not accept, with what it was submitted as and STACK's message.
 
@@ -1135,6 +1141,11 @@ Use `rand_with_prohib` or explicit guards.
   usual victims: `mu`, `nu`, `xi`, `tr`, `np`, `nm`, `fb`, `cf`, `phi`, `deg`,
   `ev`, `sgn`. `tools/test-question.sh` fails a question that does this,
   checked against the STACK you have installed.
+  Names the map marks `f` (forbidden) are different. One marked `f` only as a
+  function (`rk`) is harmless as a variable, and `rk: 3` is valid; defining
+  it as a function (`rk(x) := …`) makes the whole block invalid, as does a
+  name marked `f` as a variable (`tab`). The lint reports an invalid block
+  with STACK's message.
 - **Include the library of every contrib function you call**, in question
   variables, feedback variables and test inputs alike:
   `stack_include("contribl://vectorspaces.mac")` for `projection_matrix`, and

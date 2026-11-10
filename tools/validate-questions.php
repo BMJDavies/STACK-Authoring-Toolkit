@@ -13,11 +13,14 @@
  *   - FAIL a question or feedback variable whose name has an "s" entry in
  *     STACK's security-map.json (style-guide.md, "Variable names STACK
  *     already uses");
+ *   - FAIL question or feedback variables that STACK rejects as invalid (a
+ *     forbidden name such as `tab`, or a definition of a forbidden function),
+ *     with STACK's message, which --lint-only would otherwise never show;
  *   - FAIL a call to a function defined in one of STACK's contrib libraries
  *     (stack/maxima/contrib/*.mac) in a question that does not include that
  *     library. A missing include leaves the call unevaluated, so a test that
  *     uses it comes back blank with no message.
- * Both checks read the installed STACK, so they follow its version.
+ * The checks read the installed STACK, so they follow its version.
  *
  * --lint-only runs the lint stage and stops: no import, no CAS, seconds per
  * file. Use it to sweep many files.
@@ -170,6 +173,16 @@ function kit_lint(string $xmlfile): int {
         // at the question's own variables, so the security map's meaning wins.
         $own = [];
         foreach ($blocks as $where => $src) {
+            // An invalid block (a forbidden name such as `tab`, or a definition
+            // `rk(x) := …` of a forbidden function) yields no names below, so
+            // report it here: --lint-only never reaches the import that would.
+            if (trim($src) !== '') {
+                $kv = new stack_cas_keyval($src, new stack_options(), 1);
+                if (!$kv->get_valid()) {
+                    $msgs[] = "$where are invalid in STACK: "
+                        . trim(strip_tags(implode(' ', $kv->get_errors())));
+                }
+            }
             foreach (kit_written_names($src) as $v) {
                 $own[$v] = true;
                 $kinds = [];
