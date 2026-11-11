@@ -84,9 +84,9 @@ that uses it:
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1901
 - Upstream: 2026080600
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-11, Chapter 5 plans of the Axler project
-- Fix: not in dev yet (checked 2026-10-14)
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/b893fbebd (PR #1902, merged 2026-10-14); released in STACK 4.14.0 (2026101500) (checked 2026-11-10)
 
 **Defect.** In `stack/maxima/linearalgebra_core.mac`, `make_list_of_lists`
 declares and assigns `_op1` but tests `op1`, so for a set it returns its
@@ -114,9 +114,9 @@ and drop any node that exists only to keep `[]` away from the library.
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1903
 - Upstream: 2026080600
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-11, Chapter 5 plans of the Axler project (5D convention D5)
-- Fix: not in dev yet (checked 2026-10-14); proposed from branch `iss1903`, under review on GitHub (2026-10-13)
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/da356ef91 (PR #1904, merged 2026-10-14; more tests in 4f1304ac7); released in STACK 4.14.0 (2026101500) (checked 2026-11-10)
 
 **Defect.** In `stack/maxima/contrib/eigenlib.mac` (line 46), the
 three-argument form of `eigenvectorp` tests
@@ -143,9 +143,9 @@ and reject the zero vector separately, which `eigenvectorp` does itself.
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1912
 - Upstream: 2026080600
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-05, Section 3F of the Axler project; diagnosed 2026-10-14
-- Fix: not in dev yet (checked 2026-10-14)
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/cb8b6fc25 (PR #1915, merged 2026-10-14); released in STACK 4.14.0 (2026101500) (checked 2026-11-10)
 
 **Defect.** In `stack/maxima/stackmaxima.mac` (line 882), `stack_matrix_disp`,
 the `texput` for `matrix`, raises "stack_matrix_disp: argument must be a
@@ -185,9 +185,9 @@ unmarked.
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1911
 - Upstream: 2026080600
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-05, Section 3E of the Axler project; reviewed 2026-10-14
-- Fix: not in dev yet (checked 2026-10-14); proposed from branch `iss1911` (adds the `realnum` option)
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/25245141e (PR #1914, merged 2026-10-14; the numerical input's `realnum` option); released in STACK 4.14.0 (2026101500) (checked 2026-11-10)
 - Marker: `validator:validate_numeric`
 
 **Defect.** A missing feature: the numerical input accepts complex numbers
@@ -205,8 +205,8 @@ with the extra option `validator:validate_numeric`. One entry, no todo blocks
 60 Chapter 3 questions.
 
 **Restore.** Once a release with the option is installed: on `numerical`
-inputs, replace `validator:validate_numeric` with the new option (`realnum` in
-the proposed fix; use whatever name is released), and delete the
+inputs, replace `validator:validate_numeric` with the new option (`realnum`,
+released in 4.14.0), and delete the
 `validate_numeric` definition where no other input uses it. Leave the
 validator where the box must also reject `0*t`, which the numerical input
 accepts by design (3B_P09c in the Axler project). Algebraic and matrix inputs
@@ -216,9 +216,9 @@ keep the validator. Run `test-question.sh` on each file changed.
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1931
 - Upstream: 2026101500
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-14 (complex, 5B of the Axler project) and 2026-10-19 (real surds, 5D); raised 2026-10-19
-- Fix: not in dev yet (checked 2026-10-19); proposed as an uncommitted change to `ATSet` in the user's clone
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/3e48f8645 (`ATSet`, PR #1932) and 7499b1b66 (`ATSets`, PR #1933), merged 2026-10-19 to 2026-10-21; not in a release yet: in no tag up to v4.14.0, so expected in 4.15.0 (checked 2026-11-10)
 
 **Defect.** In `stack/maxima/stackmaxima.mac`, `ATSet` (reached from
 `ATAlgEquiv` when both arguments are sets) simplifies each element with
@@ -249,9 +249,9 @@ the set it compared with, as each question's todo block lists.
 
 - Issue: https://github.com/maths/moodle-qtype_stack/issues/1944
 - Upstream: 2026101500
-- Status: open
+- Status: fixed in dev
 - Found: 2026-10-18, Section 6B plan of the Axler project (finding 17(b)); drafted 2026-10-27 in the 7D plan as `stack-wa-orthonormal-hermitian`; raised 2026-10-28
-- Fix: not in dev yet (checked 2026-10-28); proposed as an uncommitted change on branch `iss1944` of the user's clone
+- Fix: https://github.com/maths/moodle-qtype_stack/commit/33d27065a (PR #1946, merged 2026-11-10; covers the single-column case, and conjugates in the second slot as the workaround does); not in a release yet: in no tag up to v4.14.0, so expected in 4.15.0 (checked 2026-11-10)
 
 **Defect.** The linear algebra functions use the real dot product on complex
 vectors, never the conjugate transpose. In `stack/maxima/contrib/matrix.mac`
