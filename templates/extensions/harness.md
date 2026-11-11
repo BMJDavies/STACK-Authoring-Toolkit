@@ -5,7 +5,7 @@ replaces every <...> with a value and deletes this comment. Until then the kit
 treats the binding as missing. -->
 
 How this kit runs in the assistant tool on this machine. Re-run Stage 0 of
-`ONBOARDING.md` after changing or upgrading the tool.
+`docs/ONBOARDING.md` after changing or upgrading the tool.
 
 Tool and version: <...>. Recorded: <date>.
 
@@ -25,7 +25,7 @@ effort applies to every role.
 
 ## Models and effort
 
-Chosen by the user at onboarding, from the guidance in `WORKFLOW.md`, "Choosing
+Chosen by the user at onboarding, from the guidance in `docs/WORKFLOW.md`, "Choosing
 models and effort". Reviewed before each chapter.
 
 | Role | Tier | Model here | Effort here |

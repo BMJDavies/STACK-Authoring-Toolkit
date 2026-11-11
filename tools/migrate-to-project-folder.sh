@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # migrate-to-project-folder.sh: upgrade a kit configured before the kit/project
 # separation, where project files lived in the kit's own folders, to the layout
-# with the project in project/ (its own git repository). See UPGRADING.md.
+# with the project in project/ (its own git repository). See docs/UPGRADING.md.
 #
 # Run it from the root of your kit folder, BEFORE pulling the update. The usual
 # way is to run the new version straight from the remote, without pulling:
@@ -66,7 +66,7 @@ run()  { if [ "$DRY" = 1 ]; then printf '  would run: %s\n' "$*"; else "$@"; fi;
 step "Checking this folder"
 TOP="$(git rev-parse --show-toplevel 2>/dev/null)" || die "not inside a git repository. Run this from your kit folder."
 [ "$TOP" = "$(pwd -P)" ] || die "run this from the root of the kit folder ($TOP), not from a subfolder."
-[ -d .claude ] && [ -f style-guide.md ] || die "this does not look like the STACK authoring kit (no .claude/ or style-guide.md)."
+[ -d .claude ] && [ -f style-guide.md ] || die "this does not look like the STACK Authoring Toolkit (no .claude/ or style-guide.md)."
 if [ -e project ]; then die "project/ already exists. If the migration ran before, there is nothing to do; otherwise move project/ aside first."; fi
 
 NOTICE="This project has not been set up yet"

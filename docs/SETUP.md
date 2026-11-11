@@ -6,8 +6,8 @@ This walks you from a laptop with nothing installed to a working authoring
 pipeline. Most of the first run is downloads.
 
 **Do not work through this alone, and do not start at section 1.** Open your
-assistant in this folder and type `/start`, or, if your tool has no slash
-commands, ask it to follow `ONBOARDING.md`.
+assistant in the kit folder and type `/start`, or, if your tool has no slash
+commands, ask it to follow `docs/ONBOARDING.md`.
 
 It will establish what you already have installed and send you only to the
 sections you need. Someone with Moodle and STACK already running usually needs
@@ -15,10 +15,13 @@ four of the ten below. It will also ask what it needs to know about your project
 which this file does not cover.
 
 Everything below was verified on macOS (Apple Silicon) against Moodle 5.0.6.
-Version numbers move; the shape does not. The one exception is STACK itself:
-the kit needs 4.13.0 or later, in Moodle and in the validator (section 8).
+Version numbers move; the shape does not. There are two exceptions. STACK itself
+must be 4.13.0 or later, in Moodle and in the validator (section 8).
 `tools/stack-version` holds that minimum, and `tools/check-stack-version.sh`
-checks everything against it.
+checks everything against it. Moodle must be 5.0 or later: the setup tools in
+section 6, `setup-workspace.php` and `create-live-course.php`, create question
+banks as activity modules, which Moodle 4.x does not have, and on 4.x they stop
+with an error.
 
 ---
 
@@ -531,9 +534,10 @@ tools/test-question.sh reference/showcase.xml
 tools/push-live.sh reference/showcase.xml <the quiz id it printed>
 ```
 
-Open the quiz. You should see ten questions covering key point boxes, algebraic
-input, diagnostic feedback, faded examples, dropdowns, a Parsons problem,
-reading comprehension, randomisation and a JSXGraph figure.
+Open the quiz. You should see twelve questions covering key point boxes, algebraic
+input, diagnostic feedback, faded examples, fill-in-the-blanks, dropdowns, a
+Parsons problem, reading comprehension, randomisation, a JSXGraph figure, matrix
+input and a validation layer.
 
 If that works, everything works. Keep the showcase around: it is the reference
 the agents compare their conventions against.
@@ -547,11 +551,11 @@ reads `project/AGENTS.md`. That second file is where the assistant is told what
 your project is, where the questions come from, and how you want to be worked
 with.
 
-Do not write it by hand. Ask your assistant to follow `ONBOARDING.md`, or type
+Do not write it by hand. Ask your assistant to follow `docs/ONBOARDING.md`, or type
 `/start`. It will ask what it needs and write the file for you, creating
 `project/` first if you have not already done so in section 6.
 
-Then read `WORKFLOW.md`, which covers using the pipeline day to day.
+Then read `docs/WORKFLOW.md`, which covers using the pipeline day to day.
 
 ---
 

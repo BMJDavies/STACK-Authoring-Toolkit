@@ -1,4 +1,4 @@
-# STACK question authoring kit
+# STACK Authoring Toolkit
 
 **Audience: you, the human. Everything else is written to be read by your
 assistant.**
@@ -10,7 +10,7 @@ You point it at your own material and your own Moodle site.
 This folder becomes your project. Everything lives inside it, including the agent
 definitions in `.claude/`. Nothing is installed elsewhere on your machine, so the
 whole thing is undone by deleting the folder. If you later run several authoring
-projects and want them to share one pipeline, see `MULTIPLE-PROJECTS.md`.
+projects and want them to share one pipeline, see `docs/MULTIPLE-PROJECTS.md`.
 
 It was built for and tested with Claude Code, and is written to work with any
 command-line AI assistant that reads `AGENTS.md`, such as GitHub Copilot CLI,
@@ -18,13 +18,20 @@ Codex CLI or Gemini CLI. The content, the style guide, the checklist and the
 tools are not tool-specific. On first use your assistant checks what your tool
 can do and records it in `extensions/harness.md`. It asks you one thing: which
 model and effort level each role should use. The kit names no models;
-`WORKFLOW.md`, "Choosing models and effort", explains what to weigh. Tools
+`docs/WORKFLOW.md`, "Choosing models and effort", explains what to weigh. Tools
 other than Claude Code have not yet been tested end to end.
 
 ## Getting started
 
-Open your assistant **in this folder** and type `/start`, or ask it to follow
-`ONBOARDING.md`. The folder has to be the working directory itself: if
+Get a copy of the toolkit (called "the kit" throughout its files):
+
+```bash
+git clone https://github.com/BMJDavies/STACK-Authoring-Toolkit.git
+cd STACK-Authoring-Toolkit
+```
+
+Then open your assistant **in this folder** and type `/start`, or ask it to follow
+`docs/ONBOARDING.md`. The folder has to be the working directory itself: if
 you open a session in the parent, nothing here loads, and you get an ordinary
 assistant that has never heard of the pipeline and cannot tell you so. It will work out what you already have installed, ask what it
 cannot detect, and configure the kit for your project.
@@ -63,7 +70,7 @@ ignores: `project/`, a separate git repository for one course, and
 `extensions/`, your own instructions that apply across all your projects:
 
 ```
-stack-authoring-kit/          the kit: clone this, and run the assistant here
+STACK-Authoring-Toolkit/      the kit: clone this, and run the assistant here
 ├── AGENTS.md                 standing instructions; reads extensions/AGENTS.md
 │                             and project/AGENTS.md
 ├── .claude/  tools/  style-guide.md  reference/  ...
@@ -96,17 +103,21 @@ then extensions, then project, and the later one wins where they disagree.
 
 ```
 README.md                  this file, for you
-ONBOARDING.md              setup interview, for your assistant
+LICENSE                    GNU GPL v3, the licence for the whole kit
+VERSION  CHANGELOG.md      the kit's version, and what changed in each release
+CONTRIBUTING.md            how to report a problem or propose a change
 AGENTS.md                  standing instructions for the assistant (never rewritten)
 CLAUDE.md  GEMINI.md       one-line stubs that import AGENTS.md
-SETUP.md                   from nothing to a working install
-WORKFLOW.md                using the pipeline day to day
-LESSONS.md                 why the rules are the rules
 style-guide.md             content conventions: the agents' authority
 reviewing-checklist.md     what the reviewer works through
-MULTIPLE-PROJECTS.md       optional: sharing one kit across several projects
-UPGRADING.md               only for kits set up with an earlier version: the
-                           AGENTS.md rename and the project/ layout
+
+docs/
+  SETUP.md                 from nothing to a working install
+  ONBOARDING.md            setup interview, for your assistant
+  WORKFLOW.md              using the pipeline day to day
+  LESSONS.md               why the rules are the rules
+  MULTIPLE-PROJECTS.md     optional: sharing one kit across several projects
+  UPGRADING.md             only for kits set up with an earlier version
 
 .claude/
   agents/                  textbook-{planner,author,reviewer,enricher}
@@ -129,7 +140,7 @@ tools/
   ...and several smaller utilities
 
 reference/
-  showcase.xml             ten questions, one per pattern: the golden reference
+  showcase.xml             twelve questions, one per pattern: the golden reference
   prototypes/              working templates for the harder patterns
 
 templates/project/         the skeleton onboarding copies to project/
@@ -201,7 +212,7 @@ right question. Those need your eyes. The reviewer flags them but will only reso
 in relatively trivial cases.
 
 There is also a specific bug class the tooling exists to catch but does not catch
-consistently on its own: a question that validates cleanly and marks students wrongly. LESSONS.md
+consistently on its own: a question that validates cleanly and marks students wrongly. `docs/LESSONS.md`
 opens with it. It is worth 5 minutes of your time to read and understand this file.
 
 ---
@@ -279,11 +290,48 @@ included here, and neither are its conventions: the style guide names no
 syllabus, phase or awarding body, and has been used unchanged at other levels and
 in other countries. No knowledge of that project is needed to use this kit.
 
-The theme is a Boost child theme and inherits Moodle's GPL v3. Its copyright
-header is a placeholder to fill in.
+The theme is a Boost child theme and, like Moodle, is GPL v3 or later.
+`tools/stackapi/config.php` is taken from STACK and keeps STACK's copyright
+header.
 
 The reference XML under `reference/` consists of purpose-written
 exemplars demonstrating each question pattern. The mathematics in them is
 standard school and early-undergraduate material.
 
 STACK is GPL, and is maintained by Chris Sangwin and colleagues at The University of Edinburgh.
+
+---
+
+## Version
+
+The kit's version is in `VERSION`, and `CHANGELOG.md` lists what changed in
+each release. Releases are tagged in git (`v0.1.0` and so on). Before 1.0 the
+layout and the instructions may still change between releases; `docs/UPGRADING.md`
+says what to do when they do.
+
+---
+
+## Contributing
+
+Reports of problems and pull requests are welcome. `CONTRIBUTING.md` says how.
+
+---
+
+## Licence
+
+Copyright 2026 Ben Davies and the University of Southampton.
+
+The kit is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. This covers everything in the kit: the tools, the theme, the agent
+definitions, the documentation, the templates and the reference questions. The
+full text is in `LICENSE`.
+
+The kit is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+The licence covers the kit, not what you make with it. The questions, plans and
+other content you produce in `project/`, and your own files in `extensions/`,
+are yours, to license however you choose.

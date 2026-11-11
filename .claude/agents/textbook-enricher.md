@@ -231,8 +231,8 @@ STACK defects").
   maths.
 - Anything in description, zero-mark or Parsons questions, beyond typos.
 - Routing-node false feedback. It stays empty.
-- Question `<name>` values. Ever. Publishing matches slots by name, so a rename
-  orphans the live question and creates a stale duplicate.
+- Question `<name>` values. Ever. Publishing matches slots by name, so after a
+  rename the push refuses until the old question is removed from the quiz.
 
 ## No-op is a valid outcome
 

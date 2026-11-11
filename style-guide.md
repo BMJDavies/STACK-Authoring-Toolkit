@@ -23,7 +23,9 @@ understand why, you will spot the next variant of the same problem.
 - Question behaviour: `immediatefeedback`.
 - Attempts allowed: unlimited (this is formative material).
 - Correct answer display: hidden (`reviewrightanswer=0`).
-- One quiz per section. Split later if a quiz gets very long.
+- One quiz per section. Split later if a quiz gets very long. `push-live.sh`
+  refuses to publish into a quiz that holds questions the file does not, so
+  two sections cannot share a quiz.
 - Group related descriptions and questions on the same page. Be mindful of
   mobile: do not make pages enormous. Never put a single item alone on a page.
   Merge consecutive descriptions, and attach a trailing summary to the previous
@@ -116,7 +118,7 @@ direct adaptation.
 A decision that needs the user goes into the question as well as into the
 agent's report, as a STACK `[[todo]]` block. STACK lists every question with
 one at `<moodle>/question/type/stack/adminui/todo.php`, grouped by tag, so the
-user gets a working list inside Moodle. `WORKFLOW.md` ("Your to-do list in
+user gets a working list inside Moodle. `docs/WORKFLOW.md` ("Your to-do list in
 Moodle") is the user's side of this.
 
 - **Where:** at the end of `<questiondescription>`, after the provenance
@@ -888,11 +890,12 @@ any prompt whose target equals a graded input value.
 ### Question names are immutable
 
 `push-live.sh` matches questions to live quiz slots BY NAME. Changing a `<name>`
-during an edit pass breaks the match: the re-push ADDS the renamed question as a
-new slot and orphans the old one as a stale, un-updated duplicate. Question names
-are admin-only and never student-facing, so prose style rules do not apply to
-them. If a name genuinely must change, clean up the duplicate afterwards with
-`remove-from-quiz.php`.
+during an edit pass breaks the match: the re-push refuses, because the quiz
+still holds the old name and the file does not. Question names are admin-only
+and never student-facing, so prose style rules do not apply to them. If a name
+genuinely must change, remove the old one from the quiz with
+`remove-from-quiz.php` first. That deletes its slot, so do it before students
+have attempts on it.
 
 ### Page codes in question names
 
