@@ -8,6 +8,12 @@ than prose: the point is that nothing gets skipped because it felt fine.
 Blocking items are marked. Everything else is a judgement call the reviewer
 records in the feedback document.
 
+Work through STACK's question review checklist as well
+(`agents/stack_question_review.md` in STACK's repository, fetched as the kit's
+`AGENTS.md` says in "Content rules"). It covers question quality in general;
+this file adds the kit's conventions and its pipeline. Where the two disagree,
+this file and the style guide win.
+
 ---
 
 ## Question settings
@@ -31,14 +37,16 @@ records in the feedback document.
 - [ ] `syntaxhint` with `syntaxattribute=1` on any input expecting `sqrt`, `pi`,
       `inf` or other non-obvious notation, and the hint is a generic placeholder
       rather than the shape of the answer
-- [ ] No degenerate variants: no `rand` call can produce a zero coefficient, a
-      zero denominator, a perfect square where a surd is expected, a negative
-      discriminant where real roots are expected, or any other value that
-      collapses the mathematical structure
 
 ## Deployed variants
 
-- [ ] At least 10 variants deployed in most cases
+- [ ] Seeds follow the style guide's "Deployed seeds" policy: one per distinct
+      variant, up to 10
+- [ ] No degenerate variants: no `rand` call can produce a zero coefficient, a
+      zero denominator, a perfect square where a surd is expected, a negative
+      discriminant where real roots are expected, or any other value that
+      collapses the mathematical structure (style guide, "Degenerate variant
+      prevention")
 - [ ] All variants of similar difficulty. Check specifically:
   - [ ] Every answer is nice (an integer or a simple fraction)
   - [ ] No variant is accidentally trivial (answer is 0 or 1)
@@ -57,12 +65,12 @@ decides whether it is correct. See the style guide, "Inputs".
       `requirelowestterms=0` for exact answers), not `algebraic`
 - [ ] Every matrix of numbers carries `validator:validate_numeric`
 - [ ] Every formula input graded by a property (not by `AlgEquiv` against one
-      fixed answer) carries a variable-set validator
+      fixed answer) carries `checkvars:1` or a variable-set validator
 - [ ] PRT nodes typically do not check `listofvars`, the variables used, the type 
       of the answer, or floats unless that is the purpose of the question. Such 
       checks belong on the input (type, options or a bespoke validator).
-- [ ] Each bespoke validator is a pure function of one argument, uses
-      `every`/`member` rather than `subsetp`/`setify`, and its message is clear
+- [ ] Each bespoke validator meets STACK's essentials file ("Validators"):
+      one argument, set tests that work under `simp:false`, and a message that is clear
       British English that does not hint at the answer
 - [ ] Try one invalid entry yourself through the API for at least one validated
       input: it must come back invalid with the message, not marked wrong
@@ -71,19 +79,18 @@ decides whether it is correct. See the style guide, "Inputs".
 
 ## Test cases
 
+The rules are in STACK's essentials file, "Test every question", and the
+style guide, "Question tests". Check:
+
 - [ ] Correct answer
 - [ ] Every incorrect branch
 - [ ] A mixed case for multi-input questions
-- [ ] An invalid-input case for every question that relies on validation: one
-      invalid entry, every other input correct, `NULL` for the PRT that reads
-      it and the normal route for the others
+- [ ] An invalid-input case for every question that relies on validation
 - [ ] Predictable errors (for example, repeated inputs for quadratic solutions)
 - [ ] One case per distinct route where the PRT has diagnostic nodes, including
       routes that end at the same leaf
-- [ ] **Every `<expectedanswernote>` is the full route**: the node notes in
-      order (`prt1-1-F | prt1-2-T`), with no `AT...` notes and no `[` start
-      anchor. Check each route against the PRT's design, not against the
-      validator's output.
+- [ ] **Every `<expectedanswernote>` is the full route**, checked against the
+      PRT's design, not against the validator's output
 - [ ] **No hardcoded literals in randomised questions.** Run
       `tools/audit-test-inputs.sh <file>`. Any flagged `<testinput>` must
       reference `ta` / `ta1` / `ta+1`, not a value that only matches one seed.

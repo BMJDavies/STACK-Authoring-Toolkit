@@ -53,18 +53,22 @@ Two more in the same family:
   integrand, because it differentiates the student's answer and compares. Feed
   it the integrand and it compares against the derivative of the integrand and
   fails everything.
-- `NumSigFigs` miscounts significant figures on any value with a trailing zero
-  at the target precision. `90.0` reads as 2 s.f. and the correct answer is
-  rejected. Use a tolerance test unless significant-figure form is the skill.
+- A test value with trailing zeros loses them: `28.8000` arrives as `28.8`,
+  so a correct answer tested to 4 decimal places fails. Write
+  `dispdp(28.8, 4)`. Use a tolerance test unless significant-figure form is
+  the skill.
 
 ---
 
 ## `simp` runs earlier than you think
 
-`questionsimplify` is evaluated at input time, before the marking tree sees the
-answer. So with simplification on, a form check for "did they simplify this"
-becomes a silent no-op: Maxima already simplified it, so the check passes and
-full marks are awarded regardless.
+A form check for "did they simplify this" can become a silent no-op that awards
+full marks regardless. The student's input reaches the marking tree as typed,
+but anything computed from it in the feedback variables is simplified when the
+PRT's `autosimplify` is on, and the teacher's answer is simplified when
+`questionsimplify` is on. So test the form of the input itself, or compute from
+it with `autosimplify` off. (This kit once blamed `questionsimplify` for
+simplifying the input; tested on STACK 4.13.1, it does not.)
 
 Turning it off then has a cascade of consequences, because the whole question,
 including the variables block, now runs under `simp:false`. List indexing like

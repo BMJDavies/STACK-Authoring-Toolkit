@@ -169,7 +169,9 @@ same way for the review quiz.
 
 If someone has edited a question in Moodle, pull the edit back first (below).
 A re-push from a file without it makes a newer version that drops the edit; the
-edit survives only in the history.
+edit survives only in the history. The same holds after a run of STACK's bulk
+tester with `addtags`, which writes `[[todo]]` blocks into the questions
+without anyone editing them ("Questions with `[[todo]]` blocks", below).
 
 Two things to know:
 
@@ -250,6 +252,27 @@ grep -l '\[\[todo' project/content/approved/*.xml
 A todo block does not stop validation, publishing or rendering, and students
 never see it. STACK's bulk tester reports each one as needing attention, which
 is intended.
+
+**Blocks the bulk tester writes.** Run with `--addtags` (command line) or
+`&addtags=true` (web page), STACK's bulk tester (4.10.0 and later) appends a
+block to the question description of each question with a problem: an error
+loading or upgrading it, a validation problem, no deployed seeds, no question
+tests, or failing question tests. Its tags begin with `bulktest-`, for example
+`bulktest-20261111,question_tests`. It writes straight to the database, so the
+repo is stale and nobody has made an edit to report. If the user has run it,
+or might have, check before any push:
+
+```bash
+docker cp tools/sync-from-moodle.php <container>:/tmp/sync.php
+docker exec <container> php /tmp/sync.php <quizid> /tmp/export.xml
+docker exec <container> grep -c 'todo tags="bulktest' /tmp/export.xml
+```
+
+A count above 0 means: pull the quiz back ("Pulling hand edits back out of
+Moodle"), fix each defect in the approved file, re-validate, delete the block,
+and then publish. A `bulktest-` block reports a defect, not a decision for the
+user. Never begin a kit tag with `bulktest`: the bulk tester adds nothing to a
+question that already has such a block.
 
 ## Removing questions from a quiz
 

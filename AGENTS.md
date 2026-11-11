@@ -60,6 +60,40 @@ rarely conflict; that matters more than the override rule above.
 
 ## Content rules
 
+STACK's essentials file comes first: the technical requirements for any STACK
+question, which `style-guide.md` builds on. Before writing, validating or
+reviewing any question, read it verbatim, never from memory or a summary.
+Try STACK's `master` branch first, then `dev`:
+
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/master/agents/stack_essentials.md
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/dev/agents/stack_essentials.md
+
+Run the first command. If it fails, or what it returns does not begin with
+`# STACK essentials`, run the second and apply the same check. If both fail,
+stop. Do not author, validate or review anything, and tell the user the
+essentials file could not be read. Tell the user which branch you read when it
+was `dev`. (`-f` makes a missing file an error; without it curl prints
+"404: Not Found" and succeeds.) Where the essentials file and the style guide
+disagree, the style guide wins.
+
+STACK's question review checklist is the second source for the reviewer and
+the enricher: a quality checklist that builds on the essentials file. Before
+reviewing or enriching a question, read it verbatim in the same way, `master`
+first, then `dev`:
+
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/master/agents/stack_question_review.md
+    curl -fsSL https://raw.githubusercontent.com/maths/moodle-qtype_stack/dev/agents/stack_question_review.md
+
+Here the check is that what is returned begins with `# Question quality
+review`. If both fail, tell the user and carry on without it rather than
+stopping (the reviewer with `reviewing-checklist.md` alone): STACK calls its
+checklist optional, and the kit's own rules stand on their own. Where STACK's checklist and the kit's style guide
+or checklist disagree, the kit's wins.
+
+For the kit's maintainer: both files are on `dev` from STACK issue #1925, so
+until the next STACK release `master` returns 404 and the `dev` copy is read.
+These are the only places the URLs appear.
+
 `style-guide.md`, then `project/style-guide.md` if it exists, are the single
 source of truth for content conventions. Read them before writing or reviewing
 anything, rather than relying on memory.

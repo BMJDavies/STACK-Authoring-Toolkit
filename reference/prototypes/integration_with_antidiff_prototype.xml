@@ -38,19 +38,14 @@
        - The maxima functions live in stackmaxima.mac as ATInt,
          ATAntidiff, ATAddConst, ATDiff. The XML <answertest> names are
          Int, Antidiff, AddConst, Diff (no AT prefix).
-       - DO NOT USE Antidiff or AddConst in this install. Both set
-         simp:false inside their block WITHOUT listing simp as a local,
-         so they leak simp:false into global CAS state and corrupt the
-         evaluation of any later nodes / CASText (symptoms: empty PRT
-         results on most seeds, "unevaluated casstring" errors). ATInt
-         saves and restores simp correctly, so use Int instead. If a
-         future STACK upgrade fixes Antidiff/AddConst, the cleaner
-         "separated concerns" pattern (Antidiff for the relationship +
-         AddConst for the constant) becomes available.
+       - Antidiff and AddConst set simp:false without making simp
+         local, but a compiled PRT makes simp local and resets it after
+         every answer test, so the leak stays inside the PRT (checked on
+         STACK 4.13.1). Int is still the simpler choice here.
        - Int's options field = the variable of integration only (x here).
-       - With quiet=1, the recorded answer note is the author's branch
-         note only (e.g. prt1-1-T); the test's internal note is not
-         appended. qtests compare only the LAST answer note, trimmed.
+       - With quiet=1 the test's feedback is hidden, but its answer note
+         is still recorded before the branch note; qtests compare the
+         branch notes only.
      ================================================================ -->
 <question type="stack">
   <name><text>Integration with antidiff prototype - indefinite integral with diagnostics</text></name>
