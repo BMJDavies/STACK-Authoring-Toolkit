@@ -75,9 +75,6 @@ STACK's essentials file gives the rule and why it matters. In this kit the
 value is the STACK version stamp in `project/AGENTS.md`. Never copy it from a
 template, the showcase or an older question.
 
-The showcase depends on 4.13 features (route expectations), so claiming an older version misleads anyone who maintains
-these questions later.
-
 When STACK is upgraded, update `project/AGENTS.md`, then re-stamp a file the next
 time you touch it.
 
