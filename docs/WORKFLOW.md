@@ -200,6 +200,15 @@ grep -l '\[\[todo' project/content/approved/*.xml
 STACK's bulk tester reports any question with a todo block as needing
 attention. That is deliberate, and it is one more reminder.
 
+**If you run the bulk tester with `addtags`.** With `--addtags`, or
+`&addtags=true` in the web page's URL, STACK's bulk tester writes its own
+todo blocks into each question with a problem, with tags beginning `bulktest-`
+(for example `bulktest-20261111`). These are not edits you made, but Moodle now
+differs from the files on disk just as if you had. Tell the assistant you ran
+it, and on which quizzes: it pulls them back, fixes each defect and removes the
+block before it next publishes. Otherwise the next publish replaces the
+questions with the files on disk and the blocks are lost.
+
 ---
 
 ## Doing it by hand

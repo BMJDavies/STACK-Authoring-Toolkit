@@ -145,6 +145,10 @@ Moodle") is the user's side of this.
   (then the edits are pulled back into `project/content/approved/`), or by the
   agent when the user answers in the conversation. A resolved block is never
   left in place.
+- **Blocks the kit did not write.** STACK's bulk tester can add its own blocks,
+  with tags beginning `bulktest-`. Each reports a defect, so the agent fixes
+  it and removes the block (moodle-operations skill, "Questions with
+  `[[todo]]` blocks"). Never begin a kit tag with `bulktest`.
 
 Approved files may carry open blocks. They do not affect students, and the
 question can be published while the user decides. List them with
