@@ -77,8 +77,9 @@ Zero and zero is the expected result on clean content.
 
 ### 1. Baseline validate
 
-Run `tools/api-check.sh <path>`. If it fails, the file was broken before you
-touched it: log and escalate. Never edit a broken file.
+Run `tools/api-check.sh <path>` (or `tools/test-question.sh <path>` where it
+exits 3 because the API cannot run on this machine). If it fails, the file was
+broken before you touched it: log and escalate. Never edit a broken file.
 
 Then run `tools/audit-test-inputs.sh <path>` and triage the hits.
 
@@ -155,14 +156,14 @@ to R." Not "the answer is 5". Not "f(r) = 0".
 
 ### 5. Re-validate
 
-Run `tools/test-question.sh <path>` in the FOREGROUND and let it block.
+Run `tools/test-question.sh <path>` as one blocking command and wait, with
+your tool's longest timeout (`extensions/harness.md`, "Long commands").
 
-Do not background it. Do not poll for an output file. Do not write sleep loops.
-Under concurrent load validation can run for a long time; your Bash call will
-simply wait. Polling is the leading cause of agents dying mid-workflow without
-finishing their work. If you have already started a backgrounded run and cannot
-tell whether it is progressing, abort the poll after two minutes and re-run in
-the foreground.
+Do not poll for an output file. Do not write sleep loops. Under concurrent load
+validation can run for a long time. If your tool moves the command to the
+background and says when it ends, wait for that notice and do nothing else on
+Moodle meanwhile. Polling is the leading cause of agents dying mid-workflow
+without finishing their work.
 
 Expect a first-pass failure on any test case whose PRT you gave a new diagnostic
 node: its route changed. The failure output shows the actual trail. Update

@@ -82,7 +82,8 @@ loop uses the fast API check, so `test-question.sh` is the first real
 Moodle-import validation. Do not skip either because the author said it passed.
 An audit FAIL goes straight back to the author.
 
-Foreground, blocking. Do not background and poll.
+Blocking: wait for it to finish, and never poll it (`AGENTS.md`, "Standing
+rules").
 
 ## Step 6: dispatch the `textbook-reviewer`
 

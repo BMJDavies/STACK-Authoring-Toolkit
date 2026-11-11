@@ -18,7 +18,7 @@
  * container under a unique filename.
  */
 define('CLI_SCRIPT', true);
-require('/var/www/html/config.php');
+require((getenv('MOODLE_ROOT') ?: '/var/www/html') . '/config.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/lib.php');

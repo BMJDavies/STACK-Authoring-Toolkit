@@ -516,6 +516,11 @@ Both images are amd64-only, so on Apple Silicon they run under emulation. That
 is why `tools/stackapi/config.php` raises the CAS timeout to 40 seconds: the
 stock 10 would produce false timeouts.
 
+On Linux on ARM (a Raspberry Pi, an ARM server) they cannot run at all, and
+this section does not apply. `tools/api-check.sh` then exits 3 with a message,
+`tools/test-question.sh` serves as the authoring loop as well as the gate, and
+`tools/render-sweep.sh` renders in your Moodle instead of the API.
+
 ---
 
 ## 9. Check the whole thing works

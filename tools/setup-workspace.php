@@ -18,7 +18,7 @@
  */
 
 define('CLI_SCRIPT', true);
-require('/var/www/html/config.php');
+require((getenv('MOODLE_ROOT') ?: '/var/www/html') . '/config.php');
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->dirroot . '/mod/quiz/lib.php');

@@ -285,6 +285,21 @@ When displaying randomised expressions:
   `{@`. Both replacements are good LaTeX in any case, so this is a style rule,
   not a workaround, and there is nothing to restore when #1910 is fixed.
 - **`{@ex@}` keeps its braces:** it becomes `{…}` around the LaTeX of `ex`, so `\frac{@a@}{@b@}` is correct and renders as \(\frac{a}{b}\). Do not flag it as missing braces.
+- **Surds print as fractional powers.** Under simp Maxima writes `sqrt(8)`,
+  `2*sqrt(2)` and `sqrt(27)` as `2^(3/2)` and `3^(3/2)`, and the page shows
+  \(2^{3/2}\). `sqrtdispflag` only rescues the exponent ½. Build each displayed
+  value from a square-free radicand (`sqrt(6)*c/2`), or print
+  `\sqrt{{@n@}}` with `n` an integer. Worked solutions and feedback are where
+  this hides.
+- **Never interpolate a raw list.** `{@[a, b]@}` prints \(\left[a, b\right]\),
+  Maxima's list. Use `ntuple(a, b)` for a tuple or `matrix([a],[b])` for a
+  column vector.
+- **Order the symbols once per question.** Without `ordergreat`, an
+  expression in several letters prints in reverse order (`-3z+3y-2x`). Call
+  `ordergreat(x, y, z)` once near the top of the question variables, listing
+  every symbol the question displays.
+- `tools/render-sweep.sh` flags the first two, and unprocessed `{@` or
+  `matrix(`, on every deployed seed.
 
 ### Currency: always use a rounded display variable
 
@@ -741,6 +756,27 @@ path, not just correct and completely-wrong. Aim for one test case per distinct
 route, not just per leaf. Where two routes reach the same leaf (as in
 Showcase 3), each needs its own test, with its own full-route expectation.
 
+### Test inputs are evaluated under `simp:false`
+
+STACK evaluates each test input in the question's context with `simp:false`,
+then submits the result as the student's answer (`compute_response` in STACK's
+`questiontest.php`). An expression that does not reduce to a plain value under
+`simp:false` is refused: a sum or product of matrices (`ident(3) - P`), a lambda
+the question defines (`ip(u, v)`), a call that stays unevaluated (a contrib
+function whose library the question does not include). The test then comes
+back with an empty score. Compute the value in the question variables, where
+simp is on, and put its name in the test input. The Sets rule below is one
+case of this.
+
+Arithmetic on numbers, surds and question variables is fine, although it stays
+unsimplified: `sqrt(val2)/sqrt(n)` (the example below) and `(1+2*%i)*ta1` are
+submitted as written, as a student would type them. The test is whether a
+student could type the input as an answer; a matrix sum, a call to the
+question's own lambda or a contrib call is not one.
+
+When a test fails this way, `tools/test-question.sh` names each input STACK
+did not accept, with what it was submitted as and STACK's message.
+
 ### Non-tautological test inputs
 
 When the correct answer is derived from a separately defined question variable
@@ -1100,6 +1136,25 @@ Use `rand_with_prohib` or explicit guards.
   EMPTY score, not a wrong value, because the PRT never ran. Select random
   elements with `rand([...])` instead of `list[rand(n)+1]`, and wrap any numeric
   variable you display or feed to a test in `ev(..., simp)`.
+- **Never use a name STACK's security map already allows students to use.**
+  If a question or feedback variable has an `s` entry in STACK's
+  `stack/cas/security-map.json` (as a variable, constant or function), STACK
+  accepts that name in a student's answer before it checks the question's own
+  variable names, so the map's meaning wins over yours. Short names are the
+  usual victims: `mu`, `nu`, `xi`, `tr`, `np`, `nm`, `fb`, `cf`, `phi`, `deg`,
+  `ev`, `sgn`. `tools/test-question.sh` fails a question that does this,
+  checked against the STACK you have installed.
+  Names the map marks `f` (forbidden) are different. One marked `f` only as a
+  function (`rk`) is harmless as a variable, and `rk: 3` is valid; defining
+  it as a function (`rk(x) := …`) makes the whole block invalid, as does a
+  name marked `f` as a variable (`tab`). The lint reports an invalid block
+  with STACK's message.
+- **Include the library of every contrib function you call**, in question
+  variables, feedback variables and test inputs alike:
+  `stack_include("contribl://vectorspaces.mac")` for `projection_matrix`, and
+  so on. Without it the call stays unevaluated and grading or the test fails
+  silently. `tools/test-question.sh` reports such a call and names the library.
+  Check the include before suspecting the library.
 - **`tab` is a forbidden variable name** in STACK even though plain Maxima
   accepts it. STACK's keyval parser rejects it and invalidates the entire
   question variables block, so the question never sets up. If a short variable

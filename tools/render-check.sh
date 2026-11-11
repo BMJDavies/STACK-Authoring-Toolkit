@@ -41,7 +41,7 @@ stage_batch() {
     for f in "$@"; do
         docker cp "$f" "$CONTAINER:/tmp/rc-all/$(basename "$f")" >/dev/null
     done
-    docker exec "$CONTAINER" php /opt/render-check.php --all
+    docker exec -e "MOODLE_ROOT=${MOODLE_ROOT:-/var/www/html}" "$CONTAINER" php /opt/render-check.php --all
 }
 
 case "$1" in
@@ -68,7 +68,7 @@ case "$1" in
             exit 2
         fi
         docker cp "$1" "$CONTAINER:/tmp/rc-target.xml" >/dev/null
-        docker exec "$CONTAINER" php /opt/render-check.php /tmp/rc-target.xml
+        docker exec -e "MOODLE_ROOT=${MOODLE_ROOT:-/var/www/html}" "$CONTAINER" php /opt/render-check.php /tmp/rc-target.xml
         exit $?
         ;;
 esac

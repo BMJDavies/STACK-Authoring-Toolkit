@@ -13,7 +13,7 @@
  */
 
 define('CLI_SCRIPT', true);
-require('/var/www/html/config.php');
+require((getenv('MOODLE_ROOT') ?: '/var/www/html') . '/config.php');
 require_once($CFG->dirroot . '/question/engine/bank.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 

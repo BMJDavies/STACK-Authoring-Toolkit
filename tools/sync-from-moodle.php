@@ -18,7 +18,7 @@
  */
 
 define('CLI_SCRIPT', true);
-require('/var/www/html/config.php');
+require((getenv('MOODLE_ROOT') ?: '/var/www/html') . '/config.php');
 require_once($CFG->dirroot . '/question/engine/bank.php');
 require_once($CFG->dirroot . '/question/format/xml/format.php');
 require_once($CFG->dirroot . '/question/editlib.php'); // get_questions_category(), used by the exporter
@@ -83,7 +83,30 @@ $context = context::instance_by_id($catrow->contextid);
 $format = new qformat_xml();
 $format->setContexts([$context]);
 $format->setCattofile(false);
-$format->setQuestions(array_map(function($qid) { global $DB; return $DB->get_record('question', ['id' => $qid]); }, $question_ids));
+// Load each question as Moodle's own category export does (get_questions_category()
+// in question/editlib.php): the question row with its category, then the
+// question type's options. Without get_question_options() a STACK question
+// exports with empty question variables and no inputs, PRTs or deployed seeds.
+$questions = [];
+foreach ($question_ids as $qid) {
+    $q = $DB->get_record_sql(
+        'SELECT q.*, qv.status, qc.id AS category
+           FROM {question} q
+           JOIN {question_versions} qv ON qv.questionid = q.id
+           JOIN {question_bank_entries} qbe ON qbe.id = qv.questionbankentryid
+           JOIN {question_categories} qc ON qc.id = qbe.questioncategoryid
+          WHERE q.id = :qid', ['qid' => $qid], MUST_EXIST);
+    $q->export_process = true;
+    $q->categoryobject = $DB->get_record('question_categories', ['id' => $q->category]);
+    $qtype = question_bank::get_qtype($q->qtype, false);
+    if ($qtype->name() === 'missingtype') {
+        echo "Skipping {$q->name}: question type {$q->qtype} is not installed.\n";
+        continue;
+    }
+    $qtype->get_question_options($q);
+    $questions[] = $q;
+}
+$format->setQuestions($questions);
 
 if (!$format->exportpreprocess()) {
     echo "Export preprocess failed.\n";

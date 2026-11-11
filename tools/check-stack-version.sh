@@ -68,8 +68,12 @@ check_moodle() {
     # A Moodle site: where questions are imported for the final test, and where
     # students work.
     local c="$1" v
-    v=$(docker exec "$c" sed -n 's/.*plugin->version *= *\([0-9]\{10\}\).*/\1/p' \
-        /var/www/html/question/type/stack/version.php 2>/dev/null)
+    # Moodle 5.1 and later keep plugins under public/.
+    local mr="${MOODLE_ROOT:-/var/www/html}" f
+    for f in "$mr/question/type/stack/version.php" "$mr/public/question/type/stack/version.php"; do
+        v=$(docker exec "$c" sed -n 's/.*plugin->version *= *\([0-9]\{10\}\).*/\1/p' "$f" 2>/dev/null)
+        [ -n "$v" ] && break
+    done
     if [ -z "$v" ]; then
         echo "??   Moodle ($c): could not read STACK's version.php; not checked."
         return

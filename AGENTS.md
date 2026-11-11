@@ -162,8 +162,12 @@ Runbook: `.claude/skills/moodle-operations/`.
 
 ## Standing rules
 
-- Never run validation in the background and poll for it. It is slow, produces
-  no output while running, and blocking is correct.
+- Wait for validation to finish before doing anything else, and never poll it.
+  Run it as one blocking command with your tool's longest timeout
+  (`extensions/harness.md`, "Long commands", says how). If your tool moves a
+  long command to the background and tells you when it ends, wait for that
+  notice. Do not read its output file while it runs, write sleep loops, or
+  start other work on Moodle meanwhile.
 - Never trust a previous step's claim that validation passed. Re-run it.
 - Never commit on the user's behalf, in either repository, unless they have said
   to.

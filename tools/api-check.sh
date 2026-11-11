@@ -10,11 +10,16 @@
 #
 # NOTE: this is the fast authoring-loop pre-check, not the final word. Keep
 # tools/test-question.sh (real Moodle import) as the gate before publishing.
+#
+# The API's images are amd64-only. On a machine that cannot run them (Linux on
+# ARM, such as a Raspberry Pi) this stops with exit 3 and says so: use
+# tools/test-question.sh as the inner loop there.
 
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-COMPOSE="$HERE/stackapi/docker-compose.yml"
-URL="http://localhost:3080"
+# shellcheck source=lib/stackapi.sh
+source "$HERE/lib/stackapi.sh"
+URL="$STACKAPI_URL"
 
 XML_FILE="${1:-}"
 shift || true
@@ -26,18 +31,13 @@ fi
 [ "${1:-}" = "--" ] && shift || true
 
 # Ensure the API is up (cheap no-op if already running).
-if ! curl -s -o /dev/null -m 3 "$URL/render" -X POST \
-        -H 'Content-Type: application/json' \
-        -d '{"questionDefinition":"<quiz><question type=\"stack\"></question></quiz>"}'; then
-    echo "Starting stackapi containers..."
-    docker compose -f "$COMPOSE" -p stackapi up -d >/dev/null
-    # Wait for the API to answer.
-    for i in $(seq 1 30); do
-        curl -s -o /dev/null -m 3 "$URL/render" -X POST \
-            -H 'Content-Type: application/json' \
-            -d '{"questionDefinition":"<quiz><question type=\"stack\"></question></quiz>"}' && break
-        sleep 2
-    done
+if ! api_up; then
+    if ! api_possible; then
+        echo "The STACK API's images are amd64-only and cannot run on this machine ($(uname -sm))."
+        echo "Use tools/test-question.sh as the inner loop here; it validates in your Moodle."
+        exit 3
+    fi
+    start_api || true
 fi
 
 # Refuse to validate against an old or stale validator: its verdicts are wrong.

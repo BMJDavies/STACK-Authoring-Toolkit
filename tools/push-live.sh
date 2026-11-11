@@ -76,5 +76,5 @@ docker cp "$SCRIPT_DIR/push-to-live.php" "${LIVE_CONTAINER}:${PTL}"
 docker cp "$SCRIPT_DIR/lib/publish.php" "${LIVE_CONTAINER}:${LIB}"
 docker cp "$XML" "${LIVE_CONTAINER}:${CPATH}"
 
-docker exec "$LIVE_CONTAINER" php "$PTL" "$CPATH" "$QUIZ" \
+docker exec -e "MOODLE_ROOT=${MOODLE_ROOT:-/var/www/html}" "$LIVE_CONTAINER" php "$PTL" "$CPATH" "$QUIZ" \
     "--categoryid=$CATID" "--contextid=$CTXID" "--label=$LABEL" "--url=$MOODLE_URL"

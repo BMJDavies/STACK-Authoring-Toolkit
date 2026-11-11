@@ -113,8 +113,8 @@ On return, verify independently:
   validation does not contend with a push on the main stack.
 - If validation fails, send the error back for one fix attempt, then escalate.
 
-Foreground, blocking. Do not background it and poll: that is the most common way
-a completed run gets lost.
+Blocking: wait for it to finish, and never poll it (`AGENTS.md`, "Standing
+rules"). Polling is the most common way a completed run gets lost.
 
 ### Checkpoint 3: review and publish
 

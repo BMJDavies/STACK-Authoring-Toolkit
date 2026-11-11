@@ -37,5 +37,5 @@ docker cp "$SCRIPT_DIR/push-to-review.php" "${LIVE_CONTAINER}:${PTR}"
 docker cp "$SCRIPT_DIR/lib/publish.php" "${LIVE_CONTAINER}:${LIB}"
 docker cp "$XML" "${LIVE_CONTAINER}:${CPATH}"
 
-docker exec "$LIVE_CONTAINER" php "$PTR" "$CPATH" "$QUIZ" \
+docker exec -e "MOODLE_ROOT=${MOODLE_ROOT:-/var/www/html}" "$LIVE_CONTAINER" php "$PTR" "$CPATH" "$QUIZ" \
     "--categoryid=$REVIEW_CATEGORYID" "--contextid=$REVIEW_CONTEXTID" "--url=$MOODLE_URL"

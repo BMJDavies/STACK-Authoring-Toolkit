@@ -14,6 +14,28 @@ If your own files name one of these guides, add `docs/` to the path: look in
 `project/AGENTS.md`, `project/style-guide.md` and `extensions/`. Your assistant
 can search for the six names and make the change with you.
 
+## Long commands, and tools for any machine (November 2026)
+
+Nothing to rename. Three things to know:
+
+1. **`extensions/harness.md` gains a section, "Long commands"**: how your tool
+   runs a command that takes many minutes, which validation does. Ask the
+   assistant to fill it in from `ONBOARDING.md`, Stage 0, step 5; it asks you
+   nothing. Until then it follows the standing rule in `AGENTS.md`.
+2. **`tools/render-sweep.sh` now runs on any machine.** Where the STACK API's
+   amd64 images cannot run (Linux on ARM, such as a Raspberry Pi), it renders
+   in your Moodle instead, with the same checks, and says which route it took.
+3. **`tools/test-question.sh` lints first** against the installed STACK. It
+   fails a question that names a variable the security map already allows
+   students to use, or calls a contrib-library function without including the
+   library. Questions that passed before can fail now. Run
+   `tools/test-question.sh <file> --lint-only` over your approved files to
+   see them (seconds a file); each rename needs a re-validation and a
+   re-publish.
+
+If your Moodle is not at `/var/www/html` inside its container, set
+`MOODLE_ROOT` in `project/project.conf` (the template shows it).
+
 ## Instruction files renamed to `AGENTS.md` (October 2026)
 
 **If you are the assistant, sent here because `project/CLAUDE.md` or
