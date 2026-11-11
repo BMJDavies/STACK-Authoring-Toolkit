@@ -20,7 +20,7 @@ Nothing to rename. Three things to know:
 
 1. **`extensions/harness.md` gains a section, "Long commands"**: how your tool
    runs a command that takes many minutes, which validation does. Ask the
-   assistant to fill it in from `ONBOARDING.md`, Stage 0, step 5; it asks you
+   assistant to fill it in from `docs/ONBOARDING.md`, Stage 0, step 5; it asks you
    nothing. Until then it follows the standing rule in `AGENTS.md`.
 2. **`tools/render-sweep.sh` now runs on any machine.** Where the STACK API's
    amd64 images cannot run (Linux on ARM, such as a Raspberry Pi), it renders
