@@ -4,6 +4,20 @@
 the kit.** Newest change first. If your kit predates several, do the oldest
 one first.
 
+## A local copy of STACK's source (November 2026)
+
+Optional, and nothing breaks without it. The assistant now reads STACK's
+guidance for agents through `tools/stack-guide.sh`, which uses a STACK clone in
+`project/sources/moodle-qtype_stack` when there is one, and GitHub otherwise.
+To get the clone and a checkout of your STACK release, run
+`tools/update-stack-sources.sh` (`docs/SETUP.md`, section 3). If you already
+keep a STACK clone, move or symlink it to `project/sources/moodle-qtype_stack`
+first, and the script uses it. Add these two lines to `project/.gitignore` if
+it does not already ignore all of `sources/`:
+
+    sources/moodle-qtype_stack/
+    sources/stack-target/
+
 ## Guides moved into `docs/` (November 2026)
 
 `SETUP.md`, `WORKFLOW.md`, `LESSONS.md`, `ONBOARDING.md`,

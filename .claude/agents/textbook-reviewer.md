@@ -77,7 +77,7 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
    the conventions. Check the author's reported deviations: are they justified?
 
 4. **Run the checklists.** Work through `reviewing-checklist.md`, then STACK's
-   question review checklist (`agents/stack_question_review.md`, fetched as
+   question review checklist (`agents/stack_question_review.md`, read as
    the kit's `AGENTS.md` says in "Content rules"). Do not skim either because
    the file "looks fine": that is exactly when things get through.
 

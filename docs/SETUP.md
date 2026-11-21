@@ -167,6 +167,32 @@ cd -   # back to moodle-docker
 bin/moodle-docker-compose exec webserver php admin/cli/upgrade.php --non-interactive
 ```
 
+### A copy of STACK's source in the project (recommended)
+
+The assistant reads STACK's guidance for agents, its documentation and its
+Maxima code. With a local copy it reads the version your questions are
+written for, works offline, and can run Maxima with STACK's libraries
+(`tools/stack-maxima.sh`). Once your project folder exists (section 5), and
+Moodle and its `project.conf` are set up (section 6), run from the kit:
+
+```bash
+tools/update-stack-sources.sh
+```
+
+It clones STACK into `project/sources/moodle-qtype_stack` (about 0.5 GB, once)
+and adds `project/sources/stack-target`, a second checkout of the same clone at
+the release tag matching the STACK in your Moodle. Run it again after every
+STACK upgrade, and now and then to refresh the guidance: the assistant warns
+when the copy is more than 30 days old. If the clone's remote needs an SSH
+passphrase or a login, the script fetches the same branches over HTTPS instead
+(STACK is public), leaving the remote as it is.
+
+The clone is yours to use: develop STACK in it if you like. The kit reads the
+guidance from its `origin/master` with `git show`, and never changes its branch
+or files. Leave `stack-target` alone: it is for reference only.
+
+Without it the kit still works, and reads the guidance from GitHub instead.
+
 ---
 
 ## 4. Install Maxima inside the container

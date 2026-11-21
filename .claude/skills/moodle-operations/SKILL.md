@@ -32,6 +32,29 @@ older than `tools/stack-version` allows, or if the validation service is still
 running images older than its pin. The message gives the command to fix it; ask
 the user before recreating containers.
 
+## Trying Maxima code with STACK loaded
+
+```bash
+tools/stack-maxima.sh -e 'string(-1/2);'
+tools/stack-maxima.sh --moodle snippet.mac
+tools/stack-maxima.sh --stack=project/sources/moodle-qtype_stack snippet.mac
+```
+
+Runs desktop Maxima with STACK's Maxima libraries, from STACK's own
+`stack/maxima/sandbox.wxm` copied to a temporary folder. About five seconds, no
+question XML. Use it to try question-variable code, helpers and validators over
+many values, and to check how a STACK version behaves before writing a
+workaround or an issue. By default it uses `project/sources/stack-target`, the
+release the questions are written for (`tools/update-stack-sources.sh` makes
+it). `--moodle` copies the libraries out of the Moodle container: the exact
+STACK the questions run on, including any local patches. `--stack=DIR` tests
+another checkout, such as the clone's `master` or `dev`.
+
+It is not validation: it runs no CASText, inputs, PRTs or question tests, and
+no plots. It uses this machine's Maxima, which may differ from the CAS
+server's, so read the version line it prints first. Exit 1 means Maxima
+reported an error; exit 3 means Maxima is not installed here.
+
 ## Completeness audit, before hand-off
 
 ```bash

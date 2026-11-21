@@ -189,8 +189,17 @@ Then fill in `project/project.conf` with the ids that `docs/SETUP.md` section 6
 prints, and run `tools/check-stack-version.sh`. If it fails, stop: a STACK older
 than 4.13.0 fails every route-style question test, so nothing can be validated
 until it is upgraded. Say which service is too old and point to the `docs/SETUP.md`
-section the script names. Only when it passes, offer to walk them through their
-first section using `docs/WORKFLOW.md`.
+section the script names.
+
+When it passes, offer the local copy of STACK's source (`docs/SETUP.md`,
+section 3, "A copy of STACK's source in the project"): about 0.5 GB and a
+network connection, once. If they already have a STACK clone elsewhere, offer
+to use it instead: move it to, or symlink it as,
+`project/sources/moodle-qtype_stack`. With their agreement, run
+`tools/update-stack-sources.sh` and tell them what it reported. If they
+decline, say that the kit will read STACK's guidance from GitHub instead.
+
+Then offer to walk them through their first section using `docs/WORKFLOW.md`.
 
 If they want you to commit, make the first commit in `project/`, never in the
 kit.

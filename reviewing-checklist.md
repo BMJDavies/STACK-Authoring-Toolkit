@@ -9,7 +9,7 @@ Blocking items are marked. Everything else is a judgement call the reviewer
 records in the feedback document.
 
 Work through STACK's question review checklist as well
-(`agents/stack_question_review.md` in STACK's repository, fetched as the kit's
+(`agents/stack_question_review.md` in STACK's repository, read as the kit's
 `AGENTS.md` says in "Content rules"). It covers question quality in general;
 this file adds the kit's conventions and its pipeline. Where the two disagree,
 this file and the style guide win.
