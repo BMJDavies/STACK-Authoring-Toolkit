@@ -78,7 +78,10 @@ Example line: `[21:25:15] REVIEWER [Ch8C]: re-validation PASS`
 
 4. **Run the checklists.** Work through `reviewing-checklist.md`, then STACK's
    question review checklist (`agents/stack_question_review.md`, read as
-   the kit's `AGENTS.md` says in "Content rules"). Do not skim either because
+   the kit's `AGENTS.md` says in "Content rules"). For a question with a
+   `[[parsons]]` block or a `freetext` input, also the review checklist at
+   the end of `stack_parsons.md` or `stack_free_text.md`, and its preview
+   check. Do not skim any of them because
    the file "looks fine": that is exactly when things get through.
 
 5. **Check plan faithfulness.** Run `tools/audit-draft.py` on the draft

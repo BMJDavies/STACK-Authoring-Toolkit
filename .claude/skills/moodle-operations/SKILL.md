@@ -231,6 +231,17 @@ re-import before re-running it, or you are checking the old version.
 Browser spot-checks are still needed for what this cannot see: visual layout,
 whether a JSXGraph figure is mathematically right, dropdown usability.
 
+For a free-text question, also print the model working (the teacher's answer
+of its freetext input) on every seed, as the `[[ascii]]` block receives it:
+
+```bash
+tools/show-ta.sh path/to/file.xml ans1          # the file's deployed seeds
+tools/show-ta.sh path/to/file.xml ans1 1,42,137 # chosen seeds
+```
+
+It too reads the database, so import the file first (`tools/test-question.sh`).
+Read every line: a lone `-(2*x)`, a `+-`, a coefficient 1, reversed term order.
+
 ## Pulling hand edits back out of Moodle
 
 If someone edits a question in the Moodle UI, the repo is now stale:

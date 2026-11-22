@@ -22,7 +22,9 @@ description: Reference for STACK question types, XML skeletons, PRT patterns and
 | "Show that…" (procedural) | `stack` + faded example | Pattern 6 |
 | "Show that…" (reasoning order) | `stack` + parsons | Pattern 7 |
 | Proof analysis / comprehension | `stack` + mixed inputs | Pattern 8 |
-| Classify objects into categories (type 3) | `stack` + one dropdown per object | Copy `reference/prototypes/classify_objects_prototype.xml`. Parsons grades ordered proofs only, not bucket-sorting, so classification uses dropdowns. |
+| Calculation whose working matters | `stack` + freetext working, answers graded automatically | Pattern 9 (STACK patterns A, B) |
+| Proof the student writes in full | `stack` + freetext, 0 marks, model proof to compare | Pattern 9 (STACK pattern C) |
+| Classify objects into categories (type 3) | `stack` + one dropdown per object | Copy `reference/prototypes/classify_objects_prototype.xml`. A Parsons grouping layout (`[[parsons columns="n"]]`, `matchlib.mac`) also works: STACK's `agents/stack_parsons.md` and its `Drag_and_drop-1-grouping.xml` example. |
 | "Give an example with property P" (type 7) | `stack` + algebraic, property-checking PRT | Copy `construct_instance_prototype.xml`. The PRT checks a computed property of the answer, not equivalence to one model answer. |
 | Indefinite integral, antidifferentiation | `stack` + algebraic, `Int` PRT | Copy `integration_with_antidiff_prototype.xml`. Rules: STACK's essentials file, "Integration". |
 | Figure or worked example with no input | `stack` with no input, PRT or qtest | "Skinny STACK". A `description` renders `[[jsxgraph]]` as literal text. |
@@ -126,7 +128,7 @@ Match the structure in `reference/showcase.xml`.
 
 ## Proof and "show that" patterns
 
-All three involve editorial decisions about scaffolding level. Flag them for human review.
+All four involve editorial decisions about scaffolding level. Flag them for human review.
 
 ### Pattern 6: faded worked example
 
@@ -147,64 +149,33 @@ Prototype: `reference/prototypes/faded_example_prototype.xml`
 
 ### Pattern 7: Parsons problem (drag and drop proof)
 
-Zero-mark formative exercise. `<defaultgrade>0</defaultgrade>`. No distractors.
+**The technique is STACK's.** Read `agents/stack_parsons.md` (with
+`tools/stack-guide.sh stack_parsons.md`, as for the essentials file) for the
+block, the input, the libraries, the proof construction functions, the PRT and
+the tests. This pattern adds only the kit's choices for a proof. Copy
+`reference/prototypes/parsons_prototype.xml`.
 
-Question variables:
+The kit's choices, in addition to "Parsons problems" in `style-guide.md`
+(zero marks, no distractors unless the plan asks for them, the feedback
+wording):
 
-```maxima
-stack_include_contrib("prooflib.mac");
-
-proof_steps: [
-    ["key1", "Step 1 text with \\(\\LaTeX\\)."],
-    ["key2", "Step 2 text."]
-];
-proof_steps: random_permutation(proof_steps);
-
-ta: proof("key1", "key2");
-ta1:[ta, proof_steps];
-```
-
-Question text:
-
-```
-[[parsons input="ans1"]]
-{"steps": {# parsons_encode(proof_steps) #},
- "headers": ["Your proof:"],
- "available_header": ["Drag from here:"]}
-[[/parsons]]
-[[input:ans1]] [[validation:ans1]]
-```
-
-Input: type `parsons`, tans `ta1`, `mustverify` 0,
-`showvalidation` 0.
-
-PRT feedback variables:
-
-```maxima
-sa: parsons_decode(ans1);
-[pd, saa]: proof_assessment(sa, proof_alternatives(ta));
-```
-
-PRT node: `AlgEquiv(pd, 0)`, true scores 1, false scores 0 with feedback
-`{@proof_assessment_display(saa, proof_steps)@}`.
-
-Test cases: correct is `apply(parsons_answer, [ta, proof_steps])` expecting 1,
-wrong is `apply(parsons_answer, [map(first, proof_steps), proof_steps])`
-expecting 0.
-
-Proof tree constructors for steps that can swap order:
-
-- `proof("a","b","c")` fixed order
-- `proof_c("a","b","c")` any permutation acceptable
-- `proof_iff(proof(...), proof(...))` if and only if, halves commute
-- `proof_cases("justify", ...)` first element fixed, rest commute
-- `proof_ind(base, case1, case2, conclusion)` induction, 1st and 4th fixed
-
-Sign handling: apply `tex1()` to whole Maxima expressions
-(`tex1(x^2 + b*x + c)`) rather than concatenating strings
-(`sconcat("x^2 + ", tex1(b), "x")`), or you get `x^2 + -2x`.
-
-Prototype: `reference/prototypes/parsons_prototype.xml`
+- **Layout:** proof (`[[parsons input="ans1"]]`), with `"headers": ["Your
+  proof:"]` and `"available_header": ["Drag from here:"]`.
+- **Library:** `stack_include_contrib("prooflib.mac")`, STACK's recommendation
+  for live questions. A project that prefers the server's installed copy,
+  `stack_include("contribl://prooflib.mac")`, says so in its own style guide.
+- **Model answer:** `[ta, proof_steps]`, written out in `<tans>`, never a
+  variable holding that list: STACK builds the teacher's-answer test by
+  splitting the unevaluated model answer at commas.
+- **Marking:** accept every equivalent order, with automatic feedback:
+  `[pd, saa]: proof_assessment(sa, proof_alternatives(ta))`, one node
+  `AlgEquiv(pd, 0)`, quiet, and `{@proof_assessment_display(saa,
+  proof_steps)@}` in the false branch after the kit's feedback sentence.
+- **Tests:** correct `apply(parsons_answer, [ta, proof_steps])`; wrong built
+  from `ta`, never from the shuffled `proof_steps` (which may already be in
+  the right order on some variant), for example the first two steps swapped.
+- **Variants:** about 3, so students see different shuffles (`style-guide.md`,
+  seed policy).
 
 ### Pattern 8: reading comprehension (proof analysis)
 
@@ -215,6 +186,31 @@ Use it after students have learned a technique, to test whether they understand
 why it works rather than how to execute it.
 
 Prototype: `reference/prototypes/reading_comp_prototype.xml`
+
+### Pattern 9: free-text working or proof
+
+**The technique is STACK's.** Read `agents/stack_free_text.md` (with
+`tools/stack-guide.sh stack_free_text.md`, as for the essentials file) for the
+four patterns (A to D), the input and its `manualgraded` option, the layout,
+the extractors, the model working, the PRTs and the tests. This pattern adds
+only the kit's choices. Copy `reference/prototypes/free_text_prototype.xml`
+(patterns A, A2, B and C); `reference/showcase.xml`, Showcase 13, is pattern A.
+
+The kit's choices, in addition to "Free-text working and proofs" in
+`style-guide.md`:
+
+- **Pattern:** the planner chooses one per item and records it on the
+  item's **Type** line, for example `stack + freetext (pattern B)`. A and B,
+  auto-graded with the working ungraded, come first.
+- **Model working on every seed:** after `tools/test-question.sh` has
+  imported the file, run `tools/show-ta.sh <file> ans1` (or the freetext
+  input's name) and read every line of every seed. No other kit tool shows
+  what the `[[ascii]]` block receives, and the `{#...#}` printing faults
+  appear on some seeds only.
+- **Preview check:** STACK's file asks for a check in a browser. The
+  reviewer does it in the review quiz (`tools/push-review.sh`), or asks the
+  user to, and records what was checked, on which seeds, in the feedback
+  document.
 
 ---
 

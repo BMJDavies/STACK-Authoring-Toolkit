@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<!-- ============================================================
+     PROTOTYPE A: free-text working, final answer extracted and graded.
+     The student types their working; the last line of mathematics is
+     copied by an [[extractor]] into a hidden algebraic input, which the
+     PRT grades. The working itself is not graded.
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Free text A — working with extracted final answer</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Solve \({@eql@} = {@eqr@}\).</p>
+<p>Type your working line by line. Put mathematics between backticks. Your last line of mathematics must be your answer, in the form \(x = \dots\).</p>
+<div class="free-text-container">
+[[input:ans1]] [[validation:ans1]]
+[[ascii input="ans1"]]
+  [[extractor type="lastexpr" targetinput="ans2" /]]
+[[/ascii]]
+</div>
+<div>[[hint title="How to type your working"]][[commonstring key="free_text_fact"/]][[/hint]]</div>
+<div style="display:none">[[input:ans2]]</div>
+<div>Your final answer: [[validation:ans2]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Expand the bracket, collect the terms in \(x\) on the side where their coefficient is positive, then divide.</p>
+[[ascii]]{@ta1@}[[/ascii]]
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2026080600</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* p(x+q) = r x + s has the integer solution x = v. r > p, so p - r is never 0. */
+p: rand_with_step(2, 5, 1);
+q: rand_with_prohib(-5, 5, [0]);
+v: rand_with_prohib(-6, 6, [0]);
+r: p + rand([1, 2, 3]);
+s: p*(v+q) - r*v;
+eql: p*(x+q);
+eqr: r*x + s;
+
+/* Misconception: p(x+q) expanded as px + q. Differs from v on every seed, since q(1-p) is never 0. */
+wrong_v: (q-s)/(r-p);
+/* A wrong value for the generic-feedback test: an offset from v that never equals wrong_v. */
+other_v: if is(v+1 = wrong_v) then v-1 else v+1;
+
+/* Model working, typed as a student would. It is a string, as the free-text input requires. */
+ta1: castext("Expand the bracket and collect the terms in `x` on the right.
+`
+{#eql#} = {#eqr#}
+{#expand(eql)#} = {#eqr#}
+{#p*q-s#} = {#(r-p)*x#}
+x = {#v#}
+`
+");
+ta2: x = v;
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html">
+    <text>[[feedback:prt2]]</text>
+  </specificfeedback>
+  <questionnote format="html">
+    <text>\({@eql@} = {@eqr@}\), \(x = {@v@}\), misconception \(x = {@wrong_v@}\).</text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of free-text working with an extracted final answer.]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input>
+    <name>ans1</name>
+    <type>freetext</type>
+    <tans>ta1</tans>
+    <boxsize>60</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options>monospace:true, manualgraded:false</options>
+  </input>
+  <input>
+    <name>ans2</name>
+    <type>algebraic</type>
+    <tans>ta2</tans>
+    <boxsize>15</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>5</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords>solve</forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>3</showvalidation>
+    <options></options>
+  </input>
+  <prt>
+    <name>prt2</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables>
+      <text><![CDATA[/* Accept x = v, v = x, or a bare value. */
+sa2: if equationp(ans2) and lhs(ans2) = x then rhs(ans2)
+     else if equationp(ans2) and rhs(ans2) = x then lhs(ans2)
+     else ans2;]]></text>
+    </feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Correct solution.</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>sa2</sans>
+      <tans>v</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-1-T</trueanswernote>
+      <truefeedback format="html">
+        <text></text>
+      </truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>1</falsenextnode>
+      <falseanswernote>prt2-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text></text>
+      </falsefeedback>
+    </node>
+    <node>
+      <name>1</name>
+      <description>Bracket expanded as px + q.</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>sa2</sans>
+      <tans>wrong_v</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-2-T</trueanswernote>
+      <truefeedback format="html">
+        <text><![CDATA[<p>Check how you expanded the bracket. The factor \({@p@}\) multiplies both terms inside it: \({@eql@} = {@expand(eql)@}\).</p>]]></text>
+      </truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt2-2-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>Your last line should be the solution, in the form \(x = \dots\). Substitute your value into both sides of \({@eql@} = {@eqr@}\) to check it.</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Model working, correct final line.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Final line given as a bare value, the equation reversed: still correct.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>v = x</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Bracket expanded as px + q.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>x = wrong_v</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>4</testcase>
+    <description>Wrong value with no recognised misconception.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>x = other_v</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F | prt2-2-F</expectedanswernote>
+    </expected>
+  </qtest>
+</question>
+
+<!-- ============================================================
+     PROTOTYPE A2: free-text working, several values extracted.
+     The stem asks for labelled final lines (x = ..., y = ...). One
+     laststringremainderwhitespace extractor per value sends each to its
+     own hidden input, graded by its own PRT.
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Free text A2 — working with two extracted values</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Solve the simultaneous equations \[ {@eq1@}, \qquad {@eq2@}. \]</p>
+<p>Type your working line by line. Put mathematics between backticks. Finish with two lines on their own, <code>x = </code> your value and <code>y = </code> your value.</p>
+<div class="free-text-container">
+[[input:ans1]] [[validation:ans1]]
+[[ascii input="ans1"]]
+  [[extractor type="laststringremainderwhitespace" targetinput="ans2" search="x =" /]]
+  [[extractor type="laststringremainderwhitespace" targetinput="ans3" search="y =" /]]
+[[/ascii]]
+</div>
+<div>[[hint title="How to type your working"]][[commonstring key="free_text_fact"/]][[/hint]]</div>
+<div style="display:none">[[input:ans2]] [[input:ans3]]</div>
+<div>Your value of \(x\): [[validation:ans2]]</div>
+<div>[[feedback:prt2]]</div>
+<div>Your value of \(y\): [[validation:ans3]]</div>
+<div>[[feedback:prt3]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Eliminate \(y\): multiply the first equation by \({@b2@}\) and the second by \({@b1@}\), and subtract one from the other. Then substitute \(x\) back into the first equation.</p>
+[[ascii]]{@ta1@}[[/ascii]]
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>2</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2026080600</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+ordergreat(x, y);
+/* Integer solution (x0, y0), with x0 # y0 so that a swap is detectable. */
+x0: rand_with_prohib(-5, 5, [0]);
+y0: rand_with_prohib(-5, 5, [0, x0]);
+/* All coefficients positive, so no line of the model working starts with a
+   negative product, which prints as -(6*x). b1, b2 >= 2, so it never multiplies
+   by 1. b2 # a2*b1/a1 keeps the determinant a1*b2 - a2*b1 away from 0. */
+a1: rand_with_step(1, 4, 1);
+a2: rand_with_step(1, 4, 1);
+b1: rand_with_step(2, 4, 1);
+b2: rand_with_prohib(2, 5, [a2*b1/a1]);
+/* Subtract whichever way leaves a positive coefficient of x. */
+sg: signum(a1*b2 - a2*b1);
+dx: sg*(a1*b2 - a2*b1);
+c1: a1*x0 + b1*y0;
+c2: a2*x0 + b2*y0;
+eq1: a1*x + b1*y = c1;
+eq2: a2*x + b2*y = c2;
+
+/* Wrong values for the generic-feedback tests: offsets that never equal the swapped value. */
+other_x: if is(x0+1 = y0) then x0-1 else x0+1;
+other_y: if is(y0+1 = x0) then y0-1 else y0+1;
+
+ta1: castext("Multiply the first equation by {#b2#} and the second by {#b1#}, then subtract one from the other.
+`
+{#expand(b2*eq1)#}
+{#expand(b1*eq2)#}
+{#dx*x#} = {#sg*(b2*c1-b1*c2)#}
+`
+Substitute into the first equation.
+`
+{#a1*x0+b1*y#} = {#c1#}
+`
+So
+`
+x = {#x0#}
+y = {#y0#}
+`
+");
+ta2: x0;
+ta3: y0;
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html">
+    <text></text>
+  </specificfeedback>
+  <questionnote format="html">
+    <text>\({@eq1@}\), \({@eq2@}\); \(x = {@x0@}\), \(y = {@y0@}\).</text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of free-text working with several values extracted.]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input><name>ans1</name><type>freetext</type><tans>ta1</tans><boxsize>60</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options>monospace:true, manualgraded:false</options></input>
+  <input><name>ans2</name><type>numerical</type><tans>ta2</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <input><name>ans3</name><type>numerical</type><tans>ta3</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>3</showvalidation><options></options></input>
+  <prt><name>prt2</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>Correct x.</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>ta2</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt2-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>x and y swapped.</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>y0</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-2-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>This is the value of \(y\). Check which line you labelled <code>x = </code>.</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt2-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Substitute your values into both equations to check them. After eliminating \(y\) you should have \({@dx*x@} = {@sg*(b2*c1-b1*c2)@}\).</p>]]></text></falsefeedback></node>
+  </prt>
+  <prt><name>prt3</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>Correct y.</description><answertest>AlgEquiv</answertest><sans>ans3</sans><tans>ta3</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt3-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt3-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>x and y swapped.</description><answertest>AlgEquiv</answertest><sans>ans3</sans><tans>x0</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt3-2-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>This is the value of \(x\). Check which line you labelled <code>y = </code>.</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt3-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Substitute your value of \(x\) into the first equation, \({@eq1@}\), and solve for \(y\).</p>]]></text></falsefeedback></node>
+  </prt>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Model working, both values correct.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <testinput><name>ans3</name><value>ta3</value></testinput>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt3-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>x and y swapped.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>y0</value></testinput>
+    <testinput><name>ans3</name><value>x0</value></testinput>
+    <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt3-1-F | prt3-2-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Mixed: x correct, y wrong.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <testinput><name>ans3</name><value>other_y</value></testinput>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt3-1-F | prt3-2-F</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>4</testcase>
+    <description>Mixed: x wrong, y correct.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>other_x</value></testinput>
+    <testinput><name>ans3</name><value>ta3</value></testinput>
+    <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-F</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt3-1-T</expectedanswernote></expected>
+  </qtest>
+</question>
+
+<!-- ============================================================
+     PROTOTYPE B: free-text working beside ordinary inputs.
+     The student types working in the free text, which is not graded,
+     and enters each answer in a visible input (here numerical and a
+     dropdown), graded as in any STACK question. Submitting shows the
+     model working to compare with.
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Free text B — working beside answer inputs</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Find the stationary point of \(f(x) = {@f@}\), and decide whether it is a minimum or a maximum.</p>
+<p>Use the box for your working. Your working is not marked: compare it with the model working after you submit. Enter your answers in the boxes below it.</p>
+<div class="free-text-container">
+[[input:ans1]] [[validation:ans1]]
+[[ascii input="ans1"]]
+[[/ascii]]
+</div>
+<div>[[hint title="How to type your working"]][[commonstring key="free_text_fact"/]][[/hint]]</div>
+<div>The stationary point is at \(x =\) [[input:ans2]] [[validation:ans2]]</div>
+<div>[[feedback:prt2]]</div>
+<div>where \(f(x) =\) [[input:ans3]] [[validation:ans3]]</div>
+<div>[[feedback:prt3]]</div>
+<div>It is [[input:ans4]] [[validation:ans4]]</div>
+<div>[[feedback:prt4]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Set \(f'(x) = 0\), substitute the solution into \(f\), and use the sign of the coefficient of \(x^2\).</p>
+[[ascii]]{@ta1@}[[/ascii]]
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>3</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2026080600</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* f(x) = a(x-h)^2 + k, expanded. h # 0, so the sign error -h is always distinct from h.
+   If a < 0 then h > 0, so f'(x) = 2a x - 2a h always has a positive term: a line whose
+   terms are all negative prints its first term as -(2*x). */
+a: rand_with_prohib(-3, 3, [0]);
+h: if a < 0 then rand_with_step(1, 5, 1) else rand_with_prohib(-5, 5, [0]);
+k: rand_with_prohib(-9, 9, [0]);
+f: expand(a*(x-h)^2 + k);
+df: diff(f, x);
+/* For the generic-feedback test of the y-coordinate: an offset from k. */
+other_k: k+1;
+
+ta1: castext("Differentiate and set the derivative to zero.
+`
+f'(x) = {#df#}
+{#df#} = 0
+x = {#h#}
+f({#h#}) = {#k#}
+`
+The coefficient of `x^2` is `{#a#}`, which is [[if test='is(a>0)']]positive, so the stationary point is a minimum[[else]]negative, so the stationary point is a maximum[[/if]].
+");
+ta2: h;
+ta3: k;
+ta4: [["a minimum", is(a > 0)], ["a maximum", is(a < 0)]];
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html">
+    <text></text>
+  </specificfeedback>
+  <questionnote format="html">
+    <text>\(f(x) = {@f@}\); stationary point \(({@h@}, {@k@})\), \(a = {@a@}\).</text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of ungraded free-text working beside ordinary graded inputs.]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input><name>ans1</name><type>freetext</type><tans>ta1</tans><boxsize>60</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options>monospace:true, manualgraded:false</options></input>
+  <input><name>ans2</name><type>numerical</type><tans>ta2</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans3</name><type>numerical</type><tans>ta3</tans><boxsize>5</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <input><name>ans4</name><type>dropdown</type><tans>ta4</tans><boxsize>10</boxsize><strictsyntax>1</strictsyntax><insertstars>0</insertstars><syntaxhint></syntaxhint><syntaxattribute>0</syntaxattribute><forbidwords></forbidwords><allowwords></allowwords><forbidfloat>1</forbidfloat><requirelowestterms>0</requirelowestterms><checkanswertype>0</checkanswertype><mustverify>0</mustverify><showvalidation>0</showvalidation><options></options></input>
+  <prt><name>prt2</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>Correct x-coordinate.</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>ta2</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt2-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>Sign error solving f'(x) = 0.</description><answertest>AlgEquiv</answertest><sans>ans2</sans><tans>-h</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt2-2-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>Check the sign when you solve \({@df@} = 0\).</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt2-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>A stationary point is where \(f'(x) = {@df@}\) is zero.</p>]]></text></falsefeedback></node>
+  </prt>
+  <prt><name>prt3</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>Correct value of f.</description><answertest>AlgEquiv</answertest><sans>ans3</sans><tans>ta3</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt3-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>1</falsenextnode><falseanswernote>prt3-1-F</falseanswernote><falsefeedback format="html"><text></text></falsefeedback></node>
+    <node><name>1</name><description>f evaluated correctly at the student's (wrong) x.</description><answertest>AlgEquiv</answertest><sans>ans3</sans><tans>subst(x = ans2, f)</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>0</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt3-2-T</trueanswernote><truefeedback format="html"><text><![CDATA[<p>This is the value of \(f\) at your \(x\), but your \(x\) is not the stationary point. Correct \(x\) first.</p>]]></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt3-2-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Substitute your \(x\) into \(f(x) = {@f@}\).</p>]]></text></falsefeedback></node>
+  </prt>
+  <prt><name>prt4</name><value>1.0000000</value><autosimplify>1</autosimplify><feedbackstyle>1</feedbackstyle><feedbackvariables><text></text></feedbackvariables>
+    <node><name>0</name><description>Nature of the stationary point.</description><answertest>AlgEquiv</answertest><sans>ans4</sans><tans>first(mcq_correct(ta4))</tans><testoptions></testoptions><quiet>1</quiet><truescoremode>=</truescoremode><truescore>1</truescore><truepenalty></truepenalty><truenextnode>-1</truenextnode><trueanswernote>prt4-1-T</trueanswernote><truefeedback format="html"><text></text></truefeedback><falsescoremode>=</falsescoremode><falsescore>0</falsescore><falsepenalty></falsepenalty><falsenextnode>-1</falsenextnode><falseanswernote>prt4-1-F</falseanswernote><falsefeedback format="html"><text><![CDATA[<p>Look at the sign of the coefficient of \(x^2\), which is \({@a@}\).</p>]]></text></falsefeedback></node>
+  </prt>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Model working, all answers correct.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <testinput><name>ans3</name><value>ta3</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_correct(ta4))</value></testinput>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt3-1-T</expectedanswernote></expected>
+    <expected><name>prt4</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt4-1-T</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Sign error in x, f evaluated at that x, wrong nature.</description>
+    <testinput><name>ans1</name><value>ta1</value></testinput>
+    <testinput><name>ans2</name><value>-h</value></testinput>
+    <testinput><name>ans3</name><value>subst(x = -h, f)</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_incorrect(ta4))</value></testinput>
+    <expected><name>prt2</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt3-1-F | prt3-2-T</expectedanswernote></expected>
+    <expected><name>prt4</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt4-1-F</expectedanswernote></expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Mixed: x correct, f wrong, no working typed.</description>
+    <testinput><name>ans1</name><value>""</value></testinput>
+    <testinput><name>ans2</name><value>ta2</value></testinput>
+    <testinput><name>ans3</name><value>other_k</value></testinput>
+    <testinput><name>ans4</name><value>first(mcq_correct(ta4))</value></testinput>
+    <expected><name>prt2</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt2-1-T</expectedanswernote></expected>
+    <expected><name>prt3</name><expectedscore>0.0000000</expectedscore><expectedpenalty>0.1000000</expectedpenalty><expectedanswernote>prt3-1-F | prt3-2-F</expectedanswernote></expected>
+    <expected><name>prt4</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt4-1-T</expectedanswernote></expected>
+  </qtest>
+</question>
+
+<!-- ============================================================
+     PROTOTYPE C: write, then compare. Zero marks, no PRT.
+     The student writes a proof; once the quiz is submitted they see a
+     model proof and a self-check list in the general feedback. Nothing
+     is graded and nobody marks it. manualgraded:true, as for every
+     pattern C question: with no PRT, STACK uses Moodle's manual-grading
+     behaviour anyway.
+     ============================================================ -->
+<question type="stack">
+  <name><text>PROTOTYPE: Free text C — write a proof, then compare</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Prove that the sum of two odd integers is even.</p>
+<p>Write your proof below. This exercise is not marked: when you submit the quiz, compare your proof with the model one.</p>
+<div class="free-text-container">
+[[input:ans1]] [[validation:ans1]]
+[[ascii input="ans1"]]
+[[/ascii]]
+</div>
+<div>[[hint title="How to type your proof"]][[commonstring key="free_text_fact"/]][[/hint]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>A model proof:</p>
+[[ascii]]{@ta1@}[[/ascii]]
+<p>Check your own proof against these points.</p>
+<ul>
+<li>Did you write each odd integer in a general form, with a different letter for each? Using the same letter proves the result only for an odd integer added to itself.</li>
+<li>Did you show the sum is \(2\) times an integer, and say why the bracket is an integer?</li>
+<li>Does every line follow from the one before?</li>
+</ul>
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>0</defaultgrade>
+  <penalty>0</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2026080600</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+ta1: "Let the two odd integers be `2m+1` and `2n+1`, where `m` and `n` are integers.
+`
+(2m+1) + (2n+1) = 2m + 2n + 2
+                = 2(m+n+1)
+`
+Since `m+n+1` is an integer, the sum is even.";
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html">
+    <text></text>
+  </specificfeedback>
+  <questionnote format="html">
+    <text></text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of an unmarked free-text proof compared with a model proof.]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input>
+    <name>ans1</name>
+    <type>freetext</type>
+    <tans>ta1</tans>
+    <boxsize>60</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options>monospace:true, manualgraded:true</options>
+  </input>
+  <qtest>
+    <testcase>1</testcase>
+    <description>The model proof is a valid response.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+  </qtest>
+</question>
+
+</quiz>

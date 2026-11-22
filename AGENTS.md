@@ -84,6 +84,19 @@ stopping (the reviewer with `reviewing-checklist.md` alone): STACK calls its
 checklist optional, and the kit's own rules stand on their own. Where STACK's
 checklist and the kit's style guide or checklist disagree, the kit's wins.
 
+STACK has a guide of its own for two kinds of question: `stack_parsons.md` for
+any question with a `[[parsons]]` block, and `stack_free_text.md` for any with a
+`freetext` input. Before planning, writing, validating or reviewing such a
+question, read its guide verbatim in the same way:
+
+    tools/stack-guide.sh stack_parsons.md
+    tools/stack-guide.sh stack_free_text.md
+
+If it exits non-zero, do not plan, write or review that kind of question, and
+tell the user. Tell the user, too, when it read a draft from the clone's
+working tree rather than a STACK branch. Where a guide and the kit's style guide
+disagree, the style guide wins.
+
 The project's STACK source is the reference for everything else about STACK.
 `tools/update-stack-sources.sh` keeps two checkouts in `project/sources/`:
 `moodle-qtype_stack`, a clone whose `origin/master` supplies the guidance
@@ -181,7 +194,10 @@ back into the approved file before any re-publish, or they are overwritten.
 
 Every question embeds at least two test cases, one correct and one wrong.
 Without them the marking logic is untested, and a broken question is
-indistinguishable from a working one.
+indistinguishable from a working one. The one exception is a question with no
+marking logic at all, such as a free-text proof the student compares with a
+model (`stack_free_text.md`, pattern C): it has one test, entering the model
+answer.
 
 ## Moodle
 

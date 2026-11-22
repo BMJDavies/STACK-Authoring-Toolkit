@@ -10,8 +10,11 @@
 #   2. origin/dev in the same clone
 #   3. GitHub, master then dev (curl), when there is no clone or neither
 #      branch has the file
-# The clone is read with git show, so its working tree and checked-out branch
-# are never touched: your own STACK branches and drafts are left alone.
+#   4. the clone's working tree, as a last resort, for a guide drafted there
+#      and not yet in STACK; it says so on stderr, and the caller tells the user
+# The clone is only read (git show, or reading the draft file), so its working
+# tree and checked-out branch are never changed: your own STACK branches and
+# drafts are left alone.
 # tools/update-stack-sources.sh creates the clone and fetches it.
 #
 # A file counts as found only if its first line is the one expected
@@ -79,5 +82,14 @@ for branch in master dev; do
     exit 0
 done
 
-echo "Could not read agents/$FILE: not in the local clone's origin/master or origin/dev, and not on GitHub." >&2
+if [ -f "$CLONE/agents/$FILE" ]; then
+    TEXT="$(cat "$CLONE/agents/$FILE")"
+    if starts_right "$TEXT"; then
+        echo "Read $FILE from the local clone's WORKING TREE: an unpublished draft, in no STACK branch. Tell the user." >&2
+        printf '%s\n' "$TEXT"
+        exit 0
+    fi
+fi
+
+echo "Could not read agents/$FILE: not in the local clone's origin/master, origin/dev or working tree, and not on GitHub." >&2
 exit 1
