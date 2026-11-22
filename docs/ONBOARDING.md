@@ -122,7 +122,8 @@ copy across only what is missing:
 cp -rn templates/project/. project/      # adds missing files, overwrites nothing
 ```
 
-This gives `project/AGENTS.md` (a template to fill in later), `project.conf`,
+This gives `project/AGENTS.md` and `project/course.md` (templates to fill in
+later), `project.conf`,
 `style-guide.md`, `content/`, `feedback/` and `sources/`, each with a short
 explanation. Explain to the user that `project/` is their own repository: the
 kit ignores it, so updating the kit never touches their work.
@@ -138,7 +139,12 @@ Explain in a sentence that `extensions/` is for their own instructions across
 all projects, that the kit ignores it, and that it can stay empty. Offer, but do
 not assume, `git -C extensions init` if they want it under version control.
 
-1. Subject, level, and who the students are.
+1. Subject, level, and who the students are. Is there a course, and does it
+   teach the whole of the source? If it teaches only part, ask whether STACK
+   questions should cover the whole source (scope `book`) or only the course
+   (scope `course`).
+1b. What may students be assumed to know without its being stated (standard
+   background)?
 2. Roughly how much material: a topic, a module, a book?
 3. What is the source material, and what form is it in? PDF, LaTeX, Word,
    or print only?
@@ -180,8 +186,11 @@ plainly rather than improvising it.
 
 ## What to do with the answers
 
-Fill in `project/AGENTS.md`: replace every `<...>` in the template with their
-answers, and delete the comment at the top. Keep it short: it is loaded on every
+Fill in `project/AGENTS.md` and `project/course.md`: replace every `<...>` in
+the templates with their answers, and delete the comment at the top of each.
+Questions B1 and B1b go in `course.md`; if they have a course handbook, its
+outline, learning objectives and syllabus fill in "The course". The rest goes
+in `AGENTS.md`. Keep it short: it is loaded on every
 request, so length here costs them on every interaction. Generic instructions
 are already in the kit's `AGENTS.md`; do not copy them across.
 

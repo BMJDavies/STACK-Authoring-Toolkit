@@ -22,6 +22,11 @@ Rules in `extensions/AGENTS.md` and `project/AGENTS.md` override this file, and
 the project's override the extensions'. That holds however they reached you,
 including when all three appear in your context with no stated order.
 
+`project/course.md` holds the facts about the students and the material that
+every workflow shares: who the students are, the scope (the whole source, or
+only what the course teaches), and what counts as standard background. Read it
+before planning, writing or reviewing anything, and pass its path to each role.
+
 Before dispatching a role or starting a section, also read
 `extensions/harness.md`. It records, for the tool you are running in, how the
 roles are dispatched, and the model and effort level each role gets.
@@ -30,8 +35,9 @@ roles are dispatched, and the model and effort level each role gets.
 
 - No `extensions/`: `cp -r templates/extensions extensions` (local, ignored,
   needs no permission).
-- No `project/AGENTS.md`, or it still says "Template from the kit": do not
-  author, validate or publish. Follow `docs/ONBOARDING.md`.
+- No `project/AGENTS.md` or `project/course.md`, or either still says
+  "Template from the kit": do not author, validate or publish. Follow
+  `docs/ONBOARDING.md`.
 - No `extensions/harness.md`, or it still says "Template from the kit": follow
   Stage 0 of `docs/ONBOARDING.md` before the first section.
 

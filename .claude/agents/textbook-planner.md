@@ -52,6 +52,11 @@ structure and the exact test inputs.
    deviate from your plan, and a deviation looks like a defect to the reviewer.
    Read it; do not rely on memory of it.
 
+   Then read `project/course.md`: who the students are, the scope STACK
+   questions use, and what counts as standard background. The scope decides
+   what the work order may leave out; standard background decides what a
+   question must state.
+
 2. **Read the lessons.** Open `project/feedback/lessons-learned.md` and any feedback
    documents you were pointed at. Note cross-cutting rules that affect planning.
 
