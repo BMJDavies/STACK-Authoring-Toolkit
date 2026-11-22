@@ -44,6 +44,16 @@ every path from it — `<folder>/content/`, `<folder>/sources/`,
 `<folder>/project.conf` — rather than from `project/`. Pass the same folder to
 the tools as `STACK_PROJECT`, so you and they agree on which project this is.
 
+## One STACK clone for several projects
+
+Each project keeps STACK's source in `sources/moodle-qtype_stack` and
+`sources/stack-target` (`docs/SETUP.md`, section 3), about 0.5 GB each time. To
+share one clone, keep it anywhere and symlink it into each project as
+`sources/moodle-qtype_stack`; then run `tools/update-stack-sources.sh` in each.
+Every project gets its own `stack-target` worktree, so projects written for
+different STACK releases can share the clone. Give each project a different
+folder name, since the worktree is recorded in the shared clone by path.
+
 ## Your extensions across projects
 
 `extensions/` belongs to the kit folder, not to a project. With several project

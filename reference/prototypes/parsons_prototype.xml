@@ -75,7 +75,9 @@ proof_steps: [
 proof_steps: random_permutation(proof_steps);
 
 ta: proof("half", "ctsq", "bring_c", "sq_geq", "min_val", "min_at");
-ta1:[ta, proof_steps];
+/* A wrong order for the tests: the first two steps swapped. Built from ta,
+   not from the shuffled proof_steps, which may be in the right order. */
+wa: proof("ctsq", "half", "bring_c", "sq_geq", "min_val", "min_at");
     ]]></text>
   </questionvariables>
   <specificfeedback format="html">
@@ -103,7 +105,7 @@ ta1:[ta, proof_steps];
   <input>
     <name>ans1</name>
     <type>parsons</type>
-    <tans>ta1</tans>
+    <tans>[ta, proof_steps]</tans>
     <boxsize>15</boxsize>
     <strictsyntax>1</strictsyntax>
     <insertstars>0</insertstars>
@@ -170,10 +172,10 @@ ta1:[ta, proof_steps];
   </qtest>
   <qtest>
     <testcase>2</testcase>
-    <description>Random (scrambled) order should fail.</description>
+    <description>First two steps swapped should fail.</description>
     <testinput>
       <name>ans1</name>
-      <value>apply(parsons_answer, [map(first, proof_steps), proof_steps])</value>
+      <value>apply(parsons_answer, [wa, proof_steps])</value>
     </testinput>
     <expected>
       <name>prt1</name>

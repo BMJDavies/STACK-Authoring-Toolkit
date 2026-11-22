@@ -134,13 +134,14 @@ tools/
   push-review.sh           preview a draft as a student sees it
   push-live.sh             publish
   render-check.sh          confirms a question renders correctly on the page
+  show-ta.sh               prints a free-text question's model working on every seed
   quiz-admin.php           create and configure quizzes
   run-role.sh              runs a role as its own process, for assistants without subagents
   migrate-to-project-folder.sh  only for kits set up before October 2026
   ...and several smaller utilities
 
 reference/
-  showcase.xml             twelve questions, one per pattern: the golden reference
+  showcase.xml             thirteen questions, one per pattern: the golden reference
   prototypes/              working templates for the harder patterns
 
 templates/project/         the skeleton onboarding copies to project/
