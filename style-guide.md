@@ -699,8 +699,9 @@ Embedding syntax, board sizing and templates: `jsxgraph` skill.
 
 ## Proof and "show that" questions
 
-Three approaches, from Bickerton and Sangwin (2022). All three involve editorial
-judgement, so flag them for a human before implementing.
+Three approaches from Bickerton and Sangwin (2022), and free-text working or
+proof. All four involve editorial judgement, so flag them for a human before
+implementing.
 
 ### Faded worked examples
 
@@ -718,14 +719,22 @@ steps often admit several valid orderings, and grading one ordering penalises
 correct reasoning. Feedback shows one valid ordering with a note that others may
 also be valid.
 
-**No distractors.** Every step is used in the proof.
+**No distractors unless the plan asks for them.** By default every step is used
+in the proof. Where the plan names distractors (steps that belong in no correct
+proof), each one targets a misconception the plan names, and the plan says why
+it is there. `proof_assessment` reports a distractor in the student's proof as
+a step to delete, so the marking needs no change; the prototype shows two.
 
 Feedback tone: never "your proof is not quite right". Use "That was not the
 order I was looking for, but other valid solutions may exist. Here is some
 feedback based on the solution I was expecting:".
 
-Note that Parsons grades ORDERED proofs only. It cannot grade bucket
-classification, so use dropdowns for "sort these into categories" tasks.
+These rules are for the proof layout. The `[[parsons]]` block can also sort
+items into categories (the grouping layout, `columns="n"`) or place them in a
+grid; STACK's `agents/stack_parsons.md` gives the technical rules for all
+three. The kit's classification prototype uses one dropdown per object
+instead, which needs no drag and drop and gives feedback per object; either
+is acceptable, and the plan says which.
 
 ### Reading comprehension (proof analysis)
 
@@ -737,7 +746,28 @@ has exactly one correct reason. Move any other equality into the connecting
 prose between steps. A step that chains two equalities with different reasons
 marks a defensible answer wrong.
 
-Implementation for all three: patterns 6, 7 and 8 in the `stack-question-types`
+### Free-text working and proofs
+
+The student types working or a proof into a `freetext` input. STACK's
+`agents/stack_free_text.md` gives four patterns and their technical rules;
+these are the kit's choices among them.
+
+**Graded automatically by default.** Use pattern A (answers extracted from
+the working) or B (working beside ordinary answer inputs): the answers are
+graded, the working is not, and the question says so. Prefer a structured
+format (a faded example, a Parsons problem, separate inputs) where it tests
+the point better, and say in the plan why free text was chosen instead.
+
+**Pattern C (write, then compare) is a way to handle a proof exercise**,
+alongside a computational or scaffolded variant, a description and a flagged
+skip. It carries zero marks. Its self-check list names the misconceptions the
+plan found for this proof, so the plan names them.
+
+**Pattern D (manually graded) needs a marker.** Use it only where the
+project's `AGENTS.md` says that a person marks these questions, and the plan
+names each one. Otherwise choose A, B or C.
+
+Implementation for all four: patterns 6 to 9 in the `stack-question-types`
 skill, with prototypes in `reference/prototypes/`.
 
 ---

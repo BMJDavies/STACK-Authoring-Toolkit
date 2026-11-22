@@ -1033,6 +1033,9 @@ proof_steps: [
 proof_steps: random_permutation(proof_steps);
 
 ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
+/* A wrong order for the tests: the first two steps swapped. Built from ta,
+   not from the shuffled proof_steps, which may be in the right order. */
+wa: proof("disc", "identify", "ineq", "factor", "sign", "conclude");
     ]]></text>
   </questionvariables>
   <specificfeedback format="html">
@@ -1130,10 +1133,10 @@ ta: proof("identify", "disc", "ineq", "factor", "sign", "conclude");
   </qtest>
   <qtest>
     <testcase>2</testcase>
-    <description>Scrambled order should fail.</description>
+    <description>First two steps swapped should fail.</description>
     <testinput>
       <name>ans1</name>
-      <value>apply(parsons_answer, [map(first, proof_steps), proof_steps])</value>
+      <value>apply(parsons_answer, [wa, proof_steps])</value>
     </testinput>
     <expected>
       <name>prt1</name>
@@ -1778,6 +1781,285 @@ atP: ratsimp(subst([x1=p,x2=q],sa));]]></text></feedbackvariables>
     <testinput><name>ans2</name><value>i*ta2</value></testinput>
     <expected><name>prt1</name><expectedscore>1.0000000</expectedscore><expectedpenalty>0.0000000</expectedpenalty><expectedanswernote>prt1-1-T</expectedanswernote></expected>
     <expected><name>prt2</name><expectedscore></expectedscore><expectedpenalty></expectedpenalty><expectedanswernote>NULL</expectedanswernote></expected>
+  </qtest>
+</question>
+
+<!-- PATTERN 13: Free-text working, auto-graded (STACK's stack_free_text.md, pattern A)
+     The student types their working; it is not graded. An extractor copies
+     the last line of mathematics into a hidden algebraic input, whose PRT
+     grades it. manualgraded:false, set explicitly: the freetext input
+     defaults to true, which would make the whole question manually graded.
+     - free-text-container holding the input, its validation and the
+       [[ascii]] preview; STACK's standard typing hint below it
+     - the hidden target input in its own display:none div; its validation
+       on a labelled line outside it, so the student sees what was extracted
+     - the model working is a string a student could type, built with
+       castext() and {#...#}; the general feedback renders it the same way
+     - tests set both inputs; extractors never run in a test, so check them
+       in a preview, and read the model working on every seed with
+       tools/show-ta.sh
+     Patterns B (working beside ordinary inputs) and C (write, then compare)
+     are in reference/prototypes/free_text_prototype.xml. -->
+<question type="stack">
+  <name><text>Showcase 13: Free-text working</text></name>
+  <questiontext format="html">
+    <text><![CDATA[
+<p>Solve \({@eql@} = {@eqr@}\).</p>
+<p>Type your working line by line. Put mathematics between backticks. Your last line of mathematics must be your answer, in the form \(x = \dots\).</p>
+<div class="free-text-container">
+[[input:ans1]] [[validation:ans1]]
+[[ascii input="ans1"]]
+  [[extractor type="lastexpr" targetinput="ans2" /]]
+[[/ascii]]
+</div>
+<div>[[hint title="How to type your working"]][[commonstring key="free_text_fact"/]][[/hint]]</div>
+<div style="display:none">[[input:ans2]]</div>
+<div>Your final answer: [[validation:ans2]]</div>
+    ]]></text>
+  </questiontext>
+  <generalfeedback format="html">
+    <text><![CDATA[
+<p>Expand the bracket, collect the terms in \(x\) on the side where their coefficient is positive, then divide.</p>
+[[ascii]]{@ta1@}[[/ascii]]
+    ]]></text>
+  </generalfeedback>
+  <defaultgrade>1</defaultgrade>
+  <penalty>0.1</penalty>
+  <hidden>0</hidden>
+  <idnumber></idnumber>
+  <stackversion>
+    <text>2026080600</text>
+  </stackversion>
+  <questionvariables>
+    <text><![CDATA[
+/* p(x+q) = r x + s has the integer solution x = v. r > p, so p - r is never 0. */
+p: rand_with_step(2, 5, 1);
+q: rand_with_prohib(-5, 5, [0]);
+v: rand_with_prohib(-6, 6, [0]);
+r: p + rand([1, 2, 3]);
+s: p*(v+q) - r*v;
+eql: p*(x+q);
+eqr: r*x + s;
+
+/* Misconception: p(x+q) expanded as px + q. Differs from v on every seed, since q(1-p) is never 0. */
+wrong_v: (q-s)/(r-p);
+/* A wrong value for the generic-feedback test: an offset from v that never equals wrong_v. */
+other_v: if is(v+1 = wrong_v) then v-1 else v+1;
+
+/* Model working, typed as a student would. It is a string, as the free-text input requires. */
+ta1: castext("Expand the bracket and collect the terms in `x` on the right.
+`
+{#eql#} = {#eqr#}
+{#expand(eql)#} = {#eqr#}
+{#p*q-s#} = {#(r-p)*x#}
+x = {#v#}
+`
+");
+ta2: x = v;
+    ]]></text>
+  </questionvariables>
+  <specificfeedback format="html">
+    <text>[[feedback:prt2]]</text>
+  </specificfeedback>
+  <questionnote format="html">
+    <text>\({@eql@} = {@eqr@}\), \(x = {@v@}\), misconception \(x = {@wrong_v@}\).</text>
+  </questionnote>
+  <questiondescription format="html"><text><![CDATA[This question is original to this kit and does not come from a source text. It is the reference example of free-text working with an extracted final answer.]]></text></questiondescription>
+  <questionsimplify>1</questionsimplify>
+  <assumepositive>0</assumepositive>
+  <assumereal>0</assumereal>
+  <prtcorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtcorrectfeedback"/]] [[commonstring key="defaultprtcorrectfeedback"/]]]]></text></prtcorrect>
+  <prtpartiallycorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtpartiallycorrectfeedback"/]] [[commonstring key="defaultprtpartiallycorrectfeedback"/]]]]></text></prtpartiallycorrect>
+  <prtincorrect format="html"><text><![CDATA[[[commonstring key="symbolicprtincorrectfeedback"/]] [[commonstring key="defaultprtincorrectfeedback"/]]]]></text></prtincorrect>
+  <decimals>.</decimals>
+  <scientificnotation>*10</scientificnotation>
+  <multiplicationsign>none</multiplicationsign>
+  <sqrtsign>1</sqrtsign>
+  <complexno>i</complexno>
+  <inversetrig>cos-1</inversetrig>
+  <logicsymbol>lang</logicsymbol>
+  <matrixparens>[</matrixparens>
+  <variantsselectionseed></variantsselectionseed>
+  <input>
+    <name>ans1</name>
+    <type>freetext</type>
+    <tans>ta1</tans>
+    <boxsize>60</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>0</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords></forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>0</showvalidation>
+    <options>monospace:true, manualgraded:false</options>
+  </input>
+  <input>
+    <name>ans2</name>
+    <type>algebraic</type>
+    <tans>ta2</tans>
+    <boxsize>15</boxsize>
+    <strictsyntax>1</strictsyntax>
+    <insertstars>5</insertstars>
+    <syntaxhint></syntaxhint>
+    <syntaxattribute>0</syntaxattribute>
+    <forbidwords>solve</forbidwords>
+    <allowwords></allowwords>
+    <forbidfloat>1</forbidfloat>
+    <requirelowestterms>0</requirelowestterms>
+    <checkanswertype>0</checkanswertype>
+    <mustverify>0</mustverify>
+    <showvalidation>3</showvalidation>
+    <options></options>
+  </input>
+  <prt>
+    <name>prt2</name>
+    <value>1.0000000</value>
+    <autosimplify>1</autosimplify>
+    <feedbackstyle>1</feedbackstyle>
+    <feedbackvariables>
+      <text><![CDATA[/* Accept x = v, v = x, or a bare value. */
+sa2: if equationp(ans2) and lhs(ans2) = x then rhs(ans2)
+     else if equationp(ans2) and rhs(ans2) = x then lhs(ans2)
+     else ans2;]]></text>
+    </feedbackvariables>
+    <node>
+      <name>0</name>
+      <description>Correct solution.</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>sa2</sans>
+      <tans>v</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>1</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-1-T</trueanswernote>
+      <truefeedback format="html">
+        <text></text>
+      </truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>1</falsenextnode>
+      <falseanswernote>prt2-1-F</falseanswernote>
+      <falsefeedback format="html">
+        <text></text>
+      </falsefeedback>
+    </node>
+    <node>
+      <name>1</name>
+      <description>Bracket expanded as px + q.</description>
+      <answertest>AlgEquiv</answertest>
+      <sans>sa2</sans>
+      <tans>wrong_v</tans>
+      <testoptions></testoptions>
+      <quiet>1</quiet>
+      <truescoremode>=</truescoremode>
+      <truescore>0</truescore>
+      <truepenalty></truepenalty>
+      <truenextnode>-1</truenextnode>
+      <trueanswernote>prt2-2-T</trueanswernote>
+      <truefeedback format="html">
+        <text><![CDATA[<p>Check how you expanded the bracket. The factor \({@p@}\) multiplies both terms inside it: \({@eql@} = {@expand(eql)@}\).</p>]]></text>
+      </truefeedback>
+      <falsescoremode>=</falsescoremode>
+      <falsescore>0</falsescore>
+      <falsepenalty></falsepenalty>
+      <falsenextnode>-1</falsenextnode>
+      <falseanswernote>prt2-2-F</falseanswernote>
+      <falsefeedback format="html">
+        <text><![CDATA[<p>Your last line should be the solution, in the form \(x = \dots\). Substitute your value into both sides of \({@eql@} = {@eqr@}\) to check it.</p>]]></text>
+      </falsefeedback>
+    </node>
+  </prt>
+
+  <deployedseed>1</deployedseed>
+  <deployedseed>2</deployedseed>
+  <deployedseed>3</deployedseed>
+  <deployedseed>4</deployedseed>
+  <deployedseed>5</deployedseed>
+  <deployedseed>6</deployedseed>
+  <deployedseed>7</deployedseed>
+  <deployedseed>8</deployedseed>
+  <deployedseed>9</deployedseed>
+  <deployedseed>10</deployedseed>
+  <qtest>
+    <testcase>1</testcase>
+    <description>Model working, correct final line.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>ta2</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>2</testcase>
+    <description>Final line given as a bare value, the equation reversed: still correct.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>v = x</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>1.0000000</expectedscore>
+      <expectedpenalty>0.0000000</expectedpenalty>
+      <expectedanswernote>prt2-1-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>3</testcase>
+    <description>Bracket expanded as px + q.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>x = wrong_v</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F | prt2-2-T</expectedanswernote>
+    </expected>
+  </qtest>
+  <qtest>
+    <testcase>4</testcase>
+    <description>Wrong value with no recognised misconception.</description>
+    <testinput>
+      <name>ans1</name>
+      <value>ta1</value>
+    </testinput>
+    <testinput>
+      <name>ans2</name>
+      <value>x = other_v</value>
+    </testinput>
+    <expected>
+      <name>prt2</name>
+      <expectedscore>0.0000000</expectedscore>
+      <expectedpenalty>0.1000000</expectedpenalty>
+      <expectedanswernote>prt2-1-F | prt2-2-F</expectedanswernote>
+    </expected>
   </qtest>
 </question>
 

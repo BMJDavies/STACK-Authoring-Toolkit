@@ -10,7 +10,8 @@ generic rules or with the user's extensions, this file wins.
 
 ## What this project is
 
-<One or two sentences: what is being built, for whom, at what level.>
+<One or two sentences: what is being built.> The students, the scope and
+standard background are in `project/course.md`.
 
 ## Where the questions come from
 

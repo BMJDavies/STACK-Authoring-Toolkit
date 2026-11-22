@@ -7,3 +7,8 @@
 # material is yours to distribute.
 sources/*
 !sources/README.md
+
+# STACK's source, kept by tools/update-stack-sources.sh. Never part of the
+# project, even if the lines above are removed.
+sources/moodle-qtype_stack/
+sources/stack-target/

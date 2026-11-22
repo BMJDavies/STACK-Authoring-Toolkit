@@ -9,7 +9,7 @@ Blocking items are marked. Everything else is a judgement call the reviewer
 records in the feedback document.
 
 Work through STACK's question review checklist as well
-(`agents/stack_question_review.md` in STACK's repository, fetched as the kit's
+(`agents/stack_question_review.md` in STACK's repository, read as the kit's
 `AGENTS.md` says in "Content rules"). It covers question quality in general;
 this file adds the kit's conventions and its pipeline. Where the two disagree,
 this file and the style guide win.
@@ -205,10 +205,20 @@ This is a core duty, not an afterthought.
 - [ ] **Faded examples:** are the right blanks faded? Too many is trivial, too
       few is impossible. Flag for a human to look at.
 - [ ] **Faded examples follow a full static worked example** in the same quiz
-- [ ] **Parsons problems:** zero mark (`defaultgrade=0`), no distractors,
-      feedback shows one valid ordering and notes that others may be valid
+- [ ] **Parsons problems:** zero mark (`defaultgrade=0`), no distractors
+      unless the plan names them, feedback shows one valid ordering and notes
+      that others may be valid
 - [ ] **Reading comprehension:** do the questions test understanding, or just
       surface matching?
+- [ ] **Free text:** STACK's checklist in `agents/stack_free_text.md` is
+      done; the pattern is the plan's; pattern D only where the project says
+      someone marks and the plan names the question
+- [ ] **Free text:** `tools/show-ta.sh <file> <input>` shows the model
+      working on every seed with no `-(...)` term, no reversed term order and
+      no `+-`
+- [ ] **Free text and Parsons:** the preview check in STACK's guide was done
+      in the review quiz, and the feedback document records what was checked
+      and on which seeds
 - [ ] **Sign handling:** negative-coefficient variants render correctly, no
       `x + -3`, no `(x + -2)^2`
 - [ ] **Editorial decisions:** any "explain why" converted to multiple choice
